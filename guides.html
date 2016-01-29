@@ -93,7 +93,7 @@ My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for
 
 - Ruby
 	+ `brew install rbenv`
-	+ `rbenv install -v <latest version`
+	+ `rbenv install -v <latest version>`
 	+ `rbenv global <latest version>`
 	+ `echo 'eval "$(rbenv init -)"' >> ~/.zshrc`
 	+ `ruby -v` to verify successful installation
@@ -138,14 +138,14 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 
 
 - Text editors
-    + Neovim (difficult for newcomers, skip to the text editor section)
+    + Neovim
         * `brew install neovim/neovim/neovim` or `pacman -S neovim`
         * `curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
         * `git config --global core.editor "nvim"`
         * Start `nvim` and `:PlugInstall`
-
-	+ `sublime-text3` - (Faster but not as full featured)
+	+ Sublime Text 3
+        * `brew cask install sublime-text3` 
 		* [Add registration shamelessly stolen off Google](http://appnee.com/sublime-text-3-universal-license-keys-collection-for-win-mac-linux/)
 		* Install [Package Manager](https://packagecontrol.io/installation)
 		* `Command` + `Shift` + `P` --> `Package Control: Install Package`
@@ -158,8 +158,8 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 			- ColorSublime
 			- PrintToHTML
 			- [More](http://sourabhbajaj.com/mac-setup/SublimeText/Plugins.html)
-
-	- `atom` - (Comes almost fully configured)
+	+ Atom
+        * `brew cask install atom` 
 		* [Add Fira Code support](https://github.com/tonsky/FiraCode/wiki/Atom-instructions)
 		* Atom > Preferences > Packages
 			- Gruvbox
@@ -167,13 +167,16 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 			- Vim-mode
 			- Ex-mode
 
+
 - CLI apps
 	+ Useful: `ranger screenfetch tmux the_silver_searcher weechat `
 	+ Look cool: `tty_clock lolcat`
 	+ [More](http://apple.stackexchange.com/questions/12161/os-x-terminal-must-have-utilities)
 
+
 - OSX Window Managers
     + `brew cask install spectacle` or `brew cask install slate` or `brew cask install divvy` or `brew cask install hammerspoon`
+
 
 - i3 Window Manager
 	+ `yaourt -S i3-gaps-git`
@@ -190,7 +193,7 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 
 
 - [Read about Markdown](https://help.github.com/articles/basic-writing-and-formatting-syntax/) so you can take effective notes with inline code. This website was written in Markdown and converted with Strapdown
-    + [IPython Notebook](http://ipython.org/notebook.html) is extremely useful for your first month or two and can be installed with `pip install ipython`
+    + [IPython Notebook](http://ipython.org/notebook.html) is extremely useful for your first month or two and can be installed with `pip install ipython[notebook]`
 
 
 - [Learn the Basics of Vim](http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/)
