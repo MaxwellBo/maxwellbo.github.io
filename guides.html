@@ -5,7 +5,7 @@
 
 ---
 
-This was written before I discovered the wonderful [Mac OS X Setup Guide](http://sourabhbajaj.com/mac-setup/). Fortunately, there was some vague convergent evolution and they ended up quite similiar.  However, some steps / commands are today broken or redundant. Furthermore, some choices I disagree with so I maintain my own install guide. 
+This was written before I discovered the wonderful [Mac OS X Setup Guide](http://sourabhbajaj.com/mac-setup/). Somehow there was some strange convergent evolution going on and they ended up quite similiar. However, some steps and commands are either broken or have been made redundant by software updates. Furthermore, some of the steps and instructions are at odds with my own personal preferences, so I continue to maintain my own install guide. 
 
 My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for things like themes and sane defaults, so keep that open in a tab when you're running through this guide.
 
@@ -18,7 +18,7 @@ My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for
 	+ *OSX*
 		* `xcode-select --install`
 		* Install Homebrew
-			- `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+            - Use the install script found [here](http://brew.sh/)
 			- `brew tap caskroom/versions`
 		* Settings
 			- General > Dark menu bar and dock
@@ -144,8 +144,13 @@ From now on, I'm not providing the package manager invocation . You'll have to c
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim`
         * `git config --global core.editor "nvim"`
         * Start `nvim` and `:PlugInstall`
+        * If you installed YouCompleteMe
+            - `cd ~/.vim/plugged/YouCompleteMe`
+            - `./install.py --clang-completer`
+            - `pip install --user neovim`
+                + Verify that this is installing to Python2.7 site-package directory with `pip list`, `pip3 list` and `which pip`
 	+ Sublime Text 3
-        * `brew cask install sublime-text3` 
+        * `brew cask install sublime-text3`
 		* [Add registration shamelessly stolen off Google](http://appnee.com/sublime-text-3-universal-license-keys-collection-for-win-mac-linux/)
 		* Install [Package Manager](https://packagecontrol.io/installation)
 		* `Command` + `Shift` + `P` --> `Package Control: Install Package`
@@ -159,7 +164,7 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 			- PrintToHTML
 			- [More](http://sourabhbajaj.com/mac-setup/SublimeText/Plugins.html)
 	+ Atom
-        * `brew cask install atom` 
+        * `brew cask install atom`
 		* [Add Fira Code support](https://github.com/tonsky/FiraCode/wiki/Atom-instructions)
 		* Atom > Preferences > Packages
 			- Gruvbox
@@ -188,7 +193,7 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 
 ---
 
-- Register a [GitHub account](https://github.com/). This will gradually become your identity as a programmer 
+- Register a [GitHub account](https://github.com/). This will gradually become your identity as a programmer
     + Register for the [GitHub Student Developer Pack](https://education.github.com/pack)
 
 
@@ -203,13 +208,14 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 - [Learn the Basics of Git](http://rogerdudler.github.io/git-guide/)
 	+ [Interactive Cheat Sheet](http://ndpsoftware.com/git-cheatsheet.html#loc=index;)
 	+ [Printable Cheat Sheet](https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf)
+    + https://xkcd.com/1597/ - "If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git." Here's my phone number: 0447 724 462
 
 
 - [Learn to Unit Test with the unittest module and nose2](https://www.jeffknupp.com/blog/2013/12/09/improve-your-python-understanding-unit-testing/)
 
 
 - Use a linter, like [Pylint](http://www.pylint.org/) or [Flake8](https://pypi.python.org/pypi/flake8)
-   + Optionally, let Pycharm (`brew cask install pycharm-ce`) yell at you while you code. Be sure to start the project in PyCharm or else it will be too difficult to fix formatting at the end. 
+   + Optionally, let Pycharm (`brew cask install pycharm-ce`) yell at you while you code. Be sure to start the project in PyCharm or else it will be too difficult to fix formatting at the end.
 
 
 - You'll probably be using Python 3.4. [Typehint accordingly with awareness of 3.4's limitations](https://www.python.org/dev/peps/pep-3107/)
