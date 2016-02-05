@@ -2,8 +2,8 @@
 <html>
 <title>Guides</title>
 <xmp theme="Readable" style="display:none;">
-
 ---
+
 
 This was written before I discovered the wonderful [Mac OS X Setup Guide](http://sourabhbajaj.com/mac-setup/). Somehow there was some strange convergent evolution going on and they ended up quite similiar. However, some steps and commands are either broken or have been made redundant by software updates. Furthermore, some of the steps and instructions are at odds with my own personal preferences, so I continue to maintain my own install guide. 
 
@@ -26,7 +26,8 @@ My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for
 			- Trackpad > Point & Click > Secondary click
 			- Keyboard > Shortcuts > Keyboards > Move focus to active or next window > rebind to `Command` + `<backtick>`
 	+ *Linux*
-		* Install Yaourt
+    + `pacman -S  virtualbox-guest-utils` if you're running a VM	
+    + Install Yaourt
 			- Append `[archlinuxfr] SigLevel = Never Server = http://repo.archlinux.fr/$arch` to `/etc/pacman.conf`
 			- `sudo pacman -S yaourt`
 
@@ -56,13 +57,17 @@ My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for
 - *OSX ONLY*
     + `brew install git`
     	* `git config --global credential.helper osxkeychain` or [go here](https://help.github.com/articles/caching-your-github-password-in-git/)
-    + `brew cask install iterm2`
+    + `brew cask install iterm2-beta`
         * [Themes](http://iterm2colorschemes.com/)
-            - [I personally use base16-eighties](https://github.com/chriskempson/base16-iterm2)
+            - [I personally use base16-eighties](https://github.com/chriskempson/base16-iterm2) or [Gruvbox](https://github.com/morhetz/gruvbox-contrib) with the background at 35 35 35 RGB
             -  iTerm2 > Preferences > Profiles > Colour Presets > Import
-        - iTerm2 > Preferences > Profiles > Text > Change font > `* for Powerline` (required for terminal ligatures)
-        -  iTerm2 > Preferences > Keys > To switch split panes > `Command`
-        - iTerm2 > Preferences > Keys > To switch tabs > `Alt`
+        - Preferences > Profiles > Text > Change font > `* for Powerline` (required for terminal ligatures)
+        -  Preferences > Keys > To switch split panes > `Command`
+        - Preferences > Keys > To switch tabs > `Alt`
+        - Preferences > Keys > System-Wide hotkey
+        - Preferences > Profiles > Window > Style > Full-screen Right of Screen
+        - Preferences > Profiles > General > Reuse previous session's directory
+        - Preferenes > Appearance > Hide scrollbars
 
 ---
 
@@ -146,7 +151,7 @@ From now on, I'm not providing the package manager invocation . You'll have to c
         * Start `nvim` and `:PlugInstall`
         * If you installed YouCompleteMe
             - `cd ~/.vim/plugged/YouCompleteMe`
-            - `./install.py --clang-completer`
+            - `./install.py --clang-completer` or `python2 install.py --clang-completer`
             - `pip install --user neovim`
                 + Verify that this is installing to Python2.7 site-package directory with `pip list`, `pip3 list` and `which pip`
 	+ Sublime Text 3
@@ -158,6 +163,7 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 			- PythonImproved
 			- Git
 			- Markdown Editing
+            - 
 			- Spacegrey Theme --> Eighties mode
 			- Gruvbox colorscheme
 			- ColorSublime
@@ -167,10 +173,19 @@ From now on, I'm not providing the package manager invocation . You'll have to c
         * `brew cask install atom`
 		* [Add Fira Code support](https://github.com/tonsky/FiraCode/wiki/Atom-instructions)
 		* Atom > Preferences > Packages
-			- Gruvbox
+            - [sync-settings](https://github.com/Hackafe/atom-sync-settings)
+                + `personalAccessToken: "077c26623ff9507be839052c9bcfc385a9f4c923"`
+                + `gistId: "17076f01343d86f2417f"`
+			- Gruvbox by Caleb
+            - color-picker
+            - pigments
+            - atom-beautify
 			- Minimap
+            - highlight-selected (and minimap-highlight-selected)
 			- Vim-mode
 			- Ex-mode
+            - base16-syntax
+            - [More](http://blog.daniel-klose.com/technology/atom-editor-for-sublime-text-users/)
 
 
 - CLI apps
