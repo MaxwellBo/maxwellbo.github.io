@@ -5,7 +5,7 @@
 ---
 
 
-This was written before I discovered the wonderful [Mac OS X Setup Guide](http://sourabhbajaj.com/mac-setup/). Somehow there was some strange convergent evolution going on and they ended up quite similiar. However, some steps and commands are either broken or have been made redundant by software updates. Furthermore, some of the steps and instructions are at odds with my own personal preferences, so I continue to maintain my own install guide. 
+This was written before I discovered the wonderful [Mac OS X Setup Guide](http://sourabhbajaj.com/mac-setup/). Somehow there was some strange convergent evolution going on and they ended up quite similiar. However, some steps and commands are either broken or have been made redundant by software updates. Furthermore, some of the steps and instructions are at odds with my own personal preferences, so I continue to maintain my own install guide.
 
 My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for things like themes and sane defaults, so keep that open in a tab when you're running through this guide.
 
@@ -26,7 +26,7 @@ My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for
 			- Trackpad > Point & Click > Secondary click
 			- Keyboard > Shortcuts > Keyboards > Move focus to active or next window > rebind to `Command` + `<backtick>`
 	+ *Linux*
-    + `pacman -S  virtualbox-guest-utils` if you're running a VM	
+    + `pacman -S  virtualbox-guest-utils` if you're running a VM
     + Install Yaourt
 			- Append `[archlinuxfr] SigLevel = Never Server = http://repo.archlinux.fr/$arch` to `/etc/pacman.conf`
 			- `sudo pacman -S yaourt`
@@ -52,6 +52,13 @@ My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for
         * `git clone https://github.com/powerline/fonts.git` then `bash ~/fonts/install.sh` [Link](https://github.com/powerline/fonts)
         * `git clone https://github.com/tonsky/FiraCode.git` then install each font by hand [Link](https://github.com/tonsky/FiraCode)
 
+
+    + What fonts to use
+        * `DejaVu Sans Mono` I personally like the best for OSX and Linux. It has issues with the differences between `0` `o` and `O`
+        * `Consolas` is the best option for Windows. It was designed to exploit the Microsoft's implementation of subpixel rendering
+        * `Fira Code` has some very useful ligatures for functional programming. However the ligatures hide information to beginners, so I'll recommend the ligature free `Fira Mono` too. 
+        * `Droid Sans Mono`, `Roboto Mono` and `Inconsolata-dz` are all effective alternatives
+
 ---
 
 - *OSX ONLY*
@@ -76,6 +83,8 @@ My [dotfile repository](https://github.com/MaxwellBo/dotfiles) can be useful for
 	* [Follow the instructions here](https://github.com/sorin-ionescu/prezto)
 		- Between steps 2 and 3, delete `rm` all ``~/.z*`` files so that the script in step 3 can successfully create the required symlinks
 
+- Development essentials
+    + `brew install cmake`
 
 - Python
 	+ *OSX*
@@ -126,7 +135,7 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 ---
 
 
-- Essentials
+- User essentials
 	+ `dropbox google-chrome flux gimp pandoc`
 	+ `gyazo daisydisk karabiner`
 	+ Things that might cost money:
@@ -159,38 +168,46 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 		* [Add registration shamelessly stolen off Google](http://appnee.com/sublime-text-3-universal-license-keys-collection-for-win-mac-linux/)
 		* Install [Package Manager](https://packagecontrol.io/installation)
 		* `Command` + `Shift` + `P` --> `Package Control: Install Package`
-			- Vintageous
+            - Themeing
+                - Colorsublime
+                - I use the Gruvbox syntax highlighting scheme with the Spacegrey UI Theme in Eighties mode
+                - Change your font if you're on OSX or Windows
+			- Vintageous (Vim mode)
+            - Git
 			- PythonImproved
-			- Git
 			- Markdown Editing
-            - 
-			- Spacegrey Theme --> Eighties mode
-			- Gruvbox colorscheme
-			- ColorSublime
 			- PrintToHTML
 			- [More](http://sourabhbajaj.com/mac-setup/SublimeText/Plugins.html)
 	+ Atom
         * `brew cask install atom`
-		* [Add Fira Code support](https://github.com/tonsky/FiraCode/wiki/Atom-instructions)
 		* Atom > Preferences > Packages
             - [sync-settings](https://github.com/Hackafe/atom-sync-settings)
                 + `personalAccessToken: "077c26623ff9507be839052c9bcfc385a9f4c923"`
                 + `gistId: "17076f01343d86f2417f"`
-			- Gruvbox by Caleb
-            - color-picker
-            - pigments
-            - atom-beautify
-			- Minimap
+            - Themeing
+                + Themes > One Dark > `Gear Symbol` > Layout Mode > Compact
+                + Gruvbox by Caleb
+                + base16-syntax
+                + Change your font to `Consolas` if you're on Windows
+                + [Add `Fira Code` support](https://github.com/tonsky/FiraCode/wiki/Atom-instructions)
+            - Vim-mode
+            - Ex-mode (Vim mode extension)
+            - color-picker (colorcode selector)
+            - pigments (colorcode recognition)
+            - atom-beautify (linter)
+            - file-icons
+			- Minimap (Sublime like file overview)
             - highlight-selected (and minimap-highlight-selected)
-			- Vim-mode
-			- Ex-mode
-            - base16-syntax
             - [More](http://blog.daniel-klose.com/technology/atom-editor-for-sublime-text-users/)
+    + Global themeing
+        * Material for [Atom](https://atom.io/themes/atom-material-syntax) and [Sublime](https://github.com/equinusocio/material-theme)
 
+    + NB: You're probably wondering why I've bothered listing three different text editors. Truthfully, I use all three for different purposes. I use Vim as a quick and dirty text editor for the manipulation of files in primarily commandline workspace. Atom has helpful features for web-development and an insanely high level of customization, but is slow, laggy and takes an age to respond. Sublime has great Markdown support and boots instantly for quick and easy text manipulation. Find a niche for each one, but install Vim bindings, similiar plugins, and similiar syntax highlighting schemes fonts for each one so as not to shock your brain each time you swap between them.
 
 - CLI apps
-	+ Useful: `ranger screenfetch tmux the_silver_searcher weechat `
-	+ Look cool: `tty_clock lolcat`
+	+ Useful: `ranger screenfetch tmux the_silver_searcher weechat  nmon lnav thefuck`
+    + `pip3 install glances`
+	+ Look cool: `tty_clock lolcat slurm`
 	+ [More](http://apple.stackexchange.com/questions/12161/os-x-terminal-must-have-utilities)
 
 
@@ -226,9 +243,6 @@ From now on, I'm not providing the package manager invocation . You'll have to c
     + https://xkcd.com/1597/ - "If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git." Here's my phone number: 0447 724 462
 
 
-- [Learn to Unit Test with the unittest module and nose2](https://www.jeffknupp.com/blog/2013/12/09/improve-your-python-understanding-unit-testing/)
-
-
 - Use a linter, like [Pylint](http://www.pylint.org/) or [Flake8](https://pypi.python.org/pypi/flake8)
    + Optionally, let Pycharm (`brew cask install pycharm-ce`) yell at you while you code. Be sure to start the project in PyCharm or else it will be too difficult to fix formatting at the end.
 
@@ -250,7 +264,34 @@ From now on, I'm not providing the package manager invocation . You'll have to c
 - Monads might prevent errors
     + [Rust has a very good implementation of them](http://docs.oracle.com/javase/tutorial/java/generics/types.html)
 
+
+[Learn to Unit Test with the unittest module and nose2](https://www.jeffknupp.com/blog/2013/12/09/improve-your-python-understanding-unit-testing/)
+
+
+Structure a project like the following:
+
+```project
+    src
+        __init__.py
+        main.py
+        module.py
+    test
+        test_module.py
+```
+
+`main.py` must use relative imports - `import src.module as module`
+`test_module.py` - `from src import module`
+
+Invoke `nose2` or `python3 -m unittest discover` in `/project/`
+
 ---
-</xmp>
+
+Believe it or not, but this is a Windows section.
+
+https://github.com/rix0rrr/WindowsPathEditor
+
+`vagrant init ubuntu/trusty64; vagrant up --provider virtualbox`
+
+`sudo apt-get install --no-install-recommends ubuntu-desktop`</xmp>
 <script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
 </html>
