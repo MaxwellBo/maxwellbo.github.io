@@ -4,32 +4,32 @@
 <xmp theme="Readable" style="display:none;">
 Module 2
 ===========================
-#DFD Concepts
+#####DFD Concepts
 
-##Terminator
+######Terminator
 - __Rectangle labelled with a noun__
 - A external source / sink of information
 - Must have at least one data flow entering or leaving
 
-##Data flow
+######Data flow
 - __Arrow labelled with a noun + possible objective__
 - Carries data from one place in the system to the other
     + Must start or end at a process
 
-##Processes
+######Processes
 - __Rectangle with rounded edges, ID code ontop, and a name underneath__
     + 0 is Context Level
     + 1.0, 2.0, 3.0 is Level 0
 - An activity that can transform, generate, retrieve, or delete data
 - Must have both incoming and outgoing dataflows
 
-##Data Stores
+######Data Stores
 - __Rectangle with square edges, ID code left, and a filename right__
 - Must connect only to processes
 - Must have at least one incoming and one outgoing flow
 
 
-#DFD Rules
+#####DFD Rules
 - The input of a process must be different from its outputs
 - No process can have only inputs or only outputs
     + Processes must have both outputs and inputs
@@ -46,7 +46,7 @@ Module 2
     + Number of outputs to lower level DFD equals number of outputs to proces of higher-level DFD
     + A composite data flow at a higher level may be split if different parts go to different processes in the lower level DFD
 
-#State Transition Diagrams (STD)
+#####State Transition Diagrams (STD)
 
 Finite state machine
 - States + events which cause change of state
@@ -57,7 +57,7 @@ System 1, when Event 1 and Condition 1 is true, is changed by Action 1 to System
 
 S1 is an initial state, and S3 is a terminal state
 
-##Rules
+######Rules
 
 1. All states must be defined
 2. All states must be reachable
@@ -72,13 +72,13 @@ Thus, with this ruleset, events become DFD terminators. Processes pull forked da
 Module 3
 =========
 
-#ER Concepts
+#####ER Concepts
 
-##Entity
+######Entity
 - Real-world object distinguishable from other objects
 - An entity is described using a set of attributes
 
-##Entity Sets
+######Entity Sets
 - __A table__
 - A collection of similiar entities
 - All entities in an entity set have the same set of attributes
@@ -86,7 +86,7 @@ Module 3
 - Each attribute has a domain
 
 
-##Entity Type
+######Entity Type
 - __A row in a table, as a class__
 - Defines set of entities that have the same attributes
 - Each entity is described by its NAME and and attributes
@@ -94,7 +94,7 @@ Module 3
 - Collections of all entities of a particular entity type at a given point in time is called the Entity Set or Extension of an Entity Type
 - Entity Type and Entity Set are customarily referred to by the same name
 
-##Attributes
+######Attributes
 - Attribute with attributes forking off
     + Composite attributes can be divided into smaller parts which represent simple attributes with independent meaning
     + Aicraft-Location
@@ -109,7 +109,7 @@ Module 3
     + Derived attributes can be derived from related attribute values
         * Age --> Date - B-day, where Age is the derived attribute
 
-###Representation
+######Representation
 
 {AddressPhone
             ({Phone (AreaCode,PhoneNum)},
@@ -118,7 +118,7 @@ Module 3
                                     State,
                                     PostalCode))}
 
-###Formal justification
+######Formal justification
 
 A | A:E --> P(V)
 
@@ -140,7 +140,7 @@ A is a Composite Attribute when the value set V is the Cartesian product of sets
 
 P(V1) * P(V2) ... * P(Vn), remembering that Vn are Simple Attributes
 
-## Relationships
+######Relationships
 
 A Relationship is an association among two or more entities
 - A Relationship Type defines the relationship
@@ -162,7 +162,7 @@ A Relationship is an association among two or more entities
         * Qty of Keeps can on ly be determined by the combination of STORE and PRODUCT
 
 
-## Existence dependancy
+######Existence dependancy
 - Total participation (=)
     + Constraint: Every employee must work for a department
 - Partial participation (-)
@@ -171,7 +171,7 @@ A Relationship is an association among two or more entities
 Employees   ==N== Works_In  ==1==   Departments
             --1-- Manages   ==1==   
 
-## Weak Entities
+######Weak Entities
 - __Rectangles with double lines__
 - Entity types that do not have key attributes of their own are called "Weak Entities"
 - The relationship type that relates a weak entity to its owner is called the __"Identifying relationship"__, which is a __relationship with double lines__
@@ -179,7 +179,7 @@ Employees   ==N== Works_In  ==1==   Departments
  - Weak entity must have total participation (=) in the identifying relationship set (existence dependency)
  - Weak entities normally have a "Partial Key" which a set of attributes that uniquely identify weak entities related to the same owner entity
 
-## Classes
+######Classes
 - (O) - overlapping, OR
 - (d) - disjoint, XOR
 
@@ -199,30 +199,30 @@ Relation components
 - Attribute names
 - Attribute values from the same domain
 
-#Domains
+#####Domains
 - A Domain D a set of atomic values
     + Has a datatype / format
 
-#Attributes
+#####Attributes
 - Each attribute A is the name of a role played by some domain D in the relation named R
 - The number of attributes in a relation R is called the degree of R
 
-#Tuples
+#####Tuples
 - Each Tuple t is an ordered list of n value:
     + t = <v1, v2, ..., vn>
 
-#Relation Schema
+#####Relation Schema
 - Denoted by R(A1, A2, A3, ... An), where R is the relation name, and An is attribute n
 - Integer n is termed "degree of the relation"
 
-# Relation Instance
+#####Relation Instance
 - A relation instance r of the relation scheme R, denoted by r(R) "r of R", is a set of n-tuples r = {t1, t2, ..., tm}
 
 
 Thefore, *schema is a description of the relation* and *instance is the data within the relation*
 
 
-# Constraints
+#####Constraints
 
 Catagories:
 - Single relation
@@ -232,7 +232,7 @@ Catagories:
 - Multiple relation
     + Referential
 
-# Superkey
+#####Superkey
 
 A superkey is a subset of attributes (SK) of a relation schema R, such that for any two tuples, ti and tj in a relation state r of R
 
@@ -242,7 +242,7 @@ Every relation has at least one superkey - the set of all its attributes
 
 A superkey can have redundant attributes, that is, by removing some attributes, the uniqueness constraint is still maintained
 
-# Notion of a key
+#####Notion of a key
 
 K is a key in a relation schema R if
 - K is a Superkey of R
@@ -254,7 +254,7 @@ A schema may have more than one key
 - Each is called a "candidate" key
 - One is slected as the "primary" key
 
-# Foreign keys
+#####Foreign keys
 
 A set of attributes FK in relation schema R1 is a foreign key if
 - the attributes of FK have the same domain as the primary key attributes P{K of another schema R2
@@ -273,7 +273,7 @@ Data in a relation database can be manipulated in the following ways:
 `RETRIEVE` Attributes of specific tuples, existing tuples, or even entire relations may be retrived
 
 
-#Syntax
+#####Syntax
 
 __`KEYWORD argument [optional] {multiple} ...|..choice..|...`__
 
@@ -307,7 +307,7 @@ A referential triggered action caluse can be attatched to a foreign key constrai
     `FOREIGN KEY (DNO) REFERENCES DEPARTMENT (DNUMBER) ON DELETE SET DEFAULT ON UPDATE CASCADE);`
 
 
-##`ALTER TABLE`
+######`ALTER TABLE`
 
 ``` SQL
 ALTER ABLE <table name>
@@ -342,15 +342,15 @@ Module 7
 Guidlines:
 - Don't do stupid shit
 
-#Functional Dependency
+#####Functional Dependency
 - A functional dependency (FD) is a constraint denoted X -> Y between two sets of attributes X and Y from a relational schema R
 - The FD specifies a restriction on the possible tuples that can form a relation instance r of R
 
-##Informally
+######Informally
 
 X -> Y holds if and only if whenever two tuples agree on their X-value, they must necessarily agree on their Y value
 
-##Formally
+######Formally
 
 The FD constraint is that for any two tuples t1 and t2 in the relation instance r that have:
 t1[X] = t2[X]
@@ -358,11 +358,11 @@ t2[Y] = t2[Y]
 
 This means that the values of the Y component of a tuple depend on, or are determined by the X component
 
-## Applications of FDs
+######Applications of FDs
 
 Relation instances r(R) that satisfy the FD constraints are called legal extensions, legal instances or legal relation states]
 
-## Notation for Inferred FDs
+######Notation for Inferred FDs
 
 The notation F |= X -> denotes that the FD X -> Y is inferred from the set of functional dependencies F
 
@@ -380,10 +380,10 @@ D -> MGS
 ET -> B
 
 
-## Inference rules
+######Inference rules
 - The set of all dependencies that can be inferred from a given F is called the closure of F, denoted by F+
 
-###IR1: Reflexive Rule
+######IR1: Reflexive Rule
 
 If Y ⊆ X, then X -> Y
 
@@ -393,7 +393,7 @@ If ESSN ⊆ {ESSN, Dependent_Name} then
 A set of attributes always determines itself or any of its subsets
 
 
-###IR2: Augmentation Rule
+######IR2: Augmentation Rule
 
 {X -> Y} |= {XZ -> YZ}
 
@@ -404,7 +404,7 @@ Adding the same set of attributes to both the LHS & RHS of a FD results in
 another valid FD
 
 
-###IR3: Transitive Rule
+######IR3: Transitive Rule
 
 {X -> Y, Y -> Z} |= X -> Z
 
@@ -413,7 +413,7 @@ and Dno -> Dlocation
 then SSN -> Dlocation holds
 
 
-###IR4: Decomposition Rule
+######IR4: Decomposition Rule
 
 {X -> YZ} |= X -> Y
 
@@ -424,7 +424,7 @@ We can remove attributes from the RHS of a dependency, and
 decompose the FD
 
 
-###IR5: Union Rule
+######IR5: Union Rule
 
 {X -> Y, X -> Z} |= X -> YZ}
 
@@ -436,7 +436,7 @@ We can union attributes from the RHS of a dependency, and combine
 a set of FDs into a single FD (reverse of IR4)
 
 
-###IR6: Pseudotransitive Rule
+######IR6: Pseudotransitive Rule
 
 {X -> Y, WY -> Z} |= WX -> Z
 
@@ -444,11 +444,11 @@ If SSN -> MgrSSN and
 MgrSSN, Dependent_Name -> Relationship
 then SSN, Dependent_Name -> Relationship
 
-##Closure
+#####Closure
 
 X+ is the closure of X under the set F, where X is a set of attributes
 
-#Normalization
+####Normalization
 
 - Superkey - A set of attributes such that no two tuples have the same values for these attributes
 - Key - A Minimal Superkey, called a Candidate Key if more than one
@@ -457,7 +457,7 @@ X+ is the closure of X under the set F, where X is a set of attributes
 - Prime Attribute - An attribute that is a member of any candidate key
 - Non-prime attribute - An attribute that is not a member of any candidate key
 
-##First Normal Form (1NF)
+#####First Normal Form (1NF)
 
 A relation schema is in 1NF if domains of attributes include only atomic (simple, indivisible) values and the value of an attribute is a single value from the domain of that attribute
 
@@ -465,7 +465,7 @@ A relation schema is in 1NF if domains of attributes include only atomic (simple
 –  having a set of values, a tuple of values, or a combination of both as an attribute value for a single tuple
 –  "relations within relations" and "relations as attributes of tuples"
 
-##Second Normal Form (2NF)
+#####Second Normal Form (2NF)
 
 A relation schema is in 2NF if it is in 1NF, and every non-prime attribute is fully functionally dependent on every key
 
@@ -483,7 +483,7 @@ YES
 EMP [SSN, Emp_Bdate]
 NEW-DEP [SSN,Dep_Name, Dep_Bdate]
 
-##Third Normal Form (3NF)
+#####Third Normal Form (3NF)
 
 A relation schema is in 3NF if it is in 2NF, and no non-prime attribute is transitively dependent on every key
 
