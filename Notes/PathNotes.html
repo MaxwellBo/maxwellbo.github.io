@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<title>PathNotes</title>
+<xmp theme="Readable" style="display:none;">
+
+- Register a [GitHub account](https://github.com/). This will gradually become your identity as a programmer
+    + Register for the [GitHub Student Developer Pack](https://education.github.com/pack)
+
+
+- [Read about Markdown](https://help.github.com/articles/basic-writing-and-formatting-syntax/) so you can take effective notes with inline code. This website was written in Markdown and converted with Strapdown
+    + [IPython Notebook](http://ipython.org/notebook.html) is extremely useful for your first month or two and can be installed with `pip install ipython[notebook]`
+
+
+- [Learn the Basics of Vim](http://yannesposito.com/Scratch/en/blog/Learn-Vim-Progressively/)
+
+- Learn Regex [here](http://regexone.com/) or [here](http://regexr.com/)
+
+- [Learn the Basics of Git](http://rogerdudler.github.io/git-guide/)
+	+ [Interactive Cheat Sheet](http://ndpsoftware.com/git-cheatsheet.html#loc=index;)
+	+ [Printable Cheat Sheet](https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf)
+    + [gfixler's "Best practises"](https://www.reddit.com/r/programming/comments/2fn4r9/how_to_work_with_git_flowchart/ckbdvnc)
+    + https://xkcd.com/1597/ - "If that doesn't fix it, git.txt contains the phone number of a friend of mine who understands git." Here's my phone number: 0447 724 462
+
+- Copy effective bug report formatting, like [this](https://gitlab.com/gnachman/iterm2/issues/1570)
+
+- Use a linter, like [Pylint](http://www.pylint.org/) or [Flake8](https://pypi.python.org/pypi/flake8)
+   + Optionally, let Pycharm (`brew cask install pycharm-ce`) yell at you while you code. Be sure to start the project in PyCharm or else it will be too difficult to fix formatting at the end.
+
+- For Assignment 1 in CSSE1001, you might be provided with an `assign1_sample_tests_1001.py` file or something to that effect. [This file should be run continually throughout the development of the assignment.](https://en.wikipedia.org/wiki/Test-driven_development)
+
+- You'll probably be using Python 3.4. [Typehint accordingly with awareness of 3.4's limitations](https://www.python.org/dev/peps/pep-3107/)
+    + `def function_name(variable_a: type, variable_b: type) -> return_type:`
+    + Examples
+        * `def and(a: bool, b: bool) -> bool:`
+        * `def set_x(x: float) -> None:`
+    + Python 3.4 does not support the [more elaborate type hinting system of Python 3.5. Ask tutors if you're allowed to use 3.5's syntax, as it might break their testing tools](https://docs.python.org/3/library/typing.html)
+        * We can still use its syntax in comments, even if the interpreter doesn't actually check it
+            - For datastructures
+                + `Dict[str, int]`
+                + `Tuple[int, float, str]` or `Tuple[int, ... ]` for a variable-length tuple of homogeneous type
+                + `List[T]`, where `T` is any type
+                    * Read up on generics [here](http://docs.oracle.com/javase/tutorial/java/generics/types.html), [here](http://learnyouahaskell.com/types-and-typeclasses#type-variables) and [here](https://doc.rust-lang.org/book/generics.html)
+
+
+- Monads might prevent errors
+    + [Rust has a very good implementation of them](http://docs.oracle.com/javase/tutorial/java/generics/types.html)
+
+
+[Learn to Unit Test with the unittest module and nose2](https://www.jeffknupp.com/blog/2013/12/09/improve-your-python-understanding-unit-testing/)
+
+
+Structure a project like the following:
+
+```project
+    src
+        __init__.py
+        main.py
+        module.py
+    test
+        test_module.py
+```
+
+`main.py` must use relative imports - `import src.module as module`
+`test_module.py` - `from src import module`
+
+Invoke `nose2` or `python3 -m unittest discover` in `/project/`
+
+---
+
+Believe it or not, but this is a Windows section.
+
+https://github.com/rix0rrr/WindowsPathEditor
+
+`vagrant init ubuntu/trusty64; vagrant up --provider virtualbox`
+
+`sudo apt-get install --no-install-recommends ubuntu-desktop`
+
+https://github.com/Mouaijin/dotfiles/tree/master/awesome/themes/gruvbox
+
+https://www.reddit.com/r/unixporn/comments/2uv4lg/how_do_you_match_your_vim_colorscheme_to_terminal/</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</html>

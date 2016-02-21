@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<title>PythonNotes</title>
+<xmp theme="Readable" style="display:none;">
+Python Notes
+==================
+----
+#Classes
+```p = Point(x,y)```
+The constructor
+Every time the constructor is used, a new instance is spawned
+
+```p.x()```
+The accessor (returns the x value)
+
+```p.move(x,y)```
+The mutator
+
+```self._x``` is an actual variable, but it uses an object argument. Thus, if the argument is Point, the variable will be Point._x. The self argument is always replaced by the Object on which the method is called.
+
+----
+##Class Design
+- What assumptions am I making?
+- What data do I need to store?
+- Create instance variables to capture properties associated with individual objects.
+- Create class variables to capture shared properties
+- Are the values of variables interrelated or constrained? - Add a class invariant to the class comments.
+- What should the interface look like? - What are the 'public' methods?
+- Name the class after the objects it produces.
+- Name variables after their roles and make instance variables private.
+- What information does the constructor need to create an object? Add parameters to the __init__ method and give them meaningful names.
+- Name each method to suggest its role.
+- Comment each method before writing any code!
+- Don't 'over complicate' methods - methods should, where possible, perform just one task.
+- What helper methods do I need? - make them private.
+- For testing purposes write the __repr__ method.
+
+----
+```python
+2   class Circle(object):
+3       def __init__(self, radius):
+4           self.r = radius
+5   
+6       def area(self):
+7           return math.pi*self.r**2
+8   
+9   class Donut(Circle):
+10      def __init__(self, inner_radius, outer_radius):
+11          Circle.__init__(self, outer_radius)
+12          self.ir = inner_radius
+13  
+```
+
+A superclass has to be reinitialised IF things need to be changed
+
+----
+
+#Syntax Notes
+
+##Naming Conventions
+
+_underscore means private
+CAPITALS means constant
+CapitalizingTheFirstLetter means class
+underscores_between means generic method
+
+##Loops
+- Use a for loop when you know how many times it needs to be looped (use range())
+- Use a while loop when you don't know when the loop should terminate. The loop should be terminated by inside conditions. 
+
+
+
+
+
+
+
+
+ When the method instance.method(arg1, ...) is called, the method defined in Class is used. However, the overridden method can still be accessed directly by calling SuperClass.method(instance, arg1, ...)
+
+
+Every method in a class needs a self tag, because it knows that it needs to be referencing itself, thus bounding it to the class. The self declaration is pulled when the method is attatched like so ClassInstance.method(). The self slot pulls the ClassInstance. That's why super().__init__(args) [where the args can be pulled from a top level class initialization] works. It's initializing things not on its parent class, but its superclass. Like so:
+
+where the top level is
+
+```python
+    def __init__(self, x):
+        self.x = x
+```
+
+```python
+class C(B):
+    def __init__(self, x, y):
+        super().__init__(x)
+```
+
+```python
+class ClassName(object):
+    """docstring for ClassName"""
+    def __init__(self, arg):
+        super().__init__()
+        self.arg = arg
+```
+        
+is allowed
+
+Therefore, the super().__init__(3) line in C's __init__ method results in calling A.__init__(3). A's __init__ will, therefore, set the value of the attribute x to 3. The next line in C.__init__ will now run, setting the value of the attribute y to 5.
+
+
+```python
+import math
+epsilon = 1e-5
+
+
+class Point(object):
+    def __init__(self, x, y):
+        self._x = x
+        self._y = y
+
+    def __repr__(self):
+        return 'Point({}, {})'.format(self._x, self._y)
+
+    def dist_to_point(self, other):
+        deltax = self._x - other._x #is this cheating?
+        deltay = self._y - other._y
+        return math.sqrt(deltax ** 2 + deltay ** 2)
+
+    def is_near(self, other):
+        if self.dist_to_point(other) < epsilon:
+            return True
+        else:
+            return False
+
+    def add_point(self, other):
+        self._x += other._x
+        self._y += other._y
+```
+Now this is a really good example of variabe slotting. For example, these functions would be called like p1.add_point(p2). The method pulls self, and other, and dumps it into the commands afterwards. Now this means that the __init__ function actually sets the ```self._x``` to the name it was set to, like ```p1._x```
+
+
+Think:   super().__init__(message)   initializes the super using message 
+
+
+A function tries to execute a message. The method fails. It raises a WithdrawlError, provides the error both a message and a balance. The function catches the error. The function prints a message notifiying the user that it caught the error. It then runs a method on the error, to extract the balance previously provided to it, on initialization. It then prints this balance. 
+
+
+
+```python
+class Executive(Employee):
+    def __init__(self, name, salary, bonus):
+        super().__init__(name, salary)
+        self._bonus = bonus
+
+    def wage(self):
+        return super().wage() + self._bonus / 26
+```
+
+Look at how the variables collapse away when a previous class needs to be extended. Also look at how I use a method from a superclass. 
+
+```python
+class Square(Shape):
+    def __init__(self, side_length, origin=(0, 0)):
+        super().__init__(origin=origin)
+```
+
+What the fuck?
+
+
+for i in range(n) works as a pretty good looper
+
+
+
+Iterators are constructed with iter(), by assigning them to a variable and accessed with next(). They must be assigned. 
+
+PROPERTY IS FUCKED
+
+A generator is connstructed by assigning the "function" to a variable, and accessed with next()
+
+You can pass an argument a function if you want. So something could be result = operation(result, x) where operation is specified as an argument in the function definition, passing a function (often user defined). This is a higher-order function. A function can be treated as an object that can be used in a function call. 
+
+
+```python
+def display_set_summaries(data):
+    for i in zip(*data):
+        print(i)
+```
+
+The * allows the function to take a list, and input its elements as arguments.
+
+
+
+
+
+```python
+
+double = lambda x: 2*x
+
+double(3) # --> 6 
+
+```
+
+```python
+def add_n(n):
+    return lambda x: x+ n
+
+add5 = add_n(5)
+```
+
+Here, *the function is used to construct a lambda function*, which is then assigned to a variable/object, that can be called on later on. However, you don't need to assign anything at all. For example, adding 3 and 4 could look like add_n(3)(4). 
+
+Another way to think of this is as a partial application, because when we call the ```add_n``` function, we're not giving it all the information it needs to work out an answer. So instead, add_n gives back another function which waits for the remaining input.
+
+
+```python
+
+>>> x = "This is a short sentence"
+>>> list(map(lambda x:(x, len(x)), x.split()))
+[('This', 4), ('is', 2), ('a', 1), ('short', 5), ('sentence', 8)]
+```
+Variable scope? 
+
+
+map applies a function to each value in an iterable.
+
+In this instance, x.split is the iterable, for the lambda function. 
+
+```python
+
+import sys
+
+in_file = sys.argv[1]
+
+f = open(in_file, 'r')
+
+for line in map("{0:4d}: {1}".format, count(1), f):
+    print(line, end="")
+
+f.close()
+
+```
+
+Same here. format is the function. count(1) and f are the iterators. 
+
+
+>Funnily enough, count is both an initilizer of generator and a generator itself. *(or is it?)*
+
+```python
+import itertools
+
+def isnotdiv(p):
+    return lambda v: (v % p) != 0 #4ai
+
+def primes():
+    ints = itertools.count(2) #1
+    while True:
+        prime = next(ints) #2 
+        yield prime #3 
+        ints = filter(isnotdiv(prime), ints)#4 
+
+
+primeset = primes()
+
+for i in range(3):
+    print(next(primeset))
+
+```
+
+
+
+[expression for var in iterable if test] Holy fucking shit.
+
+
+
+The Sieve of Eratosthenes
+
+1. Make a generator that defines a set of all numbers, starting at 2
+2. The first prime is 2, so set the first prime to that (using the next(ints) functon)
+3. Tell the user what the prime is
+4. Redefine the set of all numbers
+    a. Do this by pulling the numbers from the set, that cannot be divided by the prime (in this case, we only pull odds because evens can be divided by 2), using 
+       a lambda function
+        i.  The function that determines whether each number in the set can be divided by the prime, is provided the prime isnotdiv(prime)
+5. Move to the next prime, which should be 3
+
+
+square = lambda x: x**2
+
+lambda  square  x       :   x**2 
+
+def     name    (args)  :   return 
+
+
+```python
+square_odds = lambda nums: [i**2 for i in nums if i % 2 != 0]
+```
+
+Takes a list of integers, and returns the squares of the odd numbers in the list nums
+
+
+#Code Snippets
+
+```python
+def some_touch(balls):
+    for b1 in balls:
+            for b2 in balls:
+              if b1 != b2 and b1.touching(b2):
+                            return True
+    return False
+```
+
+
+
+
+
+
+</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+</html>
