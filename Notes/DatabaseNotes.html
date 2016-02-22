@@ -23,8 +23,8 @@
 **Processes**
 
 - __Rectangle with rounded edges, ID code ontop, and a name underneath__
-    + 0 is Context Level
-    + 1.0, 2.0, 3.0 is Level 0
+    + `0` is Context Level
+    + `1.0`, `2.0`, `3.0` is `Level 0`
 - An activity that can transform, generate, retrieve, or delete data
 - Must have both incoming and outgoing dataflows
 
@@ -147,24 +147,24 @@ where P(V) is the Power Set of V
 
 or
 
-Value of attribute A for entity e is A(e), "attribute of entity", where e is an entity of type E
+Value of attribute `A` for entity `e` is `A(e)`, "attribute of entity", where `e` is an entity of type `E`
 
-A is a Simple Attribute where A(e) is
+`A` is a Simple Attribute where `A(e)` is
 
-- A singleton `{a}`` for single-valued attributes
+- A singleton `{a}` for single-valued attributes
 - Not a singleton `{a, b, ..., n}` for multi-valued attributes
 - An empty set `{}` for null valued attributes
 
-A is a Composite Attribute when the value set V is the Cartesian product of sets:
+`A` is a Composite Attribute when the value set `V` is the Cartesian product of sets:
 
-`P(V1) * P(V2) ... * P(Vn)`, remembering that Vn are Simple Attributes
+`P(V1) * P(V2) ... * P(Vn)`, remembering that `Vn` are Simple Attributes
 
 **Relationships**
 
 A Relationship is an association among two or more entities
 
 - A Relationship Type defines the relationship
-    + A Relationship Type R defines a set of associations among `n` entity types, `E1, E2, ..., En`
+    + A Relationship Type `R` defines a set of associations among `n` entity types, `E1, E2, ..., En`
     + `R` is a subset of the Cartesian Product `E1 X E2 X ... X En`
     + Each Entity Type is said to participate in the relationship Type
 - A Relationship Set represents a set of relationship instances
@@ -174,11 +174,11 @@ A Relationship is an association among two or more entities
 
 **Cardi-nality Ratios**
 
-- (1:1)
+- `(1:1)`
     + Attributes of relationship on either side
-- (1:N, N:1)
-    + Attributes of relationship on N side
-- (N:M)
+- `(1:N, N:1)`
+    + Attributes of relationship on `N` side
+- `(N:M)`
     + Attributes of relationship in relationship table, as the attributes are determined by the combination of each entity
         * Example: `Store - <Keeps> - Product`, `qty` is an attribute of `<Keeps>`
         * Qty of Keeps can on ly be determined by the combination of `STORE` and `PRODUCT`
@@ -284,7 +284,9 @@ Every relation has at least one superkey - the set of all its attributes
 
 A superkey can have redundant attributes, that is, by removing some attributes, the uniqueness constraint is still maintained
 
+
 **Notion of a key**
+
 `K` is a key in a relation schema `R` if
 
 - `K` is a Superkey of `R`
@@ -297,12 +299,15 @@ A schema may have more than one key
 - Each is called a "candidate" key
 - One is slected as the "primary" key
 
+
 **Foreign keys**
+
 A set of attributes FK in relation schema R1 is a foreign key if
 
 - the attributes of FK have the same domain as the primary key attributes P{K of another schema R2
 - `t1[FK] = t2[PK]` or `t1[FK] `is `null`
 - `FK` is said to "reference" `PK`
+
 
 ---
 
@@ -386,25 +391,25 @@ Guidlines:
 
 **__Functional Dependency__**
 
-- A functional dependency (FD) is a constraint denoted `X -> Y` between two sets of attributes X and Y from a relational schema R
-- The FD specifies a restriction on the possible tuples that can form a relation instance r of `R`
+- A functional dependency (FD) is a constraint denoted `X -> Y` between two sets of attributes `X` and `Y` from a relational schema `R`
+- The FD specifies a restriction on the possible tuples that can form a relation instance `r` of `R`
 
 
 **Informally**
 
-`X -> Y` holds if and only if whenever two tuples agree on their `X`-value, they must necessarily agree on their Y value
+`X -> Y` holds if and only if whenever two tuples agree on their `X`-value, they must necessarily agree on their `Y` value
 
 
 **Formally**
 
-The FD constraint is that for any two tuples t1 and t2 in the relation instance r that have:
+The FD constraint is that for any two tuples `t1` and `t2` in the relation instance `r` that have:
 
 ```
 t1[X] = t2[X]
 t2[Y] = t2[Y]
 ```
 
-This means that the values of the Y component of a tuple depend on, or are determined by the X component
+This means that the values of the `Y` component of a tuple depend on, or are determined by the `X` component
 
 
 **Applications of FDs**
@@ -414,7 +419,7 @@ Relation instances `r(R)` that satisfy the FD constraints are called legal exten
 
 **Notation for Inferred FDs**
 
-The notation `F |= X ->` denotes that the FD `X -> Y` is inferred from the set of functional dependencies F
+The notation `F |= X ->` denotes that the FD `X -> Y` is inferred from the set of functional dependencies `F`
 
 ```SQL
 F |= {  Pnum -> MgrStartDate,
@@ -432,8 +437,7 @@ ET -> B
 
 
 Inference rules
-- The set of all dependencies that can be inferred from a given F is called the closure of F, denoted by F+
-
+- The set of all dependencies that can be inferred from a given `F` is called the closure of `F`, denoted by `F+`
 **IR1: Reflexive Rule**
 
 If `Y ⊆ X`, then `X -> Y`
@@ -516,8 +520,8 @@ A relation schema is in 1NF if domains of attributes include only atomic (simple
 
 *1NF disallows*
 
-–  having a set of values, a tuple of values, or a combination of both as an attribute value for a single tuple
-–  "relations within relations" and "relations as attributes of tuples"
+– Having a set of values, a tuple of values, or a combination of both as an attribute value for a single tuple
+– "Relations within relations" and "relations as attributes of tuples"
 
 
 **Second Normal Form (2NF)**
