@@ -61,9 +61,9 @@ Finite state machine
 
 `(S1) -- E1[C1]/A1 --> (S2) -- E2[C2]/A2 --> (S3)`
 
-System 1, when Event 1 and Condition 1 is true, is changed by Action 1 to System 2
+`System 1`, when `Event 1` and `Condition 1` is `true`, is changed by `Action 1` to `System 2`
 
-S1 is an initial state, and S3 is a terminal state
+`S1` is an initial state, and `S3` is a terminal state
 
 
 **Rules**
@@ -116,7 +116,7 @@ Thus, with this ruleset, events become DFD terminators. Processes pull forked da
         * Aircraft-Altitude
 - Attribute with double line ring
     + Multivalued attribute
-        * Name: Degree
+        * Name: `Degree`
         * Contents: `{BSc, MInfTech}`
 - Attribute with dotted ring
     + Derived attributes can be derived from related attribute values
@@ -302,9 +302,9 @@ A schema may have more than one key
 
 **Foreign keys**
 
-A set of attributes FK in relation schema R1 is a foreign key if
+A set of attributes `FK` in relation schema `R1` is a foreign key if
 
-- the attributes of FK have the same domain as the primary key attributes P{K of another schema R2
+- the attributes of `FK` have the same domain as the primary key attributes `P{K` of another schema `R2`
 - `t1[FK] = t2[PK]` or `t1[FK] `is `null`
 - `FK` is said to "reference" `PK`
 
@@ -472,7 +472,7 @@ then `SSN -> Dlocation` holds
 
 `{X -> YZ} |= X -> Y`
 
-If `SSN -> Ename`, Dno
+If `SSN -> Ename, Dno`
 then `SSN -> Ename` and `SSN -> Dno` both hold
 
 We can remove attributes from the RHS of a dependency, and
