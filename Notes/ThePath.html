@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<title>PathNotes</title>
+<title>ThePath</title>
 <xmp theme="Readable" style="display:none;">
 
 - Register a [GitHub account](https://github.com/). This will gradually become your identity as a programmer
@@ -27,7 +27,9 @@
 - Learn how to properly submit bug reports, like [this](https://gitlab.com/gnachman/iterm2/issues/1570)
 
 - [Learn how to version your programs properly](http://semver.org/)
-    + `git tag <version>` will tag the last commit made with that version number
+    + [Note that there are two variants of tags, annotated tags and lightweight tags. Git treats these differently by default.](https://git-scm.com/book/en/v2/Git-Basics-Tagging)
+    + `git tag <version>` will tag the last commit made with that version number. `git push orign <version>` will push it from local to remote
+    + Remember to add the use a `v` at the start of the version number, example `v0.1.0` for the first private build and `v1.0.0` for the first public release
 
 
 ---
