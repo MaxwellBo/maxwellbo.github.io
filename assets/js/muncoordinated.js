@@ -5615,6 +5615,11 @@ function badOneOf(problems)
 	return { tag: 'oneOf', problems: problems };
 }
 
+function badCustom(msg)
+{
+	return { tag: 'custom', msg: msg };
+}
+
 function bad(msg)
 {
 	return { tag: 'fail', msg: msg };
@@ -5651,6 +5656,11 @@ function badToString(problem)
 				return 'I ran into the following problems'
 					+ (context === '_' ? '' : ' at ' + context)
 					+ ':\n\n' + problems.join('\n');
+
+			case 'custom':
+				return 'A `customDecode` failed'
+					+ (context === '_' ? '' : ' at ' + context)
+					+ ' with the message: ' + problem.msg;
 
 			case 'fail':
 				return 'I ran into a `fail` decoder'
@@ -5854,7 +5864,7 @@ function runHelp(decoder, value)
 			var realResult = decoder.callback(result.value);
 			if (realResult.ctor === 'Err')
 			{
-				return badPrimitive('something custom', value);
+				return badCustom(realResult._0);
 			}
 			return ok(realResult._0);
 
@@ -8248,14 +8258,12 @@ var _user$project$Timer$update = F2(
 						{count: model.count - 1}) : model,
 					_elm_lang$core$Native_List.fromArray(
 						[]));
-			case 'Toggle':
+			case 'Flip':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{
-							counting: _elm_lang$core$Basics$not(model.counting)
-						}),
+						{counting: _p0._0}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
 			case 'UpdateTimeField':
@@ -8351,106 +8359,209 @@ var _user$project$Timer$UpdateUnitDropdown = function (a) {
 var _user$project$Timer$UpdateTimeField = function (a) {
 	return {ctor: 'UpdateTimeField', _0: a};
 };
-var _user$project$Timer$Toggle = {ctor: 'Toggle'};
-var _user$project$Timer$view = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_user$project$Timer$viewTime(model.count),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$Timer$Toggle)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(
-						model.counting ? 'Stop' : 'Start')
-					])),
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$html$Html$input,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$value(model.timeField),
-						_elm_lang$html$Html_Events$onInput(_user$project$Timer$UpdateTimeField)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$html$Html$form,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$select,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$value(model.unitDropdown),
-								_elm_lang$html$Html_Events$onInput(_user$project$Timer$UpdateUnitDropdown)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								A2(
-								_elm_lang$html$Html$option,
-								_elm_lang$core$Native_List.fromArray(
-									[]),
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$html$Html$text('min')
-									])),
-								A2(
-								_elm_lang$html$Html$option,
-								_elm_lang$core$Native_List.fromArray(
-									[]),
-								_elm_lang$core$Native_List.fromArray(
-									[
-										_elm_lang$html$Html$text('sec')
-									]))
-							]))
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$Timer$Incr)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('⬆️')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$Timer$Decr)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('⬇️')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$Timer$SetCountWithField)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('Set time')
-					]))
-			]));
+var _user$project$Timer$Flip = function (a) {
+	return {ctor: 'Flip', _0: a};
 };
+var _user$project$Timer$view = F2(
+	function (header, model) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('card')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('card-content')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$span,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('card-title')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text(header)
+								])),
+							_user$project$Timer$viewTime(model.count),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('switch ')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$label,
+									_elm_lang$core$Native_List.fromArray(
+										[]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Off'),
+											A2(
+											_elm_lang$html$Html$input,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$type$('checkbox'),
+													_elm_lang$html$Html_Attributes$checked(model.counting),
+													_elm_lang$html$Html_Events$onCheck(_user$project$Timer$Flip)
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[])),
+											A2(
+											_elm_lang$html$Html$span,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$class('lever')
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[])),
+											_elm_lang$html$Html$text('On')
+										]))
+								])),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('row')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$div,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('input-field col s3')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$input,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$value(model.timeField),
+													_elm_lang$html$Html_Events$onInput(_user$project$Timer$UpdateTimeField)
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[]))
+										])),
+									A2(
+									_elm_lang$html$Html$div,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('input-field col s3')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$select,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$class('browser-default'),
+													_elm_lang$html$Html_Attributes$value(model.unitDropdown),
+													_elm_lang$html$Html_Events$onInput(_user$project$Timer$UpdateUnitDropdown)
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[
+													A2(
+													_elm_lang$html$Html$option,
+													_elm_lang$core$Native_List.fromArray(
+														[]),
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html$text('min')
+														])),
+													A2(
+													_elm_lang$html$Html$option,
+													_elm_lang$core$Native_List.fromArray(
+														[]),
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html$text('sec')
+														]))
+												]))
+										]))
+								])),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('card-action')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$button,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
+											_elm_lang$html$Html_Events$onClick(_user$project$Timer$Incr)
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$i,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$class('material-icons')
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html$text('add')
+												]))
+										])),
+									A2(
+									_elm_lang$html$Html$button,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
+											_elm_lang$html$Html_Events$onClick(_user$project$Timer$Decr)
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$i,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$class('material-icons')
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html$text('remove')
+												]))
+										])),
+									A2(
+									_elm_lang$html$Html$button,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
+											_elm_lang$html$Html_Events$onClick(_user$project$Timer$SetCountWithField)
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$i,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$class('material-icons')
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html$text('alarm_on')
+												]))
+										]))
+								]))
+						]))
+				]));
+	});
 var _user$project$Timer$Tick = function (a) {
 	return {ctor: 'Tick', _0: a};
 };
@@ -8461,7 +8572,7 @@ var _user$project$Timer$main = {
 	main: _elm_lang$html$Html_App$program(
 		{
 			init: A3(_user$project$Timer$init, 60, '1', 'min'),
-			view: _user$project$Timer$view,
+			view: _user$project$Timer$view('Header'),
 			update: _user$project$Timer$update,
 			subscriptions: _user$project$Timer$subscriptions
 		})
@@ -8499,10 +8610,10 @@ var _user$project$SpeakersList$viewSpeakers = function (speakers) {
 			_elm_lang$core$Native_Utils.chr(' '),
 			speaker.name);
 		return A2(
-			_elm_lang$html$Html$div,
+			_elm_lang$html$Html$li,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html_Attributes$class('speaker')
+					_elm_lang$html$Html_Attributes$class('collection-item')
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
@@ -8535,6 +8646,43 @@ var _user$project$SpeakersList$viewActorOptions = function (actors) {
 				return !_elm_lang$core$Native_Utils.eq(x.tier, _user$project$Actor$Default);
 			},
 			actors));
+};
+var _user$project$SpeakersList$viewNowSpeaking = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('card')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('card-content')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$span,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('card-title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Now Speaking')
+							])),
+						A2(
+						_elm_lang$html$Html$ul,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$id('collection')
+							]),
+						_user$project$SpeakersList$viewSpeakers(model.currentSpeaker))
+					]))
+			]));
 };
 var _user$project$SpeakersList$Model = F6(
 	function (a, b, c, d, e, f) {
@@ -8682,7 +8830,78 @@ var _user$project$SpeakersList$subscriptions = function (model) {
 				_user$project$Timer$subscriptions(model.timer))
 			]));
 };
+var _user$project$SpeakersList$viewTimer = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('col s6')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html_App$map,
+				_user$project$SpeakersList$Timer,
+				A2(_user$project$Timer$view, 'Speaker Time', model.timer))
+			]));
+};
 var _user$project$SpeakersList$NextSpeaker = {ctor: 'NextSpeaker'};
+var _user$project$SpeakersList$viewQueue = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('card')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('card-content')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$span,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('card-title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Next Speaking')
+							])),
+						A2(
+						_elm_lang$html$Html$ul,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$id('collection')
+							]),
+						_user$project$SpeakersList$viewSpeakers(model.queuedSpeakers)),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('card-action')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$a,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Events$onClick(_user$project$SpeakersList$NextSpeaker)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('Next speaker')
+									]))
+							]))
+					]))
+			]));
+};
 var _user$project$SpeakersList$AddSpeaker = function (a) {
 	return {ctor: 'AddSpeaker', _0: a};
 };
@@ -8695,6 +8914,164 @@ var _user$project$SpeakersList$UpdateTimeField = function (a) {
 var _user$project$SpeakersList$UpdateSpeakerDropdown = function (a) {
 	return {ctor: 'UpdateSpeakerDropdown', _0: a};
 };
+var _user$project$SpeakersList$viewQueuer = F2(
+	function (actors, model) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('card')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('card-content')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$span,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('card-title')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text('Queue')
+								])),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('row')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$div,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('input-field col s6')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$select,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$class('browser-default'),
+													_elm_lang$html$Html_Attributes$value(model.speakerDropdown),
+													_elm_lang$html$Html_Events$onInput(_user$project$SpeakersList$UpdateSpeakerDropdown)
+												]),
+											_user$project$SpeakersList$viewActorOptions(actors))
+										])),
+									A2(
+									_elm_lang$html$Html$div,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('input-field col s3')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$input,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$value(model.timeField),
+													_elm_lang$html$Html_Events$onInput(_user$project$SpeakersList$UpdateTimeField)
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[]))
+										])),
+									A2(
+									_elm_lang$html$Html$div,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('input-field col s3')
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											A2(
+											_elm_lang$html$Html$select,
+											_elm_lang$core$Native_List.fromArray(
+												[
+													_elm_lang$html$Html_Attributes$class('browser-default'),
+													_elm_lang$html$Html_Attributes$value(model.unitDropdown),
+													_elm_lang$html$Html_Events$onInput(_user$project$SpeakersList$UpdateUnitDropdown)
+												]),
+											_elm_lang$core$Native_List.fromArray(
+												[
+													A2(
+													_elm_lang$html$Html$option,
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html_Attributes$value('min')
+														]),
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html$text('min')
+														])),
+													A2(
+													_elm_lang$html$Html$option,
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html_Attributes$value('sec')
+														]),
+													_elm_lang$core$Native_List.fromArray(
+														[
+															_elm_lang$html$Html$text('sec')
+														]))
+												]))
+										]))
+								])),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('card-action')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$a,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Events$onClick(
+											_user$project$SpeakersList$AddSpeaker(_user$project$SpeakersList$Neutral))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Neutral')
+										])),
+									A2(
+									_elm_lang$html$Html$a,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Events$onClick(
+											_user$project$SpeakersList$AddSpeaker(_user$project$SpeakersList$For))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('For')
+										])),
+									A2(
+									_elm_lang$html$Html$a,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Events$onClick(
+											_user$project$SpeakersList$AddSpeaker(_user$project$SpeakersList$Against))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Against')
+										]))
+								]))
+						]))
+				]));
+	});
 var _user$project$SpeakersList$view = F2(
 	function (actors, model) {
 		return A2(
@@ -8706,139 +9083,27 @@ var _user$project$SpeakersList$view = F2(
 			_elm_lang$core$Native_List.fromArray(
 				[
 					A2(
-					_elm_lang$html$Html$h3,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('Now speaking')
-						])),
-					A2(
 					_elm_lang$html$Html$div,
 					_elm_lang$core$Native_List.fromArray(
 						[
-							_elm_lang$html$Html_Attributes$id('currentSpeaker')
+							_elm_lang$html$Html_Attributes$class('row')
 						]),
-					_user$project$SpeakersList$viewSpeakers(model.currentSpeaker)),
-					A2(
-					_elm_lang$html$Html_App$map,
-					_user$project$SpeakersList$Timer,
-					_user$project$Timer$view(model.timer)),
-					A2(
-					_elm_lang$html$Html$h3,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('Queue')
-						])),
-					A2(
-					_elm_lang$html$Html$form,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
 					_elm_lang$core$Native_List.fromArray(
 						[
 							A2(
-							_elm_lang$html$Html$select,
+							_elm_lang$html$Html$div,
 							_elm_lang$core$Native_List.fromArray(
 								[
-									_elm_lang$html$Html_Attributes$value(model.speakerDropdown),
-									_elm_lang$html$Html_Events$onInput(_user$project$SpeakersList$UpdateSpeakerDropdown)
-								]),
-							_user$project$SpeakersList$viewActorOptions(actors))
-						])),
-					A2(
-					_elm_lang$html$Html$input,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$value(model.timeField),
-							_elm_lang$html$Html_Events$onInput(_user$project$SpeakersList$UpdateTimeField)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[])),
-					A2(
-					_elm_lang$html$Html$form,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							A2(
-							_elm_lang$html$Html$select,
-							_elm_lang$core$Native_List.fromArray(
-								[
-									_elm_lang$html$Html_Attributes$value(model.unitDropdown),
-									_elm_lang$html$Html_Events$onInput(_user$project$SpeakersList$UpdateUnitDropdown)
+									_elm_lang$html$Html_Attributes$class('col s6')
 								]),
 							_elm_lang$core$Native_List.fromArray(
 								[
-									A2(
-									_elm_lang$html$Html$option,
-									_elm_lang$core$Native_List.fromArray(
-										[]),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html$text('min')
-										])),
-									A2(
-									_elm_lang$html$Html$option,
-									_elm_lang$core$Native_List.fromArray(
-										[]),
-									_elm_lang$core$Native_List.fromArray(
-										[
-											_elm_lang$html$Html$text('sec')
-										]))
-								]))
-						])),
-					A2(
-					_elm_lang$html$Html$button,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onClick(
-							_user$project$SpeakersList$AddSpeaker(_user$project$SpeakersList$Neutral))
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('😐 Neutral')
-						])),
-					A2(
-					_elm_lang$html$Html$button,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onClick(
-							_user$project$SpeakersList$AddSpeaker(_user$project$SpeakersList$For))
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('👍 For')
-						])),
-					A2(
-					_elm_lang$html$Html$button,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onClick(
-							_user$project$SpeakersList$AddSpeaker(_user$project$SpeakersList$Against))
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('👎 Against')
-						])),
-					A2(
-					_elm_lang$html$Html$button,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onClick(_user$project$SpeakersList$NextSpeaker)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('Next speaker')
-						])),
-					A2(
-					_elm_lang$html$Html$div,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$id('queuedSpeakers')
-						]),
-					_user$project$SpeakersList$viewSpeakers(model.queuedSpeakers))
+									_user$project$SpeakersList$viewNowSpeaking(model),
+									_user$project$SpeakersList$viewQueue(model),
+									A2(_user$project$SpeakersList$viewQueuer, actors, model)
+								])),
+							_user$project$SpeakersList$viewTimer(model)
+						]))
 				]));
 	});
 var _user$project$SpeakersList$main = {
@@ -8861,9 +9126,9 @@ var _user$project$ListManager$Wrapper = F3(
 	function (a, b, c) {
 		return {id: a, name: b, list: c};
 	});
-var _user$project$ListManager$Update = F2(
+var _user$project$ListManager$UpdateList = F2(
 	function (a, b) {
-		return {ctor: 'Update', _0: a, _1: b};
+		return {ctor: 'UpdateList', _0: a, _1: b};
 	});
 var _user$project$ListManager$init = function () {
 	var response = _user$project$SpeakersList$init;
@@ -8885,7 +9150,7 @@ var _user$project$ListManager$init = function () {
 			[
 				A2(
 				_elm_lang$core$Platform_Cmd$map,
-				_user$project$ListManager$Update(0),
+				_user$project$ListManager$UpdateList(0),
 				_elm_lang$core$Basics$snd(response))
 			]));
 }();
@@ -8919,7 +9184,7 @@ var _user$project$ListManager$update = F2(
 							[
 								A2(
 								_elm_lang$core$Platform_Cmd$map,
-								_user$project$ListManager$Update(model.uid),
+								_user$project$ListManager$UpdateList(model.uid),
 								_elm_lang$core$Basics$snd(response))
 							]));
 				} else {
@@ -8967,7 +9232,7 @@ var _user$project$ListManager$update = F2(
 					function (x, acc) {
 						return _elm_lang$core$Native_Utils.eq(x.id, _p1) ? A2(
 							_elm_lang$core$Platform_Cmd$map,
-							_user$project$ListManager$Update(_p1),
+							_user$project$ListManager$UpdateList(_p1),
 							_elm_lang$core$Basics$snd(
 								A2(_user$project$SpeakersList$update, _p2, x.list))) : acc;
 					});
@@ -8996,7 +9261,7 @@ var _user$project$ListManager$subscriptions = function (model) {
 	var getSubscription = function (wrapper) {
 		return A2(
 			_elm_lang$core$Platform_Sub$map,
-			_user$project$ListManager$Update(wrapper.id),
+			_user$project$ListManager$UpdateList(wrapper.id),
 			_user$project$SpeakersList$subscriptions(wrapper.list));
 	};
 	return _elm_lang$core$Platform_Sub$batch(
@@ -9006,23 +9271,91 @@ var _user$project$ListManager$UpdateNameField = function (a) {
 	return {ctor: 'UpdateNameField', _0: a};
 };
 var _user$project$ListManager$DeleteList = {ctor: 'DeleteList'};
+var _user$project$ListManager$viewActive = F2(
+	function (actors, model) {
+		var viewList = function (wrapper) {
+			return A2(
+				_elm_lang$html$Html_App$map,
+				_user$project$ListManager$UpdateList(wrapper.id),
+				A2(_user$project$SpeakersList$view, actors, wrapper.list));
+		};
+		var viewName = function (wrapper) {
+			return _elm_lang$html$Html$text(wrapper.name);
+		};
+		var active = A2(
+			_elm_lang$core$List$filter,
+			function (x) {
+				return _elm_lang$core$Native_Utils.eq(x.id, model.active);
+			},
+			model.wrappers);
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('card')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('card-content')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$span,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('card-title')
+								]),
+							A2(_elm_lang$core$List$map, viewName, active)),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$id('activeList')
+								]),
+							A2(_elm_lang$core$List$map, viewList, active)),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class(' card-action')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$button,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+											_elm_lang$html$Html_Events$onClick(_user$project$ListManager$DeleteList)
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Delete')
+										]))
+								]))
+						]))
+				]));
+	});
 var _user$project$ListManager$ChangeList = function (a) {
 	return {ctor: 'ChangeList', _0: a};
 };
 var _user$project$ListManager$AddList = {ctor: 'AddList'};
 var _user$project$ListManager$view = F2(
 	function (actors, model) {
-		var viewList = function (wrapper) {
+		var viewButtons = function (wrapper) {
 			return A2(
-				_elm_lang$html$Html_App$map,
-				_user$project$ListManager$Update(wrapper.id),
-				A2(_user$project$SpeakersList$view, actors, wrapper.list));
-		};
-		var viewName = function (wrapper) {
-			return A2(
-				_elm_lang$html$Html$h3,
+				_elm_lang$html$Html$button,
 				_elm_lang$core$Native_List.fromArray(
-					[]),
+					[
+						_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn-large'),
+						_elm_lang$html$Html_Events$onClick(
+						_user$project$ListManager$ChangeList(wrapper.id))
+					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html$text(wrapper.name)
@@ -9034,32 +9367,25 @@ var _user$project$ListManager$view = F2(
 				return _elm_lang$core$Native_Utils.eq(x.id, model.active);
 			},
 			model.wrappers);
-		var viewButtons = function (wrapper) {
-			return A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(
-						_user$project$ListManager$ChangeList(wrapper.id))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text(wrapper.name)
-					]));
-		};
 		return A2(
 			_elm_lang$html$Html$section,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html_Attributes$id('speakersTab')
+					_elm_lang$html$Html_Attributes$class('container')
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
 					A2(
-					_elm_lang$html$Html$nav,
+					_elm_lang$html$Html$button,
 					_elm_lang$core$Native_List.fromArray(
-						[]),
-					A2(_elm_lang$core$List$map, viewButtons, model.wrappers)),
+						[
+							_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+							_elm_lang$html$Html_Events$onClick(_user$project$ListManager$AddList)
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('Add')
+						])),
 					A2(
 					_elm_lang$html$Html$input,
 					_elm_lang$core$Native_List.fromArray(
@@ -9071,39 +9397,16 @@ var _user$project$ListManager$view = F2(
 					_elm_lang$core$Native_List.fromArray(
 						[])),
 					A2(
-					_elm_lang$html$Html$button,
+					_elm_lang$html$Html$nav,
 					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onClick(_user$project$ListManager$AddList)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('➕ Add')
-						])),
-					A2(
-					_elm_lang$html$Html$button,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Events$onClick(_user$project$ListManager$DeleteList)
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html$text('❌ Delete')
-						])),
-					A2(
+						[]),
+					A2(_elm_lang$core$List$map, viewButtons, model.wrappers)),
+					_elm_lang$core$List$isEmpty(active) ? A2(
 					_elm_lang$html$Html$div,
 					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$id('activeListName')
-						]),
-					A2(_elm_lang$core$List$map, viewName, active)),
-					A2(
-					_elm_lang$html$Html$div,
+						[]),
 					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$id('activeList')
-						]),
-					A2(_elm_lang$core$List$map, viewList, active))
+						[])) : A2(_user$project$ListManager$viewActive, actors, model)
 				]));
 	});
 var _user$project$ListManager$main = {
@@ -9241,98 +9544,171 @@ var _user$project$ModeratedCaucus$ClearTopicField = {ctor: 'ClearTopicField'};
 var _user$project$ModeratedCaucus$UpdateTopicField = function (a) {
 	return {ctor: 'UpdateTopicField', _0: a};
 };
+var _user$project$ModeratedCaucus$viewTopic = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('card')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$div,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('card-content')
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$span,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('card-title')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Caucus Topic')
+							])),
+						A2(
+						_elm_lang$html$Html$textarea,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$value(model.topicField),
+								_elm_lang$html$Html_Events$onInput(_user$project$ModeratedCaucus$UpdateTopicField),
+								_elm_lang$html$Html_Attributes$style(
+								_elm_lang$core$Native_List.fromArray(
+									[
+										{
+										ctor: '_Tuple2',
+										_0: 'font-size',
+										_1: A2(
+											_elm_lang$core$Basics_ops['++'],
+											_elm_lang$core$Basics$toString(model.textSize),
+											'%')
+									}
+									]))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('card-action')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$button,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+										_elm_lang$html$Html_Events$onClick(_user$project$ModeratedCaucus$IncrText)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										A2(
+										_elm_lang$html$Html$i,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$class('material-icons')
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html$text('add')
+											]))
+									])),
+								A2(
+								_elm_lang$html$Html$button,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+										_elm_lang$html$Html_Events$onClick(_user$project$ModeratedCaucus$DecrText)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										A2(
+										_elm_lang$html$Html$i,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$class('material-icons')
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html$text('remove')
+											]))
+									])),
+								A2(
+								_elm_lang$html$Html$button,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+										_elm_lang$html$Html_Events$onClick(_user$project$ModeratedCaucus$ClearTopicField)
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('Clear')
+									]))
+							]))
+					]))
+			]));
+};
 var _user$project$ModeratedCaucus$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$section,
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$html$Html_Attributes$id('moderatedCaucusTab')
+				_elm_lang$html$Html_Attributes$class('container')
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
-				_elm_lang$html$Html$h4,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
+				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('Caucus Topic')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$ModeratedCaucus$ClearTopicField)
+						_elm_lang$html$Html_Attributes$class('row')
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('🚫 Clear')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$ModeratedCaucus$IncrText)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('⬆️')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$ModeratedCaucus$DecrText)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('⬇️')
-					])),
-				A2(
-				_elm_lang$html$Html$textarea,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$value(model.topicField),
-						_elm_lang$html$Html_Events$onInput(_user$project$ModeratedCaucus$UpdateTopicField),
-						_elm_lang$html$Html_Attributes$style(
+						A2(
+						_elm_lang$html$Html$div,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								{
-								ctor: '_Tuple2',
-								_0: 'font-size',
-								_1: A2(
-									_elm_lang$core$Basics_ops['++'],
-									_elm_lang$core$Basics$toString(model.textSize),
-									'%')
-							}
+								_elm_lang$html$Html_Attributes$class('col s12')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_user$project$ModeratedCaucus$viewTopic(model)
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('col s6')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html_App$map,
+								_user$project$ModeratedCaucus$CaucusTimer,
+								A2(_user$project$Timer$view, 'Caucus Time', model.caucusTimer))
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('col s6')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html_App$map,
+								_user$project$ModeratedCaucus$SpeakerTimer,
+								A2(_user$project$Timer$view, 'Speaker Time', model.speakerTimer))
 							]))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$html$Html$h4,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('Caucus Time')
-					])),
-				A2(
-				_elm_lang$html$Html_App$map,
-				_user$project$ModeratedCaucus$CaucusTimer,
-				_user$project$Timer$view(model.caucusTimer)),
-				A2(
-				_elm_lang$html$Html$h4,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('Speaker Time')
-					])),
-				A2(
-				_elm_lang$html$Html_App$map,
-				_user$project$ModeratedCaucus$SpeakerTimer,
-				_user$project$Timer$view(model.speakerTimer))
+					]))
 			]));
 };
 var _user$project$ModeratedCaucus$main = {
@@ -9639,31 +10015,9 @@ var _user$project$Main$viewStatistics = function (actors) {
 					]))
 			]));
 };
-var _user$project$Main$globalStyle = _elm_lang$html$Html_Attributes$style(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			{ctor: '_Tuple2', _0: 'color', _1: '#444'},
-			{ctor: '_Tuple2', _0: 'background-color', _1: '#EEEEEE'}
-		]));
-var _user$project$Main$smallSelectorStyle = _elm_lang$html$Html_Attributes$style(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			{ctor: '_Tuple2', _0: 'max-height', _1: '40vh'},
-			{ctor: '_Tuple2', _0: 'width', _1: '25%'},
-			{ctor: '_Tuple2', _0: 'overflow', _1: 'auto'},
-			{ctor: '_Tuple2', _0: 'display', _1: 'inline-block'}
-		]));
-var _user$project$Main$bigSelectorStyle = _elm_lang$html$Html_Attributes$style(
-	_elm_lang$core$Native_List.fromArray(
-		[
-			{ctor: '_Tuple2', _0: 'max-height', _1: '95vh'},
-			{ctor: '_Tuple2', _0: 'width', _1: '25%'},
-			{ctor: '_Tuple2', _0: 'overflow', _1: 'auto'},
-			{ctor: '_Tuple2', _0: 'display', _1: 'inline-block'}
-		]));
-var _user$project$Main$Model = F5(
-	function (a, b, c, d, e) {
-		return {activeTab: a, actors: b, actorField: c, modCaucusTab: d, speakersTab: e};
+var _user$project$Main$Model = F6(
+	function (a, b, c, d, e, f) {
+		return {activeTab: a, actors: b, actorField: c, searchField: d, modCaucusTab: e, speakersTab: f};
 	});
 var _user$project$Main$Speaking = {ctor: 'Speaking'};
 var _user$project$Main$ModeratedCaucus = {ctor: 'ModeratedCaucus'};
@@ -9692,6 +10046,7 @@ var _user$project$Main$init = function () {
 			activeTab: _user$project$Main$Committee,
 			actors: actors$,
 			actorField: '',
+			searchField: '',
 			modCaucusTab: _elm_lang$core$Basics$fst(modCaucusTab$),
 			speakersTab: _elm_lang$core$Basics$fst(speakersTab$)
 		},
@@ -9723,7 +10078,9 @@ var _user$project$Main$update = F2(
 				var changeActorCheck = function (a) {
 					return _elm_lang$core$Native_Utils.eq(a.name, _p0._0.name) ? _elm_lang$core$Native_Utils.update(
 						a,
-						{checked: _p0._1}) : a;
+						{
+							checked: _elm_lang$core$Basics$not(a.checked)
+						}) : a;
 				};
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
@@ -9757,6 +10114,14 @@ var _user$project$Main$update = F2(
 						{actorField: _p0._0}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
+			case 'UpdateSearchField':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{searchField: _p0._0}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
 			case 'AddActor':
 				var actor = {
 					name: A2(
@@ -9773,9 +10138,9 @@ var _user$project$Main$update = F2(
 						{
 							actors: A2(
 								_elm_lang$core$Basics_ops['++'],
-								model.actors,
 								_elm_lang$core$Native_List.fromArray(
-									[actor])),
+									[actor]),
+								model.actors),
 							actorField: ''
 						}),
 					_elm_lang$core$Native_List.fromArray(
@@ -9858,6 +10223,9 @@ var _user$project$Main$subscriptions = function (model) {
 				_user$project$ListManager$subscriptions(model.speakersTab))
 			]));
 };
+var _user$project$Main$UpdateSearchField = function (a) {
+	return {ctor: 'UpdateSearchField', _0: a};
+};
 var _user$project$Main$ClearCommittee = {ctor: 'ClearCommittee'};
 var _user$project$Main$Downgrade = function (a) {
 	return {ctor: 'Downgrade', _0: a};
@@ -9866,17 +10234,16 @@ var _user$project$Main$viewActorsOfTier = F2(
 	function (tier, actors) {
 		var viewStandardActor = function (actor) {
 			return A2(
-				_elm_lang$html$Html$div,
+				_elm_lang$html$Html$a,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$class('actor'),
+						_elm_lang$html$Html_Attributes$class('collection-item'),
 						_elm_lang$html$Html_Events$onClick(
 						_user$project$Main$Downgrade(actor))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text(
-						A2(_elm_lang$core$Basics_ops['++'], '⬅️ ', actor.name))
+						_elm_lang$html$Html$text(actor.name)
 					]));
 		};
 		return A2(
@@ -9896,49 +10263,22 @@ var _user$project$Main$UpdateActorNameField = function (a) {
 var _user$project$Main$ShiftCheckedTo = function (a) {
 	return {ctor: 'ShiftCheckedTo', _0: a};
 };
-var _user$project$Main$Check = F2(
-	function (a, b) {
-		return {ctor: 'Check', _0: a, _1: b};
-	});
+var _user$project$Main$Check = function (a) {
+	return {ctor: 'Check', _0: a};
+};
 var _user$project$Main$viewDefaultActors = function (actors) {
-	var isChecked = function (actor) {
-		return A2(
-			_elm_lang$core$List$any,
-			function (_) {
-				return _.checked;
-			},
-			A2(
-				_elm_lang$core$List$filter,
-				function (x) {
-					return _elm_lang$core$Native_Utils.eq(x.name, actor.name);
-				},
-				actors));
-	};
 	var viewCheckedActor = function (actor) {
 		return A2(
-			_elm_lang$html$Html$label,
-			_elm_lang$core$Native_List.fromArray(
-				[]),
+			_elm_lang$html$Html$a,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					A2(
-					_elm_lang$html$Html$br,
-					_elm_lang$core$Native_List.fromArray(
-						[]),
-					_elm_lang$core$Native_List.fromArray(
-						[])),
-					A2(
-					_elm_lang$html$Html$input,
-					_elm_lang$core$Native_List.fromArray(
-						[
-							_elm_lang$html$Html_Attributes$type$('checkbox'),
-							_elm_lang$html$Html_Attributes$checked(
-							isChecked(actor)),
-							_elm_lang$html$Html_Events$onCheck(
-							_user$project$Main$Check(actor))
-						]),
-					_elm_lang$core$Native_List.fromArray(
-						[])),
+					_elm_lang$html$Html_Attributes$class(
+					actor.checked ? 'collection-item active' : 'collection-item'),
+					_elm_lang$html$Html_Events$onClick(
+					_user$project$Main$Check(actor))
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
 					_elm_lang$html$Html$text(actor.name)
 				]));
 	};
@@ -9957,7 +10297,7 @@ var _user$project$Main$viewCommittee = function (model) {
 		_elm_lang$html$Html$section,
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$html$Html_Attributes$id('committeeTab')
+				_elm_lang$html$Html_Attributes$class('container')
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
@@ -9965,96 +10305,160 @@ var _user$project$Main$viewCommittee = function (model) {
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$id('actorSelector'),
-						_user$project$Main$bigSelectorStyle
+						_elm_lang$html$Html_Attributes$class('row')
 					]),
-				_user$project$Main$viewDefaultActors(model.actors)),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$input,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$value(model.actorField),
+								_elm_lang$html$Html_Events$onInput(_user$project$Main$UpdateActorNameField),
+								_elm_lang$html$Html_Attributes$placeholder('Add another actor')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[])),
+						A2(
+						_elm_lang$html$Html$button,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+								_elm_lang$html$Html_Events$onClick(_user$project$Main$AddActor)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Add')
+							]))
+					])),
 				A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$id('delegatesSelector'),
-						_user$project$Main$bigSelectorStyle
+						_elm_lang$html$Html_Attributes$class('row')
 					]),
-				A2(_user$project$Main$viewActorsOfTier, _user$project$Actor$Delegate, model.actors)),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$button,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+								_elm_lang$html$Html_Events$onClick(_user$project$Main$ClearCommittee)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Clear Committee')
+							]))
+					])),
 				A2(
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$id('observerSelector'),
-						_user$project$Main$smallSelectorStyle
-					]),
-				A2(_user$project$Main$viewActorsOfTier, _user$project$Actor$Observer, model.actors)),
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$id('NGOSelector'),
-						_user$project$Main$smallSelectorStyle
-					]),
-				A2(_user$project$Main$viewActorsOfTier, _user$project$Actor$NGO, model.actors)),
-				A2(
-				_elm_lang$html$Html$input,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$value(model.actorField),
-						_elm_lang$html$Html_Events$onInput(_user$project$Main$UpdateActorNameField),
-						_elm_lang$html$Html_Attributes$placeholder('Add another actor')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$Main$AddActor)
+						_elm_lang$html$Html_Attributes$class('row')
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('➕ Add')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(
-						_user$project$Main$ShiftCheckedTo(_user$project$Actor$Delegate))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('➡️ Add delgates')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(
-						_user$project$Main$ShiftCheckedTo(_user$project$Actor$Observer))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('➡️ Add observers')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(
-						_user$project$Main$ShiftCheckedTo(_user$project$Actor$NGO))
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('➡️ Add NGOs')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Events$onClick(_user$project$Main$ClearCommittee)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('🚫 Clear Committee')
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('col s4')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$div,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('input-field col s12')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										A2(
+										_elm_lang$html$Html$input,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$placeholder('Search'),
+												_elm_lang$html$Html_Attributes$value(model.searchField),
+												_elm_lang$html$Html_Events$onInput(_user$project$Main$UpdateSearchField)
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[]))
+									])),
+								A2(
+								_elm_lang$html$Html$div,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('collection')
+									]),
+								_user$project$Main$viewDefaultActors(
+									A2(
+										_elm_lang$core$List$filter,
+										function (x) {
+											return A2(
+												_elm_lang$core$String$contains,
+												_elm_lang$core$String$toLower(model.searchField),
+												_elm_lang$core$String$toLower(x.name));
+										},
+										model.actors)))
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('col s4')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$button,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+										_elm_lang$html$Html_Events$onClick(
+										_user$project$Main$ShiftCheckedTo(_user$project$Actor$Delegate))
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('Add delgates')
+									])),
+								A2(
+								_elm_lang$html$Html$div,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('collection')
+									]),
+								A2(_user$project$Main$viewActorsOfTier, _user$project$Actor$Delegate, model.actors))
+							])),
+						A2(
+						_elm_lang$html$Html$div,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('col s4')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								A2(
+								_elm_lang$html$Html$button,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+										_elm_lang$html$Html_Events$onClick(
+										_user$project$Main$ShiftCheckedTo(_user$project$Actor$Observer))
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html$text('Add observers')
+									])),
+								A2(
+								_elm_lang$html$Html$div,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$class('collection')
+									]),
+								A2(_user$project$Main$viewActorsOfTier, _user$project$Actor$Observer, model.actors))
+							]))
 					])),
 				_user$project$Main$viewStatistics(model.actors)
 			]));
@@ -10066,7 +10470,7 @@ var _user$project$Main$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$body,
 		_elm_lang$core$Native_List.fromArray(
-			[_user$project$Main$globalStyle]),
+			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
@@ -10076,37 +10480,59 @@ var _user$project$Main$view = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
-						_elm_lang$html$Html$button,
+						_elm_lang$html$Html$div,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html_Events$onClick(
-								_user$project$Main$ChangeTab(_user$project$Main$Committee))
+								_elm_lang$html$Html_Attributes$class('nav-wrapper')
 							]),
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html$text('🌐 Committee')
-							])),
-						A2(
-						_elm_lang$html$Html$button,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Events$onClick(
-								_user$project$Main$ChangeTab(_user$project$Main$ModeratedCaucus))
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('👤 Moderated Caucus')
-							])),
-						A2(
-						_elm_lang$html$Html$button,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Events$onClick(
-								_user$project$Main$ChangeTab(_user$project$Main$Speaking))
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('🗣 Speakers Lists')
+								A2(
+								_elm_lang$html$Html$ul,
+								_elm_lang$core$Native_List.fromArray(
+									[
+										_elm_lang$html$Html_Attributes$id('nav-mobile'),
+										_elm_lang$html$Html_Attributes$class('left hide-on-med-and-down')
+									]),
+								_elm_lang$core$Native_List.fromArray(
+									[
+										A2(
+										_elm_lang$html$Html$li,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn-large'),
+												_elm_lang$html$Html_Events$onClick(
+												_user$project$Main$ChangeTab(_user$project$Main$Committee))
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html$text('Committee')
+											])),
+										A2(
+										_elm_lang$html$Html$li,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn-large'),
+												_elm_lang$html$Html_Events$onClick(
+												_user$project$Main$ChangeTab(_user$project$Main$ModeratedCaucus))
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html$text('Caucus')
+											])),
+										A2(
+										_elm_lang$html$Html$li,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn-large'),
+												_elm_lang$html$Html_Events$onClick(
+												_user$project$Main$ChangeTab(_user$project$Main$Speaking))
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html$text('Speakers')
+											]))
+									]))
 							]))
 					])),
 				function () {
