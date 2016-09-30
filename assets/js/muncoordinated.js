@@ -8255,7 +8255,7 @@ var _user$project$Timer$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					model.counting ? _elm_lang$core$Native_Utils.update(
 						model,
-						{count: model.count - 1}) : model,
+						{elapsed: model.elapsed + 1}) : model,
 					_elm_lang$core$Native_List.fromArray(
 						[]));
 			case 'Flip':
@@ -8289,7 +8289,7 @@ var _user$project$Timer$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{count: _p0._0, counting: false}),
+						{count: _p0._0, counting: false, elapsed: 0}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
 			case 'SetCountWithField':
@@ -8302,7 +8302,7 @@ var _user$project$Timer$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{count: value * scale, counting: false}),
+						{count: value * scale, counting: false, elapsed: 0}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
 			case 'Incr':
@@ -8339,13 +8339,13 @@ var _user$project$Timer$init = F3(
 	function (count$, timeField$, unitDropdown$) {
 		return A2(
 			_elm_lang$core$Platform_Cmd_ops['!'],
-			{count: count$, counting: false, timeField: timeField$, unitDropdown: unitDropdown$},
+			{count: count$, elapsed: 0, counting: false, timeField: timeField$, unitDropdown: unitDropdown$},
 			_elm_lang$core$Native_List.fromArray(
 				[]));
 	});
-var _user$project$Timer$Model = F4(
-	function (a, b, c, d) {
-		return {count: a, counting: b, timeField: c, unitDropdown: d};
+var _user$project$Timer$Model = F5(
+	function (a, b, c, d, e) {
+		return {count: a, elapsed: b, counting: c, timeField: d, unitDropdown: e};
 	});
 var _user$project$Timer$Decr = {ctor: 'Decr'};
 var _user$project$Timer$Incr = {ctor: 'Incr'};
@@ -8390,7 +8390,7 @@ var _user$project$Timer$view = F2(
 								[
 									_elm_lang$html$Html$text(header)
 								])),
-							_user$project$Timer$viewTime(model.count),
+							_user$project$Timer$viewTime(model.count - model.elapsed),
 							A2(
 							_elm_lang$html$Html$div,
 							_elm_lang$core$Native_List.fromArray(
@@ -8439,7 +8439,7 @@ var _user$project$Timer$view = F2(
 									_elm_lang$html$Html$div,
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$html$Html_Attributes$class('input-field col s3')
+											_elm_lang$html$Html_Attributes$class('input-field col s6')
 										]),
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -8457,7 +8457,7 @@ var _user$project$Timer$view = F2(
 									_elm_lang$html$Html$div,
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$html$Html_Attributes$class('input-field col s3')
+											_elm_lang$html$Html_Attributes$class('input-field col s6')
 										]),
 									_elm_lang$core$Native_List.fromArray(
 										[
@@ -8626,6 +8626,15 @@ var _user$project$SpeakersList$viewSpeakers = function (speakers) {
 	};
 	return A2(_elm_lang$core$List$map, viewSpeaker, speakers);
 };
+var _user$project$SpeakersList$viewReport = function (model) {
+	return A2(
+		_elm_lang$html$Html$ul,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$id('collection')
+			]),
+		_user$project$SpeakersList$viewSpeakers(model.spokenSpeakers));
+};
 var _user$project$SpeakersList$viewActorOptions = function (actors) {
 	var viewActorOption = function (actor) {
 		return A2(
@@ -8684,9 +8693,9 @@ var _user$project$SpeakersList$viewNowSpeaking = function (model) {
 					]))
 			]));
 };
-var _user$project$SpeakersList$Model = F6(
-	function (a, b, c, d, e, f) {
-		return {speakerDropdown: a, timeField: b, unitDropdown: c, currentSpeaker: d, queuedSpeakers: e, timer: f};
+var _user$project$SpeakersList$Model = F9(
+	function (a, b, c, d, e, f, g, h, i) {
+		return {speakerDropdown: a, topicField: b, timeField: c, unitDropdown: d, currentSpeaker: e, queuedSpeakers: f, spokenSpeakers: g, caucusTimer: h, speakerTimer: i};
 	});
 var _user$project$SpeakersList$Speaker = F3(
 	function (a, b, c) {
@@ -8695,29 +8704,56 @@ var _user$project$SpeakersList$Speaker = F3(
 var _user$project$SpeakersList$Against = {ctor: 'Against'};
 var _user$project$SpeakersList$Neutral = {ctor: 'Neutral'};
 var _user$project$SpeakersList$For = {ctor: 'For'};
-var _user$project$SpeakersList$Timer = function (a) {
-	return {ctor: 'Timer', _0: a};
+var _user$project$SpeakersList$SpeakerTimer = function (a) {
+	return {ctor: 'SpeakerTimer', _0: a};
+};
+var _user$project$SpeakersList$viewSpeakerTimer = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('col s3')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html_App$map,
+				_user$project$SpeakersList$SpeakerTimer,
+				A2(_user$project$Timer$view, 'Speaker Time', model.speakerTimer))
+			]));
+};
+var _user$project$SpeakersList$CaucusTimer = function (a) {
+	return {ctor: 'CaucusTimer', _0: a};
 };
 var _user$project$SpeakersList$init = function () {
-	var timer$ = A3(_user$project$Timer$init, 60, '1', 'min');
+	var speakerTimer$ = A3(_user$project$Timer$init, 60, '1', 'min');
+	var caucusTimer$ = A3(_user$project$Timer$init, 60 * 10, '10', 'min');
 	return A2(
 		_elm_lang$core$Platform_Cmd_ops['!'],
 		{
 			speakerDropdown: '',
+			topicField: '',
 			timeField: '1',
 			unitDropdown: 'min',
 			currentSpeaker: _elm_lang$core$Native_List.fromArray(
 				[]),
 			queuedSpeakers: _elm_lang$core$Native_List.fromArray(
 				[]),
-			timer: _elm_lang$core$Basics$fst(timer$)
+			spokenSpeakers: _elm_lang$core$Native_List.fromArray(
+				[]),
+			caucusTimer: _elm_lang$core$Basics$fst(caucusTimer$),
+			speakerTimer: _elm_lang$core$Basics$fst(speakerTimer$)
 		},
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
 				_elm_lang$core$Platform_Cmd$map,
-				_user$project$SpeakersList$Timer,
-				_elm_lang$core$Basics$snd(timer$))
+				_user$project$SpeakersList$CaucusTimer,
+				_elm_lang$core$Basics$snd(caucusTimer$)),
+				A2(
+				_elm_lang$core$Platform_Cmd$map,
+				_user$project$SpeakersList$SpeakerTimer,
+				_elm_lang$core$Basics$snd(speakerTimer$))
 			]));
 }();
 var _user$project$SpeakersList$update = F2(
@@ -8730,6 +8766,14 @@ var _user$project$SpeakersList$update = F2(
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{speakerDropdown: _p1._0}),
+					_elm_lang$core$Native_List.fromArray(
+						[]));
+			case 'UpdateTopicField':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{topicField: _p1._0}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
 			case 'UpdateTimeField':
@@ -8771,11 +8815,29 @@ var _user$project$SpeakersList$update = F2(
 					_elm_lang$core$Native_List.fromArray(
 						[]));
 			case 'NextSpeaker':
-				var _p2 = model.queuedSpeakers;
+				var recordTime = function (currentSpeaker) {
+					return _elm_lang$core$Native_Utils.update(
+						currentSpeaker,
+						{time: model.speakerTimer.elapsed});
+				};
+				var model$ = _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						spokenSpeakers: A2(
+							_elm_lang$core$Basics_ops['++'],
+							model.spokenSpeakers,
+							A2(_elm_lang$core$List$map, recordTime, model.currentSpeaker))
+					});
+				var _p2 = model$.queuedSpeakers;
 				if (_p2.ctor === '[]') {
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
-						model,
+						_elm_lang$core$Native_Utils.update(
+							model$,
+							{
+								currentSpeaker: _elm_lang$core$Native_List.fromArray(
+									[])
+							}),
 						_elm_lang$core$Native_List.fromArray(
 							[]));
 				} else {
@@ -8783,39 +8845,55 @@ var _user$project$SpeakersList$update = F2(
 					var response = A2(
 						_user$project$Timer$update,
 						_user$project$Timer$SetCount(_p3.time),
-						model.timer);
+						model$.speakerTimer);
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
-							model,
+							model$,
 							{
 								currentSpeaker: _elm_lang$core$Native_List.fromArray(
 									[_p3]),
-								timer: _elm_lang$core$Basics$fst(response),
+								speakerTimer: _elm_lang$core$Basics$fst(response),
 								queuedSpeakers: _p2._1
 							}),
 						_elm_lang$core$Native_List.fromArray(
 							[
 								A2(
 								_elm_lang$core$Platform_Cmd$map,
-								_user$project$SpeakersList$Timer,
+								_user$project$SpeakersList$SpeakerTimer,
 								_elm_lang$core$Basics$snd(response))
 							]));
 				}
-			default:
-				var response = A2(_user$project$Timer$update, _p1._0, model.timer);
+			case 'CaucusTimer':
+				var response = A2(_user$project$Timer$update, _p1._0, model.caucusTimer);
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							timer: _elm_lang$core$Basics$fst(response)
+							caucusTimer: _elm_lang$core$Basics$fst(response)
 						}),
 					_elm_lang$core$Native_List.fromArray(
 						[
 							A2(
 							_elm_lang$core$Platform_Cmd$map,
-							_user$project$SpeakersList$Timer,
+							_user$project$SpeakersList$CaucusTimer,
+							_elm_lang$core$Basics$snd(response))
+						]));
+			default:
+				var response = A2(_user$project$Timer$update, _p1._0, model.speakerTimer);
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							speakerTimer: _elm_lang$core$Basics$fst(response)
+						}),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$core$Platform_Cmd$map,
+							_user$project$SpeakersList$SpeakerTimer,
 							_elm_lang$core$Basics$snd(response))
 						]));
 		}
@@ -8826,23 +8904,27 @@ var _user$project$SpeakersList$subscriptions = function (model) {
 			[
 				A2(
 				_elm_lang$core$Platform_Sub$map,
-				_user$project$SpeakersList$Timer,
-				_user$project$Timer$subscriptions(model.timer))
+				_user$project$SpeakersList$CaucusTimer,
+				_user$project$Timer$subscriptions(model.caucusTimer)),
+				A2(
+				_elm_lang$core$Platform_Sub$map,
+				_user$project$SpeakersList$SpeakerTimer,
+				_user$project$Timer$subscriptions(model.speakerTimer))
 			]));
 };
-var _user$project$SpeakersList$viewTimer = function (model) {
+var _user$project$SpeakersList$viewCaucusTimer = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$html$Html_Attributes$class('col s6')
+				_elm_lang$html$Html_Attributes$class('col s3')
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
 				_elm_lang$html$Html_App$map,
-				_user$project$SpeakersList$Timer,
-				A2(_user$project$Timer$view, 'Speaker Time', model.timer))
+				_user$project$SpeakersList$CaucusTimer,
+				A2(_user$project$Timer$view, 'Caucus Time', model.caucusTimer))
 			]));
 };
 var _user$project$SpeakersList$NextSpeaker = {ctor: 'NextSpeaker'};
@@ -8910,6 +8992,35 @@ var _user$project$SpeakersList$UpdateUnitDropdown = function (a) {
 };
 var _user$project$SpeakersList$UpdateTimeField = function (a) {
 	return {ctor: 'UpdateTimeField', _0: a};
+};
+var _user$project$SpeakersList$UpdateTopicField = function (a) {
+	return {ctor: 'UpdateTopicField', _0: a};
+};
+var _user$project$SpeakersList$viewTopicField = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('input-field col s12')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$input,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$value(model.topicField),
+						_elm_lang$html$Html_Events$onInput(_user$project$SpeakersList$UpdateTopicField),
+						_elm_lang$html$Html_Attributes$placeholder('Topic'),
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'font-size', _1: '200%'}
+							]))
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[]))
+			]));
 };
 var _user$project$SpeakersList$UpdateSpeakerDropdown = function (a) {
 	return {ctor: 'UpdateSpeakerDropdown', _0: a};
@@ -9090,6 +9201,16 @@ var _user$project$SpeakersList$view = F2(
 						]),
 					_elm_lang$core$Native_List.fromArray(
 						[
+							_user$project$SpeakersList$viewTopicField(model)
+						])),
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('row')
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
 							A2(
 							_elm_lang$html$Html$div,
 							_elm_lang$core$Native_List.fromArray(
@@ -9102,7 +9223,8 @@ var _user$project$SpeakersList$view = F2(
 									_user$project$SpeakersList$viewQueue(model),
 									A2(_user$project$SpeakersList$viewQueuer, actors, model)
 								])),
-							_user$project$SpeakersList$viewTimer(model)
+							_user$project$SpeakersList$viewSpeakerTimer(model),
+							_user$project$SpeakersList$viewCaucusTimer(model)
 						]))
 				]));
 	});
@@ -9122,21 +9244,25 @@ var _user$project$ListManager$Model = F4(
 	function (a, b, c, d) {
 		return {wrappers: a, uid: b, active: c, nameField: d};
 	});
-var _user$project$ListManager$Wrapper = F3(
-	function (a, b, c) {
-		return {id: a, name: b, list: c};
+var _user$project$ListManager$Wrapper = F4(
+	function (a, b, c, d) {
+		return {id: a, name: b, list: c, status: d};
 	});
+var _user$project$ListManager$Unresolved = {ctor: 'Unresolved'};
+var _user$project$ListManager$Failed = {ctor: 'Failed'};
+var _user$project$ListManager$Passed = {ctor: 'Passed'};
 var _user$project$ListManager$UpdateList = F2(
 	function (a, b) {
 		return {ctor: 'UpdateList', _0: a, _1: b};
 	});
 var _user$project$ListManager$init = function () {
 	var response = _user$project$SpeakersList$init;
-	var wrapper = A3(
+	var wrapper = A4(
 		_user$project$ListManager$Wrapper,
 		0,
 		'General',
-		_elm_lang$core$Basics$fst(response));
+		_elm_lang$core$Basics$fst(response),
+		_user$project$ListManager$Unresolved);
 	return A2(
 		_elm_lang$core$Platform_Cmd_ops['!'],
 		{
@@ -9171,11 +9297,12 @@ var _user$project$ListManager$update = F2(
 									model.wrappers,
 									_elm_lang$core$Native_List.fromArray(
 										[
-											A3(
+											A4(
 											_user$project$ListManager$Wrapper,
 											model.uid,
 											model.nameField,
-											_elm_lang$core$Basics$fst(response))
+											_elm_lang$core$Basics$fst(response),
+											_user$project$ListManager$Unresolved)
 										])),
 								uid: model.uid + 1,
 								nameField: ''
@@ -9202,18 +9329,18 @@ var _user$project$ListManager$update = F2(
 						{active: _p0._0}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
-			case 'DeleteList':
+			case 'UpdateWrapperStatus':
+				var updateWrapper = function (a) {
+					return _elm_lang$core$Native_Utils.eq(a.id, _p0._0) ? _elm_lang$core$Native_Utils.update(
+						a,
+						{status: _p0._1}) : a;
+				};
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							wrappers: A2(
-								_elm_lang$core$List$filter,
-								function (x) {
-									return !_elm_lang$core$Native_Utils.eq(x.id, model.active);
-								},
-								model.wrappers)
+							wrappers: A2(_elm_lang$core$List$map, updateWrapper, model.wrappers)
 						}),
 					_elm_lang$core$Native_List.fromArray(
 						[]));
@@ -9267,10 +9394,71 @@ var _user$project$ListManager$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$batch(
 		A2(_elm_lang$core$List$map, getSubscription, model.wrappers));
 };
+var _user$project$ListManager$viewReport = function (model) {
+	var showStatus = function (status) {
+		var _p3 = status;
+		switch (_p3.ctor) {
+			case 'Passed':
+				return 'Passed';
+			case 'Failed':
+				return 'Failed';
+			default:
+				return 'Unresolved';
+		}
+	};
+	var viewListReport = function (wrapper) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$h3,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(wrapper.name)
+						])),
+					A2(
+					_elm_lang$html$Html$h5,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(
+							showStatus(wrapper.status))
+						])),
+					A2(
+					_elm_lang$html$Html$h5,
+					_elm_lang$core$Native_List.fromArray(
+						[]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text(wrapper.list.topicField)
+						])),
+					A2(
+					_elm_lang$html$Html_App$map,
+					_user$project$ListManager$UpdateList(wrapper.id),
+					_user$project$SpeakersList$viewReport(wrapper.list))
+				]));
+	};
+	return A2(
+		_elm_lang$html$Html$section,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('container')
+			]),
+		A2(_elm_lang$core$List$map, viewListReport, model.wrappers));
+};
 var _user$project$ListManager$UpdateNameField = function (a) {
 	return {ctor: 'UpdateNameField', _0: a};
 };
-var _user$project$ListManager$DeleteList = {ctor: 'DeleteList'};
+var _user$project$ListManager$UpdateWrapperStatus = F2(
+	function (a, b) {
+		return {ctor: 'UpdateWrapperStatus', _0: a, _1: b};
+	});
 var _user$project$ListManager$viewActive = F2(
 	function (actors, model) {
 		var viewList = function (wrapper) {
@@ -9285,7 +9473,7 @@ var _user$project$ListManager$viewActive = F2(
 		var active = A2(
 			_elm_lang$core$List$filter,
 			function (x) {
-				return _elm_lang$core$Native_Utils.eq(x.id, model.active);
+				return _elm_lang$core$Native_Utils.eq(x.id, model.active) && _elm_lang$core$Native_Utils.eq(x.status, _user$project$ListManager$Unresolved);
 			},
 			model.wrappers);
 		return A2(
@@ -9331,11 +9519,24 @@ var _user$project$ListManager$viewActive = F2(
 									_elm_lang$core$Native_List.fromArray(
 										[
 											_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
-											_elm_lang$html$Html_Events$onClick(_user$project$ListManager$DeleteList)
+											_elm_lang$html$Html_Events$onClick(
+											A2(_user$project$ListManager$UpdateWrapperStatus, model.active, _user$project$ListManager$Passed))
 										]),
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$html$Html$text('Delete')
+											_elm_lang$html$Html$text('Passed')
+										])),
+									A2(
+									_elm_lang$html$Html$button,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn'),
+											_elm_lang$html$Html_Events$onClick(
+											A2(_user$project$ListManager$UpdateWrapperStatus, model.active, _user$project$ListManager$Failed))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text('Failed')
 										]))
 								]))
 						]))
@@ -9364,7 +9565,13 @@ var _user$project$ListManager$view = F2(
 		var active = A2(
 			_elm_lang$core$List$filter,
 			function (x) {
-				return _elm_lang$core$Native_Utils.eq(x.id, model.active);
+				return _elm_lang$core$Native_Utils.eq(x.id, model.active) && _elm_lang$core$Native_Utils.eq(x.status, _user$project$ListManager$Unresolved);
+			},
+			model.wrappers);
+		var unresolved = A2(
+			_elm_lang$core$List$filter,
+			function (x) {
+				return _elm_lang$core$Native_Utils.eq(x.status, _user$project$ListManager$Unresolved);
 			},
 			model.wrappers);
 		return A2(
@@ -9400,8 +9607,8 @@ var _user$project$ListManager$view = F2(
 					_elm_lang$html$Html$nav,
 					_elm_lang$core$Native_List.fromArray(
 						[]),
-					A2(_elm_lang$core$List$map, viewButtons, model.wrappers)),
-					_elm_lang$core$List$isEmpty(active) ? A2(
+					A2(_elm_lang$core$List$map, viewButtons, unresolved)),
+					(_elm_lang$core$List$isEmpty(unresolved) || _elm_lang$core$List$isEmpty(active)) ? A2(
 					_elm_lang$html$Html$div,
 					_elm_lang$core$Native_List.fromArray(
 						[]),
@@ -10019,6 +10226,7 @@ var _user$project$Main$Model = F6(
 	function (a, b, c, d, e, f) {
 		return {activeTab: a, actors: b, actorField: c, searchField: d, modCaucusTab: e, speakersTab: f};
 	});
+var _user$project$Main$Report = {ctor: 'Report'};
 var _user$project$Main$Speaking = {ctor: 'Speaking'};
 var _user$project$Main$ModeratedCaucus = {ctor: 'ModeratedCaucus'};
 var _user$project$Main$Committee = {ctor: 'Committee'};
@@ -10531,6 +10739,18 @@ var _user$project$Main$view = function (model) {
 										_elm_lang$core$Native_List.fromArray(
 											[
 												_elm_lang$html$Html$text('Speakers')
+											])),
+										A2(
+										_elm_lang$html$Html$li,
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html_Attributes$class('waves-effect waves-light btn-large'),
+												_elm_lang$html$Html_Events$onClick(
+												_user$project$Main$ChangeTab(_user$project$Main$Report))
+											]),
+										_elm_lang$core$Native_List.fromArray(
+											[
+												_elm_lang$html$Html$text('Report')
 											]))
 									]))
 							]))
@@ -10545,11 +10765,16 @@ var _user$project$Main$view = function (model) {
 							_elm_lang$html$Html_App$map,
 							_user$project$Main$ModCaucusTab,
 							_user$project$ModeratedCaucus$view(model.modCaucusTab));
-					default:
+					case 'Speaking':
 						return A2(
 							_elm_lang$html$Html_App$map,
 							_user$project$Main$SpeakersTab,
 							A2(_user$project$ListManager$view, model.actors, model.speakersTab));
+					default:
+						return A2(
+							_elm_lang$html$Html_App$map,
+							_user$project$Main$SpeakersTab,
+							_user$project$ListManager$viewReport(model.speakersTab));
 				}
 			}()
 			]));
