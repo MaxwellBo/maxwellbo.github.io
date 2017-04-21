@@ -9398,14 +9398,23 @@ var _user$project$SpeakersList$update = F2(
 					});
 				var _p2 = model_.queuedSpeakers;
 				if (_p2.ctor === '[]') {
+					var response = A2(_user$project$Timer$update, _user$project$Timer$SetCountWithField, model_.speakerTimer);
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
 						_elm_lang$core$Native_Utils.update(
 							model_,
 							{
-								currentSpeaker: {ctor: '[]'}
+								currentSpeaker: {ctor: '[]'},
+								speakerTimer: _elm_lang$core$Tuple$first(response)
 							}),
-						{ctor: '[]'});
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$Platform_Cmd$map,
+								_user$project$SpeakersList$SpeakerTimer,
+								_elm_lang$core$Tuple$second(response)),
+							_1: {ctor: '[]'}
+						});
 				} else {
 					var _p3 = _p2._0;
 					var response = A2(
