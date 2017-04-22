@@ -9027,7 +9027,7 @@ var _user$project$Timer$view = F2(
 														_0: _elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
 														_1: {
 															ctor: '::',
-															_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Incr),
+															_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Decr),
 															_1: {ctor: '[]'}
 														}
 													},
@@ -9042,7 +9042,7 @@ var _user$project$Timer$view = F2(
 															},
 															{
 																ctor: '::',
-																_0: _elm_lang$html$Html$text('add'),
+																_0: _elm_lang$html$Html$text('remove'),
 																_1: {ctor: '[]'}
 															}),
 														_1: {ctor: '[]'}
@@ -9056,7 +9056,7 @@ var _user$project$Timer$view = F2(
 															_0: _elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
 															_1: {
 																ctor: '::',
-																_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Decr),
+																_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$SetCountWithField),
 																_1: {ctor: '[]'}
 															}
 														},
@@ -9071,7 +9071,7 @@ var _user$project$Timer$view = F2(
 																},
 																{
 																	ctor: '::',
-																	_0: _elm_lang$html$Html$text('remove'),
+																	_0: _elm_lang$html$Html$text('alarm_on'),
 																	_1: {ctor: '[]'}
 																}),
 															_1: {ctor: '[]'}
@@ -9085,7 +9085,7 @@ var _user$project$Timer$view = F2(
 																_0: _elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
 																_1: {
 																	ctor: '::',
-																	_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$SetCountWithField),
+																	_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Incr),
 																	_1: {ctor: '[]'}
 																}
 															},
@@ -9100,7 +9100,7 @@ var _user$project$Timer$view = F2(
 																	},
 																	{
 																		ctor: '::',
-																		_0: _elm_lang$html$Html$text('alarm_on'),
+																		_0: _elm_lang$html$Html$text('add'),
 																		_1: {ctor: '[]'}
 																	}),
 																_1: {ctor: '[]'}
@@ -9132,66 +9132,6 @@ var _user$project$Timer$main = _elm_lang$html$Html$program(
 		subscriptions: _user$project$Timer$subscriptions
 	})();
 
-var _user$project$SpeakersList$viewSpeakers = function (speakers) {
-	var stanceToString = function (stance) {
-		var _p0 = stance;
-		switch (_p0.ctor) {
-			case 'For':
-				return 'For';
-			case 'Neutral':
-				return '';
-			default:
-				return 'Against';
-		}
-	};
-	var viewSpeaker = function (speaker) {
-		var c = A2(
-			_elm_lang$core$Basics_ops['++'],
-			A3(
-				_elm_lang$core$String$padLeft,
-				5,
-				_elm_lang$core$Native_Utils.chr(' '),
-				_elm_lang$core$Basics$toString(speaker.time)),
-			' seconds');
-		var b = A3(
-			_elm_lang$core$String$padRight,
-			10,
-			_elm_lang$core$Native_Utils.chr(' '),
-			stanceToString(speaker.stance));
-		var a = A3(
-			_elm_lang$core$String$padRight,
-			40,
-			_elm_lang$core$Native_Utils.chr(' '),
-			speaker.name);
-		return A2(
-			_elm_lang$html$Html$li,
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('collection-item'),
-				_1: {ctor: '[]'}
-			},
-			{
-				ctor: '::',
-				_0: _elm_lang$html$Html$text(
-					A2(
-						_elm_lang$core$Basics_ops['++'],
-						a,
-						A2(_elm_lang$core$Basics_ops['++'], b, c))),
-				_1: {ctor: '[]'}
-			});
-	};
-	return A2(_elm_lang$core$List$map, viewSpeaker, speakers);
-};
-var _user$project$SpeakersList$viewReport = function (model) {
-	return A2(
-		_elm_lang$html$Html$ul,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$id('collection'),
-			_1: {ctor: '[]'}
-		},
-		_user$project$SpeakersList$viewSpeakers(model.spokenSpeakers));
-};
 var _user$project$SpeakersList$viewActorOptions = function (actors) {
 	var viewActorOption = function (actor) {
 		return A2(
@@ -9212,53 +9152,6 @@ var _user$project$SpeakersList$viewActorOptions = function (actors) {
 				return !_elm_lang$core$Native_Utils.eq(x.tier, _user$project$Actor$Default);
 			},
 			actors));
-};
-var _user$project$SpeakersList$viewNowSpeaking = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		{
-			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('card'),
-			_1: {ctor: '[]'}
-		},
-		{
-			ctor: '::',
-			_0: A2(
-				_elm_lang$html$Html$div,
-				{
-					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('card-content'),
-					_1: {ctor: '[]'}
-				},
-				{
-					ctor: '::',
-					_0: A2(
-						_elm_lang$html$Html$span,
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('card-title'),
-							_1: {ctor: '[]'}
-						},
-						{
-							ctor: '::',
-							_0: _elm_lang$html$Html$text('Now Speaking'),
-							_1: {ctor: '[]'}
-						}),
-					_1: {
-						ctor: '::',
-						_0: A2(
-							_elm_lang$html$Html$ul,
-							{
-								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$id('collection'),
-								_1: {ctor: '[]'}
-							},
-							_user$project$SpeakersList$viewSpeakers(model.currentSpeaker)),
-						_1: {ctor: '[]'}
-					}
-				}),
-			_1: {ctor: '[]'}
-		});
 };
 var _user$project$SpeakersList$Model = F9(
 	function (a, b, c, d, e, f, g, h, i) {
@@ -9328,21 +9221,21 @@ var _user$project$SpeakersList$init = function () {
 }();
 var _user$project$SpeakersList$update = F2(
 	function (msg, model) {
-		var _p1 = msg;
-		switch (_p1.ctor) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
 			case 'UpdateSpeakerDropdown':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{speakerDropdown: _p1._0}),
+						{speakerDropdown: _p0._0}),
 					{ctor: '[]'});
 			case 'UpdateTopicField':
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{topicField: _p1._0}),
+						{topicField: _p0._0}),
 					{ctor: '[]'});
 			case 'UpdateTimeField':
 				return A2(
@@ -9350,7 +9243,7 @@ var _user$project$SpeakersList$update = F2(
 					_elm_lang$core$Native_Utils.update(
 						model,
 						{
-							timeField: A2(_elm_lang$core$String$filter, _elm_lang$core$Char$isDigit, _p1._0)
+							timeField: A2(_elm_lang$core$String$filter, _elm_lang$core$Char$isDigit, _p0._0)
 						}),
 					{ctor: '[]'});
 			case 'UpdateUnitDropdown':
@@ -9358,7 +9251,7 @@ var _user$project$SpeakersList$update = F2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
 						model,
-						{unitDropdown: _p1._0}),
+						{unitDropdown: _p0._0}),
 					{ctor: '[]'});
 			case 'AddSpeaker':
 				var scale = _elm_lang$core$Native_Utils.eq(model.unitDropdown, 'min') ? 60 : 1;
@@ -9366,7 +9259,7 @@ var _user$project$SpeakersList$update = F2(
 					_elm_lang$core$Result$withDefault,
 					0,
 					_elm_lang$core$String$toInt(model.timeField));
-				var speaker = {name: model.speakerDropdown, stance: _p1._0, time: value * scale};
+				var speaker = {name: model.speakerDropdown, stance: _p0._0, time: value * scale};
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					((!_elm_lang$core$Native_Utils.eq(model.speakerDropdown, '')) && (!_elm_lang$core$Native_Utils.eq(model.timeField, ''))) ? _elm_lang$core$Native_Utils.update(
@@ -9396,8 +9289,8 @@ var _user$project$SpeakersList$update = F2(
 							model.spokenSpeakers,
 							A2(_elm_lang$core$List$map, recordTime, model.currentSpeaker))
 					});
-				var _p2 = model_.queuedSpeakers;
-				if (_p2.ctor === '[]') {
+				var _p1 = model_.queuedSpeakers;
+				if (_p1.ctor === '[]') {
 					var response = A2(_user$project$Timer$update, _user$project$Timer$SetCountWithField, model_.speakerTimer);
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -9416,10 +9309,55 @@ var _user$project$SpeakersList$update = F2(
 							_1: {ctor: '[]'}
 						});
 				} else {
-					var _p3 = _p2._0;
+					var _p2 = _p1._0;
 					var response = A2(
 						_user$project$Timer$update,
-						_user$project$Timer$SetCount(_p3.time),
+						_user$project$Timer$SetCount(_p2.time),
+						model_.speakerTimer);
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						_elm_lang$core$Native_Utils.update(
+							model_,
+							{
+								currentSpeaker: {
+									ctor: '::',
+									_0: _p2,
+									_1: {ctor: '[]'}
+								},
+								speakerTimer: _elm_lang$core$Tuple$first(response),
+								queuedSpeakers: _p1._1
+							}),
+						{
+							ctor: '::',
+							_0: A2(
+								_elm_lang$core$Platform_Cmd$map,
+								_user$project$SpeakersList$SpeakerTimer,
+								_elm_lang$core$Tuple$second(response)),
+							_1: {ctor: '[]'}
+						});
+				}
+			case 'Yield':
+				var _p3 = _p0._0;
+				if ((!A2(_elm_lang$core$List$member, _p3, model.currentSpeaker)) && (!_elm_lang$core$Native_Utils.eq(
+					model.currentSpeaker,
+					{ctor: '[]'}))) {
+					var combinedTimes = (model.speakerTimer.count - model.speakerTimer.elapsed) + _p3.time;
+					var recordTime = function (currentSpeaker) {
+						return _elm_lang$core$Native_Utils.update(
+							currentSpeaker,
+							{time: model.speakerTimer.elapsed});
+					};
+					var model_ = _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							spokenSpeakers: A2(
+								_elm_lang$core$Basics_ops['++'],
+								model.spokenSpeakers,
+								A2(_elm_lang$core$List$map, recordTime, model.currentSpeaker))
+						});
+					var response = A2(
+						_user$project$Timer$update,
+						_user$project$Timer$SetCount(combinedTimes),
 						model_.speakerTimer);
 					return A2(
 						_elm_lang$core$Platform_Cmd_ops['!'],
@@ -9432,7 +9370,12 @@ var _user$project$SpeakersList$update = F2(
 									_1: {ctor: '[]'}
 								},
 								speakerTimer: _elm_lang$core$Tuple$first(response),
-								queuedSpeakers: _p2._1
+								queuedSpeakers: A2(
+									_elm_lang$core$List$filter,
+									function (x) {
+										return !_elm_lang$core$Native_Utils.eq(_p3, x);
+									},
+									model.queuedSpeakers)
 							}),
 						{
 							ctor: '::',
@@ -9442,9 +9385,14 @@ var _user$project$SpeakersList$update = F2(
 								_elm_lang$core$Tuple$second(response)),
 							_1: {ctor: '[]'}
 						});
+				} else {
+					return A2(
+						_elm_lang$core$Platform_Cmd_ops['!'],
+						model,
+						{ctor: '[]'});
 				}
 			case 'CaucusTimer':
-				var response = A2(_user$project$Timer$update, _p1._0, model.caucusTimer);
+				var response = A2(_user$project$Timer$update, _p0._0, model.caucusTimer);
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
@@ -9461,7 +9409,7 @@ var _user$project$SpeakersList$update = F2(
 						_1: {ctor: '[]'}
 					});
 			default:
-				var response = A2(_user$project$Timer$update, _p1._0, model.speakerTimer);
+				var response = A2(_user$project$Timer$update, _p0._0, model.speakerTimer);
 				return A2(
 					_elm_lang$core$Platform_Cmd_ops['!'],
 					_elm_lang$core$Native_Utils.update(
@@ -9514,6 +9462,125 @@ var _user$project$SpeakersList$viewCaucusTimer = function (model) {
 			_1: {ctor: '[]'}
 		});
 };
+var _user$project$SpeakersList$Yield = function (a) {
+	return {ctor: 'Yield', _0: a};
+};
+var _user$project$SpeakersList$viewSpeakers = F2(
+	function (allowYielding, speakers) {
+		var stanceToString = function (stance) {
+			var _p4 = stance;
+			switch (_p4.ctor) {
+				case 'For':
+					return 'For';
+				case 'Neutral':
+					return '';
+				default:
+					return 'Against';
+			}
+		};
+		var viewSpeaker = function (speaker) {
+			var c = A2(
+				_elm_lang$core$Basics_ops['++'],
+				A3(
+					_elm_lang$core$String$padLeft,
+					5,
+					_elm_lang$core$Native_Utils.chr(' '),
+					_elm_lang$core$Basics$toString(speaker.time)),
+				' seconds');
+			var b = A3(
+				_elm_lang$core$String$padRight,
+				10,
+				_elm_lang$core$Native_Utils.chr(' '),
+				stanceToString(speaker.stance));
+			var a = A3(
+				_elm_lang$core$String$padRight,
+				40,
+				_elm_lang$core$Native_Utils.chr(' '),
+				speaker.name);
+			return A2(
+				_elm_lang$html$Html$li,
+				A2(
+					_elm_lang$core$Basics_ops['++'],
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('collection-item'),
+						_1: {ctor: '[]'}
+					},
+					allowYielding ? {
+						ctor: '::',
+						_0: _elm_lang$html$Html_Events$onClick(
+							_user$project$SpeakersList$Yield(speaker)),
+						_1: {ctor: '[]'}
+					} : {ctor: '[]'}),
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text(
+						A2(
+							_elm_lang$core$Basics_ops['++'],
+							a,
+							A2(_elm_lang$core$Basics_ops['++'], b, c))),
+					_1: {ctor: '[]'}
+				});
+		};
+		return A2(_elm_lang$core$List$map, viewSpeaker, speakers);
+	});
+var _user$project$SpeakersList$viewNowSpeaking = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('card'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('card-content'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$span,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('card-title'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text('Now Speaking'),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$ul,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('collection'),
+								_1: {ctor: '[]'}
+							},
+							A2(_user$project$SpeakersList$viewSpeakers, false, model.currentSpeaker)),
+						_1: {ctor: '[]'}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$SpeakersList$viewReport = function (model) {
+	return A2(
+		_elm_lang$html$Html$ul,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$id('collection'),
+			_1: {ctor: '[]'}
+		},
+		A2(_user$project$SpeakersList$viewSpeakers, false, model.spokenSpeakers));
+};
 var _user$project$SpeakersList$NextSpeaker = {ctor: 'NextSpeaker'};
 var _user$project$SpeakersList$viewQueue = function (model) {
 	return A2(
@@ -9555,7 +9622,7 @@ var _user$project$SpeakersList$viewQueue = function (model) {
 								_0: _elm_lang$html$Html_Attributes$id('collection'),
 								_1: {ctor: '[]'}
 							},
-							_user$project$SpeakersList$viewSpeakers(model.queuedSpeakers)),
+							A2(_user$project$SpeakersList$viewSpeakers, true, model.queuedSpeakers)),
 						_1: {
 							ctor: '::',
 							_0: A2(
