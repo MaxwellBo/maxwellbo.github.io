@@ -9027,7 +9027,7 @@ var _user$project$Timer$view = F2(
 														_0: _elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
 														_1: {
 															ctor: '::',
-															_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Decr),
+															_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Incr),
 															_1: {ctor: '[]'}
 														}
 													},
@@ -9042,7 +9042,7 @@ var _user$project$Timer$view = F2(
 															},
 															{
 																ctor: '::',
-																_0: _elm_lang$html$Html$text('remove'),
+																_0: _elm_lang$html$Html$text('add'),
 																_1: {ctor: '[]'}
 															}),
 														_1: {ctor: '[]'}
@@ -9056,7 +9056,7 @@ var _user$project$Timer$view = F2(
 															_0: _elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
 															_1: {
 																ctor: '::',
-																_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$SetCountWithField),
+																_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Decr),
 																_1: {ctor: '[]'}
 															}
 														},
@@ -9071,7 +9071,7 @@ var _user$project$Timer$view = F2(
 																},
 																{
 																	ctor: '::',
-																	_0: _elm_lang$html$Html$text('alarm_on'),
+																	_0: _elm_lang$html$Html$text('remove'),
 																	_1: {ctor: '[]'}
 																}),
 															_1: {ctor: '[]'}
@@ -9085,7 +9085,7 @@ var _user$project$Timer$view = F2(
 																_0: _elm_lang$html$Html_Attributes$class('btn-floating waves-effect'),
 																_1: {
 																	ctor: '::',
-																	_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$Incr),
+																	_0: _elm_lang$html$Html_Events$onClick(_user$project$Timer$SetCountWithField),
 																	_1: {ctor: '[]'}
 																}
 															},
@@ -9100,7 +9100,7 @@ var _user$project$Timer$view = F2(
 																	},
 																	{
 																		ctor: '::',
-																		_0: _elm_lang$html$Html$text('add'),
+																		_0: _elm_lang$html$Html$text('alarm_on'),
 																		_1: {ctor: '[]'}
 																	}),
 																_1: {ctor: '[]'}
