@@ -9336,6 +9336,15 @@ var _user$project$SpeakersList$update = F2(
 							_1: {ctor: '[]'}
 						});
 				}
+			case 'ClearSpeakers':
+				return A2(
+					_elm_lang$core$Platform_Cmd_ops['!'],
+					_elm_lang$core$Native_Utils.update(
+						model,
+						{
+							queuedSpeakers: {ctor: '[]'}
+						}),
+					{ctor: '[]'});
 			case 'Yield':
 				var _p3 = _p0._0;
 				if ((!A2(_elm_lang$core$List$member, _p3, model.currentSpeaker)) && (!_elm_lang$core$Native_Utils.eq(
@@ -9581,6 +9590,7 @@ var _user$project$SpeakersList$viewReport = function (model) {
 		},
 		A2(_user$project$SpeakersList$viewSpeakers, false, model.spokenSpeakers));
 };
+var _user$project$SpeakersList$ClearSpeakers = {ctor: 'ClearSpeakers'};
 var _user$project$SpeakersList$NextSpeaker = {ctor: 'NextSpeaker'};
 var _user$project$SpeakersList$viewQueue = function (model) {
 	return A2(
@@ -9646,7 +9656,22 @@ var _user$project$SpeakersList$viewQueue = function (model) {
 											_0: _elm_lang$html$Html$text('Next speaker'),
 											_1: {ctor: '[]'}
 										}),
-									_1: {ctor: '[]'}
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$a,
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html_Events$onClick(_user$project$SpeakersList$ClearSpeakers),
+												_1: {ctor: '[]'}
+											},
+											{
+												ctor: '::',
+												_0: _elm_lang$html$Html$text('Clear Speakers'),
+												_1: {ctor: '[]'}
+											}),
+										_1: {ctor: '[]'}
+									}
 								}),
 							_1: {ctor: '[]'}
 						}
