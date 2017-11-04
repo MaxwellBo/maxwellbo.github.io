@@ -1,0 +1,68 @@
+==================================================================
+https://keybase.io/mjbo
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://maxbo.me
+  * I am mjbo (https://keybase.io/mjbo) on keybase.
+  * I have a public key with fingerprint D23A D67F BF45 2FAB 26E1  40F2 B3A3 DA2C 55C4 ABB2
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "0101e458c024fb3a2f02c86b70939f4638aeab5f39080e527dfa6d4e4735521a65650a",
+      "fingerprint": "d23ad67fbf452fab26e140f2b3a3da2c55c4abb2",
+      "host": "keybase.io",
+      "key_id": "b3a3da2c55c4abb2",
+      "kid": "0101e458c024fb3a2f02c86b70939f4638aeab5f39080e527dfa6d4e4735521a65650a",
+      "uid": "534de0e4ffe073312fcd5e3231889c19",
+      "username": "mjbo"
+    },
+    "service": {
+      "hostname": "maxbo.me",
+      "protocol": "http:"
+    },
+    "type": "web_service_binding",
+    "version": 1
+  },
+  "ctime": 1509770587,
+  "expire_in": 157680000,
+  "prev": "65b224d6343a9cf5bd85d558d158ccab3dc4b5374a487d9935e40a886497c146",
+  "seqno": 4,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v2.0.76
+Comment: https://keybase.io/crypto
+
+yMIgAnicrVJbSFVBFL1qShqVSUFhP52KXjc7Zx7ncbEXEliBEPRhWNxmzszRU3rP
+fZxrdsNIoxCVG2gKvRDE7KO8lBb5QCopgiLEH6UH9dMbKyihF0VzJP/6bH5m9p61
+1l57s+/OzfDlpPWeXbYivLBjOO3hnWTct+fXtrIjEnXYYSlwRDrIpy9eyXjMDR60
+mRSQZEVWOMK6KQNkUUiAJQNTV6kmG9CwkAp1wgnFFjRkXeYYaMwiKkMcaRBjoBAV
+q1gmkl+y7FA5j4ajdsgVsgxAwlTNohbCwCIUqFxBsgVEBcgIMDE2EaEUCGKFE/MY
+whwlMV5gOyInguC0vX/g/7Pv+LQchohxmSPL4rIGoQIsk2EOAVR03TAVwwPGeDRE
+qrhAVx2gjlTrl0Sm2ja5N1Svi5lfUkOdAvH0S+Go4zqmUymyFa4bDngk93DYQx3i
+NPiXH6R2iInxCUI1j8ZsJyQFFIE0XdsTVLBsaJqMdc0v8ZqwHeVB20NgTdVlcbwy
+vFpIqpgCgJgKESSGaWHKdMww1pki5mQSCpmJKIYaIkjXmGFAzJFMdF1FhmYqSJW8
+jiIhRwogYZOUC8mYXR4ibjzKpdqR23tn+dJyfFmZ6d5a+XKyc2eWbZE723ezcaxN
+m5isKGrdUZM5kHrVeuh33lD++9Hal+nHz9ctb7744vu9V42DWabbvLCh+8aH3rjk
+e5fXRLqU3dsflOyaY4503j6dvDBZlD/56NiCqrKm1PxVkaOlGkv1FydC7WvWHdg4
+8mWqrkBvu7pq9cSWX31PWl4vWz8YKe5ZOlYUOV64+cythgfXZw0Nn6ufyj6jb0js
+Gx/5FNg5kKzp2j+18zLqHy8cffZDK+9uVN52NjbXl3XlfmVL7zZUDjYks/KXVFRl
+zDv3zT8OTmac8LeEO678KL32sk8ueW3Q0ujiHlDY1PQ8/bG6Nvjz0in09OOn9pVb
+Eon7WwciPc2bUm+Sn50//B0+MQ==
+=bRR8
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/mjbo
+
+==================================================================
