@@ -12,7 +12,7 @@ img:hover {
   filter: none;
 }
 
-a:link {color: black;}      /* unvisited link */
+/* a:link {color: black;}      /* unvisited link */
 a:visited {color: black;}   /* visited link */
 a:hover {color: grey;}     /* mouse over link */
-a:active {color: grey;}    /* selected link
+a:active {color: grey;}    /* selected link */
