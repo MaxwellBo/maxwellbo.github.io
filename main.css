@@ -1,0 +1,18 @@
+/* https://stackoverflow.com/questions/609273/convert-an-image-to-grayscale-in-html-css */
+
+img {
+  filter: gray; /* IE6-9 */
+  -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
+  filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
+}
+
+/* Disable grayscale on hover */
+img:hover {
+  -webkit-filter: grayscale(0);
+  filter: none;
+}
+
+a:link {color: black;}      /* unvisited link */
+a:visited {color: black;}   /* visited link */
+a:hover {color: grey;}     /* mouse over link */
+a:active {color: grey;}    /* selected link
