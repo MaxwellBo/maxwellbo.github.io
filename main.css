@@ -6,12 +6,6 @@ img {
   filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
 }
 
-/* Disable grayscale on hover */
-img:hover {
-  -webkit-filter: grayscale(0);
-  filter: none;
-}
-
 a:link {color: black;}      /* unvisited link */
 a:visited {color: black;}   /* visited link */
 a:hover {color: grey;}     /* mouse over link */
