@@ -8,5 +8,15 @@ img {
 
 a:link {color: black;}      /* unvisited link */
 a:visited {color: black;}   /* visited link */
-a:hover {color: grey;}     /* mouse over link */
-a:active {color: grey;}    /* selected link
+a:hover {color: blue;}     /* mouse over link */
+a:active {color: darkblue;}    /* selected link */
+
+.fonts {
+  font-family: -apple-system, BlinkMacSystemFont,
+               'avenir next', avenir,
+               'helvetica neue', helvetica,
+               ubuntu,
+               roboto, noto,
+               'segoe ui', arial,
+               sans-serif;
+}
