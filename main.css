@@ -1,10 +1,10 @@
 /* https://stackoverflow.com/questions/609273/convert-an-image-to-grayscale-in-html-css */
 
-img {
+/* img {
   filter: gray; /* IE6-9 */
   -webkit-filter: grayscale(1); /* Google Chrome, Safari 6+ & Opera 15+ */
   filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
-}
+} */
 
 a {
   text-decoration: none;
@@ -26,7 +26,6 @@ body {
 
 img {
   border: 3px dotted;
-  border-color: #00f;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
