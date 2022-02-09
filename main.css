@@ -6,10 +6,11 @@ img {
   filter: grayscale(1); /* Microsoft Edge and Firefox 35+ */
 }
 
-a:link {color: black;}      /* unvisited link */
-a:visited {color: black;}   /* visited link */
-a:hover {color: blue;}     /* mouse over link */
-a:active {color: darkblue;}    /* selected link */
+a {
+  text-decoration-style: dotted;
+  text-decoration-color: blue;
+}
+
 
 .fonts {
   font-family: -apple-system, BlinkMacSystemFont,
@@ -19,4 +20,85 @@ a:active {color: darkblue;}    /* selected link */
                roboto, noto,
                'segoe ui', arial,
                sans-serif;
+}
+
+header h1 {
+  font-size: 5rem;
+  text-transform: uppercase;
+  line-height: 1.25;
+}
+
+section h2 {
+  font-size: 2.25rem;
+}
+
+section h2 span {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  text-transform: uppercase;
+}
+
+nav ul > li {
+  margin-bottom: 0.5rem;
+  margin-right: 0.25rem;
+  display: inline-block;
+  border-style: solid;
+  border-width: 1px;
+}
+
+nav ul > li > a {
+  font-size: 1.25rem;
+  text-decoration: none;
+  padding: 0.5rem;
+  font-weight: 700;
+  display: block;
+}
+
+dt {
+  font-size: 1.5rem;
+  line-height: 1.25;
+  font-weight: 500;
+}
+
+dd.title {
+  margin-left: 0;
+  line-height: 1.5;
+}
+
+dd.title > a {
+  text-decoration: none;
+}
+
+dd.time {
+  margin-left: 0;
+  line-height: 1.5;
+  margin-bottom: 1rem;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+.grid {
+  display: grid;
+  grid-template: auto 1fr auto / auto 1fr auto;
+}
+
+header {
+  padding: 2rem;
+  grid-column: 1 / 4;
+}
+
+.left-side {
+  grid-column: 1 / 2;
+}
+
+main {
+  grid-column: 2 / 3;
+}
+
+.right-side {
+  grid-column: 3 / 4;
+}
+
+footer {
+  grid-column: 1 / 4;
 }
