@@ -12,7 +12,7 @@ a {
 
 body {
   background-color: #e4e4e4;
-  max-width: min(80vw, 75ch);
+  max-width: min(80vw, 60ch);
   margin:40px auto;
   font-family: -apple-system, BlinkMacSystemFont,
                'avenir next', avenir,
@@ -29,6 +29,10 @@ img {
   border-color: #00f;
   aspect-ratio: 1/1;
   object-fit: cover;
+}
+
+h1 {
+  font-family: serif;
 }
 
 h2 {
