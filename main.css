@@ -11,6 +11,7 @@ a {
 }
 
 body {
+  background-color: #e4e4e4;
   max-width: min(80vw, 75ch);
   margin:40px auto;
   font-family: -apple-system, BlinkMacSystemFont,
@@ -24,12 +25,14 @@ body {
 }
 
 img {
-  border: 1px solid black;
+  border: 3px dotted;
+  border-color: #00f;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
 
 h2 {
+  font-family: serif;
   font-size: 2rem;
   padding-bottom: .5rem;
 }
