@@ -26,23 +26,21 @@
     <meta name="robots" content="index, follow">
 
     <link href="main.css" rel="stylesheet">
-    <link href="tachyons.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Condensed:wght@600&display=swap"
         rel="stylesheet">
-    <!-- <link rel="stylesheet" href="https://unpkg.com/tachyons/css/tachyons.min.css"> -->
 </head>
 
-<body class="parent fonts tracked-tight">
+<body>
     <header>
         <h1>
-            <marquee class="ba">
+            <marquee>
                 Max Bo
             </marquee>
         </h1>
     </header>
     <main>
-        <nav class="left-side">
-            <ul class="pl0 mw6">
+        <nav>
+            <ul>
                 <li>
                     <a href="https://www.notion.so/mjbo/Max-Bo-s-Notion-b33bd022b3604920afcef9870738b741">Wiki</a>
                 </li>
@@ -104,14 +102,15 @@
                 <dd class="title">Intern Software Engineer</dd>
                 <dd class="time">January 2017 - November 2018</dd>
             </dl>
+        </section>
+            <section>
             <h2>
                 <span>
                     Education
                 </span>
             </h2>
             <dl>
-                <dt><a href="https://www.uq.edu.au/" class="index.html no-underline">University
-                        of Queensland</a></dt>
+                <dt><a href="https://www.uq.edu.au/">University of Queensland</a></dt>
                 <dd class="title">BSc Computer Science Extended Major</dd>
                 <dd class="time">July 2015 - July 2019</dd>
             </dl>
@@ -122,29 +121,20 @@
                     Projects
                 </span>
             </h2>
-            <article class="fl w-100 w-third-ns pa2-ns pl0-ns mb3">
-                <div class="aspect-ratio aspect-ratio--1x1">
-                    <img style="background-image:url(
-                        https://static.observableusercontent.com/files/f78c2397f92a82a7badb2eb2c5758a8bea15eb8c6a32fc9f61f0c4e37746ae984f598715fe80434c2815647ea30b529cdb4ed1ad79bb57f103edbc71ad9611b8
-                    );" class="db cover aspect-ratio--object ba" />
-                </div>
-                <div class="db">
-                    <h3 class="f4 mb0 mt2 "><a href="https://observablehq.com/@mjbo/spotify-genre-map-explorer"
-                            class="no-underline">Spotify genre map explorer</a></h3>
-                </div>
-            </article>
-            <article class="fl w-100 w-third-ns pa2-ns pl0-ns mb3">
-                <div class="aspect-ratio aspect-ratio--1x1">
-                    <img style="background-image:url(
-                    https://raw.githubusercontent.com/MaxwellBo/Muncoordinated-2/master/public/promo.png
-                    );" class="db cover aspect-ratio--object ba" />
-                </div>
-                <div class="db">
-                    <h3 class="f4 mb0 mt2 "><a href="https://github.com/MaxwellBo/Muncoordinated-2"
-                            class="no-underline">Muncoordinated</a></h3>
-                    <p class="fw3 mt0 ">Model UN committee management service</p>
-                </div>
-            </article>
+            <div class="cards">
+                <article>
+                    <img
+                        src="https://static.observableusercontent.com/files/f78c2397f92a82a7badb2eb2c5758a8bea15eb8c6a32fc9f61f0c4e37746ae984f598715fe80434c2815647ea30b529cdb4ed1ad79bb57f103edbc71ad9611b8" />
+                    <h3><a href="https://observablehq.com/@mjbo/genre-map-explorer-for-spotify">Genre map explorer for
+                            Spotify</a></h3>
+                    <p>Interactive notebook built with Observable</p>
+                </article>
+                <article>
+                    <img src="https://raw.githubusercontent.com/MaxwellBo/Muncoordinated-2/master/public/promo.png" />
+                    <h3><a href="https://github.com/MaxwellBo/Muncoordinated-2">Muncoordinated</a></h3>
+                    <p>Model UN committee management service</p>
+                </article>
+            </div>
         </section>
         <section>
             <h2>
@@ -152,42 +142,23 @@
                     Talks
                 </span>
             </h2>
-            <article class="fl w-100 w-third-ns pa2-ns pl0-ns mb3">
-                <div class="aspect-ratio aspect-ratio--1x1">
-                    <img style="background-image:url(
-                    img/itpc.png
-                    );" class="db cover aspect-ratio--object ba" />
-                </div>
-                <div class="db">
-                    <h3 class="f4 mb0 mt2"><a href="https://www.youtube.com/watch?v=bvjBgAGq3E8"
-                            class="no-underline index.html">Intro to Parser Combinators</a></h3>
-                    <p class="fw3 mt0 ">Lecture</p>
-                </div>
-            </article>
-            <article class="fl w-100 w-third-ns pa2-ns pl0-ns mb3">
-                <div class="aspect-ratio aspect-ratio--1x1">
-                    <img style="background-image:url(
-                    img/itpbt.png
-                    );" class="db cover aspect-ratio--object ba" />
-                </div>
-                <div class="db">
-                    <h3 class="f4 mb0 mt2"><a href="https://www.youtube.com/watch?v=MKLLOxb2nmI"
-                            class="no-underline index.html">Intro to Property Based Testing</a></h3>
-                    <p class="fw3 mt0 ">Lecture</p>
-                </div>
-            </article>
-            <article class="fl w-100 w-third-ns pa2-ns pl0-ns mb3">
-                <div class="aspect-ratio aspect-ratio--1x1">
-                    <img style="background-image:url(
-                    img/tos.png
-                    );" class="db cover aspect-ratio--object ba" />
-                </div>
-                <div class="db">
-                    <h3 class="f4 mb0 mt2"><a href="https://github.com/MaxwellBo/A-tour-of-Scala"
-                            class="no-underline index.html">A Tour of Scala</a></h3>
-                    <p class="fw3 mt0">Lecture series</p>
-                </div>
-            </article>
+            <div class="cards">
+                <article>
+                    <img src="img/itpc.png" />
+                    <h3><a href="https://www.youtube.com/watch?v=bvjBgAGq3E8">Intro to Parser Combinators</a></h3>
+                    <p>Lecture</p>
+                </article>
+                <article>
+                    <img src="img/itpbt.png" />
+                    <h3><a href="https://www.youtube.com/watch?v=MKLLOxb2nmI">Intro to Property Based Testing</a></h3>
+                    <p>Lecture</p>
+                </article>
+                <article>
+                    <img src="img/tos.png" />
+                    <h3><a href="https://github.com/MaxwellBo/A-tour-of-Scala">A Tour of Scala</a></h3>
+                    <p>Lecture series</p>
+                </article>
+            </div>
         </section>
     </main>
     <section class="right-side">
@@ -211,9 +182,11 @@
         </ul>
         </div>
     </section>
-    <footer class="cf mb4">
-        <p>© 2021</p>
-    </footer>
+    <section>
+        <footer>
+            <p>© 2021</p>
+        </footer>
+    </section>
 </body>
 
 </html>

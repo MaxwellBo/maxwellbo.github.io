@@ -7,12 +7,12 @@ img {
 }
 
 a {
-  text-decoration-style: dotted;
-  text-decoration-color: blue;
+  text-decoration: none;
 }
 
-
-.fonts {
+body {
+  max-width: min(80vw, 75ch);
+  margin:40px auto;
   font-family: -apple-system, BlinkMacSystemFont,
                'avenir next', avenir,
                'helvetica neue', helvetica,
@@ -20,22 +20,46 @@ a {
                roboto, noto,
                'segoe ui', arial,
                sans-serif;
+  letter-spacing: -.05em;
 }
 
+img {
+  border: 1px solid black;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+
+h2 {
+  font-size: 2rem;
+  padding-bottom: .5rem;
+}
+
+h2 span {
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  text-transform: uppercase;
+}
+
+section {
+  padding-top: 2em;
+}
+
+/* MAX BO */
 header h1 {
   font-size: 5rem;
   text-transform: uppercase;
   line-height: 1.25;
 }
 
-section h2 {
-  font-size: 2.25rem;
+marquee {
+  border-style: solid;
+  border-width: 1px;
 }
 
-section h2 span {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  text-transform: uppercase;
+
+/* links */
+nav ul {
+  padding: 0px;
 }
 
 nav ul > li {
@@ -54,6 +78,17 @@ nav ul > li > a {
   display: block;
 }
 
+
+
+
+div.cards {
+  display: grid;
+  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+
+
 dt {
   font-size: 1.5rem;
   line-height: 1.25;
@@ -62,7 +97,7 @@ dt {
 
 dd.title {
   margin-left: 0;
-  line-height: 1.5;
+  margin-bottom: 0;
 }
 
 dd.title > a {
@@ -71,34 +106,37 @@ dd.title > a {
 
 dd.time {
   margin-left: 0;
-  line-height: 1.5;
-  margin-bottom: 1rem;
+  padding-bottom: 10px;
   font-weight: 300;
   text-transform: uppercase;
 }
 
-.grid {
-  display: grid;
-  grid-template: auto 1fr auto / auto 1fr auto;
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*, *::before, *::after {
+  box-sizing: border-box;
 }
-
-header {
-  padding: 2rem;
-  grid-column: 1 / 4;
+* {
+  margin: 0;
 }
-
-.left-side {
-  grid-column: 1 / 2;
+html, body {
+  height: 100%;
 }
-
-main {
-  grid-column: 2 / 3;
+body {
+  -webkit-font-smoothing: antialiased;
 }
-
-.right-side {
-  grid-column: 3 / 4;
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
 }
-
-footer {
-  grid-column: 1 / 4;
+input, button, textarea, select {
+  font: inherit;
+}
+p, h1, h2, h3, h4, h5, h6 {
+  overflow-wrap: break-word;
+}
+#root, #__next {
+  isolation: isolate;
 }
