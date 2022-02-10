@@ -6,13 +6,18 @@ a {
 
 body {
   background-color: #e4e4e4;
-  max-width: min(80vw, 60ch);
-  margin:40px auto;
-  font-family: sans-serif;
+}
+
+main {
+  max-width: min(90vw, 80ch);
+  margin: 5vw auto;;
+  padding: 15px 30px;
+  border-style: groove;
+  border-width: 4px;
 }
 
 img {
-  border: 3px dotted;
+  border: 3px groove;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
@@ -43,12 +48,6 @@ header h1 {
   text-transform: uppercase;
   line-height: 1.25;
 }
-
-marquee {
-  border-style: solid;
-  border-width: 1px;
-}
-
 
 /* links */
 nav ul {
