@@ -83,9 +83,10 @@ dt {
 }
 
 dd.time {
-  font-family: 'Anonymous Pro', monospace;
   padding-bottom: 10px;
-  text-transform: uppercase;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-size: 0.9rem;
+  font-style: italic;
 }
 
 /*
