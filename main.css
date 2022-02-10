@@ -11,7 +11,6 @@ body {
 main {
   max-width: min(80vw, 60ch);
   margin: 5vw auto;
-  font-family: 'Merriweather', serif;
 }
 
 img {
@@ -27,8 +26,12 @@ h1 {
   line-height: 1.25;
 }
 
+h1 > marquee {
+  border: 1px solid;
+}
+
 h2 {
-  /* font-family: Georgia, 'Times New Roman', Times, serif; */
+  font-family: Georgia, 'Times New Roman', Times, serif;
   font-style: italic;
   font-size: 2rem;
   padding-bottom: .5rem;
@@ -80,8 +83,8 @@ dt {
 }
 
 dd.time {
+  font-family: 'Anonymous Pro', monospace;
   padding-bottom: 10px;
-  font-weight: lighter;
   text-transform: uppercase;
 }
 
