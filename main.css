@@ -9,10 +9,9 @@ body {
 }
 
 main {
-  max-width: min(90vw, 80ch);
+  max-width: min(80vw, 60ch);
   margin: 5vw auto;
-  padding: 15px 30px;
-  border: 1px solid;
+  font-family: 'Merriweather', serif;
 }
 
 img {
@@ -29,10 +28,13 @@ h1 {
 }
 
 h2 {
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  /* font-family: Georgia, 'Times New Roman', Times, serif; */
   font-style: italic;
   font-size: 2rem;
   padding-bottom: .5rem;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
   text-transform: uppercase;
 }
 
