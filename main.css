@@ -10,20 +10,22 @@ body {
 
 main {
   max-width: min(90vw, 80ch);
-  margin: 5vw auto;;
+  margin: 5vw auto;
   padding: 15px 30px;
-  border-style: groove;
-  border-width: 4px;
+  border: 1px solid;
 }
 
 img {
-  border: 3px groove;
+  border: 1px solid;
   aspect-ratio: 1/1;
   object-fit: cover;
 }
 
 h1 {
   font-family: serif;
+  font-size: 5rem;
+  text-transform: uppercase;
+  line-height: 1.25;
 }
 
 h2 {
@@ -35,21 +37,13 @@ h2 {
 }
 
 hr {
-  height: 3px;
+  height: 1px;
 }
 
 section {
   padding-top: 2em;
 }
 
-/* MAX BO */
-header h1 {
-  font-size: 5rem;
-  text-transform: uppercase;
-  line-height: 1.25;
-}
-
-/* links */
 nav ul {
   padding: 0px;
 }
@@ -71,35 +65,21 @@ nav ul > li > a {
 }
 
 
-
-
 div.cards {
   display: grid;
   grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
 }
 
-
-
 dt {
   font-size: 1.5rem;
   line-height: 1.25;
-  font-weight: 500;
-}
-
-dd.title {
-  margin-left: 0;
-  margin-bottom: 0;
-}
-
-dd.title > a {
-  text-decoration: none;
+  font-weight: bolder;
 }
 
 dd.time {
-  margin-left: 0;
   padding-bottom: 10px;
-  font-weight: 300;
+  font-weight: lighter;
   text-transform: uppercase;
 }
 
