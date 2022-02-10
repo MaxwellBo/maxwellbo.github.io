@@ -8,14 +8,7 @@ body {
   background-color: #e4e4e4;
   max-width: min(80vw, 60ch);
   margin:40px auto;
-  font-family: -apple-system, BlinkMacSystemFont,
-               'avenir next', avenir,
-               'helvetica neue', helvetica,
-               ubuntu,
-               roboto, noto,
-               'segoe ui', arial,
-               sans-serif;
-  letter-spacing: -.05em;
+  font-family: sans-serif;
 }
 
 img {
@@ -29,15 +22,15 @@ h1 {
 }
 
 h2 {
-  font-family: serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-style: italic;
   font-size: 2rem;
   padding-bottom: .5rem;
+  text-transform: uppercase;
 }
 
-h2 span {
-  border-bottom-style: solid;
-  border-bottom-width: 1px;
-  text-transform: uppercase;
+hr {
+  height: 3px;
 }
 
 section {
