@@ -4,11 +4,11 @@ a {
 
 body {
   background-color: #e4e4e4;
-  font-family: serif;
+  font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 main {
-  max-width: min(80vw, 80ch);
+  max-width: min(80vw, 60ch);
   margin: 5vw auto;
 }
 
@@ -29,7 +29,6 @@ h1 > marquee {
 }
 
 h2 {
-  font-family: Georgia, 'Times New Roman', Times, serif;
   font-style: italic;
   font-size: 2rem;
   padding-bottom: .5rem;
@@ -56,6 +55,7 @@ nav ul > li {
 }
 
 nav ul > li > a {
+  font-family: serif;
   font-size: 1.25rem;
   padding: 0.5rem;
   font-weight: 700;
