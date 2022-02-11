@@ -12,11 +12,8 @@ main {
   margin: 5vw auto;
 }
 
-
-
 h1 {
   font-size: 5rem;
-  text-transform: uppercase;
   line-height: 1.25;
 }
 
@@ -26,12 +23,12 @@ h1 > marquee {
 
 h2 {
   font-style: italic;
+  font-variant: small-caps;
   font-size: 2rem;
   padding-bottom: .5rem;
   text-decoration: underline;
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
-  text-transform: uppercase;
 }
 
 h3 {
@@ -81,7 +78,6 @@ dt {
 
 dd.time {
   padding-bottom: 1em;
-  font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 0.9rem;
   font-style: italic;
 }
