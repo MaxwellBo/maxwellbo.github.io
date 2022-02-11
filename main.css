@@ -4,6 +4,7 @@ a {
 
 body {
   background-color: #e4e4e4;
+  font-family: serif;
 }
 
 main {
@@ -18,7 +19,6 @@ img {
 }
 
 h1 {
-  font-family: serif;
   font-size: 5rem;
   text-transform: uppercase;
   line-height: 1.25;
