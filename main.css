@@ -14,7 +14,7 @@ main {
 
 img {
   border: 2px dotted;
-  aspect-ratio: 1/1;
+  aspect-ratio: 4/3;
   object-fit: cover;
 }
 
@@ -36,6 +36,10 @@ h2 {
   text-decoration-thickness: 1px;
   text-underline-offset: 0.2em;
   text-transform: uppercase;
+}
+
+h3 {
+  font-size: 1.1rem;
 }
 
 section {
@@ -69,7 +73,7 @@ div.cards {
 }
 
 dt {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bolder;
 }
 
