@@ -39,7 +39,7 @@ h3 {
 }
 
 section {
-  padding-top: 2em;
+  padding-top: 2rem;
 }
 
 nav ul {
@@ -65,11 +65,11 @@ nav ul > li > a {
 div.cards {
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
 }
 
 div.cards img {
-  border: 2px dotted;
+  border: 1px dotted;
   aspect-ratio: 4/3;
   object-fit: cover;
 }
@@ -80,7 +80,7 @@ dt {
 }
 
 dd.time {
-  padding-bottom: 15px;
+  padding-bottom: 1em;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 0.9rem;
   font-style: italic;
