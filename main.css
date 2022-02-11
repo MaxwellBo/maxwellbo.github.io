@@ -57,7 +57,6 @@ nav ul > li {
 
 nav ul > li > a {
   font-size: 1.25rem;
-  text-decoration: none;
   padding: 0.5rem;
   font-weight: 700;
   display: block;
@@ -71,12 +70,11 @@ div.cards {
 
 dt {
   font-size: 1.5rem;
-  line-height: 1.25;
   font-weight: bolder;
 }
 
 dd.time {
-  padding-bottom: 10px;
+  padding-bottom: 15px;
   font-family: Georgia, 'Times New Roman', Times, serif;
   font-size: 0.9rem;
   font-style: italic;
