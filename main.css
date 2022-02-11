@@ -69,7 +69,7 @@ div.cards {
 }
 
 div.cards img {
-  border: 1px dotted;
+  border: 2px dotted;
   aspect-ratio: 4/3;
   object-fit: cover;
 }
