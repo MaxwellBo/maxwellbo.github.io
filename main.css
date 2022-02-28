@@ -78,6 +78,12 @@ dt {
   font-weight: bolder;
 }
 
+dt > img {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+}
+
 dd.time {
   padding-bottom: 1em;
   font-size: 0.9rem;
