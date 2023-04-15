@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <meta charset="utf-8" />
+    <title>It has been 𝑥 days since 𝑦</title>
+  </head>
+  <body>
+    <h1 id="myspan"></h1>
+    <script>
+
+        function update() {
+            const searchParams = new URLSearchParams(window.location.search)
+            const now = new Date();
+            const then = new Date(searchParams.get("date"))
+            const y = searchParams.get("y")
+            const DAY_MILLIS = 1000 * 60 * 60 * 24;
+            const days = Math.floor((now - then) / DAY_MILLIS);
+            const text = `It has been ${days} ${days === 1 ? "day": "days"} since ${y}`
+            document.getElementById("myspan").innerText = text;
+            document.title = text;
+        }
+
+        update()
+
+        const MINUTE_MILLIS = 1000 * 60;
+        window.setInterval(update, MINUTE_MILLIS);
+    </script>
+  </body>
+</html>
