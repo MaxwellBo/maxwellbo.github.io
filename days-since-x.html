@@ -1,31 +1,106 @@
 <!DOCTYPE html>
 <html lang="en-US">
-  <head>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <meta charset="utf-8" />
-    <title>It has been 𝑥 days since 𝑦</title>
-  </head>
-  <body>
-    <h1 id="myspan"></h1>
-    <script>
 
-        function update() {
-            const searchParams = new URLSearchParams(window.location.search)
-            const now = new Date();
-            const then = new Date(searchParams.get("date"))
-            const y = searchParams.get("y")
-            const DAY_MILLIS = 1000 * 60 * 60 * 24;
-            const days = Math.floor((now - then) / DAY_MILLIS);
-            const text = `It has been ${days} ${days === 1 ? "day": "days"} since ${y}`
-            document.getElementById("myspan").innerText = text;
-            document.title = text;
-        }
+<head>
+  <meta charset="utf-8" />
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@js-temporal/polyfill@0.4.3/dist/index.umd.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script crossorigin src='https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.min.js'></script>
+  <title>It has been 𝑡 days since 𝑥</title>
+</head>
 
-        update()
+<body>
+  <div id="root"></div>
+  <!-- <h1 id="myspan">It has been <span contenteditable id="days">𝑡</span> days since <span contenteditable
+      id="x">𝑥</span></h1> -->
+  <script type="text/babel">
+    // // --- set intial search parameters ---
+    // const searchParams = new URLSearchParams(window.location.search)
 
-        const MINUTE_MILLIS = 1000 * 60;
-        window.setInterval(update, MINUTE_MILLIS);
-    </script>
-  </body>
+
+    // // if (searchParams.get("x") === null) {
+    // //   console.debug("no x")
+    // //   searchParams.set("x", "𝑥")
+    // // }
+
+    // // if (searchParams.get("date") === null) {
+    // //   console.debug("no date")
+    // //   const then = new Date();
+    // //   then.setDate(then.getDate() - 3);
+
+    // //   searchParams.set("date", then)
+    // // }
+
+    // // window.location.search = searchParams.toString();
+
+
+    // // --- configure view mutators ---
+
+    // const daysSpan = document.getElementById("days")
+    // const xSpan = document.getElementById("x")
+
+    // function updateViewFromSearchParams(searchParams) {
+    //   console.debug("updateing view from search params")
+    //   const now = new Date();
+    //   const then = new Date(searchParams.get("date"))
+    //   const x = searchParams.get("x")
+    //   const DAY_MILLIS = 1000 * 60 * 60 * 24;
+    //   const days = Math.floor((now - then) / DAY_MILLIS);
+    //   const text = `It has been ${days} ${days === 1 ? "day" : "days"} since ${x}`
+    //   daysSpan.innerText = days;
+    //   xSpan.innerText = x;
+    //   document.title = text;
+    // }
+
+
+    // // --- bind view mutators ---
+    // daysSpan.addEventListener("input", () => {
+    //   console.debug("updating day span")
+    //   const searchParams = new URLSearchParams(window.location.search)
+    //   updateViewFromSearchParams(searchParams)
+
+    //   // given a specified number of how many days ago something happened,
+    //   // calculate the date that it happened
+    // })
+
+    // xSpan.addEventListener("input", () => {
+    //   console.debug("updating x span")
+    //   const searchParams = new URLSearchParams(window.location.search)
+    //   updateViewFromSearchParams(searchParams)
+    //   searchParams.set("x", xSpan.innerText)
+    //   // window.location.search = searchParams.toString();
+    // })
+
+    // --- configure view update loop ---
+    // const MINUTE_MILLIS = 1000 * 60;
+    // window.setInterval(() => updateViewFromSearchParams(new URLSearchParams(window.location.search)), MINUTE_MILLIS);
+
+
+    function App() {
+      // using js-temporal, get the date 3 days ago from now
+      const then = temporal.Temporal.Now.plainDateISO().subtract({ days: 3 })
+
+      const [x, setX] = React.useState("𝑥")
+      const [days, setDays] = React.useState("𝑥")
+
+      return (
+        <div>
+          <h1>It has been <span contentEditable>𝑡</span> days since <span contentEditable
+            onInput={e => setX(e.target.innerText)}>{x}</span></h1>
+        </div>
+      )
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    )
+  </script>
+</body>
+
+<div id="root"></div>
+
 </html>
