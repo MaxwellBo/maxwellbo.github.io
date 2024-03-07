@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            color: blue;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        a {
+            color: #5e9ca0;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Free ideas</h1>
+
+    <ul>
+        <li>
+            Publicly hosted Slack-clone where people use it to follow microblogs
+        </li>
+        <li>
+            Autocreated servers from an uploaded/drag-and-dropped Jupyter notebook with 
+            <a href="https://jupyter-kernel-gateway.readthedocs.io/en/latest/http-mode.html">
+                notebook-http
+            </a> 
+            mode.
+        </li>
+        <li>
+            It's an IDL language (like Protocol Buffers) that has:
+            <ul>
+                <li>
+                    Something like the asymmetric safe schema evolution extensions from <a href="https://github.com/stepchowfun/typical">typical</a>
+                </li>
+                <li>
+                   Something like the inbuilt type-checker and refinement types from  <a href="https://cuelang.org/docs/concepts/logic/">CUE</a>
+                </li>
+                <li>
+                    Something like the language-agnostic data validation runtime of  <a href="https://github.com/google/cel-spec">CEL</a>
+                    (with schema substitutability checked by the type-checker)
+                </li>
+                <li>
+                    Some binary encoding format (like the 
+                    <a href="https://protobuf.dev/programming-guides/encoding">
+                        Protocol Buffers encoding format 
+                    </a>
+                    ), or 
+                    <a href="https://flatbuffers.dev/">
+                        Flat Buffers 
+                    </a>
+                    ) AND JSON encoding format that share similar semantics, so that you can use the same schema for both binary and JSON encoding.
+                </li>
+                <li>
+                    No deserialization defaults.
+                </li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>
