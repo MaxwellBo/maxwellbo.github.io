@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="main.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+<body>
+    <main>
+        <header>
+            <h1><a href="/">Max Bo</a><h1>
+            <h2>Free ideas</h2>
+        </header>
+
+    Inspired by <a href="https://willcrichton.net/">Will Crichton</a>'s "Good Ideas for Free".
+        <ul>
+        <li>
+            Publicly hosted Slack-clone where people use it to follow microblogs. Similar to Gitter.
+        </li>
+        <li>
+            Autocreated servers from an uploaded/drag-and-dropped Jupyter notebook with 
+            <a href="https://jupyter-kernel-gateway.readthedocs.io/en/latest/http-mode.html">
+                notebook-http
+            </a> 
+            mode.
+        </li>
+        <li>
+            It's an IDL language (like Protocol Buffers) that has:
+            <ul>
+                <li>
+                    GitHub action for <a href="https://qntm.org/ratchet">ratcheting code</a>
+                </li>
+                <li>
+                    Something like the <code>asymmetric</code> safe schema evolution extensions from <a href="https://github.com/stepchowfun/typical">typical</a>. I think they may have screwed up its implementation for <code>choice</code> - it should have prevented the production of a <code>choice</code> member rather than requiring a fallback.
+                </li>
+                <li>
+                   Something like the inbuilt type-checker and refinement types from  <a href="https://cuelang.org/docs/concepts/logic/">CUE</a>
+                </li>
+                <li>
+                    Something like the language-agnostic data validation runtime of  <a href="https://github.com/google/cel-spec">CEL</a>
+                    (with schema substitutability checked by the type-checker)
+                </li>
+                <li>
+                    Some binary encoding format (like the 
+                    <a href="https://protobuf.dev/programming-guides/encoding">
+                        Protocol Buffers encoding format 
+                    </a>
+                    ), or 
+                    <a href="https://flatbuffers.dev/">
+                        Flat Buffers 
+                    </a>
+                    ) AND JSON encoding format that share similar semantics, so that you can use the same schema for both binary and JSON encoding.
+                </li>
+                <li>
+                    No deserialization defaults.
+                </li>
+                <li>
+                    It has some stuff from <a href="https://trpc.io/">tRPC</a>. I dunno how that's going to work, but they've really nailed RPCs for TypeScript. It would be cool to have tRPC style development across any language.
+                </li>
+            </ul>
+        </li>
+    </ul>
+    </main>
+</body>
+</html>
