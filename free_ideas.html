@@ -21,8 +21,7 @@
             </nav>
             <h1>Free ideas</h1>
         </header>
-        Inspired by Will Crichton's <a href="https://willcrichton.net/#good-ideas-for-free">Good Ideas for Free</a> and YCombinator's <a
-            href="https://www.ycombinator.com/rfs">Requests for Startups</a>.
+        Inspired by Will Crichton's <a href="https://willcrichton.net/#good-ideas-for-free">Good Ideas for Free</a> and YCombinator's <a href="https://www.ycombinator.com/rfs">Requests for Startups</a>.
         <ul>
             <li>
                 CI verification platform for AI-powered robot simulations. Think 1 part <a href="https://silogy.io/">Silogy</a>, 1 part <a href="https://github.com/Farama-Foundation/Gymnasium">OpenAI Gymnasium</a>, 1 part <a href="https://www.elodin.systems/">Elodin</a>.
@@ -35,38 +34,24 @@
             </li>
             <li>
                 Autocreated servers from an uploaded/drag-and-dropped Jupyter notebook with
-                <a href="https://jupyter-kernel-gateway.readthedocs.io/en/latest/http-mode.html">
-                    notebook-http
-                </a>
+                <a href="https://jupyter-kernel-gateway.readthedocs.io/en/latest/http-mode.html">notebook-http</a>
                 mode.
             </li>
             <li>
                 It's an IDL language (like Protocol Buffers) that has:
                 <ul>
                     <li>
-                        Something like the <code>asymmetric</code> safe schema evolution extensions from <a
-                            href="https://github.com/stepchowfun/typical">typical</a>. I think they may have screwed up
-                        its implementation for <code>choice</code> - it should have prevented the production of a
-                        <code>choice</code> member rather than requiring a fallback.
+                        Something like the <code>asymmetric</code> safe schema evolution extensions from <ahref="https://github.com/stepchowfun/typical">typical</a>. I think they may have screwed up its implementation for <code>choice</code> - it should have prevented the production of a <code>choice</code> member rather than requiring a fallback.
                     </li>
                     <li>
                         Something like the inbuilt type-checker and refinement types from <a
                             href="https://cuelang.org/docs/concepts/logic/">CUE</a>
                     </li>
                     <li>
-                        Something like the language-agnostic data validation runtime of <a
-                            href="https://github.com/google/cel-spec">CEL</a>
-                        (with schema substitutability checked by the type-checker)
+                        Something like the language-agnostic data validation runtime of <a href="https://github.com/google/cel-spec">CEL</a>  (with schema substitutability checked by the type-checker)
                     </li>
                     <li>
-                        Some binary encoding format (like the
-                        <a href="https://protobuf.dev/programming-guides/encoding">
-                            Protocol Buffers encoding format
-                        </a>), or
-                        <a href="https://flatbuffers.dev/">
-                            Flat Buffers
-                        </a> AND JSON encoding format that share similar semantics, so that you can use the same schema for
-                        both binary and JSON encoding.
+                        Some binary encoding format (like the <a href="https://protobuf.dev/programming-guides/encoding">Protocol Buffers encoding format</a> or <a href="https://flatbuffers.dev/">Flat Buffers</a>) AND JSON encoding format that share similar semantics, so that you can use the same schema for both binary and JSON encoding.
                     </li>
                     <li>
                         No deserialization defaults.
@@ -78,9 +63,7 @@
                         Enforced "semantic IDs" - e.g. fields with different names have to have different IDs in a closed union context.
                     </li>
                     <li>
-                        It has some stuff from <a href="https://trpc.io/">tRPC</a>. I dunno how that's going to work,
-                        but they've really nailed RPCs for TypeScript. It would be cool to have tRPC style development
-                        across any language.
+                        It has some stuff from <a href="https://trpc.io/">tRPC</a>. I dunno how that's going to work, but they've really nailed RPCs for TypeScript. It would be cool to have tRPC style development across any language.
                     </li>
                 </ul>
             </li>
