@@ -16,7 +16,7 @@ h1 {
   font-size: 5rem;
 }
 
-h1 > marquee {
+marquee {
   border: 1px solid;
 }
 
