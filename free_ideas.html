@@ -66,6 +66,12 @@
                         No deserialization defaults.
                     </li>
                     <li>
+                        Support for closed unions (abstract base class with a sealed set of subclasses), and open unions (TypeScript style). You'd be able to move fields between the abstract base class and the subclasses in closed unions, but not in open unions.
+                    </li>
+                    <li>
+                        Enforced "semantic IDs" - e.g. fields with different names have to have different IDs in a closed union context.
+                    </li>
+                    <li>
                         It has some stuff from <a href="https://trpc.io/">tRPC</a>. I dunno how that's going to work,
                         but they've really nailed RPCs for TypeScript. It would be cool to have tRPC style development
                         across any language.
