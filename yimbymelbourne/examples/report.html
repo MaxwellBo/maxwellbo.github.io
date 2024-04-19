@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Example report | YIMBY Melbourne Data</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="../_import/theme-yimby-melbourne.4dececa6.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="../_import/theme-yimby-melbourne.4dececa6.css">
+<link rel="modulepreload" href="../_observablehq/client.js">
+<link rel="modulepreload" href="../_observablehq/runtime.js">
+<link rel="modulepreload" href="../_observablehq/stdlib.js">
+<link rel="modulepreload" href="../_import/components/timeline.4e6d0a6e.js">
+<link rel="modulepreload" href="../_npm/@observablehq/plot@0.6.13/_esm.js">
+<link rel="modulepreload" href="../_npm/d3@7.8.5/_esm.js">
+<link rel="modulepreload" href="../_npm/isoformat@0.2.1/_esm.js">
+<link rel="modulepreload" href="../_npm/interval-tree-1d@1.0.4/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-array@3.2.4/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-axis@3.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-brush@3.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-chord@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-color@3.1.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-contour@4.0.2/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-delaunay@6.0.4/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-dispatch@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-drag@3.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-dsv@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-ease@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-fetch@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-force@3.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-format@3.1.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-geo@3.1.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-hierarchy@3.1.2/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-interpolate@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-path@3.1.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-polygon@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-quadtree@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-random@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-scale@4.0.2/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-scale-chromatic@3.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-selection@3.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-shape@3.2.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-time@3.1.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-time-format@4.1.0/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-timer@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-transition@3.0.1/_esm.js">
+<link rel="modulepreload" href="../_npm/d3-zoom@3.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/binary-search-bounds@2.0.5/_esm.js">
+<link rel="modulepreload" href="../_npm/internmap@2.0.3/_esm.js">
+<link rel="modulepreload" href="../_npm/delaunator@5.0.0/_esm.js">
+<link rel="modulepreload" href="../_npm/robust-predicates@3.0.2/_esm.js">
+<script type="module">
+
+import {define} from "../_observablehq/client.js";
+import {registerFile} from "../_observablehq/stdlib.js";
+
+registerFile("../data/examples/events.json", {"name":"../data/examples/events.json","mimeType":"application/json","path":"../data/examples/events.json"});
+
+define({id: "44515dfe", outputs: ["timeline"], body: async () => {
+const {timeline} = await import("../_import/components/timeline.4e6d0a6e.js");
+
+return {timeline};
+}});
+
+define({id: "ac9d453e", inputs: ["FileAttachment"], outputs: ["events"], body: (FileAttachment) => {
+const events = FileAttachment("../data/examples/events.json").json();
+return {events};
+}});
+
+define({id: "a330849e", inputs: ["timeline","events","display"], body: async (timeline,events,display) => {
+display(await(
+timeline(events, {height: 300})
+))
+}});
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="../">YIMBY Melbourne Data</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link"><a href="../walkability">Walkability</a></li>
+    <li class="observablehq-link"><a href="../distance">Maximum distance to desired amenities</a></li>
+  </ol>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type), h2:first-child, :not(h1) + h2">
+<nav>
+<div>Contents</div>
+<ol>
+<li class="observablehq-secondary-link"><a href="#background">Background</a></li>
+<li class="observablehq-secondary-link"><a href="#the-space-shuttle-era">The Space Shuttle era</a></li>
+<li class="observablehq-secondary-link"><a href="#commercial-spaceflight">Commercial spaceflight</a></li>
+<li class="observablehq-secondary-link"><a href="#recent-launch-activity">Recent launch activity</a></li>
+<li class="observablehq-secondary-link"><a href="#looking-forward">Looking forward</a></li>
+</ol>
+</nav>
+</aside>
+<div id="observablehq-center">
+<header id="observablehq-header">
+<a href="https://www.yimby.melbourne/" target="_blank" rel="noopener noreferrer"><img src="https://assets-global.website-files.com/64a530aa67ffbab04c9c39ab/64b27aa3f510a34fa5003e6a_logo_inter.svg" height="50/"></a>
+</header>
+<main id="observablehq-main" class="observablehq">
+<h1 id="a-brief-history-of-space-exploration" tabindex="-1"><a class="observablehq-header-anchor" href="#a-brief-history-of-space-exploration">A brief history of space exploration</a></h1>
+<p>This report is a brief overview of the history and current state of rocket launches and space exploration.</p>
+<h2 id="background" tabindex="-1"><a class="observablehq-header-anchor" href="#background">Background</a></h2>
+<p>The history of rocket launches dates back to ancient China, where gunpowder-filled tubes were used as primitive forms of propulsion.</p>
+<p>Fast-forward to the 20th century during the Cold War era, the United States and the Soviet Union embarked on a space race, a competition to innovate and explore beyond Earth.</p>
+<p>This led to the launch of the first artificial satellite, Sputnik 1, and the crewed moon landing by Apollo 11. As technology advanced, rocket launches became synonymous with space exploration and satellite deployment.</p>
+<h2 id="the-space-shuttle-era" tabindex="-1"><a class="observablehq-header-anchor" href="#the-space-shuttle-era">The Space Shuttle era</a></h2>
+<div id="cell-44515dfe" class="observablehq observablehq--block"></div>
+<div id="cell-ac9d453e" class="observablehq observablehq--block"></div>
+<div id="cell-a330849e" class="observablehq observablehq--block observablehq--loading"></div>
+<h3 id="sputnik-1-(1957)" tabindex="-1"><a class="observablehq-header-anchor" href="#sputnik-1-(1957)">Sputnik 1 (1957)</a></h3>
+<p>This was the first artificial satellite. Launched by the Soviet Union, it marked the beginning of the space age.</p>
+<h3 id="apollo-11-(1969)" tabindex="-1"><a class="observablehq-header-anchor" href="#apollo-11-(1969)">Apollo 11 (1969)</a></h3>
+<p>The historic Apollo 11 mission, led by NASA, marked the first successful human landing on the Moon. Astronauts Neil Armstrong and Buzz Aldrin became the first humans to set foot on the lunar surface.</p>
+<h3 id="viking-1-and-2-(1975)" tabindex="-1"><a class="observablehq-header-anchor" href="#viking-1-and-2-(1975)">Viking 1 and 2 (1975)</a></h3>
+<p>NASA’s Viking program successfully launched two spacecraft, Viking 1 and Viking 2, to Mars. These missions were the first to successfully land and operate on the Martian surface, conducting experiments to search for signs of life.</p>
+<h3 id="space-shuttle-columbia-(1981)" tabindex="-1"><a class="observablehq-header-anchor" href="#space-shuttle-columbia-(1981)">Space Shuttle Columbia (1981)</a></h3>
+<p>The first orbital space shuttle mission, STS-1, launched the Space Shuttle Columbia on April 12, 1981. The shuttle program revolutionized space travel, providing a reusable spacecraft for a variety of missions.</p>
+<h3 id="hubble-space-telescope-(1990)" tabindex="-1"><a class="observablehq-header-anchor" href="#hubble-space-telescope-(1990)">Hubble Space Telescope (1990)</a></h3>
+<p>The Hubble Space Telescope has provided unparalleled images and data, revolutionizing our understanding of the universe and contributing to countless astronomical discoveries.</p>
+<h3 id="international-space-station-(iss)-construction-(1998%E2%80%942011)" tabindex="-1"><a class="observablehq-header-anchor" href="#international-space-station-(iss)-construction-(1998%E2%80%942011)">International Space Station (ISS) construction (1998—2011)</a></h3>
+<p>The ISS, a collaborative effort involving multiple space agencies, began construction with the launch of its first module, Zarya, in 1998. Over the following years, various modules were added, making the ISS a symbol of international cooperation in space exploration.</p>
+<h2 id="commercial-spaceflight" tabindex="-1"><a class="observablehq-header-anchor" href="#commercial-spaceflight">Commercial spaceflight</a></h2>
+<p>After the Space Shuttle program, a new era emerged with a shift towards commercial spaceflight.</p>
+<p>Private companies like Blue Origin, founded by Jeff Bezos in 2000, and SpaceX, founded by Elon Musk in 2002, entered the scene. These companies focused on developing reusable rocket technologies, significantly reducing launch costs.</p>
+<p>SpaceX, in particular, achieved milestones like the first privately developed spacecraft to reach orbit (Dragon in 2010) and the first privately funded spacecraft to dock with the ISS (Dragon in 2012).</p>
+<h2 id="recent-launch-activity" tabindex="-1"><a class="observablehq-header-anchor" href="#recent-launch-activity">Recent launch activity</a></h2>
+<p>The proliferation of commercial space companies has driven a surge in global launch activity within the last few years.</p>
+<p>SpaceX’s Falcon 9 and Falcon Heavy, along with other vehicles from companies like Rocket Lab, have become workhorses for deploying satellites, conducting scientific missions, and ferrying crew to the ISS.</p>
+<p>The advent of small satellite constellations, such as Starlink by SpaceX, has further fueled this increase in launches. The push for lunar exploration has added momentum to launch activities, with initiatives like NASA’s Artemis program and plans for crewed missions to the Moon and Mars.</p>
+<h2 id="looking-forward" tabindex="-1"><a class="observablehq-header-anchor" href="#looking-forward">Looking forward</a></h2>
+<p>As technology continues to advance and global interest in space exploration grows, the future promises even more exciting developments in the realm of rocket launches and space travel.</p>
+<p>Exploration will not only be limited to the Moon or Mars, but extend to other parts of our solar system such as Jupiter and Saturn’s moons, and beyond.</p>
+</main>
+<footer id="observablehq-footer">
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-04-19T15:09:56">Apr 19, 2024</a>.</div>
+</footer>
+</div>

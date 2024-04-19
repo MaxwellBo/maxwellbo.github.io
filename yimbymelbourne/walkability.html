@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Walkability | YIMBY Melbourne Data</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_import/theme-yimby-melbourne.4dececa6.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_import/theme-yimby-melbourne.4dececa6.css">
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<link rel="modulepreload" href="./_npm/apache-arrow@15.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/parquet-wasm@0.5.0/esm/arrow1.js">
+<link rel="modulepreload" href="./_npm/@observablehq/plot@0.6.13/_esm.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/vgplot.js">
+<link rel="modulepreload" href="./_npm/@uwdata/vgplot@0.7.0/_esm.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/duckdb.js">
+<link rel="modulepreload" href="./_npm/@duckdb/duckdb-wasm@1.28.0/_esm.js">
+<link rel="modulepreload" href="./_npm/tslib@2.6.2/_esm.js">
+<link rel="modulepreload" href="./_npm/flatbuffers@23.5.26/_esm.js">
+<link rel="modulepreload" href="./_npm/d3@7.8.5/_esm.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/_esm.js">
+<link rel="modulepreload" href="./_npm/interval-tree-1d@1.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/@uwdata/mosaic-core@0.7.0/_esm.js">
+<link rel="modulepreload" href="./_npm/@uwdata/mosaic-plot@0.7.0/_esm.js">
+<link rel="modulepreload" href="./_npm/@uwdata/mosaic-sql@0.7.0/_esm.js">
+<link rel="modulepreload" href="./_npm/@uwdata/mosaic-inputs@0.7.0/_esm.js">
+<link rel="modulepreload" href="./_npm/apache-arrow@13.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-array@3.2.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-axis@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-brush@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-chord@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-color@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-contour@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-delaunay@6.0.4/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dispatch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-drag@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-dsv@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-ease@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-fetch@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-force@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-format@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-geo@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-hierarchy@3.1.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-interpolate@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-path@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-polygon@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-quadtree@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-random@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-scale-chromatic@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-selection@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-shape@3.2.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time@3.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-time-format@4.1.0/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-timer@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-transition@3.0.1/_esm.js">
+<link rel="modulepreload" href="./_npm/d3-zoom@3.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/binary-search-bounds@2.0.5/_esm.js">
+<link rel="modulepreload" href="./_npm/internmap@2.0.3/_esm.js">
+<link rel="modulepreload" href="./_npm/delaunator@5.0.0/_esm.js">
+<link rel="modulepreload" href="./_npm/robust-predicates@3.0.2/_esm.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.js";
+import {registerFile, FileAttachment} from "./_observablehq/stdlib.js";
+import {registerTable} from "./_observablehq/stdlib/duckdb.js";
+
+registerFile("./data/walkability_by_SA1.parquet", {"name":"./data/walkability_by_SA1.parquet","path":"./_file/data/walkability_by_SA1.608600c6.parquet","lastModified":1710248877285});
+registerFile("./data/walkability_by_node.parquet", {"name":"./data/walkability_by_node.parquet","path":"./_file/data/walkability_by_node.92a6b42b.parquet","lastModified":1713453355805});
+registerFile("data/walkability_by_SA1.parquet", {"name":"data/walkability_by_SA1.parquet","path":"./_file/data/walkability_by_SA1.608600c6.parquet","lastModified":1710248877285});
+registerFile("data/walkability_by_node.parquet", {"name":"data/walkability_by_node.parquet","path":"./_file/data/walkability_by_node.92a6b42b.parquet","lastModified":1713453355805});
+registerTable("walkability_by_node", FileAttachment("./data/walkability_by_node.parquet"));
+registerTable("walkability_by_SA1", FileAttachment("./data/walkability_by_SA1.parquet"));
+
+define({id: "312e527d", inputs: ["FileAttachment"], outputs: ["walkability_by_node","walkability_by_SA1"], body: (FileAttachment) => {
+const walkability_by_node = FileAttachment("./data/walkability_by_node.parquet").parquet();
+const walkability_by_SA1 = FileAttachment("./data/walkability_by_SA1.parquet").parquet();
+return {walkability_by_node,walkability_by_SA1};
+}});
+
+define({id: "e934f67d", inputs: ["Plot","walkability_by_SA1"], outputs: ["plotMetrics"], body: (Plot,walkability_by_SA1) => {
+async function plotMetrics({ x, y, fill }) {
+  return Plot.plot({
+    grid: true,
+    color: {
+      legend: true,
+      scheme: "turbo",
+    },
+    marks: [
+      Plot.dot(walkability_by_SA1, {
+        x,
+        y,
+        fill,
+        tip: { channels: { name: "geography_name" } },
+      }),
+    ],
+  });
+}
+return {plotMetrics};
+}});
+
+define({id: "34ea1235", inputs: ["vg"], outputs: ["$brush","independentVariables","dependentVariables","makeFacet","plotSA1Splom"], body: (vg) => {
+// adapted from https://uwdata.github.io/mosaic/examples/splom.html
+const $brush = vg.Selection.single();
+
+const independentVariables = [
+  "restaurant - within 1km",
+  "grocery or supermarket - within 1km",
+  "cafe - within 1km",
+  "bar or pub - within 1km",
+]
+
+const dependentVariables = [
+  "median_rent_weekly",
+  "pct_households_wo_cars",
+  "pct_houses",
+  "pct_owner_occupiers",
+  "pct_apartments",
+]
+
+
+const makeFacet = (x, y) => {
+  return vg.plot(
+    // https://uwdata.github.io/mosaic/api/vgplot/attributes.html
+    vg.frame({stroke: "#ccc"}),
+    vg.dot(
+      vg.from("walkability_by_SA1"),
+      {x, y, fill: "median_rent_weekly", r: 2}
+    ),
+    vg.intervalXY({as: $brush}),
+    vg.highlight({by: $brush, opacity: 0.1}),
+    vg.xLabelAnchor("center"),
+    vg.yLabelAnchor("center"),
+  )
+}
+
+const plotSA1Splom = () => vg.vconcat(
+  ...dependentVariables.map(d => vg.hconcat(...independentVariables.map(i => makeFacet(i, d)))
+))
+return {$brush,independentVariables,dependentVariables,makeFacet,plotSA1Splom};
+}});
+
+define({id: "c90678bd", inputs: ["Plot","walkability_by_SA1"], outputs: ["plotSA1WeeklyRentLegend"], body: (Plot,walkability_by_SA1) => {
+function plotSA1WeeklyRentLegend() {
+  const rent = Plot.dotX(walkability_by_SA1, {
+    x: 0,
+    fill: "median_rent_weekly",
+  }).plot()
+  return Plot.legend({
+    color: rent.scale("color"),
+    label: "Median rent, weekly ($)"
+  })
+}
+return {plotSA1WeeklyRentLegend};
+}});
+
+define({id: "b5195515", inline: true, inputs: ["plotSA1WeeklyRentLegend","display"], body: async (plotSA1WeeklyRentLegend,display) => {
+display(await(
+plotSA1WeeklyRentLegend()
+))
+}});
+
+define({id: "b1299276", inline: true, inputs: ["plotMetrics","display"], body: async (plotMetrics,display) => {
+display(await(
+plotMetrics({
+  x: "bar or pub - within 500m",
+  y: "park area - within 500m",
+  fill: "median_rent_weekly",
+})
+))
+}});
+
+define({id: "de358129", inline: true, inputs: ["plotMetrics","display"], body: async (plotMetrics,display) => {
+display(await(
+plotMetrics({
+  x: "median_rent_weekly",
+  y: "cafe - within 500m",
+  fill: "average_household_size"
+})
+))
+}});
+
+define({id: "88f81e78", inline: true, inputs: ["plotMetrics","display"], body: async (plotMetrics,display) => {
+display(await(
+plotMetrics({
+  x: "child care - within 2km",
+  y: "pct_owner_occupiers",
+  fill: "median_age" })
+))
+}});
+
+define({id: "4f24c371", inline: true, inputs: ["plotMetrics","display"], body: async (plotMetrics,display) => {
+display(await(
+plotMetrics({
+  x: "pct_households_wo_cars",
+  y: "restaurant - within 1km",
+  fill: "pct_apartments",
+})
+))
+}});
+
+define({id: "b5195515-1", inline: true, inputs: ["plotSA1WeeklyRentLegend","display"], body: async (plotSA1WeeklyRentLegend,display) => {
+display(await(
+plotSA1WeeklyRentLegend()
+))
+}});
+
+define({id: "3a3e8ac3", inline: true, inputs: ["plotSA1Splom","display"], body: async (plotSA1Splom,display) => {
+display(await(
+plotSA1Splom()
+))
+}});
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link"><a href="./">YIMBY Melbourne Data</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link observablehq-link-active"><a href="./walkability">Walkability</a></li>
+    <li class="observablehq-link"><a href="./distance">Maximum distance to desired amenities</a></li>
+  </ol>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type), h2:first-child, :not(h1) + h2">
+<nav>
+<div>Contents</div>
+<ol>
+<li class="observablehq-secondary-link"><a href="#walkability-by-sa1">Walkability by SA1</a></li>
+</ol>
+</nav>
+</aside>
+<div id="observablehq-center">
+<header id="observablehq-header">
+<a href="https://www.yimby.melbourne/" target="_blank" rel="noopener noreferrer"><img src="https://assets-global.website-files.com/64a530aa67ffbab04c9c39ab/64b27aa3f510a34fa5003e6a_logo_inter.svg" height="50/"></a>
+</header>
+<main id="observablehq-main" class="observablehq">
+<h1 id="walkability" tabindex="-1"><a class="observablehq-header-anchor" href="#walkability">Walkability</a></h1>
+<div id="cell-312e527d" class="observablehq observablehq--block"></div>
+<h2 id="walkability-by-sa1" tabindex="-1"><a class="observablehq-header-anchor" href="#walkability-by-sa1">Walkability by SA1</a></h2>
+<div id="cell-e934f67d" class="observablehq observablehq--block"></div>
+<div id="cell-34ea1235" class="observablehq observablehq--block"></div>
+<div id="cell-c90678bd" class="observablehq observablehq--block"></div>
+<div>
+<span id="cell-b5195515" class="observablehq--loading"></span>
+<span id="cell-b1299276" class="observablehq--loading"></span>
+</div>
+<div>
+<span id="cell-de358129" class="observablehq--loading"></span>
+</div>
+<div>
+<span id="cell-88f81e78" class="observablehq--loading"></span>
+</div>
+<div>
+<span id="cell-4f24c371" class="observablehq--loading"></span>
+</div>
+<div>
+<span id="cell-b5195515-1" class="observablehq--loading"></span>
+<span id="cell-3a3e8ac3" class="observablehq--loading"></span>
+</div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="prev" href="./"><span>YIMBY Melbourne Data</span></a><a rel="next" href="./distance"><span>Maximum distance to desired amenities</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-04-19T15:09:56">Apr 19, 2024</a>.</div>
+</footer>
+</div>
