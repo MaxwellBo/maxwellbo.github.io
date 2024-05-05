@@ -94,7 +94,8 @@ footer img {
 
 
 code {
-  background-color: #EEE;;
+  border: 1px solid #CCC;
+  background-color: #EEE;
   padding: .125rem .25rem;
 }
 
