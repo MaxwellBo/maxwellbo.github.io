@@ -27,11 +27,11 @@
     <br />
 
     First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
-        truly naked, brutalist html quine</a>,
-      and we'll create a <code>echo</code> class that will let us display
-      <code>style</code> and <code>script</code> tags inline.
+      truly naked, brutalist html quine</a>,
+    and we'll create a <code>echo</code> class that will let us display
+    <code>style</code> and <code>script</code> tags inline.
     This doesn't perfectly quine/echo all the source HTML to the DOM, so <kbd>View source</kbd> to see the "real"
-      HTML - note the <code>id</code>s of the <code>script</code> blocks.
+    HTML - note the <code>id</code>s of the <code>script</code> blocks.
 
     <style class="echo">
       .echo {
@@ -45,8 +45,8 @@
     </style>
 
     Then we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and <a
-        href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to the global window
-      context. We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
+      href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to the global window
+    context. We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
 
     <script type="module" class="echo">
       import * as stdlib from 'https://esm.run/@observablehq/stdlib'
@@ -94,10 +94,11 @@
     </script>
 
     Now we've created a our <code>counter</code> cell, we can create other cells that depend on it.
-  
+
     <br />
 
-    Let's import <a href="https://github.com/observablehq/htl">Hypertext Literal</a> and use it to format the <code>counter</code> value.
+    Let's import <a href="https://github.com/observablehq/htl">Hypertext Literal</a> and use it to format the
+    <code>counter</code> value.
 
     <script type="module" class="echo" id="fizzbuzz">
       import * as htl from 'https://esm.run/htl'
@@ -115,7 +116,8 @@
       });
     </script>
 
-    Let's import <a href="https://github.com/observablehq/plot">Observable Plot</a> and use the <code>counter</code> value in the plot.
+    Let's import <a href="https://github.com/observablehq/plot">Observable Plot</a> and use the <code>counter</code>
+    value in the plot.
 
     <script type="module" class="echo" id="plot">
       import * as Plot from 'https://esm.run/@observablehq/plot'
@@ -140,9 +142,10 @@
 
     <p>We'll create a new cell type <code>viewof</code> that works specifically with <a
         href="https://github.com/observablehq/inputs">Observable
-        Inputs</a>. 
-        
-        It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> -  one for the value, and one for the DOM element itself.
+        Inputs</a>.
+
+      It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> - one for the value, and one for the
+      DOM element itself.
 
       <script type="module" class="echo">
         function viewof(name, inputsOrDefinition, maybeDefinition) {
@@ -158,7 +161,6 @@
           }
         }
         window.viewof = viewof
-
       </script>
 
       <script type="module" class="echo" id="range">
