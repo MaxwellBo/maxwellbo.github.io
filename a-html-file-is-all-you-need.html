@@ -21,7 +21,7 @@
       <h2>Can we build a reactive document in a single HTML file?</h2>
     </header>
 
-    <b>Yes</b> <i>(standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</i>.
+    <b>Yes</b> <i><sub>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</sub></i>.
 
     <br />
     <br />
@@ -46,7 +46,7 @@
 
     Then we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and <a
         href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to the global window
-      context. We'll define helper methods <code>cell</code> and <cell>observer</cell> that wrap the runtime.
+      context. We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
 
     <script type="module" class="echo">
       import * as stdlib from 'https://esm.run/@observablehq/stdlib'
@@ -81,6 +81,8 @@
     </script>
 
     Now we declare a cell called <code>counter</code> that will emit a number every second.
+    We have to declare the <code>script</code> tag with <code>type="module" class="echo" id="counter"</code>.
+    <b>The <code>script</code> <code>id</code> must be the same as the cell name.</b>
 
     <script type="module" class="echo" id="counter">
       cell("counter", async function* () {
@@ -91,11 +93,11 @@
       });
     </script>
 
-    and we can declare some cells that depend on it:
+    Now we've created a our <code>counter</code> cell, we can create other cells that depend on it.
   
     <br />
 
-    Let's import <a href="https://github.com/observablehq/htl">Hypertext Literal</a>:
+    Let's import <a href="https://github.com/observablehq/htl">Hypertext Literal</a> and use it to format the <code>counter</code> value.
 
     <script type="module" class="echo" id="fizzbuzz">
       import * as htl from 'https://esm.run/htl'
@@ -113,7 +115,7 @@
       });
     </script>
 
-    Let's import <a href="https://github.com/observablehq/plot">Observable Plot</a>:
+    Let's import <a href="https://github.com/observablehq/plot">Observable Plot</a> and use the <code>counter</code> value in the plot.
 
     <script type="module" class="echo" id="plot">
       import * as Plot from 'https://esm.run/@observablehq/plot'
