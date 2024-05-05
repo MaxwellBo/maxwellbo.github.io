@@ -4,149 +4,121 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="main.css" rel="stylesheet">
 </head>
-<script type="module">
-  import * as htl from 'https://esm.run/htl'
-  import * as Plot from 'https://esm.run/@observablehq/plot'
-  import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
-
-  const runtime = new Runtime();
-  const module = runtime.module();
-  window.runtime = runtime;
-  window.module = module;
-  window.htl = htl
-  window.Plot = Plot
-
-  function observer(elementId) {
-    const inspector = document.createElement("pre");
-    const oldElement = document.getElementById(elementId)
-    const parentElement = oldElement.parentNode;
-    parentElement.insertBefore(inspector, oldElement);
-    return new Inspector(inspector);
-  }
-
-  window.observer = observer
-</script>
-<script>
-
-  
-  /**
-   * More accurately described as "viewBefore", 
-   * this function takes an elementId, finds it, and inserts the new element
-   * before it.
-   */
-  function view(elementId, newElement) {
-    const oldElement = document.getElementById(elementId)
-    const parentElement = oldElement.parentNode;
-    parentElement.insertBefore(newElement, oldElement);
-  }
-
-  /**
-   * This function takes an elementId, finds it, and inserts the new element
-   * before it _if_ an element with the same tag is not already present.
-   * 
-   * If an element with the same tag is present,
-   * it removes the existing element with the same tag,
-   * and then adds the new element. 
-   */
-  function sview(elementId, newElement, tag) {
-    const oldElement = document.getElementById(elementId)
-    const parentElement = oldElement.parentNode;
-    const existingElement = parentElement.querySelector(tag)
-    if (existingElement) {
-      existingElement.remove()
-    }
-    parentElement.insertBefore(newElement, oldElement);
-  }
-
-  function delay(duration, value) {
-    return new Promise(function(resolve) {
-      setTimeout(function() {
-        resolve(value);
-      }, duration);
-    });
-  }
-
-  function observe(id) {
-    const tag = 'observe-' + id
-    return (
-      {
-        pending() {
-          console.log(`${id}: pending`);
-          sview(id,
-            htl.html`<p>${id}: pending</p>`,
-            tag
-          )
-        },
-        fulfilled(value) {
-          console.log(`${id}: fullfilled`, value);
-          sview(id,
-            htl.html`<p>${id}: fullfilled ${value}</p>`,
-            tag
-          )
-        },
-        rejected(error) {
-          console.error(`${id}: rejected`, error);
-          sview(id,
-            htl.html`<p>${id}: rejected ${error}</p>`,
-            tag)
-        }
-      }
-    )
-  }
-</script>
-<style>
-  .echo {
-    display: block;
-    white-space: pre;
-    font-family: monospace;
-    background-color: #f0f0f0;
-  }
-</style>
 <html>
 
 <head>
   <meta charset="UTF-8">
-  <title>Title of your webpage</title>
+  <title>HTML is all you need</title>
 </head>
 
 <body>
   <main>
+    <h2>Can we build a reactive document in a single HTML page?</h2>
 
-    <h1>Single file JS notebooks</h1>
+    <p>Yes (standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</p>.
 
-    <script type="module" class="echo" id="cell1">
-      const cell1 = module.variable(observer("cell1")).define("cell1", async function* () {
-        for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
-          yield await delay(1000, i)
+    <p>First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
+        truly naked, brutalist html quine</a>,
+      and we'll create a <code>echo</code> class that will let us display
+      <code>style</code> and <code>script</code> tags inline.
+
+      <style class="echo">
+        .echo {
+          display: block;
+          white-space: pre;
+          border-radius: 3px;
+          padding: .2rem;
+          margin: .2rem;
+          background-color: ghostwhite;
+          font-family: monospace;
         }
-      });
-    </script>
+      </style>
 
-    <script type="module" class="echo" id="cell2">
-      const cell2 = module.variable(observer("cell2")).define("cell2", ["cell1"], (cell1) => {
-        return cell1 * 100
-      });
-    </script>
+      <p>Then we'll import the <a href="https://github.com/observablehq/runtime">Observable runtime</a>,
+        <a href="https://github.com/observablehq/htl">Hypertext Literal</a>, and <a href="https://github.com/observablehq/plot">Observable Plot</a> libraries, and bind them to the global window context.
+      </p>
 
+      <script type="module" class="echo">
+        import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
+        const runtime = new Runtime();
+        const module = runtime.module();
+        window.runtime = runtime;
+        window.module = module;
 
-    <script type="module" class="echo" id="example1">
-      const id = 'example1'
-      const example1 = htl.html`<p>alpha</p>`
-      view(id, example1)
-      const example2 = htl.html`<p>beta</p>`
-      view(id, example2)
-    </script>
+        import * as htl from 'https://esm.run/htl'
+        window.htl = htl
 
-    <script type="module" class="echo" id="example2">
-      const id = 'example2'
-      const numbers = [
-        170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
-        176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
-        166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
-        163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
-      ]
-      view(id, Plot.lineY(numbers).plot())
-    </script>
+        import * as Plot from 'https://esm.run/@observablehq/plot'
+        window.Plot = Plot
+
+        function cell(name, inputsOrDefinition, maybeDefinition) {
+          if (maybeDefinition) {
+            const inputs = inputsOrDefinition
+            const definition = maybeDefinition
+            const variable = module.variable(observer(name)).define(name, inputs, definition)
+          } else {
+            const definition = inputsOrDefinition
+            const variable = module.variable(observer(name)).define(name, definition)
+          }
+        }
+        window.cell = cell
+
+        function observer(cellId) {
+          const div = document.createElement("div");
+          const cellElement = document.getElementById(cellId)
+          cellElement.parentNode.insertBefore(div, cellElement);
+          return new Inspector(div);
+        }
+        window.observer = observer
+      </script>
+
+      And we'll declare a quick helper function to demo reactivity.
+
+      <script class="echo">
+        function delay(duration, value) {
+          return new Promise(function (resolve) {
+            setTimeout(function () {
+              resolve(value);
+            }, duration);
+          });
+        }
+      </script>
+
+      Now we declare some cell called <code>cell1</code> that will emit a number every second.
+
+      <script type="module" class="echo" id="cell1">
+        cell("cell1", async function* () {
+          let i = 0
+          while (true) {
+            yield await delay(1000, i++)
+          }
+        });
+      </script>
+
+      and we can declare some cells that depend on it.
+
+      <script type="module" class="echo" id="cell2">
+        cell("cell2", ["cell1"], (cell1) => {
+          return htl.html`<b>${cell1 * 10}</b>`
+        });
+      </script>
+
+      <script type="module" class="echo" id="cell3">
+        cell("cell3", ["cell1"], (cell1) => {
+          const numbers = [
+            170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
+            176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
+            166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
+            163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
+          ]
+          return Plot.plot({
+            marks: [
+              Plot.lineY(numbers, { x: (d, i) => i, y: d => d}),
+              Plot.ruleX([cell1])
+            ]
+          })
+        });
+      </script>
 
   </main>
 </body>
