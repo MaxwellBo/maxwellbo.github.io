@@ -97,8 +97,8 @@
 
     Now we declare some cell called <code>cell1</code> that will emit a number every second.
 
-    <script type="module" class="echo" id="cell1">
-      cell("cell1", async function* () {
+    <script type="module" class="echo" id="counter">
+      cell("counter", async function* () {
         let i = 0
         while (true) {
           yield await delay(1000, i++)
@@ -108,14 +108,22 @@
 
     and we can declare some cells that depend on it.
 
-    <script type="module" class="echo" id="cell2">
-      cell("cell2", ["cell1"], (cell1) => {
-        return htl.html`<b>${cell1 * 10}</b>`
+    <script type="module" class="echo" id="fizzbuzz">
+      cell("fizzbuzz", ["counter"], (counter) => {
+        if (counter % 3 === 0 && counter % 5 === 0) {
+          return htl.html`<span style="color: purple">FizzBuzz</span>`
+        } else if (counter % 3 === 0) {
+          return htl.html`<span style="color: red">Fizz</span>`
+        } else if (counter % 5 === 0) {
+          return htl.html`<span style="color: blue">Buzz</span>`
+        } else {
+          return htl.html`<span>${counter}</span>`
+        }
       });
     </script>
 
-    <script type="module" class="echo" id="cell3">
-      cell("cell3", ["cell1"], (cell1) => {
+    <script type="module" class="echo" id="plot">
+      cell("plot", ["counter"], (counter) => {
         const numbers = [
           170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
           176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
@@ -125,7 +133,7 @@
         return Plot.plot({
           marks: [
             Plot.lineY(numbers, { x: (d, i) => i, y: d => d }),
-            Plot.ruleX([cell1])
+            Plot.ruleX([counter % 40])
           ]
         })
       });
@@ -136,7 +144,8 @@
     <p>Reactive inputs are a little bit gnarly. We'll import <a href="https://github.com/observablehq/inputs">Observable Inputs</a> and the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>, and declare a new cell type <code>viewof</code></p>
 
     <script type="module" class="echo">
-      import * as stdlib from 'https://esm.run/@observablehq/stdlib'
+      import * as stdlib from 'https://esm.sh/@observablehq/stdlib'
+      console.log(stdlib)
 
       function valueof(input) {
         switch (input.type) {
