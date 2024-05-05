@@ -69,9 +69,9 @@
         }
       }
 
-      function observer(cellId) {
+      function observer(cellName) {
         const div = document.createElement("div");
-        const cellElement = document.getElementById(cellId)
+        const cellElement = document.getElementById(cellName)
         cellElement.parentNode.insertBefore(div, cellElement);
         return new Inspector(div);
       }
