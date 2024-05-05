@@ -31,19 +31,21 @@
     <p>First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
         truly naked, brutalist html quine</a>,
       and we'll create a <code>echo</code> class that will let us display
-      <code>style</code> and <code>script</code> tags inline.</p>
-      <p>This doesn't perfectly quine/echo all the source HTML to the DOM, so <kbd>View source</kbd> to see the "real" HTML - note the <code>id</code>s of the <code>script</code> blocks.</p>
+      <code>style</code> and <code>script</code> tags inline.
+    </p>
+    <p>This doesn't perfectly quine/echo all the source HTML to the DOM, so <kbd>View source</kbd> to see the "real"
+      HTML - note the <code>id</code>s of the <code>script</code> blocks.</p>
 
-      <style class="echo">
-        .echo {
-          display: block;
-          white-space: pre;
-          font-family: monospace;
-          background-color: #EEE;
-          margin: .2rem;
-          overflow: scroll;
-        }
-      </style>
+    <style class="echo">
+      .echo {
+        display: block;
+        white-space: pre;
+        font-family: monospace;
+        background-color: #EEE;
+        margin: .2rem;
+        overflow: scroll;
+      }
+    </style>
 
     <p>Then we'll import the <a href="https://github.com/observablehq/runtime">Observable runtime</a>,
       <a href="https://github.com/observablehq/htl">Hypertext Literal</a>, and <a
@@ -51,7 +53,7 @@
       context.
     </p>
 
-    
+
     <script type="module" class="echo">
       import * as htl from 'https://esm.run/htl'
       import * as Plot from 'https://esm.run/@observablehq/plot'
@@ -63,10 +65,10 @@
         if (maybeDefinition) {
           const inputs = inputsOrDefinition
           const definition = maybeDefinition
-          const variable = module.variable(observer(name)).define(name, inputs, definition)
+          module.variable(observer(name)).define(name, inputs, definition)
         } else {
           const definition = inputsOrDefinition
-          const variable = module.variable(observer(name)).define(name, definition)
+          module.variable(observer(name)).define(name, definition)
         }
       }
 
@@ -77,6 +79,7 @@
         return new Inspector(div);
       }
 
+      window.module = module
       window.htl = htl
       window.Plot = Plot
       window.cell = cell
@@ -131,6 +134,73 @@
       });
     </script>
 
+    <h3>Inputs</h3>
+
+    <p>Reactive inputs are a little bit gnarly. We'll import <a href="https://github.com/observablehq/inputs">Observable Inputs</a> and the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>, and declare a new cell type <code>viewof</code></p>
+
+    <script type="module" class="echo">
+      import * as stdlib from 'https://esm.run/@observablehq/stdlib'
+
+      function valueof(input) {
+        switch (input.type) {
+          case "range":
+          case "number": return input.valueAsNumber;
+          case "date": return input.valueAsDate;
+          case "checkbox": return input.checked;
+          case "file": return input.multiple ? input.files : input.files[0];
+          case "select-multiple": return Array.from(input.selectedOptions, o => o.value);
+          default: return input.value;
+        }
+      }
+
+      function eventof(input) {
+        switch (input.type) {
+          case "button":
+          case "submit":
+          case "checkbox": return "click";
+          case "file": return "change";
+          default: return "input";
+        }
+      }
+
+      function input(input) {
+        return stdlib.observe(function (change) {
+          var event = eventof(input), value = valueof(input);
+          function inputted() { change(valueof(input)); }
+          input.addEventListener(event, inputted);
+          if (value !== undefined) change(value);
+          return function () { input.removeEventListener(event, inputted); };
+        });
+      }
+
+      function viewof(name, inputsOrDefinition, maybeDefinition) {
+        if (maybeDefinition) {
+          const inputs = inputsOrDefinition
+          const definition = maybeDefinition
+          module.variable(observer(name)).define("viewof " + name, inputs, definition)
+          module.variable().define(name, ["viewof " + name], (inpt) => input(inpt))
+        } else {
+          const definition = inputsOrDefinition
+          module.variable(observer(name)).define("viewof " + name, definition)
+          module.variable().define(name, ["viewof " + name], (inpt) => input(inpt))
+        }
+      }
+      window.viewof = viewof
+
+    </script>
+
+    <script type="module" class="echo" id="range">
+      import * as Inputs from 'https://esm.run/@observablehq/inputs'
+      viewof("range", () => {
+        return Inputs.range([0, 100], { step: 1 })
+      });
+    </script>
+
+    <script type="module" class="echo" id="rangePlot">
+      cell("rangePlot", ["range"], (range) => {
+        return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
+      });
+    </script>
 
   </main>
 </body>
