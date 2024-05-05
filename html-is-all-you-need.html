@@ -21,7 +21,7 @@
           </marquee>
         </h2>
       </nav>
-      <h2>Can we build a reactive document in a single HTML page?</h2>
+      <h2>Can we build a reactive document in a single HTML file?</h2>
     </header>
 
     <p>Yes (standing on the shoulders of <a href="https://observablehq.com/">Observable</a>).</p>
@@ -31,9 +31,8 @@
     <p>First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
         truly naked, brutalist html quine</a>,
       and we'll create a <code>echo</code> class that will let us display
-      <code>style</code> and <code>script</code> tags inline.
-
-      This doesn't perfectly quine/echo all the source HTML to the DOM, so<code>View source</code> to see the "real" HTML - note the <code>id</code>s of the <code>script</code> blocks.
+      <code>style</code> and <code>script</code> tags inline.</p>
+      <p>This doesn't perfectly quine/echo all the source HTML to the DOM, so <code>View source</code> to see the "real" HTML - note the <code>id</code>s of the <code>script</code> blocks.</p>
 
       <style class="echo">
         .echo {
@@ -53,18 +52,13 @@
       context.
     </p>
 
+    
     <script type="module" class="echo">
+      import * as htl from 'https://esm.run/htl'
+      import * as Plot from 'https://esm.run/@observablehq/plot'
       import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
       const runtime = new Runtime();
       const module = runtime.module();
-      window.runtime = runtime;
-      window.module = module;
-
-      import * as htl from 'https://esm.run/htl'
-      window.htl = htl
-
-      import * as Plot from 'https://esm.run/@observablehq/plot'
-      window.Plot = Plot
 
       function cell(name, inputsOrDefinition, maybeDefinition) {
         if (maybeDefinition) {
@@ -76,7 +70,6 @@
           const variable = module.variable(observer(name)).define(name, definition)
         }
       }
-      window.cell = cell
 
       function observer(cellId) {
         const div = document.createElement("div");
@@ -84,6 +77,10 @@
         cellElement.parentNode.insertBefore(div, cellElement);
         return new Inspector(div);
       }
+
+      window.htl = htl
+      window.Plot = Plot
+      window.cell = cell
       window.observer = observer
     </script>
 
