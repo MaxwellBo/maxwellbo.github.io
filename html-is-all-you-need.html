@@ -25,12 +25,15 @@
     </header>
 
     <p>Yes (standing on the shoulders of <a href="https://observablehq.com/">Observable</a>).</p>
-    
+
+    <br />
 
     <p>First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
         truly naked, brutalist html quine</a>,
       and we'll create a <code>echo</code> class that will let us display
       <code>style</code> and <code>script</code> tags inline.
+
+      This doesn't perfectly quine/echo all the source HTML to the DOM, so<code>View source</code> to see the "real" HTML - note the <code>id</code>s of the <code>script</code> blocks.
 
       <style class="echo">
         .echo {
@@ -131,6 +134,7 @@
         })
       });
     </script>
+
 
   </main>
 </body>
