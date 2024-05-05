@@ -15,12 +15,83 @@
   window.module = module;
   window.htl = htl
   window.Plot = Plot
+
+  function freakyObserver(elementId) {
+    const inspector = document.createElement("div");
+    const oldElement = document.getElementById(elementId)
+    const parentElement = oldElement.parentNode;
+    parentElement.insertBefore(inspector, oldElement);
+    return new Inspector(inspector);
+  }
+
+  window.freakyObserver = freakyObserver
 </script>
 <script>
+
+  
+  /**
+   * More accurately described as "viewBefore", 
+   * this function takes an elementId, finds it, and inserts the new element
+   * before it.
+   */
   function view(elementId, newElement) {
     const oldElement = document.getElementById(elementId)
     const parentElement = oldElement.parentNode;
     parentElement.insertBefore(newElement, oldElement);
+  }
+
+  /**
+   * This function takes an elementId, finds it, and inserts the new element
+   * before it _if_ an element with the same tag is not already present.
+   * 
+   * If an element with the same tag is present,
+   * it removes the existing element with the same tag,
+   * and then adds the new element. 
+   */
+  function sview(elementId, newElement, tag) {
+    const oldElement = document.getElementById(elementId)
+    const parentElement = oldElement.parentNode;
+    const existingElement = parentElement.querySelector(tag)
+    if (existingElement) {
+      existingElement.remove()
+    }
+    parentElement.insertBefore(newElement, oldElement);
+  }
+
+  function delay(duration, value) {
+    return new Promise(function(resolve) {
+      setTimeout(function() {
+        resolve(value);
+      }, duration);
+    });
+  }
+
+  function observe(id) {
+    const tag = 'observe-' + id
+    return (
+      {
+        pending() {
+          console.log(`${id}: pending`);
+          sview(id,
+            htl.html`<p>${id}: pending</p>`,
+            tag
+          )
+        },
+        fulfilled(value) {
+          console.log(`${id}: fullfilled`, value);
+          sview(id,
+            htl.html`<p>${id}: fullfilled ${value}</p>`,
+            tag
+          )
+        },
+        rejected(error) {
+          console.error(`${id}: rejected`, error);
+          sview(id,
+            htl.html`<p>${id}: rejected ${error}</p>`,
+            tag)
+        }
+      }
+    )
   }
 </script>
 <style>
@@ -43,29 +114,12 @@
 
     <h1>Single file JS notebooks</h1>
 
-    <script type="module" class="echo" id="example0">
-      const obs = {
-        pending() {
-          console.log(`${name}: pending`);
-        },
-        fulfilled(value) {
-          console.log(`${name}: fullfilled`, value);
-        },
-        rejected(error) {
-          console.error(`${name}: rejected`, error);
-        }
-      }
-
-      const a = module.variable(obs).define("a", function* () {
-        for (const i of [1, 2, 18]) {
-          yield i
+    <script type="module" class="echo" id="cell1">
+      const cell1 = module.variable(freakyObserver("cell1")).define("cell1", async function* () {
+        for (const i of [1, 2, 3]) {
+          yield await delay(1000, htl.html`<h1>${i}</h1>`)
         }
       });
-      console.log(a)
-      const b = module.variable(obs).define("b", 2);
-      console.log(b)
-      const c = module.variable(obs).define("c", ["a", "b"], (a, b) => a + b);
-      console.log(c)
     </script>
 
     <script type="module" class="echo" id="example1">
