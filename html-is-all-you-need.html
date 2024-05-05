@@ -16,15 +16,15 @@
   window.htl = htl
   window.Plot = Plot
 
-  function freakyObserver(elementId) {
-    const inspector = document.createElement("div");
+  function observer(elementId) {
+    const inspector = document.createElement("pre");
     const oldElement = document.getElementById(elementId)
     const parentElement = oldElement.parentNode;
     parentElement.insertBefore(inspector, oldElement);
     return new Inspector(inspector);
   }
 
-  window.freakyObserver = freakyObserver
+  window.observer = observer
 </script>
 <script>
 
@@ -115,12 +115,19 @@
     <h1>Single file JS notebooks</h1>
 
     <script type="module" class="echo" id="cell1">
-      const cell1 = module.variable(freakyObserver("cell1")).define("cell1", async function* () {
-        for (const i of [1, 2, 3]) {
-          yield await delay(1000, htl.html`<h1>${i}</h1>`)
+      const cell1 = module.variable(observer("cell1")).define("cell1", async function* () {
+        for (const i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]) {
+          yield await delay(1000, i)
         }
       });
     </script>
+
+    <script type="module" class="echo" id="cell2">
+      const cell2 = module.variable(observer("cell2")).define("cell2", ["cell1"], (cell1) => {
+        return cell1 * 100
+      });
+    </script>
+
 
     <script type="module" class="echo" id="example1">
       const id = 'example1'
