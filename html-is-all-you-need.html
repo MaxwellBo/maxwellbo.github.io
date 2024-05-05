@@ -6,7 +6,9 @@
 </head>
 <script type="module">
     import * as htl from 'https://esm.run/htl'
+    import * as Plot from 'https://esm.run/@observablehq/plot'
     window.htl = htl
+    window.Plot = Plot
 </script>
 <script>
     function view(elementId, newElement) {
@@ -33,17 +35,27 @@
 <body>
     <main>
 
-    <h1>Headless Observable</h1>
+    <h1>Single file JS notebooks</h1>
 
-    <script class="echo" id="example1">
-        const id = document.currentScript.id;
-        window.addEventListener("load", () => {
-            const example1 = htl.html`<p>alpha</p>`
-            view(id, example1)
-            const example2 = htl.html`<p>beta</p>`
-            view(id, example2)
-        });
+    <script type="module" class="echo" id="example1">
+        const id = 'example1'
+        const example1 = htl.html`<p>alpha</p>`
+        view(id, example1)
+        const example2 = htl.html`<p>beta</p>`
+        view(id, example2)
     </script>
+
+    <script type="module" class="echo" id="example2">
+        const id = 'example2'
+        const numbers = [
+            170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
+            176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
+            166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
+            163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
+        ]
+        view(id, Plot.lineY(numbers).plot())
+    </script>
+
     </main>
 </body>
 
