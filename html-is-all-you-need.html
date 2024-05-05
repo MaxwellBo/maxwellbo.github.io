@@ -13,9 +13,19 @@
 
 <body>
   <main>
-    <h2>Can we build a reactive document in a single HTML page?</h2>
+    <header>
+      <nav>
+        <h2>
+          <marquee>
+            <a href="/">← Max Bo</a>
+          </marquee>
+        </h2>
+      </nav>
+      <h2>Can we build a reactive document in a single HTML page?</h2>
+    </header>
 
-    <p>Yes (standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</p>.
+    <p>Yes (standing on the shoulders of <a href="https://observablehq.com/">Observable</a>).</p>
+    
 
     <p>First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
         truly naked, brutalist html quine</a>,
@@ -34,91 +44,93 @@
         }
       </style>
 
-      <p>Then we'll import the <a href="https://github.com/observablehq/runtime">Observable runtime</a>,
-        <a href="https://github.com/observablehq/htl">Hypertext Literal</a>, and <a href="https://github.com/observablehq/plot">Observable Plot</a> libraries, and bind them to the global window context.
-      </p>
+    <p>Then we'll import the <a href="https://github.com/observablehq/runtime">Observable runtime</a>,
+      <a href="https://github.com/observablehq/htl">Hypertext Literal</a>, and <a
+        href="https://github.com/observablehq/plot">Observable Plot</a> libraries, and bind them to the global window
+      context.
+    </p>
 
-      <script type="module" class="echo">
-        import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
-        const runtime = new Runtime();
-        const module = runtime.module();
-        window.runtime = runtime;
-        window.module = module;
+    <script type="module" class="echo">
+      import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
+      const runtime = new Runtime();
+      const module = runtime.module();
+      window.runtime = runtime;
+      window.module = module;
 
-        import * as htl from 'https://esm.run/htl'
-        window.htl = htl
+      import * as htl from 'https://esm.run/htl'
+      window.htl = htl
 
-        import * as Plot from 'https://esm.run/@observablehq/plot'
-        window.Plot = Plot
+      import * as Plot from 'https://esm.run/@observablehq/plot'
+      window.Plot = Plot
 
-        function cell(name, inputsOrDefinition, maybeDefinition) {
-          if (maybeDefinition) {
-            const inputs = inputsOrDefinition
-            const definition = maybeDefinition
-            const variable = module.variable(observer(name)).define(name, inputs, definition)
-          } else {
-            const definition = inputsOrDefinition
-            const variable = module.variable(observer(name)).define(name, definition)
-          }
+      function cell(name, inputsOrDefinition, maybeDefinition) {
+        if (maybeDefinition) {
+          const inputs = inputsOrDefinition
+          const definition = maybeDefinition
+          const variable = module.variable(observer(name)).define(name, inputs, definition)
+        } else {
+          const definition = inputsOrDefinition
+          const variable = module.variable(observer(name)).define(name, definition)
         }
-        window.cell = cell
+      }
+      window.cell = cell
 
-        function observer(cellId) {
-          const div = document.createElement("div");
-          const cellElement = document.getElementById(cellId)
-          cellElement.parentNode.insertBefore(div, cellElement);
-          return new Inspector(div);
-        }
-        window.observer = observer
-      </script>
+      function observer(cellId) {
+        const div = document.createElement("div");
+        const cellElement = document.getElementById(cellId)
+        cellElement.parentNode.insertBefore(div, cellElement);
+        return new Inspector(div);
+      }
+      window.observer = observer
+    </script>
 
-      And we'll declare a quick helper function to demo reactivity.
+    And we'll declare a quick helper function to demo reactivity.
 
-      <script class="echo">
-        function delay(duration, value) {
-          return new Promise(function (resolve) {
-            setTimeout(function () {
-              resolve(value);
-            }, duration);
-          });
-        }
-      </script>
-
-      Now we declare some cell called <code>cell1</code> that will emit a number every second.
-
-      <script type="module" class="echo" id="cell1">
-        cell("cell1", async function* () {
-          let i = 0
-          while (true) {
-            yield await delay(1000, i++)
-          }
+    <script class="echo">
+      function delay(duration, value) {
+        return new Promise(function (resolve) {
+          setTimeout(function () {
+            resolve(value);
+          }, duration);
         });
-      </script>
+      }
+    </script>
 
-      and we can declare some cells that depend on it.
+    Now we declare some cell called <code>cell1</code> that will emit a number every second.
 
-      <script type="module" class="echo" id="cell2">
-        cell("cell2", ["cell1"], (cell1) => {
-          return htl.html`<b>${cell1 * 10}</b>`
-        });
-      </script>
+    <script type="module" class="echo" id="cell1">
+      cell("cell1", async function* () {
+        let i = 0
+        while (true) {
+          yield await delay(1000, i++)
+        }
+      });
+    </script>
 
-      <script type="module" class="echo" id="cell3">
-        cell("cell3", ["cell1"], (cell1) => {
-          const numbers = [
-            170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
-            176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
-            166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
-            163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
+    and we can declare some cells that depend on it.
+
+    <script type="module" class="echo" id="cell2">
+      cell("cell2", ["cell1"], (cell1) => {
+        return htl.html`<b>${cell1 * 10}</b>`
+      });
+    </script>
+
+    <script type="module" class="echo" id="cell3">
+      cell("cell3", ["cell1"], (cell1) => {
+        const numbers = [
+          170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
+          176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
+          166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
+          163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
+        ]
+        return Plot.plot({
+          marks: [
+            Plot.lineY(numbers, { x: (d, i) => i, y: d => d }),
+            Plot.ruleX([cell1])
           ]
-          return Plot.plot({
-            marks: [
-              Plot.lineY(numbers, { x: (d, i) => i, y: d => d}),
-              Plot.ruleX([cell1])
-            ]
-          })
-        });
-      </script>
+        })
+      });
+    </script>
 
   </main>
 </body>
