@@ -1,14 +1,50 @@
 <!DOCTYPE html>
+
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="main.css" rel="stylesheet">
 </head>
+<script type="module">
+    import * as htl from 'https://esm.run/htl'
+    window.htl = htl
+</script>
+<script>
+    function view(elementId, newElement) {
+        const oldElement = document.getElementById(elementId)
+        const parentElement = oldElement.parentNode;
+        parentElement.insertBefore(newElement, oldElement);
+    }
+</script>
+<style>
+    .echo { 
+        display:block; 
+        white-space: pre;
+        font-family: monospace;
+        background-color: #f0f0f0;
+    }
+</style>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Title of your webpage</title>
-    </head>
-    <body>
-        <h1>Hello, World!</h1>
-    </body>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title of your webpage</title>
+</head>
+
+<body>
+    <main>
+
+    <h1>Headless Observable</h1>
+
+    <script class="echo" id="example1">
+        const id = document.currentScript.id;
+        window.addEventListener("load", () => {
+            const example1 = htl.html`<p>alpha</p>`
+            view(id, example1)
+            const example2 = htl.html`<p>beta</p>`
+            view(id, example2)
+        });
+    </script>
+    </main>
+</body>
+
 </html>
