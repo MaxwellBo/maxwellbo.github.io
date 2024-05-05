@@ -21,17 +21,17 @@
       <h2>Can we build a reactive document in a single HTML file?</h2>
     </header>
 
-    <p>Yes (standing on the shoulders of <a href="https://observablehq.com/">Observable</a>).</p>
+    Yes (standing on the shoulders of <a href="https://observablehq.com/">Observable</a>).
 
     <br />
+    <br />
 
-    <p>First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
+    First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
         truly naked, brutalist html quine</a>,
       and we'll create a <code>echo</code> class that will let us display
       <code>style</code> and <code>script</code> tags inline.
-    </p>
-    <p>This doesn't perfectly quine/echo all the source HTML to the DOM, so <kbd>View source</kbd> to see the "real"
-      HTML - note the <code>id</code>s of the <code>script</code> blocks.</p>
+    This doesn't perfectly quine/echo all the source HTML to the DOM, so <kbd>View source</kbd> to see the "real"
+      HTML - note the <code>id</code>s of the <code>script</code> blocks.
 
     <style class="echo">
       .echo {
@@ -44,17 +44,15 @@
       }
     </style>
 
-    <p>Then we'll import the <a href="https://github.com/observablehq/runtime">Observable runtime</a>,
-      <a href="https://github.com/observablehq/htl">Hypertext Literal</a>, and <a
-        href="https://github.com/observablehq/plot">Observable Plot</a> libraries, and bind them to the global window
-      context.
-    </p>
-
+    Then we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and <a
+        href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to the global window
+      context. We'll define helper methods <code>cell</code> and <cell>observer</cell> that wrap the runtime.
 
     <script type="module" class="echo">
-      import * as htl from 'https://esm.run/htl'
-      import * as Plot from 'https://esm.run/@observablehq/plot'
+      import * as stdlib from 'https://esm.run/@observablehq/stdlib'
       import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
+
+      const library = new stdlib.Library();
       const runtime = new Runtime();
       const module = runtime.module();
 
@@ -76,39 +74,32 @@
         return new Inspector(div);
       }
 
+      window.library = library
       window.module = module
-      window.htl = htl
-      window.Plot = Plot
       window.cell = cell
       window.observer = observer
     </script>
 
-    And we'll declare a quick helper function to demo reactivity.
-
-    <script class="echo">
-      function delay(duration, value) {
-        return new Promise(function (resolve) {
-          setTimeout(function () {
-            resolve(value);
-          }, duration);
-        });
-      }
-    </script>
-
-    Now we declare some cell called <code>cell1</code> that will emit a number every second.
+    Now we declare a cell called <code>counter</code> that will emit a number every second.
 
     <script type="module" class="echo" id="counter">
       cell("counter", async function* () {
         let i = 0
         while (true) {
-          yield await delay(1000, i++)
+          yield await library.Promises.delay(1000, i++)
         }
       });
     </script>
 
-    and we can declare some cells that depend on it.
+    and we can declare some cells that depend on it:
+  
+    <br />
+
+    Let's import <a href="https://github.com/observablehq/htl">Hypertext Literal</a>:
 
     <script type="module" class="echo" id="fizzbuzz">
+      import * as htl from 'https://esm.run/htl'
+
       cell("fizzbuzz", ["counter"], (counter) => {
         if (counter % 3 === 0 && counter % 5 === 0) {
           return htl.html`<span style="color: purple">FizzBuzz</span>`
@@ -122,7 +113,11 @@
       });
     </script>
 
+    Let's import <a href="https://github.com/observablehq/plot">Observable Plot</a>:
+
     <script type="module" class="echo" id="plot">
+      import * as Plot from 'https://esm.run/@observablehq/plot'
+
       cell("plot", ["counter"], (counter) => {
         const numbers = [
           170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
@@ -141,72 +136,42 @@
 
     <h3>Inputs</h3>
 
-    <p>Reactive inputs are a little bit gnarly. We'll import <a href="https://github.com/observablehq/inputs">Observable Inputs</a> and the <a href="https://github.com/observablehq/stdlib">Observable standard library</a>, and declare a new cell type <code>viewof</code></p>
+    <p>We'll create a new cell type <code>viewof</code> that works specifically with <a
+        href="https://github.com/observablehq/inputs">Observable
+        Inputs</a>.
 
-    <script type="module" class="echo">
-      import * as stdlib from 'https://esm.sh/@observablehq/stdlib'
-      console.log(stdlib)
-
-      function valueof(input) {
-        switch (input.type) {
-          case "range":
-          case "number": return input.valueAsNumber;
-          case "date": return input.valueAsDate;
-          case "checkbox": return input.checked;
-          case "file": return input.multiple ? input.files : input.files[0];
-          case "select-multiple": return Array.from(input.selectedOptions, o => o.value);
-          default: return input.value;
+      <script type="module" class="echo">
+        function viewof(name, inputsOrDefinition, maybeDefinition) {
+          if (maybeDefinition) {
+            const inputs = inputsOrDefinition
+            const definition = maybeDefinition
+            module.variable(observer(name)).define("viewof " + name, inputs, definition)
+            module.variable().define(name, ["viewof " + name], (inpt) => library.Generators.input(inpt))
+          } else {
+            const definition = inputsOrDefinition
+            module.variable(observer(name)).define("viewof " + name, definition)
+            module.variable().define(name, ["viewof " + name], (inpt) => library.Generators.input(inpt))
+          }
         }
-      }
+        window.viewof = viewof
 
-      function eventof(input) {
-        switch (input.type) {
-          case "button":
-          case "submit":
-          case "checkbox": return "click";
-          case "file": return "change";
-          default: return "input";
-        }
-      }
+      </script>
 
-      function input(input) {
-        return stdlib.observe(function (change) {
-          var event = eventof(input), value = valueof(input);
-          function inputted() { change(valueof(input)); }
-          input.addEventListener(event, inputted);
-          if (value !== undefined) change(value);
-          return function () { input.removeEventListener(event, inputted); };
+      <script type="module" class="echo" id="range">
+        import * as Inputs from 'https://esm.run/@observablehq/inputs'
+
+        viewof("range", () => {
+          return Inputs.range([0, 100], { step: 1 })
         });
-      }
+      </script>
 
-      function viewof(name, inputsOrDefinition, maybeDefinition) {
-        if (maybeDefinition) {
-          const inputs = inputsOrDefinition
-          const definition = maybeDefinition
-          module.variable(observer(name)).define("viewof " + name, inputs, definition)
-          module.variable().define(name, ["viewof " + name], (inpt) => input(inpt))
-        } else {
-          const definition = inputsOrDefinition
-          module.variable(observer(name)).define("viewof " + name, definition)
-          module.variable().define(name, ["viewof " + name], (inpt) => input(inpt))
-        }
-      }
-      window.viewof = viewof
+      <script type="module" class="echo" id="rangePlot">
+        import * as Plot from 'https://esm.run/@observablehq/plot'
 
-    </script>
-
-    <script type="module" class="echo" id="range">
-      import * as Inputs from 'https://esm.run/@observablehq/inputs'
-      viewof("range", () => {
-        return Inputs.range([0, 100], { step: 1 })
-      });
-    </script>
-
-    <script type="module" class="echo" id="rangePlot">
-      cell("rangePlot", ["range"], (range) => {
-        return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
-      });
-    </script>
+        cell("rangePlot", ["range"], (range) => {
+          return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
+        });
+      </script>
 
   </main>
 </body>
