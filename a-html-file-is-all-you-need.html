@@ -361,23 +361,13 @@
     We'll create some appropriate styles:
 
     <style class="echo">
-      @keyframes pulsate {
-        content 0% {
-          background-color: white;
-        }
-
-        50% {
-          background-color: grey;
-        }
-
-        100% {
-          background-color: white;
-        }
+      @keyframes blink {
+        67% { opacity: 0 }
       }
 
       .observablehq--running:after {
-        content: '·';
-        animation: pulsate 2s infinite;
+        content: 'LOADING';
+        animation: blink 1s step-end infinite;;
       }
 
       .observablehq--error {

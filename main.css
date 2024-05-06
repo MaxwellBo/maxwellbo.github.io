@@ -128,6 +128,12 @@ kbd {
   justify-content: center;
 }
 
+blink, .blink { animation: blink 1s step-end infinite; }
+
+@keyframes blink {
+  67% { opacity: 0 }
+}
+
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
