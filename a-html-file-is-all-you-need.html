@@ -32,10 +32,13 @@
     I don't think HTML is being used enough for scientific publishing.
     <br />
     People are using either full-blown publishing platforms, like <a href="https://quarto.org/">Quarto</a>, <a
-      href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, or using interactive notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a href="https://observablehq.com/">Observable</a>.
+      href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, or using interactive
+    notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a
+      href="https://observablehq.com/">Observable</a>.
     <br />
     <br />
-    I think a single, self-contained HTML file can provide most of the affordances of these two types of tools, and prevent a lot of faffing around with tooling or 3rd-party platforms
+    I think a single, self-contained HTML file can provide most of the affordances of these two types of tools, and
+    prevent a lot of faffing around with tooling or 3rd-party platforms
     <br />
     <br />
     I'm going to try and demonstrate this, in <i>this</i> file.
@@ -204,9 +207,11 @@
 
     <h2>Mutability</h2>
 
-    Purely functional dataflow is great, but sometimes you just need to mutate state. 
-    We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a>
-    values when the value is mutated - in the runtime. 
+    Purely functional dataflow is great, but sometimes you just need to mutate state.
+    We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new
+    <a
+      href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a>
+    values when the value is mutated - in the runtime.
 
     <script type="module" class="echo" id="mutable">
       function Mutable(value) {
@@ -219,7 +224,7 @@
           "value",
           {
             get: () => value,
-            set: (x) => void change((value = x)) 
+            set: (x) => void change((value = x))
           }
         );
       }
@@ -247,12 +252,57 @@
 
     <script type="module" class="echo" id="sword">
       import * as htl from 'https://esm.run/htl'
-      
+
       cell("sword", ["ref"], (ref) => {
         return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
       });
     </script>
 
+
+    <h2>LaTeX, Markdown, GrapViz &amp; more</h2>
+
+    Need I say more.
+
+    <script type="module" class="echo" id="tex">
+      cell("tex", () => {
+        return library.tex().then(tex =>
+          tex`\def\f#1#2{#1f(#2)}
+    \f\relax{x} = \int_{-\infty}^\infty
+    \f\hat\xi\,e^{2 \pi i \xi x}
+    \,d\xi`
+        )
+      });
+    </script>
+
+    <script type="module" class="echo" id="markdown">
+      const elements = [
+        { symbol: "Co", name: "Cobalt", number: 27 },
+        { symbol: "Cu", name: "Copper", number: 29 },
+        { symbol: "Sn", name: "Tin", number: 50 },
+        { symbol: "Pb", name: "Lead", number: 82 }
+      ]
+
+      cell("markdown", () => {
+        return library.md().then(md =>
+          md`
+| Name      | Symbol      | Atomic number |
+|-----------|-------------|---------------|${elements.map(e => `
+| ${e.name} | ${e.symbol} | ${e.number}   |`)}
+`
+        )
+      });
+    </script>
+
+    <script type="module" class="echo" id="dot">
+      cell("dot", () => {
+        return library.dot().then(dot =>
+          dot`digraph G {
+            rankdir = LR
+            a -> b -> c
+          }`
+        )
+      });
+    </script>
 
     <h2>Cell status</h2>
 
