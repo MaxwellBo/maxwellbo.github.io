@@ -22,15 +22,33 @@
       </nav>
       <time datetime="2024-05-06">May 6, 2024</time>
       <h1>Can we build a reactive document in a single HTML file?</h1>
-      <b>Yes</b> <i><sub>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</sub></i>.
+      <b>Yes</b> <small><i>(by standing on the shoulders of <a
+            href="https://observablehq.com/">Observable</a>)</i></small>.
     </header>
+
+    Before I start, why am I doing this?
+    <br />
+    <br />
+    I don't think HTML being used enough for scientific publishing.
+    <br />
+    People are using either full-blown publishing platforms, like <a href="https://quarto.org/">Quarto</a>, <a
+      href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, or using interactive notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a href="https://observablehq.com/">Observable</a>.
+    <br />
+    <br />
+    I think a single, self-contained HTML file can provide most of the affordances of these two types of tools, and prevent a lot of faffing around with tooling or 3rd-party platforms
+    <br />
+    <br />
+    Let's build it here, in <i>this</i> file.
+
+    <h2>Cells</h2>
 
 
     First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
       truly naked, brutalist html quine</a>,
     and create a CSS class called <code>echo</code> that will display
     <code>style</code> and <code>script</code> elements inline.
-    <code>echo</code> doesn't perfectly quine/echo all the source HTML to the DOM, so you'll need to use <kbd>View source</kbd> to see the "real"
+    <code>echo</code> doesn't perfectly quine/echo all the source HTML to the DOM, so you'll need to use <kbd>View
+      source</kbd> to see the "real"
     HTML - note the <code>id</code> attributes of the <code>script</code> elements.
 
     <style class="echo">
@@ -45,7 +63,8 @@
     </style>
 
     Now we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and the <a
-      href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to <code>window</code> We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
+      href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to <code>window</code> We'll
+    define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
 
     <script type="module" class="echo">
       import * as stdlib from 'https://esm.run/@observablehq/stdlib'
@@ -80,8 +99,10 @@
     </script>
 
     Now we'll declare a cell called <code>counter</code> that will emit a number every second.
-    We have to declare the <code>script</code> element with attributes <code>type="module" class="echo" id="counter"</code>.
-    <b>The <code>script</code> <code>id</code> attribute must be the same as the <code>name</code> parameter passed to <code>cell</code></b>.
+    We have to declare the <code>script</code> element with attributes
+    <code>type="module" class="echo" id="counter"</code>.
+    <b>The <code>script</code> <code>id</code> attribute must be the same as the <code>name</code> parameter passed to
+      <code>cell</code></b>.
 
     <script type="module" class="echo" id="counter">
       cell("counter", async function* () {
@@ -147,16 +168,19 @@
       DOM element itself.
 
       <script type="module" class="echo">
+        import * as Inputs from 'https://esm.run/@observablehq/inputs'
+        window.Inputs = Inputs
+
         function viewof(name, inputsOrDefinition, maybeDefinition) {
           if (maybeDefinition) {
             const inputs = inputsOrDefinition
             const definition = maybeDefinition
-            module.variable(observer(name)).define("viewof " + name, inputs, definition)
-            module.variable().define(name, ["viewof " + name], (inpt) => library.Generators.input(inpt))
+            module.variable(observer(name)).define(`viewof ${name}`, inputs, definition)
+            module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
           } else {
             const definition = inputsOrDefinition
-            module.variable(observer(name)).define("viewof " + name, definition)
-            module.variable().define(name, ["viewof " + name], (inpt) => library.Generators.input(inpt))
+            module.variable(observer(name)).define(`viewof ${name}`, definition)
+            module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
           }
         }
         window.viewof = viewof
@@ -165,8 +189,6 @@
       Wiggle the range input and see another dependent cell update.
 
       <script type="module" class="echo" id="range">
-        import * as Inputs from 'https://esm.run/@observablehq/inputs'
-
         viewof("range", () => {
           return Inputs.range([0, 100], { step: 1 })
         });
@@ -180,44 +202,103 @@
         });
       </script>
 
+    <h2>Mutability</h2>
 
-      <h2>Cell status</h2>
+    Purely functional dataflow is great, but sometimes you just need to mutate state. 
+    We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a>
+    values when the value is mutated - in the runtime. 
 
-      Observable's <code>Inspector</code> applies a <code>observablehq--running</code> and a
-      <code>observablehq--error</code> class to the cell's <code>div</code> result element. 
-      We'll create some appropriate styles:
+    <script type="module" class="echo" id="mutable">
+      function Mutable(value) {
+        let change;
+        return Object.defineProperty(
+          library.Generators.observe((_) => {
+            change = _;
+            if (value !== undefined) change(value);
+          }),
+          "value",
+          {
+            get: () => value,
+            set: (x) => void change((value = x)) 
+          }
+        );
+      }
 
-      <style class="echo">
-        @keyframes pulsate {
-          content
-          0%   {background-color: white;}
-          50%  {background-color: grey;}
-          100% {background-color: white;}
+      function mutable(name, value) {
+        const m = Mutable(value)
+        module.variable(observer(name)).define(name, m)
+        return m
+      }
+      window.mutable = mutable
+    </script>
+
+    <script type="module" class="echo" id="ref">
+      window.ref = mutable("ref", 3)
+    </script>
+
+    <script type="module" class="echo" id="increment">
+      viewof("increment", () => {
+        const increment = () => ++ref.value
+        const reset = () => ref.value = 0;
+
+        return Inputs.button([["Increment", increment], ["Reset", reset]])
+      });
+    </script>
+
+    <script type="module" class="echo" id="sword">
+      import * as htl from 'https://esm.run/htl'
+      
+      cell("sword", ["ref"], (ref) => {
+        return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
+      });
+    </script>
+
+
+    <h2>Cell status</h2>
+
+    Observable's <code>Inspector</code> applies a <code>observablehq--running</code> and a
+    <code>observablehq--error</code> class to the cell's <code>div</code> result element.
+    We'll create some appropriate styles:
+
+    <style class="echo">
+      @keyframes pulsate {
+        content 0% {
+          background-color: white;
         }
 
-        .observablehq--running:after {
-          content: '·';
-          animation: pulsate 2s infinite;
+        50% {
+          background-color: grey;
         }
 
-        .observablehq--error {
-          color: #d00;
+        100% {
+          background-color: white;
         }
-      </style>
+      }
 
-      <script type="module" class="echo" id="running">
-        cell("running", () => {
-          // this cell will run forever
-          return new Promise(() => {})
-        });
-      </script>
+      .observablehq--running:after {
+        content: '·';
+        animation: pulsate 2s infinite;
+      }
 
-      <script type="module" class="echo" id="error">
-        cell("error", () => {
-          throw new Error("This cell has thrown an error")
-        });
-      </script>
+      .observablehq--error {
+        color: #d00;
+      }
+    </style>
+
+    <script type="module" class="echo" id="running">
+      cell("running", () => {
+        // this cell will run forever
+        return new Promise(() => { })
+      });
+    </script>
+
+    <script type="module" class="echo" id="error">
+      cell("error", () => {
+        throw new Error("This cell has thrown an error")
+      });
+    </script>
 
   </main>
 </body>
+
 </html>
