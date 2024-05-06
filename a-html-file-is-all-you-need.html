@@ -302,6 +302,16 @@
       });
     </script>
 
+    <h2>Python</h2>
+
+    <script type="module" class="echo" id="python" >
+      import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
+      cell("python", async () => {
+        const pyodide = await loadPyodide();
+        return pyodide.runPython("[ i for i in range(1, 10) ]").toJs();
+      });
+    </script>
+
     <h2>SQLite</h2>
 
     I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
