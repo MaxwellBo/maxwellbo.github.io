@@ -14,8 +14,12 @@ main {
   margin: 5vw auto;
 }
 
-h1 {
+h1.wordmark {
   font-size: 5rem;
+}
+
+h1 {
+  font-size: 2.5rem;
 }
 
 marquee {
@@ -26,9 +30,6 @@ h2 {
   font-style: italic;
   font-size: 2rem;
   padding-bottom: .5rem;
-  text-decoration: underline;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 0.2em;
 }
 
 h3 {
@@ -41,6 +42,12 @@ section {
 
 nav ul {
   padding: 0px;
+}
+
+a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.2em;
 }
 
 nav ul > li {

@@ -5,12 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="main.css" rel="stylesheet">
   <meta charset="UTF-8">
-  <title>A HTML file is all you need</title>
+  <meta name="description" content="Yes (by standing on the shoulders of Observable)">
+  <meta name="author" content="Max Bo">
+  <title>Can we build a reactive document in a single HTML file?</title>
 </head>
 
 <body>
   <main>
-    <header>
+    <header style="padding-bottom: 1rem">
       <nav>
         <h2>
           <marquee>
@@ -18,13 +20,11 @@
           </marquee>
         </h2>
       </nav>
-      <h2>Can we build a reactive document in a single HTML file?</h2>
+      <time datetime="2024-05-06">May 6, 2024</time>
+      <h1>Can we build a reactive document in a single HTML file?</h1>
+      <b>Yes</b> <i><sub>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</sub></i>.
     </header>
 
-    <b>Yes</b> <i><sub>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</sub></i>.
-
-    <br />
-    <br />
 
     First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
       truly naked, brutalist html quine</a>,
@@ -137,7 +137,7 @@
       });
     </script>
 
-    <h3>Inputs</h3>
+    <h2>Inputs</h2>
 
     <p>We'll create a new cell type <code>viewof</code> that works specifically with <a
         href="https://github.com/observablehq/inputs">Observable
@@ -179,8 +179,6 @@
           return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
         });
       </script>
-
   </main>
 </body>
-
 </html>
