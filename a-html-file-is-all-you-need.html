@@ -125,6 +125,7 @@
 
     <script type="module" class="echo" id="fizzbuzz">
       import * as htl from 'https://esm.run/htl'
+      window.htl = htl
 
       cell("fizzbuzz", ["counter"], (counter) => {
         if (counter % 3 === 0 && counter % 5 === 0) {
@@ -144,6 +145,7 @@
 
     <script type="module" class="echo" id="plot">
       import * as Plot from 'https://esm.run/@observablehq/plot'
+      window.Plot = Plot
 
       cell("plot", ["counter"], (counter) => {
         const numbers = [
@@ -198,8 +200,6 @@
       </script>
 
       <script type="module" class="echo" id="rangePlot">
-        import * as Plot from 'https://esm.run/@observablehq/plot'
-
         cell("rangePlot", ["range"], (range) => {
           return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
         });
@@ -251,8 +251,6 @@
     </script>
 
     <script type="module" class="echo" id="sword">
-      import * as htl from 'https://esm.run/htl'
-
       cell("sword", ["ref"], (ref) => {
         return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
       });
@@ -301,6 +299,30 @@
             a -> b -> c
           }`
         )
+      });
+    </script>
+
+    <h2>SQLite</h2>
+
+    I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
+    Now we'll use a <a href="https://sqlite.org/wasm/doc/trunk/index.md">sqlite3 WASM</a> backed client to query it.
+
+    <script type="module" class="echo" id="sqlite">
+      cell("sqlite", async () => {
+        const url = "https://maxbo.me/chinook.db"
+        const db = await library.SQLiteDatabaseClient().open(url)
+        const tracks = await db.query("SELECT * FROM tracks")
+
+        return Plot.plot({
+          title: htl.html`<h3>Track length distribution</h3>`,
+          marks: [
+            Plot.rectY(
+              tracks,
+              Plot.binX({ y: "count" }, { x: "Milliseconds", tip: true })
+            ),
+            Plot.ruleY([0])
+          ]
+        })
       });
     </script>
 
