@@ -308,17 +308,6 @@
       });
     </script>
 
-    <h2>Python</h2>
-
-    <img src="under-construction.gif" alt="Under construction" style="width: 100%; max-width: 150px; margin: 1rem 0" />
-
-    <script type="module" class="echo" id="python" >
-      import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
-      cell("python", async () => {
-        const pyodide = await loadPyodide();
-        return pyodide.runPython("[ i for i in range(1, 10) ]").toJs();
-      });
-    </script>
 
     <h2>SQLite</h2>
 
@@ -345,6 +334,19 @@
     </script>
 
     <img src="data.png" alt="Data" style="width: 100%; max-width: 150px; margin: 1rem 0" />
+
+    <h2>Python</h2>
+
+    <img src="under-construction.gif" alt="Under construction" style="display:inline-block; max-width: 50px;" />
+    <img src="under-construction-2.gif" alt="Under construction" style="display:inline-block; max-width: 150px;" />
+
+    <script type="module" class="echo" id="python" >
+      import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
+      cell("python", async () => {
+        const pyodide = await loadPyodide();
+        return pyodide.runPython("[ i for i in range(1, 10) ]").toJs();
+      });
+    </script>
 
     <h2>Cell status</h2>
 
@@ -389,8 +391,6 @@
         throw new Error("This cell has thrown an error")
       });
     </script>
-
-
   </main>
 </body>
 
