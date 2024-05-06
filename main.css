@@ -12,6 +12,7 @@ h1, h2 {
 main {
   max-width: min(80vw, 72ch);
   margin: 5vw auto;
+  padding-bottom: 2em;
 }
 
 h1.wordmark {
@@ -119,6 +120,12 @@ kbd {
   line-height: 1;
   padding: 2px 4px;
   white-space: nowrap;
+}
+
+.center-contents {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /*
