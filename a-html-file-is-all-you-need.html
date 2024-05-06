@@ -179,6 +179,45 @@
           return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
         });
       </script>
+
+
+      <h2>Cell status</h2>
+
+      Observable's <code>Inspector</code> applies a <code>observablehq--running</code> and a
+      <code>observable-error</code> class to the cell's <code>div</code> result element. 
+      We'll create some appropriate styles:
+
+      <style class="echo">
+        @keyframes pulsate {
+          content
+          0%   {background-color: white;}
+          50%  {background-color: grey;}
+          100% {background-color: white;}
+        }
+
+        .observablehq--running:after {
+          content: '·';
+          animation: pulsate 2s infinite;
+        }
+
+        .observablehq--error {
+          color: #d00;
+        }
+      </style>
+
+      <script type="module" class="echo" id="running">
+        cell("running", () => {
+          // this cell will run forever
+          return new Promise(() => {})
+        });
+      </script>
+
+      <script type="module" class="echo" id="error">
+        cell("error", () => {
+          throw new Error("This cell has thrown an error")
+        });
+      </script>
+
   </main>
 </body>
 </html>
