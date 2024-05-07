@@ -169,6 +169,11 @@
       });
     </script>
 
+    <i>We should always store data in their own <code>script</code> elements, so that they can be easily
+      referenced by other cells.</i>
+
+    <br />
+
     numbers =
     <script class="echo" id="numbers" type="application/json" >
       [
@@ -294,12 +299,7 @@
     </script>
 
     <script type="module" class="echo" id="markdown">
-      const elements = [
-        { symbol: "Co", name: "Cobalt", number: 27 },
-        { symbol: "Cu", name: "Copper", number: 29 },
-        { symbol: "Sn", name: "Tin", number: 50 },
-        { symbol: "Pb", name: "Lead", number: 82 }
-      ]
+      const elements = JSON.parse(document.getElementById("elements").text);
 
       cell("markdown", () => {
         return library.md().then(md =>
@@ -310,6 +310,16 @@
 `
         )
       });
+    </script>
+
+    elements =
+    <script class="echo" id="elements" type="application/json">
+      [
+        { "symbol": "Co", "name": "Cobalt", "number": 27 },
+        { "symbol": "Cu", "name": "Copper", "number": 29 },
+        { "symbol": "Sn", "name": "Tin", "number": 50 },
+        { "symbol": "Pb", "name": "Lead", "number": 82 }
+      ]
     </script>
 
     <script type="module" class="echo" id="dot">
