@@ -3,6 +3,7 @@
 body {
   background-color: #e4e4e4;
   font-family: Georgia, 'Times New Roman', Times, serif;
+  cursor: url('img/cursor-dino.png'), auto;
 }
 
 h1, h2 {
@@ -147,6 +148,10 @@ aside {
 
 aside > p {
   margin: 0.5rem;
+}
+
+img {
+  image-rendering: pixelated;
 }
 
 /*
