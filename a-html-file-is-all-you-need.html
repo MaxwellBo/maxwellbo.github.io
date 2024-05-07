@@ -221,6 +221,7 @@ Purely functional dataflow is great, but sometimes you just need to mutate state
 We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a> values when the value is mutated - in the runtime.
 
 <script type="module" class="echo" id="mutable">
+/** Hijacked from https://github.com/observablehq/stdlib/blob/main/src/mutable.js */
 function Mutable(value) {
   let change;
   return Object.defineProperty(
