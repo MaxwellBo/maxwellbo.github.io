@@ -35,17 +35,20 @@
     People are using either full-blown publishing platforms, like <a href="https://quarto.org/">Quarto</a>, <a
       href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, using interactive
     notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a
-      href="https://observablehq.com/">Observable</a>, or wiki platforms like <a href="https://obsidian.md/publish">Obsidian Publish</a>.
+      href="https://observablehq.com/">Observable</a>, or wiki platforms like <a
+      href="https://obsidian.md/publish">Obsidian Publish</a>.
     <br />
     <br />
     I think single, self-contained HTML files can provide a similar set of affordances, and
     prevent a lot of faffing around with tooling or 3rd-party platforms.
     <br />
     <br />
-    <aside><p>
-      While I have not used <a href="https://htmx.org/">htmx</a>, I believe I am obligated to mention it.
-      I think it's a great advance for HTML hypermedia.
-    </p></aside>
+    <aside>
+      <p>
+        While I have not used <a href="https://htmx.org/">htmx</a>, I believe I am obligated to mention it.
+        I think it's a great advance for HTML hypermedia.
+      </p>
+    </aside>
     I'm going to try and demonstrate this, in <i>this</i> file, literate programming style.
 
 
@@ -176,7 +179,7 @@
     <br />
 
     numbers =
-    <script class="echo" id="numbers" type="application/json" >
+    <script class="echo" id="numbers" type="application/json">
       [
         170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
         176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
@@ -337,7 +340,8 @@
 
     <h2>SQLite</h2>
 
-    I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
+    I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at
+    <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
     Now we'll use a <a href="https://sqlite.org/wasm/doc/trunk/index.md">sqlite3 WASM</a> backed client to query it.
 
     <script type="module" class="echo" id="sqlite">
@@ -360,15 +364,17 @@
     </script>
 
     <div class="center-contents">
-      <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data" style="max-width: 125px; margin: 1rem" />
+      <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data"
+        style="max-width: 125px; margin: 1rem" />
     </div>
 
     <h2>Python</h2>
 
     <img src="img/under-construction.gif" alt="A man labors" style="display:inline-block; max-width: 50px;" />
-    <img src="img/under-construction-2.gif" alt="The phrase 'Under construction' is aflame" style="display:inline-block; max-width: 150px;" />
+    <img src="img/under-construction-2.gif" alt="The phrase 'Under construction' is aflame"
+      style="display:inline-block; max-width: 150px;" />
 
-    <script type="module" class="echo" id="python" >
+    <script type="module" class="echo" id="python">
       import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
       cell("python", async () => {
         const pyodide = await loadPyodide();
@@ -384,7 +390,9 @@
 
     <style class="echo">
       @keyframes blink {
-        67% { opacity: 0 }
+        67% {
+          opacity: 0
+        }
       }
 
       .observablehq--running:after {
