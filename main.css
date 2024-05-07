@@ -134,6 +134,21 @@ blink, .blink { animation: blink 1s step-end infinite; }
   67% { opacity: 0 }
 }
 
+aside {
+  width: 40%;
+  padding-left: 0.5rem;
+  margin-left: 0.5rem;
+  float: right;
+  margin-left: 5px;
+  border-left: teal 1px solid;
+  font-style: italic;
+  color: teal;
+}
+
+aside > p {
+  margin: 0.5rem;
+}
+
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
