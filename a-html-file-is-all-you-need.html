@@ -12,412 +12,386 @@
 </head>
 
 <body>
-  <main>
-    <header style="padding-bottom: 1rem">
-      <nav>
-        <h2>
-          <marquee>
-            <a href="/">← Max Bo</a>
-          </marquee>
-        </h2>
-      </nav>
-      <time datetime="2024-05-06">May 6, 2024</time>
-      <h1>Can we build a reactive document in a single HTML file?</h1>
-      <b>Yes</b> <small><i>(by standing on the shoulders of <a
-            href="https://observablehq.com/">Observable</a>)</i></small>.
-    </header>
+<main>
+<header style="padding-bottom: 1rem">
+  <nav>
+    <h2>
+      <marquee>
+        <a href="/">← Max Bo</a>
+      </marquee>
+    </h2>
+  </nav>
+  <time datetime="2024-05-06">May 6, 2024</time>
+  <h1>Can we build a reactive document in a single HTML file?</h1>
+  <b>Yes</b> <small><i>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</i></small>.
+</header>
 
-    Before I start, why am I doing this?
-    <br />
-    <br />
-    I don't think HTML is being used enough for scientific publishing.
-    <br />
-    People are using either full-blown publishing platforms, like <a href="https://quarto.org/">Quarto</a>, <a
-      href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, using interactive
-    notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a
-      href="https://observablehq.com/">Observable</a>, or wiki platforms like <a
-      href="https://obsidian.md/publish">Obsidian Publish</a>.
-    <br />
-    <br />
-    I think single, self-contained HTML files can provide a similar set of affordances, and
-    prevent a lot of faffing around with tooling or 3rd-party platforms.
-    <br />
-    <br />
-    <aside>
-      <p>
-        While I have not used <a href="https://htmx.org/">htmx</a>, I believe I am obligated to mention it.
-        I think it's a great advance for HTML hypermedia.
-      </p>
-    </aside>
-    I'm going to try and demonstrate this, in <i>this</i> file, literate programming style.
+Before I start, why am I doing this?
+<br />
+<br />
+I don't think HTML is being used enough for scientific publishing.
+<br />
+People are using either full-blown publishing platforms, like <a href="https://quarto.org/">Quarto</a>, <a href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, using interactive notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a href="https://observablehq.com/">Observable</a>, or wiki platforms like <a href="https://obsidian.md/publish">Obsidian Publish</a>.
+<br />
+<br />
+I think single, self-contained HTML files can provide a similar set of affordances, and prevent a lot of faffing around with tooling or 3rd-party platforms.
+<br />
+<br />
+<aside>
+  <p>
+    While I have not used <a href="https://htmx.org/">htmx</a>, I believe I am obligated to mention it.
+    I think it's a great advance for HTML hypermedia.
+  </p>
+</aside>
+I'm going to try and demonstrate this, in <i>this</i> file, literate programming style.
 
 
-    <div class="center-contents">
-      <img src="img/document.png" alt="A computer displays an open book" style="max-width: 125px; margin: 1rem" />
-    </div>
+<div class="center-contents">
+  <img src="img/document.png" alt="A computer displays an open book" style="max-width: 125px; margin: 1rem" />
+</div>
 
-    <h2>Cells</h2>
-
-
-    First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a
-      truly naked, brutalist html quine</a>,
-    and create a CSS class called <code>echo</code> that will display
-    <code>style</code> and <code>script</code> elements inline.
-    <code>echo</code> doesn't perfectly quine/echo all the source HTML to the DOM, so you'll need to use <kbd>View
-      source</kbd> to see the "real"
-    HTML - note the <code>id</code> attributes of the <code>script</code> elements.
-
-    <style class="echo">
-      .echo {
-        display: block;
-        white-space: pre;
-        font-family: monospace;
-        background-color: #EEE;
-        margin: .2rem;
-        overflow: scroll;
-      }
-    </style>
-
-    Now we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and the <a
-      href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to <code>window</code> We'll
-    define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
-
-    <script type="module" class="echo">
-      import * as stdlib from 'https://esm.run/@observablehq/stdlib'
-      import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
-
-      const library = new stdlib.Library();
-      const runtime = new Runtime();
-      const module = runtime.module();
-
-      function cell(name, inputsOrDefinition, maybeDefinition) {
-        if (maybeDefinition) {
-          const inputs = inputsOrDefinition
-          const definition = maybeDefinition
-          module.variable(observer(name)).define(name, inputs, definition)
-        } else {
-          const definition = inputsOrDefinition
-          module.variable(observer(name)).define(name, definition)
-        }
-      }
-
-      function observer(cellName) {
-        const div = document.createElement("div");
-        const cellElement = document.getElementById(cellName)
-        cellElement.parentNode.insertBefore(div, cellElement);
-        return new Inspector(div);
-      }
-
-      window.library = library
-      window.module = module
-      window.cell = cell
-      window.observer = observer
-    </script>
-
-    Now we'll declare a cell called <code>counter</code> that will emit a number every second.
-    We have to declare the <code>script</code> element with attributes
-    <code>type="module" class="echo" id="counter"</code>.
-    <b>The <code>script</code> <code>id</code> attribute must be the same as the <code>name</code> parameter passed to
-      <code>cell</code></b>.
-
-    <script type="module" class="echo" id="counter">
-      cell("counter", async function* () {
-        let i = 0
-        while (true) {
-          yield await library.Promises.delay(1000, i++)
-        }
-      });
-    </script>
-
-    Now that we've created a our <code>counter</code> cell, we can create other cells that depend on it.
-
-    <br />
-
-    We'll import <a href="https://github.com/observablehq/htl">Hypertext Literal</a> and use it to format the
-    <code>counter</code> value.
-
-    <script type="module" class="echo" id="fizzbuzz">
-      import * as htl from 'https://esm.run/htl'
-      window.htl = htl
-
-      cell("fizzbuzz", ["counter"], (counter) => {
-        if (counter % 3 === 0 && counter % 5 === 0) {
-          return htl.html`<b style="color: purple">FizzBuzz</b>`
-        } else if (counter % 3 === 0) {
-          return htl.html`<b style="color: red">Fizz</b>`
-        } else if (counter % 5 === 0) {
-          return htl.html`<b style="color: blue">Buzz</b>`
-        } else {
-          return htl.html`<b>${counter}</b>`
-        }
-      });
-    </script>
-
-    We'll import <a href="https://github.com/observablehq/plot">Observable Plot</a> and use the <code>counter</code>
-    value in the plot.
+<h2>Cells</h2>
 
 
-    <script type="module" class="echo" id="plot">
-      import * as Plot from 'https://esm.run/@observablehq/plot'
-      window.Plot = Plot
+First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a truly naked, brutalist html quine</a>, and create a CSS class called <code>echo</code> that will display <code>style</code> and <code>script</code> elements inline.
+<code>echo</code> doesn't perfectly quine/echo all the source HTML to the DOM, so you'll need to use <kbd>View source</kbd> to see the "real" HTML - note the <code>id</code> attributes of the <code>script</code> elements.
 
-      cell("plot", ["counter"], (counter) => {
-        const numbers = JSON.parse(document.getElementById("numbers").text);
+<style class="echo">
+.echo {
+  display: block;
+  white-space: pre;
+  font-family: monospace;
+  background-color: #EEE;
+  margin: .2rem;
+  overflow: scroll;
+}
+</style>
 
-        return Plot.plot({
-          marks: [
-            Plot.lineY(numbers, { x: (d, i) => i, y: d => d }),
-            Plot.ruleX([counter % 40])
-          ]
-        })
-      });
-    </script>
+Now we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and the <a href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to <code>window</code>.
+We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
 
-    <i>We should always store data in their own <code>script</code> elements, so that they can be easily
-      referenced by other cells.</i>
+<script type="module" class="echo">
+import * as stdlib from 'https://esm.run/@observablehq/stdlib'
+import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
 
-    <br />
+const library = new stdlib.Library();
+const runtime = new Runtime();
+const module = runtime.module();
 
-    numbers =
-    <script class="echo" id="numbers" type="application/json">
-      [
-        170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
-        176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
-        166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
-        163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
-      ]
-    </script>
+function cell(name, inputsOrDefinition, maybeDefinition) {
+  if (maybeDefinition) {
+    const inputs = inputsOrDefinition
+    const definition = maybeDefinition
+    module.variable(observer(name)).define(name, inputs, definition)
+  } else {
+    const definition = inputsOrDefinition
+    module.variable(observer(name)).define(name, definition)
+  }
+}
 
-    <div class="center-contents">
-      <img src="img/up.png" alt="A computer displays a graph in the upward direction" style="max-width: 125px" />
-    </div>
+function observer(cellName) {
+  const div = document.createElement("div");
+  const cellElement = document.getElementById(cellName)
+  cellElement.parentNode.insertBefore(div, cellElement);
+  return new Inspector(div);
+}
 
-    <h2>Inputs</h2>
+window.library = library
+window.module = module
+window.cell = cell
+window.observer = observer
+</script>
 
-    <p>We'll create a new cell type <code>viewof</code> that works specifically with <a
-        href="https://github.com/observablehq/inputs">Observable
-        Inputs</a>.
+Now we'll declare a cell called <code>counter</code> that will emit a number every second.
+We have to declare the <code>script</code> element with attributes <code>type="module" class="echo" id="counter"</code>.
+<b>The <code>script</code> <code>id</code> attribute must be the same as the <code>name</code> parameter passed to <code>cell</code></b>.
 
-      It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> - one for the value, and one for the
-      DOM element itself.
+<script type="module" class="echo" id="counter">
+cell("counter", async function* () {
+  let i = 0
+  while (true) {
+    yield await library.Promises.delay(1000, i++)
+  }
+});
+</script>
 
-      <script type="module" class="echo">
-        import * as Inputs from 'https://esm.run/@observablehq/inputs'
-        window.Inputs = Inputs
+Now that we've created a our <code>counter</code> cell, we can create other cells that depend on it.
 
-        function viewof(name, inputsOrDefinition, maybeDefinition) {
-          if (maybeDefinition) {
-            const inputs = inputsOrDefinition
-            const definition = maybeDefinition
-            module.variable(observer(name)).define(`viewof ${name}`, inputs, definition)
-            module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
-          } else {
-            const definition = inputsOrDefinition
-            module.variable(observer(name)).define(`viewof ${name}`, definition)
-            module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
-          }
-        }
-        window.viewof = viewof
-      </script>
+<br />
 
-      Wiggle the range input and see another dependent cell update.
+We'll import <a href="https://github.com/observablehq/htl">Hypertext Literal</a> and use it to format the
+<code>counter</code> value.
 
-      <script type="module" class="echo" id="range">
-        viewof("range", () => {
-          return Inputs.range([0, 100], { step: 1 })
-        });
-      </script>
+<script type="module" class="echo" id="fizzbuzz">
+import * as htl from 'https://esm.run/htl'
+window.htl = htl
 
-      <script type="module" class="echo" id="rangePlot">
-        cell("rangePlot", ["range"], (range) => {
-          return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
-        });
-      </script>
+cell("fizzbuzz", ["counter"], (counter) => {
+  if (counter % 3 === 0 && counter % 5 === 0) {
+    return htl.html`<b style="color: purple">FizzBuzz</b>`
+  } else if (counter % 3 === 0) {
+    return htl.html`<b style="color: red">Fizz</b>`
+  } else if (counter % 5 === 0) {
+    return htl.html`<b style="color: blue">Buzz</b>`
+  } else {
+    return htl.html`<b>${counter}</b>`
+  }
+});
+</script>
 
+We'll import <a href="https://github.com/observablehq/plot">Observable Plot</a> and use the <code>counter</code> value in the plot.
 
-    <h2>Mutability</h2>
+<script type="module" class="echo" id="plot">
+import * as Plot from 'https://esm.run/@observablehq/plot'
+window.Plot = Plot
 
-    Purely functional dataflow is great, but sometimes you just need to mutate state.
-    We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new
-    <a
-      href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a>
-    values when the value is mutated - in the runtime.
+cell("plot", ["counter"], (counter) => {
+  const numbers = JSON.parse(document.getElementById("numbers").text);
 
-    <script type="module" class="echo" id="mutable">
-      function Mutable(value) {
-        let change;
-        return Object.defineProperty(
-          library.Generators.observe((_) => {
-            change = _;
-            if (value !== undefined) change(value);
-          }),
-          "value",
-          {
-            get: () => value,
-            set: (x) => void change((value = x))
-          }
-        );
-      }
+  return Plot.plot({
+    marks: [
+      Plot.lineY(numbers, { x: (d, i) => i, y: d => d }),
+      Plot.ruleX([counter % 40])
+    ]
+  })
+});
+</script>
 
-      function mutable(name, value) {
-        const m = Mutable(value)
-        module.variable(observer(name)).define(name, m)
-        return m
-      }
-      window.mutable = mutable
-    </script>
+<i>We should always store data in their own <code>script</code> elements, so that they can be easily referenced by other cells.</i>
 
-    <script type="module" class="echo" id="ref">
-      window.ref = mutable("ref", 3)
-    </script>
+<br />
 
-    <script type="module" class="echo" id="increment">
-      viewof("increment", () => {
-        const increment = () => ++ref.value
-        const reset = () => ref.value = 0;
+numbers =
+<script class="echo" id="numbers" type="application/json">
+[
+  170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
+  176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
+  166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
+  163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
+]
+</script>
 
-        return Inputs.button([["Increment", increment], ["Reset", reset]])
-      });
-    </script>
+<div class="center-contents">
+  <img src="img/up.png" alt="A computer displays a graph in the upward direction" style="max-width: 125px" />
+</div>
 
-    <script type="module" class="echo" id="sword">
-      cell("sword", ["ref"], (ref) => {
-        return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
-      });
-    </script>
+<h2>Inputs</h2>
 
+We'll create a new cell type <code>viewof</code> that works specifically with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.
 
-    <h2>LaTeX, Markdown, GraphViz &amp; more</h2>
+It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> - one for the value, and one for the DOM element itself.
 
-    What's the point if I can't render LaTeX, Markdown and GraphViz?
+<script type="module" class="echo">
+import * as Inputs from 'https://esm.run/@observablehq/inputs'
+window.Inputs = Inputs
 
-    <script type="module" class="echo" id="tex">
-      cell("tex", () => {
-        return library.tex().then(tex =>
-          tex`\def\f#1#2{#1f(#2)}
-    \f\relax{x} = \int_{-\infty}^\infty
-    \f\hat\xi\,e^{2 \pi i \xi x}
-    \,d\xi`
-        )
-      });
-    </script>
+function viewof(name, inputsOrDefinition, maybeDefinition) {
+  if (maybeDefinition) {
+    const inputs = inputsOrDefinition
+    const definition = maybeDefinition
+    module.variable(observer(name)).define(`viewof ${name}`, inputs, definition)
+    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
+  } else {
+    const definition = inputsOrDefinition
+    module.variable(observer(name)).define(`viewof ${name}`, definition)
+    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
+  }
+}
+window.viewof = viewof
+</script>
 
-    <script type="module" class="echo" id="markdown">
-      const elements = JSON.parse(document.getElementById("elements").text);
+Wiggle the range input and see another dependent cell update.
 
-      cell("markdown", () => {
-        return library.md().then(md =>
-          md`
+<script type="module" class="echo" id="range">
+viewof("range", () => {
+  return Inputs.range([0, 100], { step: 1 })
+});
+</script>
+
+<script type="module" class="echo" id="rangePlot">
+cell("rangePlot", ["range"], (range) => {
+  return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
+});
+</script>
+
+<h2>Mutability</h2>
+
+Purely functional dataflow is great, but sometimes you just need to mutate state.
+We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a> values when the value is mutated - in the runtime.
+
+<script type="module" class="echo" id="mutable">
+function Mutable(value) {
+  let change;
+  return Object.defineProperty(
+    library.Generators.observe((_) => {
+      change = _;
+      if (value !== undefined) change(value);
+    }),
+    "value",
+    {
+      get: () => value,
+      set: (x) => void change((value = x))
+    }
+  );
+}
+
+function mutable(name, value) {
+  const m = Mutable(value)
+  module.variable(observer(name)).define(name, m)
+  return m
+}
+window.mutable = mutable
+</script>
+
+<script type="module" class="echo" id="ref">
+window.ref = mutable("ref", 3)
+</script>
+
+<script type="module" class="echo" id="increment">
+viewof("increment", () => {
+  const increment = () => ++ref.value
+  const reset = () => ref.value = 0;
+
+  return Inputs.button([["Increment", increment], ["Reset", reset]])
+});
+</script>
+
+<script type="module" class="echo" id="sword">
+cell("sword", ["ref"], (ref) => {
+  return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
+});
+</script>
+
+<h2>LaTeX, Markdown, GraphViz &amp; more</h2>
+
+What's the point if I can't render LaTeX, Markdown and GraphViz?
+
+<script type="module" class="echo" id="tex">
+cell("tex", () => {
+  return library.tex().then(tex =>
+    tex`\def\f#1#2{#1f(#2)}
+\f\relax{x} = \int_{-\infty}^\infty
+\f\hat\xi\,e^{2 \pi i \xi x}
+\,d\xi`
+  )
+});
+</script>
+
+<script type="module" class="echo" id="markdown">
+const elements = JSON.parse(document.getElementById("elements").text);
+
+cell("markdown", () => {
+  return library.md().then(md =>
+    md`
 | Name      | Symbol      | Atomic number |
 |-----------|-------------|---------------|${elements.map(e => `
 | ${e.name} | ${e.symbol} | ${e.number}   |`)}
 `
-        )
-      });
-    </script>
+  )
+});
+</script>
 
-    elements =
-    <script class="echo" id="elements" type="application/json">
-      [
-        { "symbol": "Co", "name": "Cobalt", "number": 27 },
-        { "symbol": "Cu", "name": "Copper", "number": 29 },
-        { "symbol": "Sn", "name": "Tin", "number": 50 },
-        { "symbol": "Pb", "name": "Lead", "number": 82 }
-      ]
-    </script>
+elements =
+<script class="echo" id="elements" type="application/json">
+[
+  { "symbol": "Co", "name": "Cobalt", "number": 27 },
+  { "symbol": "Cu", "name": "Copper", "number": 29 },
+  { "symbol": "Sn", "name": "Tin", "number": 50 },
+  { "symbol": "Pb", "name": "Lead", "number": 82 }
+]
+</script>
 
-    <script type="module" class="echo" id="dot">
-      cell("dot", () => {
-        return library.dot().then(dot =>
-          dot`digraph G {
-            rankdir = LR
-            a -> b -> c
-          }`
-        )
-      });
-    </script>
+<script type="module" class="echo" id="dot">
+cell("dot", () => {
+  return library.dot().then(dot =>
+    dot`digraph G {
+      rankdir = LR
+      a -> b -> c
+    }`
+  )
+});
+</script>
 
 
-    <h2>SQLite</h2>
+<h2>SQLite</h2>
 
-    I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at
-    <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
-    Now we'll use a <a href="https://sqlite.org/wasm/doc/trunk/index.md">sqlite3 WASM</a> backed client to query it.
+I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
+Now we'll use a <a href="https://sqlite.org/wasm/doc/trunk/index.md">sqlite3 WASM</a> backed client to query it.
 
-    <script type="module" class="echo" id="sqlite">
-      cell("sqlite", async () => {
-        const url = "https://maxbo.me/chinook.db"
-        const db = await library.SQLiteDatabaseClient().open(url)
-        const tracks = await db.query("SELECT * FROM tracks")
+<script type="module" class="echo" id="sqlite">
+cell("sqlite", async () => {
+  const url = "https://maxbo.me/chinook.db"
+  const db = await library.SQLiteDatabaseClient().open(url)
+  const tracks = await db.query("SELECT * FROM tracks")
 
-        return Plot.plot({
-          title: htl.html`<h3>Track length distribution</h3>`,
-          marks: [
-            Plot.rectY(
-              tracks,
-              Plot.binX({ y: "count" }, { x: "Milliseconds", tip: true })
-            ),
-            Plot.ruleY([0])
-          ]
-        })
-      });
-    </script>
+  return Plot.plot({
+    title: htl.html`<h3>Track length distribution</h3>`,
+    marks: [
+      Plot.rectY(
+        tracks,
+        Plot.binX({ y: "count" }, { x: "Milliseconds", tip: true })
+      ),
+      Plot.ruleY([0])
+    ]
+  })
+});
+</script>
 
-    <div class="center-contents">
-      <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data"
-        style="max-width: 125px; margin: 1rem" />
-    </div>
+<div class="center-contents">
+  <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data"
+    style="max-width: 125px; margin: 1rem" />
+</div>
 
-    <h2>Python</h2>
+<h2>Python</h2>
 
-    <img src="img/under-construction.gif" alt="A man labors" style="display:inline-block; max-width: 50px;" />
-    <img src="img/under-construction-2.gif" alt="The phrase 'Under construction' is aflame"
-      style="display:inline-block; max-width: 150px;" />
+<img src="img/under-construction.gif" alt="A man labors" style="display:inline-block; max-width: 50px;" />
+<img src="img/under-construction-2.gif" alt="The phrase 'Under construction' is aflame"
+  style="display:inline-block; max-width: 150px;" />
 
-    <script type="module" class="echo" id="python">
-      import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
-      cell("python", async () => {
-        const pyodide = await loadPyodide();
-        return pyodide.runPython("[ i for i in range(1, 10) ]").toJs();
-      });
-    </script>
+<script type="module" class="echo" id="python">
+import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
+cell("python", async () => {
+  const pyodide = await loadPyodide();
+  return pyodide.runPython("[ i for i in range(1, 10) ]").toJs();
+});
+</script>
 
-    <h2>Cell status</h2>
+<h2>Cell status</h2>
 
-    Observable's <code>Inspector</code> applies a <code>observablehq--running</code> and a
-    <code>observablehq--error</code> class to the cell's <code>div</code> result element.
-    We'll apply some appropriate styles:
+Observable's <code>Inspector</code> applies a <code>observablehq--running</code> and a
+<code>observablehq--error</code> class to the cell's <code>div</code> result element.
+We'll apply some appropriate styles:
 
-    <style class="echo">
-      @keyframes blink {
-        67% {
-          opacity: 0
-        }
-      }
+<style class="echo">
+@keyframes blink {
+  67% {
+    opacity: 0
+  }
+}
 
-      .observablehq--running:after {
-        content: 'LOADING';
-        animation: blink 1s step-end infinite;
-      }
+.observablehq--running:after {
+  content: 'LOADING';
+  animation: blink 1s step-end infinite;
+}
 
-      .observablehq--error {
-        color: #d00;
-      }
-    </style>
+.observablehq--error {
+  color: #d00;
+}
+</style>
 
-    <script type="module" class="echo" id="running">
-      cell("running", () => {
-        // this cell will run forever
-        return new Promise(() => { })
-      });
-    </script>
+<script type="module" class="echo" id="running">
+cell("running", () => {
+  // this cell will run forever
+  return new Promise(() => { })
+});
+</script>
 
-    <script type="module" class="echo" id="error">
-      cell("error", () => {
-        throw new Error("This cell has thrown an error")
-      });
-    </script>
-  </main>
+<script type="module" class="echo" id="error">
+cell("error", () => {
+  throw new Error("This cell has thrown an error")
+});
+</script>
+</main>
 </body>
 
 </html>
