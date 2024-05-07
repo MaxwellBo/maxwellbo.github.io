@@ -54,7 +54,6 @@ I'm going to try and demonstrate this, in <i>this</i> file, literate programming
 
 
 First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a truly naked, brutalist html quine</a>, and create a CSS class called <code>echo</code> that will display <code>style</code> and <code>script</code> elements inline.
-<code>echo</code> doesn't perfectly quine/echo all the source HTML to the DOM, so you'll need to use <kbd>View source</kbd> to see the "real" HTML - note the <code>id</code> attributes of the <code>script</code> elements.
 
 <style class="echo">
 .echo {
@@ -64,8 +63,23 @@ First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiw
   background-color: #EEE;
   margin-bottom: 1rem;
   margin-top: 0.2rem;
-  padding: 0 1rem 1rem 1rem;
+  padding: 0.5rem 1rem 1rem 1rem;
   overflow: scroll;
+}
+script.echo::before {
+  content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\">";
+}
+script.echo::after { 
+  content: "<\/script>"; 
+}
+style.echo::before { 
+  content: "<style class=\"" attr(class)"\">"; 
+}
+style.echo::after { 
+  content: "<\/style>"; 
+}
+*.echo::before, *.echo::after {
+  color: darkgreen; 
 }
 </style>
 
@@ -105,7 +119,6 @@ window.observer = observer
 </script>
 
 Now we'll declare a cell called <code>counter</code> that will emit a number every second.
-We have to declare the <code>script</code> element with attributes <code>type="module" class="echo" id="counter"</code>.
 <b>The <code>script</code> <code>id</code> attribute must be the same as the <code>name</code> parameter passed to <code>cell</code></b>.
 
 <script type="module" class="echo" id="counter">
@@ -163,7 +176,6 @@ cell("plot", ["counter"], (counter) => {
 
 <br />
 
-numbers =
 <script class="echo" id="numbers" type="application/json">
 [
   170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
@@ -294,7 +306,6 @@ cell("markdown", () => {
 });
 </script>
 
-elements =
 <script class="echo" id="elements" type="application/json">
 [
   { "symbol": "Co", "name": "Cobalt", "number": 27 },
