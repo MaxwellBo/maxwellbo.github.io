@@ -4,6 +4,9 @@ body {
   background-color: #e4e4e4;
   font-family: Georgia, 'Times New Roman', Times, serif;
   cursor: url('img/cursor-dino.png'), auto;
+  font-smooth: never;
+  -webkit-font-smoothing: none;
+  text-rendering: optimizeSpeed;
 }
 
 h1, h2 {
