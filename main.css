@@ -28,7 +28,7 @@ h1 {
 }
 
 marquee {
-  border: 1px solid;
+  border: 5px inset;
 }
 
 h2 {
@@ -59,8 +59,7 @@ nav ul > li {
   margin-bottom: 0.5rem;
   margin-right: 0.25rem;
   display: inline-block;
-  border-style: solid;
-  border-width: 1px;
+  border: 2px outset;
 }
 
 nav ul > li > a {
