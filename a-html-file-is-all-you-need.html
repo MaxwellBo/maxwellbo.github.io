@@ -372,11 +372,11 @@ cell("python", async () => {
   const response = await fetch('https://maxbo.me/chinook.db');
   pyodide.FS.writeFile('/chinook.db', new Uint8Array(await response.arrayBuffer()));
 
-  await pyodide.loadPackage(['matplotlib', 'pandas', 'sqlite3']);
+  await pyodide.loadPackage(['sqlite3', 'matplotlib', 'pandas']);
   const code = `
+import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
-import sqlite3
 
 with sqlite3.connect("/chinook.db") as conn:
   tracks_df = pd.read_sql_query("SELECT * FROM tracks", conn)
