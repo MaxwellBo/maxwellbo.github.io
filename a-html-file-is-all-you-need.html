@@ -366,7 +366,38 @@ cell("sqlite", async () => {
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
 cell("python", async () => {
   const pyodide = await loadPyodide();
-  return pyodide.runPython("[ i for i in range(0, 10) ]").toJs();
+
+  await pyodide.loadPackage(['numpy', 'matplotlib']);
+
+  const numpyCode = `
+import numpy as np
+x = np.linspace(0, 10, 100)
+y = np.sin(x)
+`;
+
+    const matplotlibCode = `
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+ax.plot(x, y)
+ax.set_title('This is a Matplotlib plot')
+plt.show()
+`;
+
+  await pyodide.runPythonAsync(numpyCode);
+  await pyodide.runPythonAsync(matplotlibCode);
+
+  const imageDataUrl = await pyodide.runPythonAsync(`
+import io, base64
+buf = io.BytesIO()
+fig.savefig(buf, format='png')
+buf.seek(0)
+'data:image/png;base64,' + base64.b64encode(buf.read()).decode()
+`);
+
+  const imageElement = document.createElement('img');
+  imageElement.src = imageDataUrl;
+
+  return imageElement
 });
 </script>
 
