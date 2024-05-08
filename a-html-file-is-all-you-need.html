@@ -340,7 +340,7 @@ Now we'll use a <a href="https://sqlite.org/wasm/doc/trunk/index.md">sqlite3 WAS
 cell("sqlite", async () => {
   const url = "https://maxbo.me/chinook.db";
   const db = await library.SQLiteDatabaseClient().open(url);
-  const tracks = await db.query("SELECT * FROM tracks");
+  const tracks = await db.query("SELECT Milliseconds FROM tracks LIMIT 100");
 
   return Plot.plot({
     title: htl.html`<h3>Track length distribution</h3>`,
@@ -366,21 +366,31 @@ The <a href="http://pyodide.org/">Pyodide</a> CPython WASM distribution supports
 <script type="module" class="echo" id="python">
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
 cell("python", async () => {
-  const pyodide = await loadPyodide();
+  const url = "https://maxbo.me/chinook.db";
+  const db = await library.SQLiteDatabaseClient().open(url);
+  const tracks = await db.query("SELECT * FROM tracks LIMIT 100");
 
-  await pyodide.loadPackage(['numpy', 'matplotlib']);
+  const pyodide = await loadPyodide();
+  await pyodide.loadPackage(['matplotlib', 'pandas']);
   const code = `
 import numpy as np
+import pandas as pd
 import matplotlib.pyplot as plt
-x = np.linspace(0, 10, 100)
-y = np.sin(x)
-fig, ax = plt.subplots()
-ax.plot(x, y)
-ax.set_title('This is a Matplotlib plot')
+import json
+
+tracks = json.loads("""
+${JSON.stringify(tracks)}
+""")
+
+tracks_df = pd.DataFrame(tracks)
+plt.title('Track length distribution')
+plt.hist(tracks_df['Milliseconds'], bins='auto')
+plt.xlabel('Milliseconds')
+plt.ylabel('Frequency')
 
 import io, base64
 buf = io.BytesIO()
-fig.savefig(buf, format='png')
+plt.savefig(buf, format='png')
 buf.seek(0)
 'data:image/png;base64,' + base64.b64encode(buf.read()).decode()
 `;
