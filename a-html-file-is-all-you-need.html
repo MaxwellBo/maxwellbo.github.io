@@ -127,7 +127,7 @@ Now we'll declare a cell called <code>counter</code> that emits a number every s
 cell("counter", async function* () {
   let i = 0;
   while (true) {
-    yield await library.Promises.delay(1000, i++);
+    yield library.Promises.delay(1000, i++);
   }
 });
 </script>
@@ -355,10 +355,6 @@ cell("sqlite", async () => {
 });
 </script>
 
-<div class="center-contents">
-  <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data" style="max-width: 125px; margin: 1rem" />
-</div>
-
 <h2>Python</h2>
 
 The <a href="http://pyodide.org/">Pyodide</a> CPython WASM distribution includes <a href="https://numpy.org/">NumPy</a>, <a href="https://pandas.pydata.org/">Pandas</a>, <a href="https://matplotlib.org/">Matplotlib</a>, <a href="https://scikit-learn.org/">scikit-learn</a>, and <a href="https://scipy.org/">Scipy</a>.
@@ -400,6 +396,11 @@ buf.seek(0)
   return imageElement;
 });
 </script>
+
+<div class="center-contents">
+  <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data" style="max-width: 125px; margin: 1rem" />
+</div>
+
 
 <h2>Cell status</h2>
 
