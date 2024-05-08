@@ -156,7 +156,7 @@ cell("fizzbuzz", ["counter"], (counter) => {
 });
 </script>
 
-We'll import <a href="https://github.com/observablehq/plot">Observable Plot</a> and use the <code>counter</code> value in the plot.
+We'll import <a href="https://observablehq.com/plot/what-is-plot">Observable Plot</a> and use the <code>counter</code> value in the plot.
 
 <script type="module" class="echo" id="plot">
 import * as Plot from 'https://esm.run/@observablehq/plot'
@@ -331,13 +331,13 @@ digraph G {
 <h2>SQLite</h2>
 
 I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
-Now we'll use a <a href="https://sqlite.org/wasm/doc/trunk/index.md">sqlite3 WASM</a> backed client to query it.
+Now we'll use a <a href="https://observablehq.com/framework/lib/sqlite">WASM-backed SQLite client</a> to query it.
 
 <script type="module" class="echo" id="sqlite">
 cell("sqlite", async () => {
   const url = "https://maxbo.me/chinook.db";
   const db = await library.SQLiteDatabaseClient().open(url);
-  const tracks = await db.query("SELECT Milliseconds FROM tracks");
+  const tracks = await db.query("SELECT * FROM tracks");
 
   return Plot.plot({
     title: htl.html`<h3>Track length distribution</h3>`,
