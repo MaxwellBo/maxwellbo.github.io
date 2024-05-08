@@ -218,6 +218,7 @@ window.viewof = viewof;
 
 Wiggle the range input and see another dependent cell update.
 
+
 <script type="module" class="echo" id="range">
 viewof("range", () => {
   return Inputs.range([0, 100], { step: 1 });
@@ -447,6 +448,29 @@ I will try and cram all of this into a library with some proper documentation. S
 <div class="center-contents">
   <img src="img/typing.gif" alt="A computer terminal receives text" style="margin: 1rem" />
 </div>
+
+<!-- To the reader
+
+I was going to try and get this section working but this article didn't do
+well on HN so I gave up. Rather not scream into the void.
+
+<h2>contenteditable</h2>
+
+<script>
+function rerun(event) {
+  const existingScript = event.target;
+  const scriptContent = existingScript.textContent;
+  const newScript = document.createElement('script');
+  newScript.textContent = scriptContent;
+  for (let i = 0; i < existingScript.attributes.length; i++) {
+    newScript.setAttribute(existingScript.attributes[i].name, existingScript.attributes[i].value || '');
+  }
+  existingScript.parentNode.insertBefore(newScript, existingScript);
+  existingScript.parentNode.removeChild(existingScript);
+}
+</script> 
+-->
+
 </main>
 </body>
 
