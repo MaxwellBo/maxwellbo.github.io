@@ -45,7 +45,7 @@ I think self-contained HTML files can provide a similar set of affordances, and 
     I think it's a great advance for HTML hypermedia.
   </p>
 </aside>
-I'm going to try and demonstrate this, literate programming style.
+I'll try and demonstrate these affordances, literate programming style.
 
 <div class="center-contents">
   <img src="img/document.png" alt="A computer displays an open book" style="max-width: 125px; margin: 1rem" />
@@ -378,9 +378,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import sqlite3
 
-conn = sqlite3.connect("/chinook.db")
-tracks_df = pd.read_sql_query("SELECT * FROM tracks", conn)
-conn.close()
+with sqlite3.connect("/chinook.db") as conn:
+  tracks_df = pd.read_sql_query("SELECT * FROM tracks", conn)
 
 plt.title('Track length distribution')
 plt.hist(tracks_df['Milliseconds'], bins='auto')
