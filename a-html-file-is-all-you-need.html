@@ -21,7 +21,9 @@
       </marquee>
     </h2>
   </nav>
-  <time datetime="2024-05-06">May 6, 2024</time>
+  Published <time datetime="2024-05-06">May 6, 2024</time>
+  <br />
+  Modified <time datetime="2024-05-06">May 8, 2024</time>
   <h1>Can we build a reactive document in a single HTML file?</h1>
   <b>Yes</b> <small><i>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</i></small>.
 </header>
@@ -34,7 +36,7 @@ I don't think HTML is being used enough for scientific publishing.
 People are using either full-blown publishing platforms, like <a href="https://quarto.org/">Quarto</a>, <a href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, using interactive notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a href="https://observablehq.com/">Observable</a>, or wiki platforms like <a href="https://obsidian.md/publish">Obsidian Publish</a>.
 <br />
 <br />
-I think self-contained HTML files can provide a similar set of affordances, and prevent a lot of faffing around with tooling or 3rd-party platforms.
+I think self-contained HTML files can provide a similar set of affordances, and prevent a lot of faffing around with CLI tooling, CI steps, or 3rd-party platforms.
 <br />
 <br />
 <aside>
@@ -43,8 +45,7 @@ I think self-contained HTML files can provide a similar set of affordances, and 
     I think it's a great advance for HTML hypermedia.
   </p>
 </aside>
-I'm going to try and demonstrate this, in <i>this</i> file, literate programming style.
-
+I'm going to try and demonstrate this, literate programming style.
 
 <div class="center-contents">
   <img src="img/document.png" alt="A computer displays an open book" style="max-width: 125px; margin: 1rem" />
@@ -97,12 +98,12 @@ const module = runtime.module();
 
 function cell(name, inputsOrDefinition, maybeDefinition) {
   if (maybeDefinition) {
-    const inputs = inputsOrDefinition
-    const definition = maybeDefinition
-    module.variable(observer(name)).define(name, inputs, definition)
+    const inputs = inputsOrDefinition;
+    const definition = maybeDefinition;
+    module.variable(observer(name)).define(name, inputs, definition);
   } else {
-    const definition = inputsOrDefinition
-    module.variable(observer(name)).define(name, definition)
+    const definition = inputsOrDefinition;
+    module.variable(observer(name)).define(name, definition);
   }
 }
 
@@ -113,10 +114,10 @@ function observer(cellName) {
   return new Inspector(div);
 }
 
-window.library = library
-window.module = module
-window.cell = cell
-window.observer = observer
+window.library = library;
+window.module = module;
+window.cell = cell;
+window.observer = observer;
 </script>
 
 Now we'll declare a cell called <code>counter</code> that emits a number every second.
@@ -124,9 +125,9 @@ Now we'll declare a cell called <code>counter</code> that emits a number every s
 
 <script type="module" class="echo" id="counter">
 cell("counter", async function* () {
-  let i = 0
+  let i = 0;
   while (true) {
-    yield await library.Promises.delay(1000, i++)
+    yield await library.Promises.delay(1000, i++);
   }
 });
 </script>
@@ -139,18 +140,18 @@ We'll import <a href="https://github.com/observablehq/htl">Hypertext Literal</a>
 <code>counter</code> value.
 
 <script type="module" class="echo" id="fizzbuzz">
-import * as htl from 'https://esm.run/htl'
-window.htl = htl
+import * as htl from 'https://esm.run/htl';
+window.htl = htl;
 
 cell("fizzbuzz", ["counter"], (counter) => {
   if (counter % 3 === 0 && counter % 5 === 0) {
-    return htl.html`<b style="color: purple">FizzBuzz</b>`
+    return htl.html`<b style="color: purple">FizzBuzz</b>`;
   } else if (counter % 3 === 0) {
-    return htl.html`<b style="color: red">Fizz</b>`
+    return htl.html`<b style="color: red">Fizz</b>`;
   } else if (counter % 5 === 0) {
-    return htl.html`<b style="color: blue">Buzz</b>`
+    return htl.html`<b style="color: blue">Buzz</b>`;
   } else {
-    return htl.html`<b>${counter}</b>`
+    return htl.html`<b>${counter}</b>`;
   }
 });
 </script>
@@ -169,7 +170,7 @@ cell("plot", ["counter"], (counter) => {
       Plot.lineY(numbers, { x: (d, i) => i, y: d => d }),
       Plot.ruleX([counter % 40])
     ]
-  })
+  });
 });
 </script>
 
@@ -202,30 +203,30 @@ window.Inputs = Inputs
 
 function viewof(name, inputsOrDefinition, maybeDefinition) {
   if (maybeDefinition) {
-    const inputs = inputsOrDefinition
-    const definition = maybeDefinition
-    module.variable(observer(name)).define(`viewof ${name}`, inputs, definition)
-    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
+    const inputs = inputsOrDefinition;
+    const definition = maybeDefinition;
+    module.variable(observer(name)).define(`viewof ${name}`, inputs, definition);
+    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
   } else {
     const definition = inputsOrDefinition
-    module.variable(observer(name)).define(`viewof ${name}`, definition)
-    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt))
+    module.variable(observer(name)).define(`viewof ${name}`, definition);
+    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
   }
 }
-window.viewof = viewof
+window.viewof = viewof;
 </script>
 
 Wiggle the range input and see another dependent cell update.
 
 <script type="module" class="echo" id="range">
 viewof("range", () => {
-  return Inputs.range([0, 100], { step: 1 })
+  return Inputs.range([0, 100], { step: 1 });
 });
 </script>
 
 <script type="module" class="echo" id="rangePlot">
 cell("rangePlot", ["range"], (range) => {
-  return Plot.tickX([range]).plot({ x: { domain: [0, 100] } })
+  return Plot.tickX([range]).plot({ x: { domain: [0, 100] } });
 });
 </script>
 
@@ -252,11 +253,11 @@ function Mutable(value) {
 }
 
 function mutable(name, value) {
-  const m = Mutable(value)
-  module.variable(observer(name)).define(name, m)
-  return m
+  const m = Mutable(value);
+  module.variable(observer(name)).define(name, m);
+  return m;
 }
-window.mutable = mutable
+window.mutable = mutable;
 </script>
 
 <script type="module" class="echo" id="ref">
@@ -265,10 +266,10 @@ window.ref = mutable("ref", 3)
 
 <script type="module" class="echo" id="increment">
 viewof("increment", () => {
-  const increment = () => ++ref.value
+  const increment = () => ++ref.value;
   const reset = () => ref.value = 0;
 
-  return Inputs.button([["Increment", increment], ["Reset", reset]])
+  return Inputs.button([["Increment", increment], ["Reset", reset]]);
 });
 </script>
 
@@ -289,7 +290,7 @@ cell("tex", () => {
 \f\relax{x} = \int_{-\infty}^\infty
 \f\hat\xi\,e^{2 \pi i \xi x}
 \,d\xi`
-  )
+  );
 });
 </script>
 
@@ -303,7 +304,7 @@ cell("markdown", () => {
 |-----------|-------------|---------------|${elements.map(e => `
 | ${e.name} | ${e.symbol} | ${e.number}   |`)}
 `
-  )
+  );
 });
 </script>
 
@@ -323,7 +324,7 @@ cell("dot", () => {
       rankdir = LR
       a -> b -> c
     }`
-  )
+  );
 });
 </script>
 
@@ -335,9 +336,9 @@ Now we'll use a <a href="https://sqlite.org/wasm/doc/trunk/index.md">sqlite3 WAS
 
 <script type="module" class="echo" id="sqlite">
 cell("sqlite", async () => {
-  const url = "https://maxbo.me/chinook.db"
-  const db = await library.SQLiteDatabaseClient().open(url)
-  const tracks = await db.query("SELECT * FROM tracks")
+  const url = "https://maxbo.me/chinook.db";
+  const db = await library.SQLiteDatabaseClient().open(url);
+  const tracks = await db.query("SELECT * FROM tracks");
 
   return Plot.plot({
     title: htl.html`<h3>Track length distribution</h3>`,
@@ -348,7 +349,7 @@ cell("sqlite", async () => {
       ),
       Plot.ruleY([0])
     ]
-  })
+  });
 });
 </script>
 
@@ -386,7 +387,7 @@ buf.seek(0)
   const imageElement = document.createElement('img');
   imageElement.src = imageDataUrl;
 
-  return imageElement
+  return imageElement;
 });
 </script>
 
@@ -420,13 +421,13 @@ We'll style them appropriately:
 <script type="module" class="echo" id="running">
 cell("running", () => {
   // this cell will run forever
-  return new Promise(() => { })
+  return new Promise(() => { });
 });
 </script>
 
 <script type="module" class="echo" id="error">
 cell("error", () => {
-  throw new Error("This cell has thrown an error")
+  throw new Error("This cell has thrown an error");
 });
 </script>
 
