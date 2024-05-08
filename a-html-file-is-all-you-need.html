@@ -119,8 +119,8 @@ window.cell = cell
 window.observer = observer
 </script>
 
-Now we'll declare a cell called <code>counter</code> that will emit a number every second.
-<b>The <code>script</code> <code>id</code> attribute must be the same as the <code>name</code> parameter passed to <code>cell</code></b>.
+Now we'll declare a cell called <code>counter</code> that emits a number every second.
+<b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
 
 <script type="module" class="echo" id="counter">
 cell("counter", async function* () {
@@ -278,9 +278,9 @@ cell("sword", ["ref"], (ref) => {
 });
 </script>
 
-<h2>LaTeX, Markdown, GraphViz &amp; more</h2>
+<h2>LaTeX, Markdown, GraphViz</h2>
 
-What's the point if I can't render LaTeX, Markdown and GraphViz?
+What's the point otherwise?
 
 <script type="module" class="echo" id="tex">
 cell("tex", () => {
@@ -358,42 +358,29 @@ cell("sqlite", async () => {
 
 <h2>Python</h2>
 
-<img src="img/under-construction.gif" alt="A man labors" style="display:inline-block; max-width: 50px;" />
-<img src="img/under-construction-2.gif" alt="The phrase 'Under construction' is aflame"
-  style="display:inline-block; max-width: 150px;" />
-
 <script type="module" class="echo" id="python">
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
 cell("python", async () => {
   const pyodide = await loadPyodide();
 
   await pyodide.loadPackage(['numpy', 'matplotlib']);
-
-  const numpyCode = `
+  const code = `
 import numpy as np
+import matplotlib.pyplot as plt
 x = np.linspace(0, 10, 100)
 y = np.sin(x)
-`;
-
-    const matplotlibCode = `
-import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 ax.plot(x, y)
 ax.set_title('This is a Matplotlib plot')
-plt.show()
-`;
 
-  await pyodide.runPythonAsync(numpyCode);
-  await pyodide.runPythonAsync(matplotlibCode);
-
-  const imageDataUrl = await pyodide.runPythonAsync(`
 import io, base64
 buf = io.BytesIO()
 fig.savefig(buf, format='png')
 buf.seek(0)
 'data:image/png;base64,' + base64.b64encode(buf.read()).decode()
-`);
+`;
 
+  const imageDataUrl = await pyodide.runPythonAsync(code);
   const imageElement = document.createElement('img');
   imageElement.src = imageDataUrl;
 
@@ -418,7 +405,7 @@ We'll style them appropriately:
   margin-top: 1rem;
 }
 
-.observablehq--running:after {
+.observablehq--running::before {
   content: 'LOADING';
   animation: blink 1s step-end infinite;
 }
