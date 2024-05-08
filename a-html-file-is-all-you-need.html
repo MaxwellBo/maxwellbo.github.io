@@ -284,27 +284,29 @@ cell("sword", ["ref"], (ref) => {
 What's the point otherwise?
 
 <script type="module" class="echo" id="tex">
-cell("tex", () => {
-  return library.tex().then(tex =>
-    tex`\def\f#1#2{#1f(#2)}
-\f\relax{x} = \int_{-\infty}^\infty
-\f\hat\xi\,e^{2 \pi i \xi x}
-\,d\xi`
-  );
+cell("tex", async () => {
+  const tex = await library.tex()
+  return tex`
+\Delta E^*_{00} = \sqrt{
+  \Big(\frac{\Delta L'}{k_LS_L}\Big)^2 +
+  \Big(\frac{\Delta C'}{k_CS_C}\Big)^2 +
+  \Big(\frac{\Delta H'}{k_HS_H}\Big)^2 +
+  R_T
+  \frac{\Delta C'}{k_CS_C}
+  \frac{\Delta H'}{k_HS_H}}`
 });
 </script>
 
 <script type="module" class="echo" id="markdown">
 const elements = JSON.parse(document.getElementById("elements").text);
 
-cell("markdown", () => {
-  return library.md().then(md =>
-    md`
+cell("markdown", async () => {
+  const md = await library.md();
+  return md`
 | Name      | Symbol      | Atomic number |
 |-----------|-------------|---------------|${elements.map(e => `
 | ${e.name} | ${e.symbol} | ${e.number}   |`)}
-`
-  );
+`;
 });
 </script>
 
@@ -318,13 +320,13 @@ cell("markdown", () => {
 </script>
 
 <script type="module" class="echo" id="dot">
-cell("dot", () => {
-  return library.dot().then(dot =>
-    dot`digraph G {
-      rankdir = LR
-      a -> b -> c
-    }`
-  );
+cell("dot", async () => {
+  const dot = await library.dot();
+  return dot`
+digraph G {
+  rankdir = LR
+  a -> b -> c
+}`;
 });
 </script>
 
