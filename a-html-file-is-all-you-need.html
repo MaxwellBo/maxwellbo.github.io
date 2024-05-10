@@ -425,7 +425,8 @@ buf.seek(0)
 
 <h2>R</h2>
 
-You know the drill. It's R, using <a href="https://docs.r-wasm.org/webr/latest/">WebR</a>.
+You know the drill. It's R, using <a href="https://docs.r-wasm.org/webr/latest/">WebR</a>. 
+I didn't figure out how to get <a href="https://ggplot2.tidyverse.org/">ggplot2</a> <a href="https://docs.r-wasm.org/webr/latest/plotting.html">rendering</a>, but I assume it's possible.
 
 <br />
 
@@ -439,7 +440,7 @@ cell("r", async () => {
   const response = await fetch('https://maxbo.me/chinook.db');
   webR.FS.writeFile('/chinook.db', new Uint8Array(await response.arrayBuffer()));
 
-  await webR.installPackages(['RSQLite', 'ggplot2'])
+  await webR.installPackages(['RSQLite'])
   const shelter = await new webR.Shelter();
   
   const code = `
