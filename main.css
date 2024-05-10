@@ -39,8 +39,7 @@ h1 {
 }
 
 marquee {
-  border: 3px inset;
-  background: white;
+  border: 3px ridge;
 }
 
 h2 {
