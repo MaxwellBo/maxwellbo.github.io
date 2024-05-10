@@ -12,6 +12,14 @@ body {
   text-rendering: optimizeSpeed;
 }
 
+button {
+  border: 2px outset;
+}
+
+button:active {
+  border: 2px inset
+}
+
 h1, h2 {
   font-family: 'Playfair Display SC', Georgia, 'Times New Roman', Times, serif;
 }
@@ -31,7 +39,8 @@ h1 {
 }
 
 marquee {
-  border: 5px inset;
+  border: 3px inset;
+  background: white;
 }
 
 h2 {
