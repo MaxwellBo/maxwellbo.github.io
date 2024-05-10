@@ -454,9 +454,9 @@ hist(track_data$Milliseconds,
   main = "Track length distribution",
   xlab = "Duration (Milliseconds)")`;
 
-  const capture = await shelter.captureR(code);
-
   const output = document.createElement('div');
+
+  const capture = await shelter.captureR(code);
 
   capture.images.forEach((img) => {
     const canvas = document.createElement("canvas");
