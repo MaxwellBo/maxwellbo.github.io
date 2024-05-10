@@ -441,20 +441,16 @@ I ran out of time to do a proper R example, but you should probably use <a href=
   
     await webR.installPackages(['RSQLite', 'ggplot2'])
     const shelter = await new webR.Shelter();
-    
+
   
-    const code = `
+const code = `
   library(RSQLite)
   library(ggplot2)
   conn <- dbConnect(SQLite(), "/chinook.db")
   track_data <- dbGetQuery(conn, "SELECT Milliseconds FROM tracks")
   dbDisconnect(conn)
-  
-  p <- ggplot(track_data, aes(x = Milliseconds)) +
-    geom_histogram(bins=30) + 
-    labs(title = "Track length distribution", x = "Milliseconds", y = "Frequency")
 
-  p
+  hist(rnorm(10000))
   `
   const capture = await shelter.captureR(code);
 
