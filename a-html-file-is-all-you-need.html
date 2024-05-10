@@ -425,32 +425,33 @@ buf.seek(0)
 
 <h2>R</h2>
 
-I ran out of time to do a proper R example, but you should probably use <a href="https://docs.r-wasm.org/webr/latest/">WebR</a>.
+You know the drill. It's R, using <a href="https://docs.r-wasm.org/webr/latest/">WebR</a>.
 
 <br />
 
 <script type="module" class="echo" id="r">
-  import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
-  
-  cell("r", async () => {
-    const webR = new WebR();
-    await webR.init();
-  
-    const response = await fetch('https://maxbo.me/chinook.db');
-    webR.FS.writeFile('/chinook.db', new Uint8Array(await response.arrayBuffer()));
-  
-    await webR.installPackages(['RSQLite', 'ggplot2'])
-    const shelter = await new webR.Shelter();
+import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
 
-  
-const code = `
-  library(RSQLite)
-  library(ggplot2)
-  conn <- dbConnect(SQLite(), "/chinook.db")
-  track_data <- dbGetQuery(conn, "SELECT Milliseconds FROM tracks")
-  dbDisconnect(conn)
+cell("r", async () => {
+  const webR = new WebR();
+  await webR.init();
 
-  hist(rnorm(10000))
+  const response = await fetch('https://maxbo.me/chinook.db');
+  webR.FS.writeFile('/chinook.db', new Uint8Array(await response.arrayBuffer()));
+
+  await webR.installPackages(['RSQLite', 'ggplot2'])
+  const shelter = await new webR.Shelter();
+  
+  const code = `
+library(RSQLite)
+conn <- dbConnect(SQLite(), "/chinook.db")
+track_data <- dbGetQuery(conn, "SELECT Milliseconds FROM tracks")
+dbDisconnect(conn)
+
+hist(track_data$Milliseconds, 
+  breaks = 50,
+  main = "Track length distribution",
+  xlab = "Duration (Milliseconds)")
   `
   const capture = await shelter.captureR(code);
 
@@ -468,11 +469,8 @@ const code = `
   shelter.purge();
 
   return output
-  });
-  </script>
-
-<img src="img/under-construction-2.gif" alt="The phrase 'Under construction' is aflame" style="display:inline-block; max-width: 150px;" />
-
+});
+</script>
 
 <h2>Cell status</h2>
 
