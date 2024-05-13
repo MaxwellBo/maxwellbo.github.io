@@ -54,13 +54,13 @@
 Before I start, why am I doing this?
 <br />
 <br />
-I don't think HTML is being used enough for scientific publishing.
+I don't think HTML is being used enough as a platform for scientific publishing.
 <br />
-People are commonly using either full-blown publishing platforms, like <a href="https://quarto.org/">Quarto</a>, <a href="https://typst.app/">Typst</a> and <a href="https://overleaf.com">Overleaf</a>, using interactive notebooks, like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> and <a href="https://observablehq.com/">Observable</a>, or wiki platforms like <a href="https://obsidian.md/publish">Obsidian Publish</a>.
+Typically, people will first use an interactive notebook like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> or <a href="https://observablehq.com/">Observable</a> to do data exploration, analysis and visualisation, and then move to publishing platforms like <a href="https://quarto.org/">Quarto</a>, <a href="https://typst.app/">Typst</a>, <a href="https://overleaf.com">Overleaf</a>, pure <a href="https://www.latex-project.org/">LaTeX</a>, or a <a href="https://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor to typeset their work.
 <br />
+I think self-contained HTML files can be used for both of these stages, and prevent a lot of faffing around with CLI tooling, CI steps, or 3rd-party platforms.
 <br />
-I think self-contained HTML files can provide a similar set of affordances, and prevent a lot of faffing around with CLI tooling, CI steps, or 3rd-party platforms.
-<br />
+HTML's typesetting capabilities are well documented, but its capabilities as a platform for data exploration, analysis and visualisation are not.
 <br />
 <aside>
   <p>
@@ -68,7 +68,7 @@ I think self-contained HTML files can provide a similar set of affordances, and 
     I think it's a great advance for HTML hypermedia.
   </p>
 </aside>
-I'll try and demonstrate these affordances, literate programming style.
+I'll try and demonstrate these capabilities, literate programming style.
 
 <div class="center-contents">
   <img src="img/document.png" alt="A computer displays an open book" style="max-width: 125px; margin: 1rem" />
@@ -422,13 +422,12 @@ buf.seek(0)
 });
 </script>
 
-
 <h2>R</h2>
 
 You know the drill. It's R, using <a href="https://docs.r-wasm.org/webr/latest/">WebR</a>. 
 I didn't figure out how to get <a href="https://ggplot2.tidyverse.org/">ggplot2</a> <a href="https://docs.r-wasm.org/webr/latest/plotting.html">rendering</a> working, but I assume it's possible.
 
-<br />
+<i>I must disclose that this seems to be a bit flaky on iOS. I am not sure why.</i>
 
 <script type="module" class="echo" id="r">
 import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
