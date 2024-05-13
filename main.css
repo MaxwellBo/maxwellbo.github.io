@@ -115,6 +115,10 @@ footer img {
 }
 
 
+hr {
+  margin-bottom: 2rem;
+}
+
 code {
   border: 1px solid #CCC;
   background-color: #EEE;

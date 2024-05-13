@@ -12,7 +12,7 @@
   <meta property="og:title" content="Can we build a reactive article in a single HTML file?">
   <meta property="og:description" content="Yes (by standing on the shoulders of Observable)">
   <meta property="og:image" content="https://maxbo.me/img/document.png">
-  <meta property="og:url" content="https://maxbo.me/a-html-file-is-all-you-need.html">
+  <meta property="og:url" content="https://maxbo.me/a-html-file-is-all-you-need">
   <meta property="og:type" content="article">
   <meta property="og:site_name" content="Max Bo">
   <meta property="og:locale" content="en_GB">
@@ -28,8 +28,8 @@
   <meta name="twitter:creator" content="@_max_bo_">
   <meta name="twitter:title" content="Can we build a reactive article in a single HTML file?">
   <meta name="twitter:description" content="Yes (by standing on the shoulders of Observable)">
-  <meta name="twitter:image" content="https://maxbo.me/img/document.png">
-  <meta name="twitter:url" content="https://maxbo.me/a-html-file-is-all-you-need.html">
+  <!-- <meta name="twitter:image" content="https://maxbo.me/img/document.png"> -->
+  <meta name="twitter:url" content="https://maxbo.me/a-html-file-is-all-you-need">
 
   <title>Can we build a reactive article in a single HTML file?</title>
 </head>
@@ -51,14 +51,22 @@
   <b>Yes</b> <small><i>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</i></small>.
 </header>
 
+<hr />
+
 Before I start, why am I doing this?
 <br />
 <br />
-I don't think HTML is being used enough as a platform for scientific publishing.
+<b>I don't think HTML is being used enough as a platform for scientific publishing.</b>
 <br />
-Typically, people will first use an interactive notebook like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> or <a href="https://observablehq.com/">Observable</a> to do data exploration, analysis and visualisation, and then move to publishing platforms like <a href="https://quarto.org/">Quarto</a>, <a href="https://typst.app/">Typst</a>, <a href="https://overleaf.com">Overleaf</a>, pure <a href="https://www.latex-project.org/">LaTeX</a>, or a <a href="https://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor to typeset their work.
+<br />
+Instead, people will:
+<ol>
+  <li>First use an interactive notebook like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> or <a href="https://observablehq.com/">Observable</a> to do data exploration, analysis and visualisation,</li>
+  <li>Then move to publishing platforms like <a href="https://quarto.org/">Quarto</a>, <a href="https://typst.app/">Typst</a>, <a href="https://overleaf.com">Overleaf</a>, pure <a href="https://www.latex-project.org/">LaTeX</a>, or a <a href="https://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor to typeset their work.</li>
+</ol>
 <br />
 I think self-contained HTML files can be used for both of these stages, and prevent a lot of faffing around with CLI tooling, CI steps, or 3rd-party platforms.
+<br />
 <br />
 HTML's typesetting capabilities are well documented, but its capabilities as a platform for data exploration, analysis and visualisation are not.
 <br />
@@ -68,6 +76,7 @@ HTML's typesetting capabilities are well documented, but its capabilities as a p
     I think it's a great advance for HTML hypermedia.
   </p>
 </aside>
+<br />
 I'll try and demonstrate these capabilities, literate programming style.
 
 <div class="center-contents">
@@ -427,7 +436,7 @@ buf.seek(0)
 You know the drill. It's R, using <a href="https://docs.r-wasm.org/webr/latest/">WebR</a>. 
 I didn't figure out how to get <a href="https://ggplot2.tidyverse.org/">ggplot2</a> <a href="https://docs.r-wasm.org/webr/latest/plotting.html">rendering</a> working, but I assume it's possible.
 
-<i>I must disclose that this seems to be a bit flaky on iOS. I am not sure why.</i>
+<i>I must disclose that this cell seems to be a bit flaky on iOS. I am not sure why.</i>
 
 <script type="module" class="echo" id="r">
 import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
