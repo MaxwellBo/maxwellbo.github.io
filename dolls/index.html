@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Viewer Demo</title>
+</head>
+<body>
+<main>
+<script type="module" class="echo" id="model">
+import { cell } from '/celine.mjs';
+import 'https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js';
+import * as htl from 'https://esm.run/htl';
+
+cell("model", async () => {
+return htl.html`
+  <model-viewer 
+    style="width: 100%; height: 400px"
+    src="/models/NeilArmstrong.glb" 
+    poster="/models/NeilArmstrong.webp" 
+    alt="Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum" 
+    ar 
+    auto-rotate
+    shadow-intensity="1" 
+    camera-controls 
+    touch-action="pan-y">
+  </model-viewer>
+`;
+});
+</script>
+</main>
+</body>
+</html>
