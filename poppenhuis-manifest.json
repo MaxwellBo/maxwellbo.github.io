@@ -11,6 +11,7 @@
           {
             "id": "neil",
             "name": "Neil Armstrong",
+            "description": "Neil Armstrong's Spacesuit from the Smithsonian Digitization Programs Office and National Air and Space Museum",
             "model": "https://maxbo.me/models/NeilArmstrong.glb",
             "poster": "https://maxbo.me/models/NeilArmstrong.webp"
           }
