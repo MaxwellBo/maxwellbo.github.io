@@ -1,19 +1,21 @@
-{
-  "id": "buzz",
-  "name": "Buzz Aldrin",
-  "bio": "not as cool as Neil",
-  "collections": [
-    {
-      "id": "coworkers",
-      "name": "Coworkers",
-      "items": [
-        {
-          "id": "neil",
-          "name": "Neil Armstrong",
-          "model": "https://maxbo.me/models/NeilArmstrong.glb",
-          "poster": "https://maxbo.me/posters/NeilArmstrong.webp"
-        }
-      ]
-    }
-  ]
-}
+[
+  {
+    "id": "buzz",
+    "name": "Buzz Aldrin",
+    "bio": "not as cool as Neil",
+    "collections": [
+      {
+        "id": "coworkers",
+        "name": "Coworkers",
+        "items": [
+          {
+            "id": "neil",
+            "name": "Neil Armstrong",
+            "model": "https://maxbo.me/models/NeilArmstrong.glb",
+            "poster": "https://maxbo.me/posters/NeilArmstrong.webp"
+          }
+        ]
+      }
+    ]
+  }
+]
