@@ -133,10 +133,18 @@ function cell(name, inputsOrDefinition, maybeDefinition) {
   if (maybeDefinition) {
     const inputs = inputsOrDefinition;
     const definition = maybeDefinition;
-    module.variable(observer(name)).define(name, inputs, definition);
+    try {
+      module.variable(observer(name)).redefine(name, inputs, definition);
+    } catch (error) {
+      module.variable(observer(name)).define(name, inputs, definition);
+    }
   } else {
     const definition = inputsOrDefinition;
-    module.variable(observer(name)).define(name, definition);
+    try {
+      module.variable(observer(name)).redefine(name, inputs, definition);
+    } catch (error) {
+      module.variable(observer(name)).define(name, inputs, definition);
+    }
   }
 }
 
@@ -156,7 +164,7 @@ window.observer = observer;
 Now we'll declare a cell called <code>counter</code> that emits a number every second.
 <b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
 
-<script type="module" class="echo" id="counter">
+<script type="module" class="echo" id="counter" contenteditable="true">
 cell("counter", async function* () {
   let i = 0;
   while (true) {
@@ -586,6 +594,43 @@ function rerun(event) {
     <br />
     <small>© 2024</small>
 </footer>
+
+<script class="echo" type="module">
+    const editableScript = document.getElementById('counter');
+
+    editableScript.addEventListener('blur', function() {
+        // Creating a new script element
+        let newScript = document.createElement('script');
+        
+        // Cloning attributes from old script
+        Array.from(editableScript.attributes).forEach(attr => {
+            newScript.setAttribute(attr.name, attr.value);
+        });
+
+        // Setting the new script content to the edited content
+        newScript.textContent = editableScript.textContent;
+
+        // Replace the old script element with the new one
+        editableScript.parentNode.replaceChild(newScript, editableScript);
+
+        // Apply contenteditable on the new script
+        newScript.contentEditable = "true";
+        addBlurListener(newScript);
+    });
+  
+  function addBlurListener(scriptElement) {
+      scriptElement.addEventListener('blur', function() {
+          let tempScript = document.createElement('script');
+          Array.from(scriptElement.attributes).forEach(attr => {
+              tempScript.setAttribute(attr.name, attr.value);
+          });
+          tempScript.textContent = scriptElement.textContent;
+          scriptElement.parentNode.replaceChild(tempScript, scriptElement);
+          tempRSipt.contentEditable = "true";
+          addBlurListener(tempScript);
+      });
+  }
+  </script>
 
 </main>
 </body>
