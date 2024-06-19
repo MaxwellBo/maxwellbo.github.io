@@ -89,7 +89,7 @@ I'll try and demonstrate these capabilities, literate programming style.
 First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a truly naked, brutalist html quine</a>, and create a CSS class called <code>echo</code> that will display/reflect <code>style</code> and <code>script</code> elements inline.
 <i>This <code>style</code> block has effectively styled itself.</i>
 
-<style class="echo">
+<style class="echo" contenteditable="true">
 .echo {
   display: block;
   white-space: pre;
@@ -108,7 +108,7 @@ script.echo::after {
   content: "<\/script>"; 
 }
 style.echo::before { 
-  content: "<style class=\"" attr(class)"\">"; 
+  content: "<style class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
 }
 style.echo::after { 
   content: "<\/style>"; 
@@ -514,10 +514,10 @@ Observable's <code>Inspector</code> can apply an <code>observablehq--running</co
 <code>observablehq--error</code> class to the cell's <code>div</code> result element.
 We'll style them appropriately:
 
-<style class="echo">
+<style class="echo" contenteditable="true">
 @keyframes blink {
   67% {
-    opacity: 0
+    opacity: 0;
   }
 }
 
