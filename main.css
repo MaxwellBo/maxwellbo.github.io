@@ -171,6 +171,12 @@ img {
   image-rendering: pixelated;
 }
 
+.icon {
+  height: 32px;
+  padding-right: 8px;
+  display: inline-block;
+}
+
 /*
   Josh's Custom CSS Reset
   https://www.joshwcomeau.com/css/custom-css-reset/
