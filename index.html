@@ -37,6 +37,14 @@
 </head>
 
 <body>
+    <script>
+    /* be iframe friendly */
+    if (window.self !== window.top) {
+      document.querySelectorAll('a').forEach((link) => {
+        link.setAttribute('target', '_top');
+      });
+    }
+    </script>
     <main>
         <header>
             <h1 class="wordmark">
