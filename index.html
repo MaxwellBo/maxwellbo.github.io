@@ -11,6 +11,14 @@
 
         gtag('config', 'UA-135030873-1');
     </script>
+    <script type="module">
+    /* be iframe friendly */
+    if (window.self !== window.top) {
+      document.querySelectorAll('a').forEach((link) => {
+        link.setAttribute('target', '_top');
+      });
+    }
+    </script>
     <title>Max Bo</title>
     <meta name="author" content="Max Bo, max@maxbo.me">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -37,14 +45,6 @@
 </head>
 
 <body>
-    <script>
-    /* be iframe friendly */
-    if (window.self !== window.top) {
-      document.querySelectorAll('a').forEach((link) => {
-        link.setAttribute('target', '_top');
-      });
-    }
-    </script>
     <main>
         <header>
             <h1 class="wordmark">
