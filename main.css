@@ -70,7 +70,7 @@ li.button {
   margin-bottom: 0.5rem;
   margin-right: 0.25rem;
   display: inline-block;
-  border: 2px outset;
+  border: 2px ridge;
 }
 
 li.button a {
