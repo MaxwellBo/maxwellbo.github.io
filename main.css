@@ -66,14 +66,14 @@ a {
   text-underline-offset: 0.2em;
 }
 
-nav ul > li {
+li.button {
   margin-bottom: 0.5rem;
   margin-right: 0.25rem;
   display: inline-block;
   border: 2px outset;
 }
 
-nav ul > li > a {
+li.button a {
   font-family: serif;
   font-size: 1.25rem;
   padding: 0.5rem;
@@ -87,7 +87,7 @@ div.cards {
   grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
 }
 
-div.cards img {
+.listing img {
   border: 2px dotted;
   aspect-ratio: 4/3;
   object-fit: cover;
@@ -98,22 +98,21 @@ dt {
   font-weight: bolder;
 }
 
-dt > img {
+img.favicon {
   width: 1rem;
   height: 1rem;
   display: inline-block;
 }
 
-dd.time {
+img.badge {
+  display: inline-block;
+}
+
+.time {
   padding-bottom: 1em;
   font-size: 0.9rem;
   font-style: italic;
 }
-
-footer img {
-  display: inline-block;
-}
-
 
 hr {
   margin-bottom: 2rem;
@@ -175,6 +174,11 @@ img {
   height: 32px;
   padding-right: 8px;
   display: inline-block;
+}
+
+.listing .title {
+  font-size: 1.1rem;
+  font-weight: bold;
 }
 
 /*
