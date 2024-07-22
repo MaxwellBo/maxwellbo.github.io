@@ -293,7 +293,7 @@ function Mutable(value) {
 
 function mutable(name, value) {
   const m = Mutable(value);
-  module.variable(observer(name)).define(name, m);
+  cell(name, m);
   return m;
 }
 window.mutable = mutable;
