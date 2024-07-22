@@ -2,7 +2,6 @@
 
 html {
   cursor: url('img/cursor-dino.png'), auto;
-  perspective: 10000px;
 }
 
 body {
@@ -11,7 +10,6 @@ body {
   font-smooth: never;
   -webkit-font-smoothing: none;
   text-rendering: optimizeSpeed;
-  transform: rotateY(3deg);
 }
 
 button {
