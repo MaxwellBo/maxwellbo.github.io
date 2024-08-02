@@ -34,6 +34,7 @@
 }
 
 #watermark {
+  display: none;
   font-family: 'Crozet';
   position: absolute;
   top: 50%;
@@ -44,6 +45,47 @@
   white-space: nowrap;
   pointer-events: none; /* Make sure it doesn't interfere with other elements */
   z-index: -1; /* Push it to the back */
+}
+
+#clouds {
+  background-image: url('img/clouds.webp');
+}
+
+#cycle {
+  animation: cycle 30s linear infinite;
+}
+
+@keyframes cycle {
+  0% {
+    background-color: yellow;
+  }
+
+  20% {
+    background-color: lightsalmon;
+  }
+
+  40% {
+    background-color: mediumslateblue;
+  }
+
+  60% {
+    background-color: mistyrose;
+  }
+
+  80% {
+    background-color: mediumturquoise;
+  }
+
+  100% {
+    background-color: yellow;
+  }
+}
+
+#dindong {
+  font-family: 'DINdong';
+  background-color: cornflowerblue;
+  color: cornsilk;
+  font-size: 50px;
 }
 
 img.icon {
@@ -154,6 +196,10 @@ div.cards {
   grid-template-columns: repeat(auto-fit, minmax(20ch, 20ch));
 }
 
+article.art {
+  border: 0.5px solid black;
+}
+
 article.listing {
   border: 0.5px solid black;
   backdrop-filter: blur(1px);
@@ -180,6 +226,10 @@ article.listing {
 }
 
 @media (min-width: 768px) {
+  #watermark {
+    display: initial;
+  }
+
 
   body {
     display: grid;
