@@ -200,3 +200,20 @@ html, body {
     bottom: 0;
   }
 }
+
+dl {
+  font-family: monospace;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+dt, dd {
+  display: block;
+  text-align: center;
+  width: 100px; 
+  margin: 0;
+}
+dd {
+  margin-top: 1em; /* Adjust spacing as needed */
+}

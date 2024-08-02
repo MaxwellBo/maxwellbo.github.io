@@ -625,6 +625,67 @@
     </section>
   </main>
   <footer>
+    <dl>
+      <dt>chargingchange</dt>
+      <dd id="chargingchange"></dd>
+      <dt>levelchange</dt>
+      <dd id="levelchange"></dd>
+      <dt>chargingtimechange</dt>
+      <dd id="chargingtimechange"></dd>
+      <dt>dischargingtimechange</dt>
+      <dd id="dischargingtimechange"></dd>
+      <dt>mousemove.x</dt>
+      <dd id="mousemove.x"></dd>
+      <dt>mousemove.y</dt>
+      <dd id="mousemove.y"></dd>
+      <dt>user-agent</dt>
+      <dd id="user-agent"></dd>
+    </dl>
+    <script>
+      navigator.getBattery().then(function (battery) {
+        battery.addEventListener('chargingchange', function () {
+          updateChargeInfo();
+        });
+        function updateChargeInfo() {
+          document.getElementById('chargingchange').textContent = battery.charging ? 'Charging' : 'Not charging';
+        }
+
+        battery.addEventListener('levelchange', function () {
+          updateLevelInfo();
+        });
+        function updateLevelInfo() {
+          document.getElementById('levelchange').textContent = battery.level * 100 + '%';
+        }
+
+        battery.addEventListener('chargingtimechange', function () {
+          updateChargingInfo();
+        });
+        function updateChargingInfo() {
+          document.getElementById('chargingtimechange').textContent = battery.chargingTime + ' seconds';
+        }
+
+        battery.addEventListener('dischargingtimechange', function () {
+          updateDischargingInfo();
+        });
+        function updateDischargingInfo() {
+          document.getElementById('dischargingtimechange').textContent = battery.dischargingTime + ' seconds';
+        }
+
+        updateChargeInfo();
+        updateLevelInfo();
+        updateChargingInfo();
+        updateDischargingInfo();
+
+        addEventListener('mousemove', function (event) {
+          document.getElementById('mousemove.x').textContent = event.clientX;
+          document.getElementById('mousemove.y').textContent = event.clientY;
+        });
+
+        document.getElementById('user-agent').textContent = navigator.userAgent;
+      });
+    </script>
+
+
     <small>© 2024</small>
   </footer>
 </body>
