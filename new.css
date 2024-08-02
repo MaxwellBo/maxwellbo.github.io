@@ -131,7 +131,6 @@ header {
 
   }
   img:hover {
-    z-index: -1;
     animation: grow 10s linear;
   }
 
