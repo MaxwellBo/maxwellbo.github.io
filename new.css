@@ -1,32 +1,36 @@
-
 @font-face {
   font-family: 'DINdong';
-  src: 
-      url('fonts/DINdong/DINdong.woff2') format('woff2'),
-      url('fonts/DINdong/DINdong.woff') format('woff'),
-      url('fonts/DINdong/DINdong.ttf') format('truetype'),
-      url('fonts/DINdong/DINdong.otf') format('opentype');
+  src:
+    url('fonts/DINdong/DINdong.woff2') format('woff2'),
+    url('fonts/DINdong/DINdong.woff') format('woff'),
+    url('fonts/DINdong/DINdong.ttf') format('truetype'),
+    url('fonts/DINdong/DINdong.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Ductus Geometric';
-  src: 
-      url('fonts/ductus/webfonts/DuctusCalligraphic.woff2') format('woff2'),
-      url('fonts/ductus/webfonts/DuctusGeometric.woff') format('woff'),
-      url('fonts/ductus/ttf//DuctusGeometric.ttf') format('truetype'),
-      url('fonts/ductus/otf/DuctusGeometric.otf') format('opentype');
+  src:
+    url('fonts/ductus/webfonts/DuctusCalligraphic.woff2') format('woff2'),
+    url('fonts/ductus/webfonts/DuctusGeometric.woff') format('woff'),
+    url('fonts/ductus/ttf//DuctusGeometric.ttf') format('truetype'),
+    url('fonts/ductus/otf/DuctusGeometric.otf') format('opentype');
 }
 
 @font-face {
   font-family: 'Homoneta';
-  src: 
-      url('fonts/homoneta/woff/Homoneta-Regular.woff2') format('woff2'),
-      url('fonts/homoneta/woff/Homoneta-Regular.woff') format('woff'),
-      url('fonts/homoneta/otf/Homoneta-Regular.otf') format('opentype');
+  src:
+    url('fonts/homoneta/woff/Homoneta-Regular.woff2') format('woff2'),
+    url('fonts/homoneta/woff/Homoneta-Regular.woff') format('woff'),
+    url('fonts/homoneta/otf/Homoneta-Regular.otf') format('opentype');
+}
+
+img.icon {
+  display: none;
 }
 
 a {
   color: color(display-p3 0 0 1);
+  text-decoration: none;
 }
 
 a:active {
@@ -41,22 +45,18 @@ a:hover {
   color: color(display-p3 1 0 0);
 }
 
+body {
+  font-family: 'DINdong', sans-serif;
+}
+
 nav {
-  font-family: 'Ductus Geometric', sans-serif;
-
-  margin: 1rem;
-
-  perspective: 300px;
-
   ul {
+    max-width: 100%;
     list-style-type: none;
-    max-width: 20ch;
-
-    transform: rotateY(3deg);
+    padding-inline-start: 0px;
 
     li {
-      border: 1px black solid;
-      margin: 0.5rem;
+      border-bottom: 1px black solid;
       padding: 0.5rem;
 
       /* :hover {
@@ -67,40 +67,25 @@ nav {
   }
 }
 
-main {
-  border: 1px solid black;
-  padding: 1rem;
-  margin: 1rem;
-
-  section {
-    padding: 1rem;
-  }
-
-  h1, h2, h3 {
-    ::before {
-      content: '*';
-    }
-
-    font-family: 'DINdong', sans-serif;
-    color: black;
-  }
-
+h1, h2, h3 {
   font-family: 'Ductus Geometric', sans-serif;
 }
 
-img.icon {
-  display: none;
+h2 {
+  font-size: 2rem
+}
+
+main {
+  font-family: 'DINdong', sans-serif;
+  border-left: 1px solid black;
 }
 
 header {
-  font-family: 'DINdong', sans-serif;
+  border-bottom: 1px solid black;
+  font-family: 'Ductus Geometric', sans-serif;
   text-transform: uppercase;
 
-  perspective: 100px;
-  transform: rotateZ(3deg) rotateX(2deg);
-
   .wordmark {
-    border: 1px solid black;
     font-size: 5rem;
   }
 }
@@ -110,63 +95,49 @@ footer {
   width: 100%;
   white-space: nowrap;
   padding: 1rem;
-  margin-bottom: 1rem;
   border: 1px solid black;
   font-family: monospace;
 }
 
-
 @keyframes grow {
   0% {
-    transform: scale(1) rotateZ(-5deg);;
+    transform: scale(1);
   }
 
   50% {
-    transform: scale(5) rotateZ(-5deg);;
+    transform: scale(5);
   }
 }
 
-.listing {
-  perspective: 30px;
+div.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20ch, 20ch));
+}
 
-  padding-top: 2rem;
+article.listing {
+  border: 0.5px solid black;
 
   img {
-    z-index: 5;
-    max-width: 20ch;
-    transform: rotateZ(-5deg);
     aspect-ratio: 4/3;
     object-fit: cover;
-    border: 1px black solid;
   }
 
   img:hover {
     animation: grow 60s linear infinite;
   }
-  
-  .title {
-    font-size: 1.1rem;
-    font-weight: bold;
+
+  p.title {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
   }
 
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-html, body {
-  height: 100%;
+  p.description {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 }
 
 @media (min-width: 768px) {
-  div.cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
-  }
-
 
   body {
     display: grid;
@@ -197,4 +168,49 @@ html, body {
     position: sticky;
     bottom: 0;
   }
+}
+
+
+/*
+  Josh's Custom CSS Reset
+  https://www.joshwcomeau.com/css/custom-css-reset/
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+#root,
+#__next {
+  isolation: isolate;
 }

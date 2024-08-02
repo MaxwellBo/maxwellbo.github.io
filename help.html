@@ -51,6 +51,7 @@
       addEventListener("devicemotion", ondevicemotion);
 
       function ondevicemotion(event) {
+        console.log(event);
         log(`Acceleration along the X-axis: ${event.accelerationIncludingGravity.x}`);
         log(`Acceleration along the Y-axis: ${event.accelerationIncludingGravity.y}`);
         log(`Acceleration along the Z-axis: ${event.accelerationIncludingGravity.z}`);
