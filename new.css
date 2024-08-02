@@ -92,6 +92,22 @@ img.icon {
   display: none;
 }
 
+img.favicon {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+}
+
+dt {
+  padding-top: 0.3rem;
+  font-size: 1.3rem;
+}
+
+dd.time {
+  font-size: 0.9rem;
+  color: darkgray;
+}
+
 a {
   color: color(display-p3 0 0 1);
   text-decoration: none;
