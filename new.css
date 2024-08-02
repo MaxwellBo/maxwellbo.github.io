@@ -91,12 +91,16 @@ header {
 }
 
 footer {
-  overflow-y: scroll;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
   width: 100%;
   white-space: nowrap;
-  padding: 1rem;
   border: 1px solid black;
-  font-family: monospace;
+}
+
+script {
+  display: none;
 }
 
 @keyframes grow {

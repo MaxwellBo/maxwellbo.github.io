@@ -5,6 +5,7 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135030873-1"></script>
   <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  <link href="https://tools.aftertheflood.com/sparks/styles/font-faces.css" rel="stylesheet" />
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -214,19 +215,9 @@
         </article>
         <article class="listing">
           <a href="https://poppenhu.is">
-            <model-viewer 
-              style="width: 100%; height: 15ch;"
-              alt="James" 
-              src="dolls/James.glb"  
-              interaction-prompt=""
-              progress-bar=""
-              loading="auto"
-              auto-rotate-delay="0"
-              rotation-per-second="20deg"
-              camera-controls
-              auto-rotate
-              touch-action="pan-y"
-            ></model-viewer>
+            <model-viewer style="width: 100%; height: 15ch;" alt="James" src="dolls/James.glb" interaction-prompt=""
+              progress-bar="" loading="auto" auto-rotate-delay="0" rotation-per-second="20deg" camera-controls
+              auto-rotate touch-action="pan-y"></model-viewer>
 
 
             <p class="title">poppenhuis</h3>
@@ -640,104 +631,93 @@
     </section>
   </main>
   <footer>
-    <table>
-      <thead>
-        <tr>
-          <th>onLine</th>
-          <th>language</th>
-          <th>mousemove.x</th>
-          <th>mousemove.y</th>
-          <th>chargingchange</th>
-          <th>levelchange</th>
-          <th>chargingtimechange</th>
-          <th>dischargingtimechange</th>
-          <th>hardwareConcurrency</th>
-          <th>deviceMemory</th>
-          <th>storageEstimate</th>
-          <th>maxTouchPoints</th>
-          <th>cookieEnabled</th>
-          <th>doNotTrack</th>
-          <th>webDriver</th>
-          <th>userAgent</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td id="onLine"></td>
-          <td id="language"></td>
-          <td id="mousemove.x"></td>
-          <td id="mousemove.y"></td>
-          <td id="chargingchange"></td>
-          <td id="levelchange"></td>
-          <td id="chargingtimechange"></td>
-          <td id="dischargingtimechange"></td>
-          <td id="hardwareConcurrency"></td>
-          <td id="deviceMemory"></td>
-          <td id="storageEstimate"></td>
-          <td id="maxTouchPoints"></td>
-          <td id="cookieEnabled"></td>
-          <td id="doNotTrack"></td>
-          <td id="webDriver"></td>
-          <td id="userAgent"></td>
-        </tr>
-      </tbody>
-    </table>
+    <small>© 2024, <a href="old.html">old site</a></small>
+    <article>
+      <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
+        <rect id="screen" x="0" y="0" width="100" height="100" fill="white" stroke="black" />
+        <circle id="cursor" cx="50" cy="50" r="2" fill="black" />
+      </svg>
+      <code>
+        <output id="x"></output>
+        <output id="y"></output>
+      </code>
+
+      <script>
+        function updateWidget() {
+          const svg = document.getElementById('mouseWidget');
+          const rect = document.getElementById('screen');
+          const aspectRatio = window.innerWidth / window.innerHeight;
+          svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
+          rect.setAttribute('width', 100 * aspectRatio);
+          rect.setAttribute('height', 100);
+        }
+
+        function updateDotPosition(event) {
+          const dot = document.getElementById('cursor');
+          const x = (event.clientX / window.innerWidth) * 100;
+          const y = (event.clientY / window.innerHeight) * 100;
+          dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
+          dot.setAttribute('cy', y);
+
+          document.getElementById('x').textContent = "x: " + event.clientX;
+          document.getElementById('y').textContent = "y:" + event.clientY;
+        }
+
+        window.addEventListener('resize', updateWidget);
+        document.addEventListener('mousemove', updateDotPosition);
+
+        updateWidget();
+      </script>
+
+    </article>
+
+    <article>
+      <svg id="batteryWidget" viewBox="0 0 100 50" style="max-height: 50px;">
+        <rect x="10" y="10" width="80" height="30" fill="none" stroke="black" />
+        <rect id="batteryFill" x="10" y="10" width="0" height="30" fill="black" />
+      </svg>
+    </article>
+
     <script>
-      navigator.getBattery().then(function (battery) {
-        battery.addEventListener('chargingchange', function () {
-          updateChargeInfo();
-        });
-        function updateChargeInfo() {
-          document.getElementById('chargingchange').textContent = battery.charging ? 'Charging' : 'Not charging';
+      navigator.getBattery().then((battery) => {
+        function updateBatteryInfo() {
+          const batteryFill = document.getElementById('batteryFill');
+          const levelPercent = battery.level * 100;
+
+          batteryFill.setAttribute('width', 80 * battery.level);
+
+          if (battery.charging) {
+            batteryFill.setAttribute('fill', 'green');
+          } else if (battery.level < 0.20) {
+            batteryFill.setAttribute('fill', 'red');
+          } else {
+            batteryFill.setAttribute('fill', 'black');
+          }
         }
 
-        battery.addEventListener('levelchange', function () {
-          updateLevelInfo();
-        });
-        function updateLevelInfo() {
-          document.getElementById('levelchange').textContent = battery.level * 100 + '%';
-        }
+        battery.addEventListener('chargingchange', updateBatteryInfo);
+        battery.addEventListener('levelchange', updateBatteryInfo);
+        battery.addEventListener('chargingtimechange', updateBatteryInfo);
+        battery.addEventListener('dischargingtimechange', updateBatteryInfo);
 
-        battery.addEventListener('chargingtimechange', function () {
-          updateChargingInfo();
-        });
-        function updateChargingInfo() {
-          document.getElementById('chargingtimechange').textContent = battery.chargingTime + ' seconds';
-        }
-
-        battery.addEventListener('dischargingtimechange', function () {
-          updateDischargingInfo();
-        });
-        function updateDischargingInfo() {
-          document.getElementById('dischargingtimechange').textContent = battery.dischargingTime + ' seconds';
-        }
-
-        updateChargeInfo();
-        updateLevelInfo();
-        updateChargingInfo();
-        updateDischargingInfo();
-
-        addEventListener('mousemove', function (event) {
-          document.getElementById('mousemove.x').textContent = event.clientX;
-          document.getElementById('mousemove.y').textContent = event.clientY;
-        });
-
-        document.getElementById('userAgent').textContent = navigator.userAgent;
-
-        document.getElementById('onLine').textContent = navigator.onLine ? 'Online' : 'Offline';
-        document.getElementById('language').textContent = navigator.language;
-        document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency;
-        document.getElementById('deviceMemory').textContent = navigator.deviceMemory;
-        navigator.storage.estimate().then(function (estimate) {
-          document.getElementById('storageEstimate').textContent = estimate.usage + ' / ' + estimate.quota;
-        });
-        document.getElementById('maxTouchPoints').textContent = navigator.maxTouchPoints;
-        document.getElementById('cookieEnabled').textContent = navigator.cookieEnabled;
-        document.getElementById('doNotTrack').textContent = navigator.doNotTrack;
-        document.getElementById('webDriver').textContent = navigator.webdriver;
+        updateBatteryInfo();
       });
     </script>
-    <small>© 2024, <a href="old.html">old site</a></small>
+    <script>
+      // document.getElementById('userAgent').textContent = navigator.userAgent;
+
+      // document.getElementById('onLine').textContent = navigator.onLine ? 'Online' : 'Offline';
+      // document.getElementById('language').textContent = navigator.language;
+      // document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency;
+      // document.getElementById('deviceMemory').textContent = navigator.deviceMemory;
+      // navigator.storage.estimate().then(function (estimate) {
+      //   document.getElementById('storageEstimate').textContent = estimate.usage + ' / ' + estimate.quota;
+      // });
+      // document.getElementById('maxTouchPoints').textContent = navigator.maxTouchPoints;
+      // document.getElementById('cookieEnabled').textContent = navigator.cookieEnabled;
+      // document.getElementById('doNotTrack').textContent = navigator.doNotTrack;
+      // document.getElementById('webDriver').textContent = navigator.webdriver;
+    </script>
   </footer>
 </body>
 
