@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="H_N.liga" format="2">
+	<advance width="955"/>
+	<outline>
+		<contour>
+			<point x="807" y="600" type="line"/>
+			<point x="807" y="572" type="line"/>
+			<point x="857" y="572" type="line"/>
+			<point x="876" y="550" type="line"/>
+			<point x="779" y="70" type="line"/>
+			<point x="571" y="600" type="line"/>
+			<point x="553" y="600" type="line"/>
+			<point x="422" y="28" type="line"/>
+			<point x="362" y="28" type="line"/>
+			<point x="362" y="0" type="line"/>
+			<point x="530" y="0" type="line"/>
+			<point x="530" y="28" type="line"/>
+			<point x="482" y="28" type="line"/>
+			<point x="463" y="50" type="line"/>
+			<point x="463" y="72" type="line"/>
+			<point x="545" y="434" type="line"/>
+			<point x="717" y="0" type="line"/>
+			<point x="810" y="0" type="line"/>
+			<point x="928" y="550" type="line"/>
+			<point x="947" y="572" type="line"/>
+			<point x="995" y="572" type="line"/>
+			<point x="995" y="600" type="line"/>
+		</contour>
+		<component base="H"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>H</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>N</string>
+		</dict>
+	</lib>
+</glyph>

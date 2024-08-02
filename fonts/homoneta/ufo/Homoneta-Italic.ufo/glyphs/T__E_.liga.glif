@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="T_E.liga" format="2">
+	<advance width="620"/>
+	<outline>
+		<contour>
+			<point x="386" y="549" type="line"/>
+			<point x="403" y="562" type="line"/>
+			<point x="550" y="562" type="line"/>
+			<point x="572" y="543" type="line"/>
+			<point x="581" y="497" type="line"/>
+			<point x="609" y="497" type="line"/>
+			<point x="630" y="600" type="line"/>
+			<point x="40" y="600" type="line"/>
+			<point x="86" y="497" type="line"/>
+			<point x="105" y="497" type="line"/>
+			<point x="105" y="545" type="line"/>
+			<point x="121" y="563" type="line"/>
+			<point x="278" y="563" type="line"/>
+			<point x="297" y="541" type="line"/>
+			<point x="185" y="28" type="line"/>
+			<point x="121" y="28" type="line"/>
+			<point x="121" y="0" type="line"/>
+			<point x="514" y="0" type="line"/>
+			<point x="536" y="105" type="line"/>
+			<point x="508" y="105" type="line"/>
+			<point x="498" y="57" type="line"/>
+			<point x="476" y="38" type="line"/>
+			<point x="302" y="38" type="line"/>
+			<point x="274" y="59" type="line"/>
+			<point x="325" y="292" type="line"/>
+			<point x="350" y="311" type="line"/>
+			<point x="509" y="311" type="line"/>
+			<point x="531" y="292" type="line"/>
+			<point x="531" y="262" type="line"/>
+			<point x="559" y="262" type="line"/>
+			<point x="586" y="394" type="line"/>
+			<point x="558" y="394" type="line"/>
+			<point x="549" y="366" type="line"/>
+			<point x="527" y="347" type="line"/>
+			<point x="358" y="347" type="line"/>
+			<point x="341" y="367" type="line"/>
+			<point x="379" y="541" type="line"/>
+		</contour>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>T</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>E</string>
+		</dict>
+	</lib>
+</glyph>

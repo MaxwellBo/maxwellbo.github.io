@@ -1,0 +1,237 @@
+@Uppercase = [ A Acircumflex Adieresis Agrave Aring B C Ccedilla D E Eacute Ecircumflex Edieresis Egrave F G H I Idieresis J K L M N O Odieresis Oslash OE P Q R S T U Udieresis V W X Y Z ];
+
+# Prefix: Languagesystems
+# automatic
+languagesystem DFLT dflt;
+
+feature aalt {
+# automatic
+feature ordn;
+feature onum;
+feature ss01;
+feature ss02;
+} aalt;
+
+feature ordn {
+# automatic
+sub N o period by numero;
+} ordn;
+
+feature onum {
+# automatic
+sub zero by zero.osf;
+sub one by one.osf;
+sub two by two.osf;
+sub three by three.osf;
+sub four by four.osf;
+sub five by five.osf;
+sub six by six.osf;
+sub seven by seven.osf;
+sub eight by eight.osf;
+sub nine by nine.osf;
+} onum;
+
+feature c2sc {
+
+} c2sc;
+
+feature smcp {
+
+} smcp;
+
+feature dlig {
+
+} dlig;
+
+feature liga {
+ # on s'occupe d'abord des ligatures standards (non-inclusives):
+
+lookup points{
+  sub period period by periodcentered;
+  sub period period period by ellipsis;
+}points;
+
+  # on applique toutes les ligatures inclusives aux endroits où il y a un point médian:
+  lookup ligaturesinclusives {
+sub a periodcentered o n by a_o_n;
+sub d u periodcentered d e space l a by d_u_d_e_l_a;
+sub d periodcentered e by d_e;
+sub d periodcentered e s by d_e_s;
+sub c periodcentered h e by c_h_e;
+sub c periodcentered h e s by c_h_e_s;
+sub c periodcentered q u e by c_q_u_e;
+sub c periodcentered q u e s by c_q_u_e_s;
+sub e periodcentered s by e_s;
+sub e periodcentered s s e by e_s_s_e;
+sub Eacute periodcentered E S by eacute_e;
+sub ecircumflex t periodcentered e by ecircumflex_t_e;
+sub ecircumflex t periodcentered e s by ecircumflex_t_e_s;
+sub f periodcentered f e by f_f_e;
+sub f periodcentered f e s by f_f_e_s;
+sub f periodcentered v e by f_v_e;
+sub f periodcentered v e s by f_v_e_s;
+sub g periodcentered u e by g_u_e;
+sub g periodcentered u e s by g_u_e_s;
+sub i periodcentered e by i_e;
+sub i periodcentered e l by i_e_l;
+sub I periodcentered e l by I_e_l;
+sub I periodcentered E L by I_E_L;
+sub i periodcentered e s by i_e_s;
+sub l periodcentered e by l_e;
+sub l periodcentered l e by l_l_e;
+sub l periodcentered l e s by l_l_e_s;
+sub l periodcentered l u i by l_l_u_i;
+sub n periodcentered e by n_e;
+sub n periodcentered e s by n_e_s;
+sub n periodcentered n e by n_n_e;
+sub n periodcentered n e s by n_n_e_s;
+sub p periodcentered m by p_m;
+sub r periodcentered e by r_e;
+sub r periodcentered e s by r_e_s;
+sub r periodcentered s e by r_s_e;
+sub r periodcentered s e s by r_s_e_s;
+sub s periodcentered e by s_e;
+sub s periodcentered e s by s_e_s;
+sub s periodcentered l l e by s_l_l_e;
+sub s periodcentered t e by s_t_e;
+sub s periodcentered t e s by s_t_e_s;
+sub t periodcentered e by t_e;
+sub t periodcentered e s by t_e_s;
+sub t periodcentered t e by t_t_e;
+sub t periodcentered t e s by t_t_e_s;
+sub u periodcentered e by u_e;
+sub u periodcentered e s by u_e_s;
+sub u periodcentered l l e by u_l_l_e;
+sub u periodcentered l l e s by u_l_l_e_s;
+sub u r periodcentered i c e by u_r_i_c_e;
+sub u r periodcentered i c e s by u_r_i_c_e_s;
+sub x periodcentered c e by x_c_e;
+sub x periodcentered c e s by x_c_e_s;
+sub x periodcentered s e by x_s_e;
+sub x periodcentered s e s by x_s_e_s;
+      } ligaturesinclusives;
+
+  lookup ligaturesbasiques{
+sub f i by f_i;
+sub f l by f_l;
+sub f h by f_h;
+sub f f by f_f;
+sub f f i by f_f_i;
+sub f f l by f_f_l;
+sub a s by a_s;
+sub c r by c_r;
+sub e e by e_e;
+sub e h by e_h;
+sub e t by e_t;
+sub e u by e_u;
+sub eacute s by eacute_s;
+sub g g by g_g;
+sub g i by g_i;
+sub i p by i_p;
+sub i t by i_t;
+sub o e by o_e;
+sub o o by o_o;
+sub o t by o_t;
+sub r i by r_i;
+sub r v by r_v;
+sub s eacute by s_eacute;
+sub s ecircumflex by s_ecircumflex;
+sub s egrave by s_egrave;
+sub s p by s_p;
+sub s t by s_t;
+sub u p by u_p;
+sub u t by u_t;
+sub u r by u_r;
+sub y t by y_t;
+sub e s by e_s.ss01;
+sub eacute e s by eacute_e_s.ss01;
+sub s e by s_e.ss01;
+sub s e s by s_e_s.ss01;
+sub eacute e by eacute_e.ss02;
+      } ligaturesbasiques;
+} liga;
+
+feature rlig {
+  # on applique toutes les ligatures inclusives aux endroits où il y a un point médian:
+  
+  lookup points2{
+  sub period period by periodcentered;
+  sub period period period by ellipsis;
+}points2;
+  
+  
+  lookup ligaturesinclusives2 {
+sub a periodcentered o n by a_o_n;
+sub d u periodcentered d e space l a by d_u_d_e_l_a;
+sub d periodcentered e by d_e;
+sub d periodcentered e s by d_e_s;
+sub c periodcentered h e by c_h_e;
+sub c periodcentered h e s by c_h_e_s;
+sub c periodcentered q u e by c_q_u_e;
+sub c periodcentered q u e s by c_q_u_e_s;
+sub e periodcentered s by e_s;
+sub e periodcentered s s e by e_s_s_e;
+sub Eacute periodcentered E S by eacute_e;
+sub ecircumflex t periodcentered e by ecircumflex_t_e;
+sub ecircumflex t periodcentered e s by ecircumflex_t_e_s;
+sub f periodcentered f e by f_f_e;
+sub f periodcentered f e s by f_f_e_s;
+sub f periodcentered v e by f_v_e;
+sub f periodcentered v e s by f_v_e_s;
+sub g periodcentered u e by g_u_e;
+sub g periodcentered u e s by g_u_e_s;
+sub i periodcentered e by i_e;
+sub i periodcentered e l by i_e_l;
+sub i periodcentered e s by i_e_s;
+sub I periodcentered e l by I_e_l;
+sub I periodcentered E L by I_E_L;
+sub l periodcentered e by l_e;
+sub l periodcentered l e by l_l_e;
+sub l periodcentered l e s by l_l_e_s;
+sub l periodcentered l u i by l_l_u_i;
+sub n periodcentered e by n_e;
+sub n periodcentered e s by n_e_s;
+sub n periodcentered n e by n_n_e;
+sub n periodcentered n e s by n_n_e_s;
+sub p periodcentered m by p_m;
+sub r periodcentered e by r_e;
+sub r periodcentered e s by r_e_s;
+sub r periodcentered s e by r_s_e;
+sub r periodcentered s e s by r_s_e_s;
+sub s periodcentered e by s_e;
+sub s periodcentered e s by s_e_s;
+sub s periodcentered l l e by s_l_l_e;
+sub s periodcentered t e by s_t_e;
+sub s periodcentered t e s by s_t_e_s;
+sub t periodcentered e by t_e;
+sub t periodcentered e s by t_e_s;
+sub t periodcentered t e by t_t_e;
+sub t periodcentered t e s by t_t_e_s;
+sub u periodcentered e by u_e;
+sub u periodcentered e s by u_e_s;
+sub u periodcentered l l e by u_l_l_e;
+sub u periodcentered l l e s by u_l_l_e_s;
+sub u r periodcentered i c e by u_r_i_c_e;
+sub u r periodcentered i c e s by u_r_i_c_e_s;
+sub x periodcentered c e by x_c_e;
+sub x periodcentered c e s by x_c_e_s;
+sub x periodcentered s e by x_s_e;
+sub x periodcentered s e s by x_s_e_s;      } ligaturesinclusives2;
+} rlig;
+
+feature ss01 {
+# automatic
+sub e_s by e_s.ss01;
+sub eacute_e_s by eacute_e_s.ss01;
+sub s_e by s_e.ss01;
+sub s_e_s by s_e_s.ss01;
+sub i_e_l by i_e_l.ss01;
+sub eacute_e by eacute_e.ss01;
+sub r_e by r_e.ss01;
+} ss01;
+
+feature ss02 {
+# automatic
+sub eacute_e by eacute_e.ss02;
+} ss02;
+

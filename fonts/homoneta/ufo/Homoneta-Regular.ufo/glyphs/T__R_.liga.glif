@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="T_R.liga" format="2">
+	<advance width="709"/>
+	<outline>
+		<contour>
+			<point x="198" y="0" type="line"/>
+			<point x="417" y="0" type="line"/>
+			<point x="417" y="28" type="line"/>
+			<point x="368" y="28" type="line"/>
+			<point x="349" y="50" type="line"/>
+			<point x="349" y="292" type="line"/>
+			<point x="368" y="314" type="line"/>
+			<point x="408" y="314" type="line"/>
+			<point x="563" y="50" type="line"/>
+			<point x="544" y="28" type="line"/>
+			<point x="494" y="28" type="line"/>
+			<point x="494" y="0" type="line"/>
+			<point x="709" y="0" type="line"/>
+			<point x="709" y="28" type="line"/>
+			<point x="660" y="28" type="line"/>
+			<point x="485" y="319" type="line"/>
+			<point x="571" y="334"/>
+			<point x="630" y="385"/>
+			<point x="630" y="471" type="curve" smooth="yes"/>
+			<point x="630" y="573"/>
+			<point x="544" y="600"/>
+			<point x="427" y="600" type="curve" smooth="yes"/>
+			<point x="10" y="600" type="line"/>
+			<point x="56" y="497" type="line"/>
+			<point x="75" y="497" type="line"/>
+			<point x="75" y="545" type="line"/>
+			<point x="91" y="563" type="line"/>
+			<point x="248" y="563" type="line"/>
+			<point x="267" y="541" type="line"/>
+			<point x="267" y="50" type="line"/>
+			<point x="248" y="28" type="line"/>
+			<point x="198" y="28" type="line"/>
+		</contour>
+		<contour>
+			<point x="349" y="367" type="line"/>
+			<point x="349" y="550" type="line"/>
+			<point x="368" y="572" type="line"/>
+			<point x="448" y="572" type="line" smooth="yes"/>
+			<point x="512" y="572"/>
+			<point x="546" y="531"/>
+			<point x="546" y="469" type="curve" smooth="yes"/>
+			<point x="546" y="409"/>
+			<point x="515" y="345"/>
+			<point x="455" y="345" type="curve" smooth="yes"/>
+			<point x="368" y="345" type="line"/>
+		</contour>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>T</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>R</string>
+		</dict>
+	</lib>
+</glyph>

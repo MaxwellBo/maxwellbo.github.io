@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="J" format="2">
+	<advance width="281"/>
+	<unicode hex="004A"/>
+	<outline>
+		<contour>
+			<point x="163" y="-160" type="line"/>
+			<point x="163" y="550" type="line"/>
+			<point x="182" y="572" type="line"/>
+			<point x="230" y="572" type="line"/>
+			<point x="230" y="600" type="line"/>
+			<point x="12" y="600" type="line"/>
+			<point x="12" y="572" type="line"/>
+			<point x="62" y="572" type="line"/>
+			<point x="81" y="550" type="line"/>
+			<point x="81" y="-62" type="line"/>
+			<point x="59" y="-81" type="line"/>
+			<point x="0" y="-81" type="line"/>
+			<point x="0" y="-104" type="line"/>
+		</contour>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>j</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>j</string>
+		</dict>
+	</lib>
+</glyph>

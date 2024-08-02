@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="H_E.liga" format="2">
+	<advance width="823"/>
+	<outline>
+		<contour>
+			<point x="372" y="0" type="line"/>
+			<point x="793" y="0" type="line"/>
+			<point x="793" y="105" type="line"/>
+			<point x="765" y="105" type="line"/>
+			<point x="765" y="57" type="line"/>
+			<point x="743" y="38" type="line"/>
+			<point x="543" y="38" type="line"/>
+			<point x="524" y="60" type="line"/>
+			<point x="524" y="275" type="line"/>
+			<point x="543" y="297" type="line"/>
+			<point x="692" y="297" type="line"/>
+			<point x="714" y="278" type="line"/>
+			<point x="714" y="248" type="line"/>
+			<point x="742" y="248" type="line"/>
+			<point x="742" y="380" type="line"/>
+			<point x="714" y="380" type="line"/>
+			<point x="714" y="352" type="line"/>
+			<point x="692" y="333" type="line"/>
+			<point x="543" y="333" type="line"/>
+			<point x="524" y="355" type="line"/>
+			<point x="524" y="540" type="line"/>
+			<point x="543" y="562" type="line"/>
+			<point x="691" y="562" type="line"/>
+			<point x="713" y="543" type="line"/>
+			<point x="713" y="497" type="line"/>
+			<point x="741" y="497" type="line"/>
+			<point x="741" y="600" type="line"/>
+			<point x="372" y="600" type="line"/>
+			<point x="372" y="572" type="line"/>
+			<point x="422" y="572" type="line"/>
+			<point x="441" y="550" type="line"/>
+			<point x="441" y="50" type="line"/>
+			<point x="422" y="28" type="line"/>
+			<point x="372" y="28" type="line"/>
+		</contour>
+		<component base="H"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>H</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>E</string>
+		</dict>
+	</lib>
+</glyph>

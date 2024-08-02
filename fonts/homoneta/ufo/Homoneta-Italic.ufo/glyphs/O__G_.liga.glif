@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="O_G.liga" format="2">
+	<advance width="901"/>
+	<outline>
+		<contour>
+			<point x="471" y="224" type="curve"/>
+			<point x="389" y="133" type="line"/>
+			<point x="419" y="48"/>
+			<point x="487" y="-14"/>
+			<point x="587" y="-14" type="curve" smooth="yes"/>
+			<point x="650" y="-14"/>
+			<point x="709" y="15"/>
+			<point x="751" y="73" type="curve"/>
+			<point x="725" y="-54" type="line"/>
+			<point x="707" y="-127"/>
+			<point x="688" y="-161"/>
+			<point x="652" y="-155" type="curve" smooth="yes"/>
+			<point x="635" y="-152"/>
+			<point x="626" y="-140"/>
+			<point x="623" y="-118" type="curve"/>
+			<point x="624" y="-97"/>
+			<point x="619" y="-87"/>
+			<point x="612" y="-79" type="curve" smooth="yes"/>
+			<point x="597" y="-62"/>
+			<point x="572" y="-57"/>
+			<point x="552" y="-71" type="curve" smooth="yes"/>
+			<point x="530" y="-86"/>
+			<point x="527" y="-123"/>
+			<point x="548" y="-152" type="curve" smooth="yes"/>
+			<point x="566" y="-176"/>
+			<point x="600" y="-184"/>
+			<point x="649" y="-186" type="curve" smooth="yes"/>
+			<point x="712" y="-189"/>
+			<point x="772" y="-138"/>
+			<point x="789" y="-54" type="curve" smooth="yes"/>
+			<point x="858" y="285" type="line"/>
+			<point x="827" y="291" type="line"/>
+			<point x="694" y="248" type="line"/>
+			<point x="694" y="225" type="line"/>
+			<point x="753" y="225" type="line"/>
+			<point x="775" y="206" type="line"/>
+			<point x="760" y="121" type="line"/>
+			<point x="724" y="57"/>
+			<point x="666" y="12"/>
+			<point x="597" y="12" type="curve" smooth="yes"/>
+			<point x="524" y="12"/>
+			<point x="470" y="105"/>
+		</contour>
+		<contour>
+			<point x="459" y="497" type="curve"/>
+			<point x="488" y="346" type="line"/>
+			<point x="515" y="466"/>
+			<point x="569" y="566"/>
+			<point x="658" y="582" type="curve" smooth="yes"/>
+			<point x="766" y="601"/>
+			<point x="837" y="499"/>
+			<point x="827" y="390" type="curve"/>
+			<point x="857" y="390" type="line"/>
+			<point x="891" y="575" type="line"/>
+			<point x="865" y="575" type="line"/>
+			<point x="858" y="546" type="line"/>
+			<point x="832" y="546" type="line"/>
+			<point x="798" y="601"/>
+			<point x="732" y="616"/>
+			<point x="655" y="610" type="curve" smooth="yes"/>
+			<point x="575" y="604"/>
+			<point x="508" y="561"/>
+		</contour>
+		<component base="O"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>O</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>=G-20</string>
+		</dict>
+	</lib>
+</glyph>

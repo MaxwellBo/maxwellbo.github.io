@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="D_e_s.liga" format="2">
+	<advance width="841"/>
+	<outline>
+		<component base="D"/>
+		<component base="E" xScale="0.4665" yScale="0.4665" xOffset="595" yOffset="321"/>
+		<component base="S" xScale="0.4665" yScale="0.4665" xOffset="590" yOffset="-5"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+			<array>
+				<dict>
+					<key>alignment</key>
+					<integer>-1</integer>
+					<key>index</key>
+					<integer>1</integer>
+					<key>name</key>
+					<string>E</string>
+				</dict>
+			</array>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>D</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>D</string>
+		</dict>
+	</lib>
+</glyph>

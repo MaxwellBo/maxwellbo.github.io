@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="F_H.dlig" format="2">
+	<advance width="813"/>
+	<outline>
+		<contour>
+			<point x="222" y="0" type="line"/>
+			<point x="441" y="0" type="line"/>
+			<point x="441" y="28" type="line"/>
+			<point x="391" y="28" type="line"/>
+			<point x="372" y="50" type="line"/>
+			<point x="372" y="275" type="line"/>
+			<point x="391" y="297" type="line"/>
+			<point x="623" y="297" type="line"/>
+			<point x="642" y="275" type="line"/>
+			<point x="642" y="50" type="line"/>
+			<point x="623" y="28" type="line"/>
+			<point x="575" y="28" type="line"/>
+			<point x="575" y="0" type="line"/>
+			<point x="793" y="0" type="line"/>
+			<point x="793" y="28" type="line"/>
+			<point x="743" y="28" type="line"/>
+			<point x="724" y="50" type="line"/>
+			<point x="724" y="600" type="line"/>
+			<point x="575" y="600" type="line"/>
+			<point x="575" y="572" type="line"/>
+			<point x="623" y="572" type="line"/>
+			<point x="642" y="550" type="line"/>
+			<point x="642" y="353" type="line"/>
+			<point x="623" y="331" type="line"/>
+			<point x="391" y="331" type="line"/>
+			<point x="372" y="353" type="line"/>
+			<point x="372" y="550" type="line"/>
+			<point x="391" y="572" type="line"/>
+			<point x="439" y="572" type="line"/>
+			<point x="439" y="600" type="line"/>
+			<point x="372" y="600" type="line"/>
+			<point x="372" y="601" type="line"/>
+			<point x="20" y="601" type="line"/>
+			<point x="20" y="495" type="line"/>
+			<point x="48" y="495" type="line"/>
+			<point x="48" y="543" type="line"/>
+			<point x="70" y="562" type="line"/>
+			<point x="270" y="562" type="line"/>
+			<point x="289" y="540" type="line"/>
+			<point x="289" y="369" type="line"/>
+			<point x="270" y="347" type="line"/>
+			<point x="121" y="347" type="line"/>
+			<point x="99" y="366" type="line"/>
+			<point x="99" y="393" type="line"/>
+			<point x="71" y="393" type="line"/>
+			<point x="71" y="264" type="line"/>
+			<point x="99" y="264" type="line"/>
+			<point x="99" y="292" type="line"/>
+			<point x="121" y="311" type="line"/>
+			<point x="270" y="311" type="line"/>
+			<point x="289" y="289" type="line"/>
+			<point x="289" y="50" type="line"/>
+			<point x="270" y="28" type="line"/>
+			<point x="222" y="28" type="line"/>
+		</contour>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>F</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>H</string>
+		</dict>
+	</lib>
+</glyph>

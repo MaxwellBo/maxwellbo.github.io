@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="E_Egrave.001" format="2">
+	<advance width="471"/>
+	<outline>
+		<contour>
+			<point x="20" y="0" type="line"/>
+			<point x="441" y="0" type="line"/>
+			<point x="441" y="105" type="line"/>
+			<point x="413" y="105" type="line"/>
+			<point x="413" y="57" type="line"/>
+			<point x="391" y="38" type="line"/>
+			<point x="191" y="38" type="line"/>
+			<point x="172" y="60" type="line"/>
+			<point x="172" y="289" type="line"/>
+			<point x="191" y="311" type="line"/>
+			<point x="340" y="311" type="line"/>
+			<point x="362" y="292" type="line"/>
+			<point x="362" y="262" type="line"/>
+			<point x="390" y="262" type="line"/>
+			<point x="390" y="394" type="line"/>
+			<point x="362" y="394" type="line"/>
+			<point x="362" y="366" type="line"/>
+			<point x="340" y="347" type="line"/>
+			<point x="191" y="347" type="line"/>
+			<point x="172" y="369" type="line"/>
+			<point x="172" y="600" type="line"/>
+			<point x="89" y="599" type="line"/>
+			<point x="89" y="50" type="line"/>
+			<point x="70" y="28" type="line"/>
+			<point x="20" y="28" type="line"/>
+		</contour>
+		<component base="acutecomb" xScale="-1" xOffset="406"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>E</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>E</string>
+		</dict>
+	</lib>
+</glyph>

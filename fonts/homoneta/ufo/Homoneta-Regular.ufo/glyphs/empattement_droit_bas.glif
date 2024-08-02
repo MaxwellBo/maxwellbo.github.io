@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="empattement_droit_bas" format="2">
+	<advance width="514"/>
+	<outline>
+		<contour>
+			<point x="32" y="0" type="line"/>
+			<point x="241" y="0" type="line"/>
+			<point x="241" y="28" type="line"/>
+			<point x="193" y="28" type="line"/>
+			<point x="174" y="50" type="line"/>
+			<point x="174" y="72" type="line"/>
+			<point x="101" y="72" type="line"/>
+			<point x="101" y="50" type="line"/>
+			<point x="82" y="28" type="line"/>
+			<point x="32" y="28" type="line"/>
+		</contour>
+	</outline>
+</glyph>

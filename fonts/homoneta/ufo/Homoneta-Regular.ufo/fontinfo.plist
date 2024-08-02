@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ascender</key>
+	<integer>600</integer>
+	<key>capHeight</key>
+	<integer>600</integer>
+	<key>copyright</key>
+	<string>Sous licence CC-BY-NC-SA (https://creativecommons.org/licenses/by-nc-sa/2.0/be/)</string>
+	<key>descender</key>
+	<integer>-180</integer>
+	<key>familyName</key>
+	<string>Homoneta</string>
+	<key>openTypeHeadCreated</key>
+	<string>2019/12/07 12:26:27</string>
+	<key>openTypeNameDesigner</key>
+	<string>Quentin Lamouroux</string>
+	<key>openTypeNameDesignerURL</key>
+	<string>http://www.quentinlamouroux.com/</string>
+	<key>openTypeOS2UnicodeRanges</key>
+	<array/>
+	<key>postscriptBlueValues</key>
+	<array>
+		<real>-10.0</real>
+		<real>0.0</real>
+		<real>440.0</real>
+		<real>450.0</real>
+		<real>600.0</real>
+		<real>610.0</real>
+	</array>
+	<key>postscriptFontName</key>
+	<string>Homoneta-Regular</string>
+	<key>postscriptOtherBlues</key>
+	<array/>
+	<key>postscriptStemSnapH</key>
+	<array>
+		<real>55.0</real>
+	</array>
+	<key>postscriptStemSnapV</key>
+	<array>
+		<real>62.0</real>
+	</array>
+	<key>styleName</key>
+	<string>Regular</string>
+	<key>unitsPerEm</key>
+	<integer>1000</integer>
+	<key>versionMajor</key>
+	<integer>1</integer>
+	<key>versionMinor</key>
+	<integer>0</integer>
+	<key>xHeight</key>
+	<integer>440</integer>
+</dict>
+</plist>

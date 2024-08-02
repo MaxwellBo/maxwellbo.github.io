@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="U_D.liga" format="2">
+	<advance width="955"/>
+	<outline>
+		<contour>
+			<point x="717" y="608" type="curve" smooth="yes"/>
+			<point x="447" y="608" type="line"/>
+			<point x="447" y="580" type="line"/>
+			<point x="497" y="580" type="line"/>
+			<point x="516" y="558" type="line"/>
+			<point x="446" y="229" type="line" smooth="yes"/>
+			<point x="416" y="88"/>
+			<point x="351" y="39"/>
+			<point x="267" y="38" type="curve" smooth="yes"/>
+			<point x="173" y="37"/>
+			<point x="112" y="81"/>
+			<point x="137" y="198" type="curve" smooth="yes"/>
+			<point x="213" y="550" type="line"/>
+			<point x="232" y="572" type="line"/>
+			<point x="280" y="572" type="line"/>
+			<point x="280" y="600" type="line"/>
+			<point x="133" y="600" type="line"/>
+			<point x="123" y="550" type="line"/>
+			<point x="47" y="206" type="line" smooth="yes"/>
+			<point x="11" y="45"/>
+			<point x="114" y="-9"/>
+			<point x="248" y="-10" type="curve" smooth="yes"/>
+			<point x="359" y="-11"/>
+			<point x="424" y="30"/>
+			<point x="466" y="117" type="curve"/>
+			<point x="439" y="0" type="line"/>
+			<point x="602" y="0" type="line" smooth="yes"/>
+			<point x="744" y="0"/>
+			<point x="899" y="105"/>
+			<point x="929" y="306" type="curve" smooth="yes"/>
+			<point x="960" y="512"/>
+			<point x="860" y="608"/>
+		</contour>
+		<contour>
+			<point x="843" y="298" type="curve" smooth="yes"/>
+			<point x="813" y="118"/>
+			<point x="673" y="28"/>
+			<point x="600" y="28" type="curve" smooth="yes"/>
+			<point x="514" y="28" type="line"/>
+			<point x="495" y="50" type="line"/>
+			<point x="600" y="558" type="line"/>
+			<point x="619" y="580" type="line"/>
+			<point x="715" y="580" type="line" smooth="yes"/>
+			<point x="788" y="580"/>
+			<point x="878" y="508"/>
+		</contour>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>U</string>
+		</dict>
+	</lib>
+</glyph>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="empattement_haut_gauche" format="2">
+	<advance width="514"/>
+	<outline>
+		<contour>
+			<point x="101" y="481" type="line"/>
+			<point x="174" y="481" type="line"/>
+			<point x="174" y="600" type="line"/>
+			<point x="20" y="544" type="line"/>
+			<point x="20" y="521" type="line"/>
+			<point x="79" y="521" type="line"/>
+			<point x="101" y="502" type="line"/>
+		</contour>
+	</outline>
+</glyph>

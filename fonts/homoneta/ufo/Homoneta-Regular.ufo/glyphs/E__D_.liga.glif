@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="E_D.liga" format="2">
+	<advance width="574"/>
+	<outline>
+		<contour>
+			<point x="92" y="243" type="line"/>
+			<point x="175" y="243" type="line"/>
+			<point x="175" y="289" type="line"/>
+			<point x="194" y="311" type="line"/>
+			<point x="313" y="311" type="line"/>
+			<point x="335" y="292" type="line"/>
+			<point x="335" y="262" type="line"/>
+			<point x="363" y="262" type="line"/>
+			<point x="363" y="394" type="line"/>
+			<point x="335" y="394" type="line"/>
+			<point x="335" y="366" type="line"/>
+			<point x="313" y="347" type="line"/>
+			<point x="194" y="347" type="line"/>
+			<point x="175" y="369" type="line"/>
+			<point x="175" y="412" type="line"/>
+			<point x="92" y="412" type="line"/>
+		</contour>
+		<component base="D"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.ComponentInfo</key>
+			<array>
+				<dict>
+					<key>alignment</key>
+					<integer>-1</integer>
+					<key>index</key>
+					<integer>1</integer>
+					<key>name</key>
+					<string>D</string>
+				</dict>
+			</array>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>D</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>D</string>
+		</dict>
+	</lib>
+</glyph>

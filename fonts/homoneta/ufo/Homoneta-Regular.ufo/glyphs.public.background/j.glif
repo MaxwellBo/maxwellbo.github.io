@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="j" format="2">
+	<advance width="212"/>
+	<outline>
+		<contour>
+			<point x="154" y="-151" type="line"/>
+			<point x="154" y="440" type="line"/>
+			<point x="0" y="379" type="line"/>
+			<point x="0" y="361" type="line"/>
+			<point x="59" y="361" type="line"/>
+			<point x="81" y="342" type="line"/>
+			<point x="81" y="-53" type="line"/>
+			<point x="59" y="-72" type="line"/>
+			<point x="0" y="-72" type="line"/>
+			<point x="0" y="-90" type="line"/>
+		</contour>
+		<component base="dotaccentcomb" xOffset="-41"/>
+	</outline>
+</glyph>

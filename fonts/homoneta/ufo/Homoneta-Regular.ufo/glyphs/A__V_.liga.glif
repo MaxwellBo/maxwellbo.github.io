@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="A_V.liga" format="2">
+	<advance width="786"/>
+	<outline>
+		<contour>
+			<point x="10" y="0" type="line"/>
+			<point x="183" y="0" type="line"/>
+			<point x="183" y="28" type="line"/>
+			<point x="135" y="28" type="line"/>
+			<point x="116" y="50" type="line"/>
+			<point x="116" y="51" type="line"/>
+			<point x="182" y="243" type="line"/>
+			<point x="197" y="255" type="line"/>
+			<point x="364" y="255" type="line"/>
+			<point x="381" y="242" type="line"/>
+			<point x="447" y="51" type="line"/>
+			<point x="428" y="28" type="line"/>
+			<point x="380" y="28" type="line"/>
+			<point x="380" y="0" type="line"/>
+			<point x="555" y="0" type="line"/>
+			<point x="747" y="550" type="line"/>
+			<point x="748" y="550" type="line"/>
+			<point x="756" y="572" type="line"/>
+			<point x="806" y="572" type="line"/>
+			<point x="806" y="600" type="line"/>
+			<point x="633" y="600" type="line"/>
+			<point x="633" y="572" type="line"/>
+			<point x="681" y="572" type="line"/>
+			<point x="700" y="550" type="line"/>
+			<point x="700" y="549" type="line"/>
+			<point x="534" y="69" type="line"/>
+			<point x="369" y="549" type="line"/>
+			<point x="388" y="572" type="line"/>
+			<point x="436" y="572" type="line"/>
+			<point x="436" y="600" type="line"/>
+			<point x="201" y="600" type="line"/>
+			<point x="201" y="572" type="line"/>
+			<point x="251" y="572" type="line"/>
+			<point x="69" y="50" type="line"/>
+			<point x="68" y="50" type="line"/>
+			<point x="60" y="28" type="line"/>
+			<point x="10" y="28" type="line"/>
+		</contour>
+		<contour>
+			<point x="200" y="293" type="line"/>
+			<point x="282" y="531" type="line"/>
+			<point x="314" y="440" type="line"/>
+			<point x="364" y="293" type="line"/>
+			<point x="357" y="279" type="line"/>
+			<point x="207" y="279" type="line"/>
+		</contour>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>A</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>V</string>
+		</dict>
+	</lib>
+</glyph>

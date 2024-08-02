@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="oslash" format="2">
+	<advance width="497"/>
+	<unicode hex="00F8"/>
+	<outline>
+		<contour>
+			<point x="30" y="-83" type="line"/>
+			<point x="67" y="-83" type="line"/>
+			<point x="467" y="519" type="line"/>
+			<point x="429" y="519" type="line"/>
+		</contour>
+		<component base="o" xOffset="18"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>o</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>o</string>
+		</dict>
+	</lib>
+</glyph>

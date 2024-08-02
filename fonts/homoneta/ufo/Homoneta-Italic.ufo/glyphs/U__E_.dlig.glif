@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="U_E.dlig" format="2">
+	<advance width="759"/>
+	<outline>
+		<contour>
+			<point x="328" y="29" type="line"/>
+			<point x="249" y="-9" type="line"/>
+			<point x="693" y="-9" type="line"/>
+			<point x="715" y="96" type="line"/>
+			<point x="687" y="96" type="line"/>
+			<point x="677" y="48" type="line"/>
+			<point x="655" y="29" type="line"/>
+		</contour>
+		<contour>
+			<point x="521" y="347" type="line"/>
+			<point x="514" y="311" type="line"/>
+			<point x="648" y="311" type="line"/>
+			<point x="670" y="292" type="line"/>
+			<point x="670" y="262" type="line"/>
+			<point x="698" y="262" type="line"/>
+			<point x="725" y="394" type="line"/>
+			<point x="697" y="394" type="line"/>
+			<point x="688" y="366" type="line"/>
+			<point x="666" y="347" type="line"/>
+		</contour>
+		<contour>
+			<point x="562" y="600" type="line"/>
+			<point x="555" y="562" type="line"/>
+			<point x="689" y="562" type="line"/>
+			<point x="711" y="543" type="line"/>
+			<point x="720" y="497" type="line"/>
+			<point x="748" y="497" type="line"/>
+			<point x="769" y="600" type="line"/>
+		</contour>
+		<component base="U"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>U</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>E</string>
+		</dict>
+	</lib>
+</glyph>

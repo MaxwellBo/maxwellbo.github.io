@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="uni2116" format="2">
+	<advance width="911"/>
+	<unicode hex="2116"/>
+	<outline>
+		<contour>
+			<point x="841" y="0" type="line"/>
+			<point x="841" y="35" type="line"/>
+			<point x="589" y="35" type="line"/>
+			<point x="589" y="0" type="line"/>
+		</contour>
+		<component base="N"/>
+		<component base="degree" xOffset="558" yOffset="-240"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>N</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>minus</string>
+		</dict>
+	</lib>
+</glyph>

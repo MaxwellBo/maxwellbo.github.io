@@ -17,6 +17,14 @@
       url('fonts/ductus/otf/DuctusGeometric.otf') format('opentype');
 }
 
+@font-face {
+  font-family: 'Homoneta';
+  src: 
+      url('fonts/homoneta/woff/Homoneta-Regular.woff2') format('woff2'),
+      url('fonts/homoneta/woff/Homoneta-Regular.woff') format('woff'),
+      url('fonts/homoneta/otf/Homoneta-Regular.otf') format('opentype');
+}
+
 a {
   color: color(display-p3 0 0 1);
 }
@@ -36,7 +44,9 @@ a:hover {
 nav {
   font-family: 'Ductus Geometric', sans-serif;
 
-  perspective: 100px;
+  margin: 1rem;
+
+  perspective: 50px;
 
   ul {
     list-style-type: none;
@@ -56,13 +66,27 @@ nav {
     }
 
   }
-
 }
 
 main {
   border: 1px solid black;
   padding: 1rem;
   margin: 1rem;
+
+  section {
+    padding: 1rem;
+  }
+
+  h1, h2, h3 {
+    
+    ::before {
+      content: '*';
+    }
+    font-family: 'DINdong', sans-serif;
+    color: black;
+  }
+
+  font-family: 'Ductus Geometric', sans-serif;
 }
 
 img.icon {
@@ -82,27 +106,52 @@ header {
   }
 }
 
-main {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px; /* Adjust the gap between sections as needed */
+
+@keyframes grow {
+  from {
+    transform: scale(1) rotateZ(-10deg);;
+  }
+  to {
+    transform: scale(5) rotateZ(-10deg);;
+  }
 }
 
 .listing {
   display: flex;
   align-items: center;
+  perspective: 30px;
 
   img {
+    transform: rotateZ(-10deg);
     aspect-ratio: 4/3;
     max-width: 10ch;
     object-fit: cover;
     background-color: #e05e5e; /* For demonstration, replacing with actual image */
+
+
+  }
+  img:hover {
+    z-index: -1;
+    animation: grow 10s linear;
   }
 
   a {
     display: flex;
     align-items: center;
   }
+  .title {
+    font-size: 1.3rem;
+    font-weight: bolder;
+    padding-right: 3px;
+    display: block;
+  }
+
+  .description {
+    font-size: 0.9rem;
+    font-style: italic;
+    display: block;
+  }
+
 }
 
 * {
@@ -116,6 +165,10 @@ html, body {
 }
 
 @media (min-width: 768px) {
+  main {
+    columns: 2;
+  }
+
   body {
     display: grid;
     gap: 1rem;

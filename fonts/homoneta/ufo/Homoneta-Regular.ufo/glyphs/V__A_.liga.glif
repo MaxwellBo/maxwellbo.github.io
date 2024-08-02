@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="V_A.liga" format="2">
+	<advance width="850"/>
+	<outline>
+		<contour>
+			<point x="201" y="0" type="line"/>
+			<point x="306" y="51" type="line"/>
+			<point x="373" y="243" type="line"/>
+			<point x="388" y="255" type="line"/>
+			<point x="555" y="255" type="line"/>
+			<point x="572" y="242" type="line"/>
+			<point x="638" y="51" type="line"/>
+			<point x="619" y="28" type="line"/>
+			<point x="571" y="28" type="line"/>
+			<point x="571" y="0" type="line"/>
+			<point x="790" y="0" type="line"/>
+			<point x="790" y="28" type="line"/>
+			<point x="740" y="28" type="line"/>
+			<point x="733" y="48" type="line"/>
+			<point x="538" y="600" type="line"/>
+			<point x="392" y="600" type="line"/>
+			<point x="392" y="572" type="line"/>
+			<point x="442" y="572" type="line"/>
+			<point x="260" y="50" type="line"/>
+			<point x="259" y="50" type="line"/>
+			<point x="251" y="28" type="line"/>
+			<point x="201" y="28" type="line"/>
+		</contour>
+		<contour>
+			<point x="391" y="293" type="line"/>
+			<point x="473" y="532" type="line"/>
+			<point x="555" y="293" type="line"/>
+			<point x="548" y="279" type="line"/>
+			<point x="398" y="279" type="line"/>
+		</contour>
+		<component base="V"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>V</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>A</string>
+		</dict>
+	</lib>
+</glyph>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="O_G.liga" format="2">
+	<advance width="937"/>
+	<outline>
+		<contour>
+			<point x="703" y="-180" type="curve" smooth="yes"/>
+			<point x="803" y="-182"/>
+			<point x="884" y="-84"/>
+			<point x="884" y="45" type="curve" smooth="yes"/>
+			<point x="884" y="185" type="line"/>
+			<point x="885" y="304" type="line"/>
+			<point x="731" y="248" type="line"/>
+			<point x="731" y="225" type="line"/>
+			<point x="790" y="225" type="line"/>
+			<point x="812" y="206" type="line"/>
+			<point x="812" y="153" type="line"/>
+			<point x="813" y="84" type="line"/>
+			<point x="683" y="-30"/>
+			<point x="569" y="39"/>
+			<point x="529" y="205" type="curve"/>
+			<point x="470" y="111" type="line"/>
+			<point x="514" y="34"/>
+			<point x="586" y="-10"/>
+			<point x="664" y="-10" type="curve" smooth="yes"/>
+			<point x="766" y="-10"/>
+			<point x="812" y="49"/>
+			<point x="812" y="49" type="curve"/>
+			<point x="808" y="-89"/>
+			<point x="785" y="-146"/>
+			<point x="716" y="-133" type="curve"/>
+			<point x="688" y="-119"/>
+			<point x="700" y="-90"/>
+			<point x="675" y="-86" type="curve" smooth="yes"/>
+			<point x="644" y="-81"/>
+			<point x="626" y="-104"/>
+			<point x="622" y="-123" type="curve" smooth="yes"/>
+			<point x="615" y="-154"/>
+			<point x="638" y="-179"/>
+		</contour>
+		<contour>
+			<point x="468" y="492" type="curve"/>
+			<point x="517" y="391" type="line"/>
+			<point x="531" y="512"/>
+			<point x="601" y="579"/>
+			<point x="687" y="581" type="curve" smooth="yes"/>
+			<point x="804" y="583"/>
+			<point x="866" y="485"/>
+			<point x="875" y="379" type="curve"/>
+			<point x="910" y="379" type="line"/>
+			<point x="910" y="584" type="line"/>
+			<point x="878" y="584" type="line"/>
+			<point x="878" y="555" type="line"/>
+			<point x="855" y="555" type="line"/>
+			<point x="855" y="555"/>
+			<point x="807" y="610"/>
+			<point x="685" y="610" type="curve" smooth="yes"/>
+			<point x="587" y="610"/>
+			<point x="513" y="566"/>
+		</contour>
+		<component base="O"/>
+	</outline>
+	<lib>
+		<dict>
+			<key>com.schriftgestaltung.Glyphs.leftMetricsKey</key>
+			<string>O</string>
+			<key>com.schriftgestaltung.Glyphs.rightMetricsKey</key>
+			<string>=G-20</string>
+		</dict>
+	</lib>
+</glyph>
