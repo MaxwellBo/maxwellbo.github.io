@@ -4,6 +4,7 @@
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135030873-1"></script>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -213,7 +214,21 @@
         </article>
         <article class="listing">
           <a href="https://poppenhu.is">
-            <img src="img/poppenhuis.png" />
+            <model-viewer 
+              style="width: 100%; height: 15ch;"
+              alt="James" 
+              src="dolls/James.glb"  
+              interaction-prompt=""
+              progress-bar=""
+              loading="auto"
+              auto-rotate-delay="0"
+              rotation-per-second="20deg"
+              camera-controls
+              auto-rotate
+              touch-action="pan-y"
+            ></model-viewer>
+
+
             <p class="title">poppenhuis</h3>
           </a>
           <p class="description">Digital dollhouse</p>
