@@ -129,7 +129,10 @@ footer {
 .listing {
   perspective: 30px;
 
+  padding-top: 2rem;
+
   img {
+    z-index: 5;
     max-width: 20ch;
     transform: rotateZ(-10deg);
     aspect-ratio: 4/3;
