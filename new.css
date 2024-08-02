@@ -178,6 +178,7 @@ header {
   text-transform: uppercase;
 
   .wordmark {
+    font-family: 'DINdong';
     font-size: 3rem;
   }
 }
