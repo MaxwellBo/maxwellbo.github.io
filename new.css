@@ -52,7 +52,6 @@ nav {
     list-style-type: none;
     max-width: 20ch;
 
-    /* rotate */
     transform: rotateY(3deg);
 
     li {
@@ -118,11 +117,12 @@ footer {
 
 
 @keyframes grow {
-  from {
-    transform: scale(1) rotateZ(-10deg);;
+  0% {
+    transform: scale(1) rotateZ(-5deg);;
   }
-  to {
-    transform: scale(5) rotateZ(-10deg);;
+
+  50% {
+    transform: scale(5) rotateZ(-5deg);;
   }
 }
 
@@ -134,13 +134,14 @@ footer {
   img {
     z-index: 5;
     max-width: 20ch;
-    transform: rotateZ(-10deg);
+    transform: rotateZ(-5deg);
     aspect-ratio: 4/3;
     object-fit: cover;
+    border: 1px black solid;
   }
 
   img:hover {
-    animation: grow 10s linear;
+    animation: grow 60s linear infinite;
   }
   
   .title {
@@ -163,14 +164,12 @@ html, body {
 @media (min-width: 768px) {
   div.cards {
     display: grid;
-    grid-gap: 1rem;
     grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
   }
 
 
   body {
     display: grid;
-    gap: 1rem;
     grid-template-rows: auto 1fr;
     grid-template-columns: auto 1fr;
     grid-template-areas:
