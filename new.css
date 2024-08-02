@@ -219,7 +219,7 @@ article.art {
 
 article.listing {
   border: 0.5px solid black;
-  backdrop-filter: blur(1px);
+  /* backdrop-filter: blur(1px); */
 
   img {
     aspect-ratio: 4/3;
