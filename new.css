@@ -46,7 +46,7 @@ nav {
 
   margin: 1rem;
 
-  perspective: 50px;
+  perspective: 300px;
 
   ul {
     list-style-type: none;
@@ -81,6 +81,10 @@ main {
     
     ::before {
       content: '*';
+    }
+
+    ::after{
+      content: '↳';
     }
     font-family: 'DINdong', sans-serif;
     color: black;
