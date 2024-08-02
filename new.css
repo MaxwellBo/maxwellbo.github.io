@@ -96,6 +96,7 @@ footer {
   flex-direction: row;
   width: 100%;
   white-space: nowrap;
+  gap: 1rem;
   border: 1px solid black;
 }
 

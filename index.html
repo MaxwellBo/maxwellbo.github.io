@@ -703,21 +703,26 @@
         updateBatteryInfo();
       });
     </script>
-    <script>
-      // document.getElementById('userAgent').textContent = navigator.userAgent;
+    <article>
+      <output id="userAgent"></output>
+      <output id="language"></output>
 
-      // document.getElementById('onLine').textContent = navigator.onLine ? 'Online' : 'Offline';
-      // document.getElementById('language').textContent = navigator.language;
-      // document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency;
-      // document.getElementById('deviceMemory').textContent = navigator.deviceMemory;
-      // navigator.storage.estimate().then(function (estimate) {
-      //   document.getElementById('storageEstimate').textContent = estimate.usage + ' / ' + estimate.quota;
-      // });
-      // document.getElementById('maxTouchPoints').textContent = navigator.maxTouchPoints;
-      // document.getElementById('cookieEnabled').textContent = navigator.cookieEnabled;
-      // document.getElementById('doNotTrack').textContent = navigator.doNotTrack;
-      // document.getElementById('webDriver').textContent = navigator.webdriver;
-    </script>
+      <script>
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+        document.getElementById('language').textContent = navigator.language;
+
+        // document.getElementById('onLine').textContent = navigator.onLine ? 'Online' : 'Offline';
+        // document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency;
+        // document.getElementById('deviceMemory').textContent = navigator.deviceMemory;
+        // navigator.storage.estimate().then(function (estimate) {
+        //   document.getElementById('storageEstimate').textContent = estimate.usage + ' / ' + estimate.quota;
+        // });
+        // document.getElementById('maxTouchPoints').textContent = navigator.maxTouchPoints;
+        // document.getElementById('cookieEnabled').textContent = navigator.cookieEnabled;
+        // document.getElementById('doNotTrack').textContent = navigator.doNotTrack;
+        // document.getElementById('webDriver').textContent = navigator.webdriver;
+      </script>
+    </article>
   </footer>
 </body>
 
