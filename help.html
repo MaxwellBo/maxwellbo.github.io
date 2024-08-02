@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>help</title>
+  <script>
+
+    function log(message) {
+      console.log(message);
+      document.getElementById("log").innerHTML += message + "<br>";
+    }
+
+    navigator.getBattery().then((battery) => {
+      function updateAllBatteryInfo() {
+        updateChargeInfo();
+        updateLevelInfo();
+        updateChargingInfo();
+        updateDischargingInfo();
+      }
+      updateAllBatteryInfo();
+
+      battery.addEventListener("chargingchange", () => {
+        updateChargeInfo();
+      });
+      function updateChargeInfo() {
+        log(`Battery charging? ${battery.charging ? "Yes" : "No"}`);
+      }
+
+      battery.addEventListener("levelchange", () => {
+        updateLevelInfo();
+      });
+      function updateLevelInfo() {
+        log(`Battery level: ${battery.level * 100}%`);
+      }
+
+      battery.addEventListener("chargingtimechange", () => {
+        updateChargingInfo();
+      });
+      function updateChargingInfo() {
+        log(`Battery charging time: ${battery.chargingTime} seconds`);
+      }
+
+      battery.addEventListener("dischargingtimechange", () => {
+        updateDischargingInfo();
+      });
+      function updateDischargingInfo() {
+        log(`Battery discharging time: ${battery.dischargingTime} seconds`);
+      }
+
+      addEventListener("devicemotion", ondevicemotion);
+
+      function ondevicemotion(event) {
+        log(`Acceleration along the X-axis: ${event.accelerationIncludingGravity.x}`);
+        log(`Acceleration along the Y-axis: ${event.accelerationIncludingGravity.y}`);
+        log(`Acceleration along the Z-axis: ${event.accelerationIncludingGravity.z}`);
+      }
+
+      addEventListener("deviceorientation", ondeviceorientation);
+
+      function ondeviceorientation(event) {
+        log(`Z-axis: ${event.alpha}`);
+        log(`X-axis: ${event.beta}`);
+        log(`Y-axis: ${event.gamma}`);
+      }
+
+      /** log user agent */
+      log(`User agent: ${navigator.userAgent}`);
+      /** log current time */
+      log(`Current time: ${new Date().toLocaleTimeString()}`);
+
+      log(`Device Memory: ${navigator.deviceMemory}`);
+
+      log(`Hardware Concurrency: ${navigator.hardwareConcurrency}`);
+
+      log(`Max Touch Points: ${navigator.maxTouchPoints}`);
+
+      /** OS version, is in iframe, is mobile, is robot, is 64 bit, is language */
+      log(`OS: ${navigator.oscpu}`);
+      log (`Platform: ${navigator.platform}`);
+      log(`Product: ${navigator.product}`);
+      log(`Product Sub: ${navigator.productSub}`);
+      log(`Vendor: ${navigator.vendor}`);
+      log(`Vendor Sub: ${navigator.vendorSub}`);
+      log(`Language: ${navigator.language}`);
+      log(`Languages: ${navigator.languages}`);
+      log(`Cookie Enabled: ${navigator.cookieEnabled}`);
+      log(`Do Not Track: ${navigator.doNotTrack}`);
+      log(`OnLine: ${navigator.onLine}`);
+      log(`Service Worker Controller: ${navigator.serviceWorker.controller}`);
+      log(`Service Worker Ready: ${navigator.serviceWorker.ready}`);
+      log(`Storage: ${navigator.storage}`);
+      log(`Storage Estimate: ${navigator.storage.estimate()}`);
+      log(`Web Driver: ${navigator.webdriver}`);
+
+
+      /** mouse position */
+      addEventListener("mousemove", onmousemove);
+
+      function onmousemove(event) {
+        log(`Mouse X: ${event.clientX}`);
+        log(`Mouse Y: ${event.clientY}`);
+      }
+
+
+    });
+
+  </script>
+</head>
+
+<body>
+  <h1>browser</h1>
+  <p id="log"></p>
+</body>
+
+</html>

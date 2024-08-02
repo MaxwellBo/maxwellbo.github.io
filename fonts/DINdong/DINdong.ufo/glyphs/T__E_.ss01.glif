@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="T_E.ss01" format="2">
+	<advance width="2680"/>
+	<unicode hex="F4811"/>
+	<note>
+		uF4811
+	</note>
+	<outline>
+		<contour>
+			<point x="1281" y="1" type="line"/>
+			<point x="1281" y="0" type="line"/>
+			<point x="2556" y="0" type="line"/>
+			<point x="2556" y="134" type="line"/>
+			<point x="1415" y="134" type="line"/>
+			<point x="1414" y="571" type="line"/>
+			<point x="2366" y="574" type="line"/>
+			<point x="2366" y="708" type="line"/>
+			<point x="1413" y="705" type="line"/>
+			<point x="1412" y="1128" type="line"/>
+			<point x="2554" y="1128" type="line"/>
+			<point x="2554" y="1263" type="line"/>
+			<point x="1990" y="1263" type="line"/>
+			<point x="1990" y="1264" type="line"/>
+			<point x="108" y="1264" type="line"/>
+			<point x="108" y="1131" type="line"/>
+			<point x="1278" y="1131" type="line"/>
+			<point x="1275" y="1" type="line"/>
+		</contour>
+	</outline>
+</glyph>

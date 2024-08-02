@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Maxwell Bo's Résumé</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .section {
+            margin-top: 20px;
+        }
+        h2 {
+            border-bottom: 1px solid lightgrey;
+            padding-bottom: 6px;
+        }
+        .job-title, .edu-title, .project-title, .talk-title {
+            font-weight: bold;
+        }
+        .job-detail, .edu-detail, .project-detail, .talk-detail, .skill-detail {
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li::before {
+            content: "\2022";
+            color: black;
+            display: inline-block;
+            width: 1em;
+            margin-left: -1em;
+        }
+        .job-company, .talk-event, .cert-entity {
+            font-weight: bold;
+        }
+        .dates {
+            float: right;
+            font-style: italic;
+            color: #555;
+        }
+        .note {
+            text-align: right;
+            font-size: small;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Maxwell Bo</h1>
+        <p>
+            <a href="mailto:max@maxbo.me">max@maxbo.me</a> &#8226; 0447 724 462<br>
+            <a href="http://maxbo.me/">maxbo.me</a> &#8226; 
+            <a href="https://github.com/MaxwellBo">github.com/MaxwellBo</a> &#8226; 
+            <a href="https://www.linkedin.com/in/max-bo/">linkedin.com/in/max-bo</a>
+        </p>
+    </header>
+    <section id="employment" class="section">
+        <h2>Employment</h2>
+        <div>
+            <p class="job-title">Software Engineer <span class="dates">Mar 2022 - Present</span></p>
+            <p class="job-company"><a href="https://www.canva.com/about/">Canva</a>, Sydney</p>
+            <div class="job-detail">
+                <p>I primarily worked on <i>Protogen</i>, Canva's hard fork of <a href="https://protobuf.dev/">Protocol Buffers</a>, in the Server Platform Team. Protogen consists of 2 main components, the code generator, and the compatibility checker, in support of our 3 custom wire protocols across 6 language targets. I designed and delivered:</p>
+                <ul>
+                    <li><i>Dual Deserialization</i>, a mechanism to evolve one of the wire protocols to another with just a single annotation option,</li>
+                    <li><i>Lifetime annotations</i>, a Rust-like grammar for compatibility modelling of protos serialized to data silos,</li>
+                    <li><i>Default case support</i>, the ability to add and remove discriminated unions to and from existing messages,</li>
+                    <li><i>Field moving support</i>, a mechanism of moving fields in and out of discriminated union contexts,</li>
+                </ul>
+                <p>which have been used to safely evolve hundreds of core API, RPC, and database schemas.</p>
+                <p>Subsequently, I was granted ownership of Protogen by the CTO; it was one of the most critical pieces of Canva's infrastructure he had preserved ownership over.</p>
+                <p>Right now, I'm working on rolling out Java static analysis tooling across the monorepo, in the newly formed Core Libraries team.</p>
+            </div>
+        </div>
+        <div>
+            <p class="job-title">Software Engineer <span class="dates">Jan 2020 - Feb 2022</span></p>
+            <p class="job-company"><a href="https://about.google/">Google</a>, Sydney</p>
+            <div class="job-detail">
+                <p>I worked on the primary Google Photos app (Java, Android) in the Sharing team. I:</p>
+                <ul>
+                    <li>Audited reliability for all sharing flows. My investigations into notifications delivery and handling reliability resulted in a fix that produced a statistically significant ~2% MAU bump for some sharing user journeys.</li>
+                    <li>Shipped location sharing privacy controls on shared albums and conversations for EU data privacy regulatory compliance.</li>
+                    <li>Shipped a broad set of changes for <a href="https://ico.org.uk/for-organisations/guide-to-data-protection/ico-codes-of-practice/age-appropriate-design-code/">Age Appropriate Design Code</a> regulatory compliance.</li>
+                </ul>
+                <p>I briefly worked on an unreleased Photos app (Java, Android) for the education sector. (Jan 2020 - Aug 2020)</p>
+                <p>Before working to wind it down I:</p>
+                <ul>
+                    <li>Built 2 critical user journeys: the photo sharing carousel view, and notification deep-linking.</li>
+                    <li>Built out a semi-automated i18n and a11y regression testing suite. With this, we identified and fixed 35 separate bugs, and received a perfect score from an independent accessibility audit.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p class="job-title">Junior Software Engineer <span class="dates">Jul 2019 - Dec 2019</span></p>
+            <p class="job-title">Intern Software Engineer (full-time) <span class="dates">Nov 2018 - Jul 2019</span></p>
+            <p class="job-company"><a href="https://www.atlassian.com/">Atlassian</a>, Sydney</p>
+            <div class="job-detail">
+                <p>I worked with purely functional Scala (Akka, Scalaz) and React (TypeScript, Redux) in the Atlassian Account team. We owned the core user account object, login/signup flow, and auth dance. Along with general BAU work I:</p>
+                <ul>
+                    <li>Overhauled the frontend development loop, converting over ~20KLOC of untyped and Flow-typed JavaScript to TypeScript, discovering and fixing numerous type-related defects, integrating Sentry error reporting into our monitoring and bug triage pipelines, and writing a Bamboo plugin (Python) to bump library versions and raise PRs in downstream dependents.</li>
+                    <li>Contributed the core design of an SLA monitoring system for our entire authentication flow for the Cloud Premium initiative.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p class="job-title">Intern Software Engineer <span class="dates">Jan 2017 - Nov 2018</span></p>
+            <p class="job-company"><a href="https://skedulo.com/">Skedulo</a>, Brisbane</p>
+            <div class="job-detail">
+                <p>I worked as a full-stack engineer writing hybrid OO/FP Scala (Play, Typelevel ecosystem), TypeScript (React), Xamarin (C#), building a mobile workforce management platform. Whilst juggling full-time uni and general BAU work I:</p>
+                <ul>
+                    <li>Built the customer self-service onboarding flow, and the internal tenant configuration & feature flag portal.</li>
+                    <li>Rewrote the scheduling and resource tracking microservices, which eliminated a bunch of long-standing transient errors and performance issues.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="education" class="section">
+        <h2>Education</h2>
+        <div>
+            <p class="edu-title"><a href="https://www.uq.edu.au/">University of Queensland</a>, Brisbane<br>
+            Bachelor of Science (BSc), Computer Science Extended Major, 6.0/7 GPA <span class="dates">Jul 2015 - Jul 2019</span></p>
+            <div class="edu-detail">
+                <ul>
+                    <li>Dean's Commendation for Academic Excellence, awarded for a minimum semester GPA of 6.6 <span class="dates">Nov 2017</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="projects" class="section">
+        <h2>Projects</h2>
+        <div>
+            <p class="project-title"><a href="https://muncoordinated.io">Muncoordinated</a> <a href="https://muncoordinated.io">muncoordinated.io</a> <span class="dates">Oct 2017 - Present</span></p>
+            <div class="project-detail">
+                <p>A Model UN committee management service, built with TypeScript, React, & Firebase.</p>
+                <ul>
+                    <li>Spiked to ~5000 MAU at COVID's peak, as the only MUN management service with a synchronized 'multiplayer' mode.</li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <p class="project-title">20+ interactive data visualization projects <a href="https://maxbo.me/#projects">maxbo.me/#projects</a> <span class="dates">Sep 2021 - Present</span></p>
+            <div class="project-detail">
+                <p>These interactive datavis notebooks (JavaScript) mainly pertain to color theory, music, cosmetics, and Australian psephology.</p>
+                <ul>
+                    <li>I was awarded Observable's Featured creator for my work on <a href="https://observablehq.com/@mjbo/perceptually-uniform-color-models?collection=@observablehq/instagram-shares">Perceptually uniform color models</a> and <a href="https://observablehq.com/@mjbo/hello-mixbox?collection=@observablehq/featured-creators">Hello Mixbox</a>.</li>
+                    <li><a href="https://observablehq.com/@mjbo/spotify-genre-map-explorer">Spotify Genre Map Explorer</a> has over ~1000 MAU.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <section id="talks" class="section">
+        <h2>Authored talks</h2>
+        <div>
+            <p class="talk-title"><a href="https://www.youtube.com/watch?v=2xgTu4lsbMo">Intermediate Data Visualisation</a> <span class="dates">Oct 2023</span></p>
+        </div>
+        <div>
+            <p class="talk-title"><a href="https://www.youtube.com/watch?v=bvjBgAGq3E8">Parser Combinators</a> <span class="dates">May 2020</span></p>
+        </div>
+        <div>
+            <p class="talk-title"><a href="https://github.com/MaxwellBo/A-tour-of-Scala#and-given-lectures-about-it">Functional programming in Scala lecture series</a> 3 parts, 4½ hours <span class="dates">Sep 2019 - Dec 2019</span></p>
+        </div>
+        <div>
+            <p class="talk-title"><a href="https://www.youtube.com/watch?v=MKLLOxb2nmI">Introduction to Property-Based Testing</a> <span class="dates">Oct 2019</span></p>
+        </div>
+    </section>
+    <section id="skills" class="section">
+        <h2>Skills, interests</h2>
+        <div class="skill-detail">
+            <p>Scala, TypeScript, Java, React, functional programming, data visualization, CS pedagogy, PLT, rapid prototyping, literate programming, CRDTs & OTs, color theory, psephology, classical guitar, dinghy sailing & racing, badminton</p>
+        </div>
+    </section>
+    <section id="certifications" class="section">
+        <h2>Certifications</h2>
+        <div>
+            <p class="cert-title">Grade 8 Classical Guitar <span class="dates">2014</span></p>
+            <p class="cert-entity"><a href="http://www.trinitycollege.com/">Trinity College</a></p>
+        </div>
+    </section>
+    <div class="note">
+        <p>[Rendered on server's current date]</p>
+    </div>
+</body>
+</html>

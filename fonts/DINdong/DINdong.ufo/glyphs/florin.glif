@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="florin" format="2">
+	<advance width="1218"/>
+	<unicode hex="0192"/>
+	<note>
+		florin
+	</note>
+	<outline>
+		<contour>
+			<point x="48" y="-159" type="line"/>
+			<point x="48" y="-292" type="line"/>
+			<point x="652" y="-292" type="line"/>
+			<point x="652" y="-159" type="line"/>
+			<point x="651" y="-159" type="line"/>
+			<point x="651" y="756" type="line"/>
+			<point x="904" y="756" type="line"/>
+			<point x="904" y="889" type="line"/>
+			<point x="651" y="889" type="line"/>
+			<point x="651" y="1161" type="line"/>
+			<point x="1156" y="1161" type="line"/>
+			<point x="1156" y="1294" type="line"/>
+			<point x="516" y="1294" type="line"/>
+			<point x="516" y="889" type="line"/>
+			<point x="358" y="889" type="line"/>
+			<point x="358" y="756" type="line"/>
+			<point x="516" y="756" type="line"/>
+			<point x="516" y="-159" type="line"/>
+		</contour>
+	</outline>
+</glyph>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="N_N_E.ss02" format="2">
+	<advance width="3762"/>
+	<unicode hex="F3652"/>
+	<note>
+		uF3652
+	</note>
+	<outline>
+		<contour>
+			<point x="166" y="1262" type="line"/>
+			<point x="163" y="0" type="line"/>
+			<point x="297" y="0" type="line"/>
+			<point x="299" y="1061" type="line"/>
+			<point x="1259" y="0" type="line"/>
+			<point x="1393" y="0" type="line"/>
+			<point x="1396" y="1060" type="line"/>
+			<point x="2355" y="0" type="line"/>
+			<point x="3638" y="0" type="line"/>
+			<point x="3638" y="134" type="line"/>
+			<point x="2497" y="134" type="line"/>
+			<point x="2496" y="571" type="line"/>
+			<point x="3448" y="574" type="line"/>
+			<point x="3448" y="708" type="line"/>
+			<point x="2495" y="705" type="line"/>
+			<point x="2494" y="1128" type="line"/>
+			<point x="3636" y="1128" type="line"/>
+			<point x="3636" y="1262" type="line"/>
+			<point x="2358" y="1262" type="line"/>
+			<point x="2355" y="199" type="line"/>
+			<point x="1396" y="1262" type="line"/>
+			<point x="1262" y="1262" type="line"/>
+			<point x="1259" y="199" type="line"/>
+			<point x="300" y="1262" type="line"/>
+		</contour>
+	</outline>
+</glyph>

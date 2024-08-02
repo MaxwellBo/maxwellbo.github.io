@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="A_E.ss03" format="2">
+	<advance width="2528"/>
+	<unicode hex="F1013"/>
+	<note>
+		uF1011
+	</note>
+	<outline>
+		<contour>
+			<point x="1585" y="0" type="line"/>
+			<point x="1586" y="-1" type="line"/>
+			<point x="1729" y="-1" type="line"/>
+			<point x="1728" y="0" type="line"/>
+			<point x="2405" y="0" type="line"/>
+			<point x="2405" y="134" type="line"/>
+			<point x="1391" y="134" type="line"/>
+			<point x="1389" y="563" type="line"/>
+			<point x="2174" y="563" type="line"/>
+			<point x="2174" y="699" type="line"/>
+			<point x="1388" y="699" type="line"/>
+			<point x="1388" y="1128" type="line"/>
+			<point x="2403" y="1128" type="line"/>
+			<point x="2403" y="1262" type="line"/>
+			<point x="1217" y="1262" type="line"/>
+			<point x="83" y="0" type="line"/>
+			<point x="269" y="0" type="line"/>
+			<point x="782" y="563" type="line"/>
+			<point x="1256" y="563" type="line"/>
+			<point x="1257" y="0" type="line"/>
+		</contour>
+		<contour>
+			<point x="1255" y="699" type="line"/>
+			<point x="894" y="699" type="line"/>
+			<point x="1255" y="1112" type="line"/>
+		</contour>
+	</outline>
+</glyph>

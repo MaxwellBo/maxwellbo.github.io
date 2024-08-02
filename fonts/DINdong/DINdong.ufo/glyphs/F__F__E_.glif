@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="F_F_E" format="2">
+	<advance width="4206"/>
+	<unicode hex="F2030"/>
+	<anchor x="1052" y="0" name="bottom_1"/>
+	<anchor x="3155" y="0" name="bottom_2"/>
+	<anchor x="2103" y="0" name="caret_1"/>
+	<anchor x="1052" y="1129" name="top_1"/>
+	<anchor x="3155" y="1129" name="top_2"/>
+	<note>
+		F_E
+	</note>
+	<outline>
+		<contour>
+			<point x="123" y="1262" type="line"/>
+			<point x="126" y="0" type="line"/>
+			<point x="260" y="0" type="line"/>
+			<point x="259" y="571" type="line"/>
+			<point x="2412" y="574" type="line"/>
+			<point x="2412" y="708" type="line"/>
+			<point x="258" y="705" type="line"/>
+			<point x="257" y="1128" type="line"/>
+			<point x="2805" y="1128" type="line"/>
+			<point x="2808" y="0" type="line"/>
+			<point x="4083" y="0" type="line"/>
+			<point x="4083" y="134" type="line"/>
+			<point x="2942" y="134" type="line"/>
+			<point x="2941" y="571" type="line"/>
+			<point x="3893" y="574" type="line"/>
+			<point x="3893" y="708" type="line"/>
+			<point x="2940" y="705" type="line"/>
+			<point x="2939" y="1128" type="line"/>
+			<point x="4081" y="1128" type="line"/>
+			<point x="4081" y="1262" type="line"/>
+		</contour>
+	</outline>
+</glyph>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="module4" format="2">
+	<advance width="1694"/>
+	<note>
+		module4
+	</note>
+	<outline>
+		<contour>
+			<point x="283" y="246" type="line"/>
+			<point x="386" y="160" type="line"/>
+			<point x="1385" y="1241" type="line"/>
+			<point x="1282" y="1327" type="line"/>
+		</contour>
+	</outline>
+</glyph>

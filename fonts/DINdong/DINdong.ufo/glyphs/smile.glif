@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="smile" format="2">
+	<advance width="1879"/>
+	<unicode hex="2323"/>
+	<note>
+		uni2323
+	</note>
+	<outline>
+		<contour>
+			<point x="580" y="655" type="line"/>
+			<point x="999" y="-410" type="line"/>
+			<point x="1178" y="-410" type="line"/>
+			<point x="1604" y="655" type="line"/>
+			<point x="1464" y="655" type="line"/>
+			<point x="1092" y="-273" type="line"/>
+			<point x="726" y="655" type="line"/>
+		</contour>
+		<contour>
+			<point x="133" y="1570" type="line"/>
+			<point x="133" y="1442" type="line"/>
+			<point x="746" y="1442" type="line"/>
+			<point x="746" y="1570" type="line"/>
+		</contour>
+		<contour>
+			<point x="364" y="1191" type="line"/>
+			<point x="327" y="1069" type="line"/>
+			<point x="914" y="892" type="line"/>
+			<point x="951" y="1015" type="line"/>
+		</contour>
+		<contour>
+			<point x="1128" y="1318" type="line"/>
+			<point x="1128" y="1190" type="line"/>
+			<point x="1741" y="1190" type="line"/>
+			<point x="1741" y="1318" type="line"/>
+		</contour>
+	</outline>
+</glyph>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="N_N_E" format="2">
+	<advance width="4357"/>
+	<unicode hex="F3650"/>
+	<note>
+		uF3650
+	</note>
+	<outline>
+		<contour>
+			<point x="1857" y="1262" type="line"/>
+			<point x="1854" y="0" type="line"/>
+			<point x="1988" y="0" type="line"/>
+			<point x="1990" y="1061" type="line"/>
+			<point x="2950" y="0" type="line"/>
+			<point x="4233" y="0" type="line"/>
+			<point x="4233" y="134" type="line"/>
+			<point x="3092" y="134" type="line"/>
+			<point x="3091" y="571" type="line"/>
+			<point x="4043" y="574" type="line"/>
+			<point x="4043" y="708" type="line"/>
+			<point x="3090" y="705" type="line"/>
+			<point x="3089" y="1128" type="line"/>
+			<point x="4231" y="1128" type="line"/>
+			<point x="4231" y="1262" type="line"/>
+			<point x="2953" y="1262" type="line"/>
+			<point x="2950" y="199" type="line"/>
+			<point x="1991" y="1262" type="line"/>
+		</contour>
+		<contour>
+			<point x="122" y="563" type="line"/>
+			<point x="8" y="493" type="line"/>
+			<point x="660" y="-587" type="line"/>
+			<point x="774" y="-518" type="line"/>
+			<point x="226" y="390" type="line"/>
+			<point x="1596" y="-19" type="line"/>
+			<point x="1711" y="50" type="line"/>
+			<point x="1060" y="1131" type="line"/>
+			<point x="945" y="1061" type="line"/>
+			<point x="1494" y="151" type="line"/>
+		</contour>
+	</outline>
+</glyph>

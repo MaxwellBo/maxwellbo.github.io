@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="L_E.ss01" format="2">
+	<advance width="3849"/>
+	<outline>
+		<contour>
+			<point x="108" y="2" type="line"/>
+			<point x="3725" y="0" type="line"/>
+			<point x="3725" y="134" type="line"/>
+			<point x="2584" y="134" type="line"/>
+			<point x="2583" y="571" type="line"/>
+			<point x="3535" y="574" type="line"/>
+			<point x="3535" y="708" type="line"/>
+			<point x="2582" y="705" type="line"/>
+			<point x="2581" y="1128" type="line"/>
+			<point x="3723" y="1128" type="line"/>
+			<point x="3723" y="1262" type="line"/>
+			<point x="2447" y="1262" type="line"/>
+			<point x="2450" y="134" type="line"/>
+			<point x="241" y="134" type="line"/>
+			<point x="244" y="1262" type="line"/>
+			<point x="110" y="1262" type="line"/>
+		</contour>
+		<contour>
+			<point x="245" y="134" type="move"/>
+		</contour>
+	</outline>
+</glyph>

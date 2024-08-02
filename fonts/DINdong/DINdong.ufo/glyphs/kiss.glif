@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="kiss" format="2">
+	<advance width="1739"/>
+	<unicode hex="1F48F"/>
+	<note>
+		u1F48F
+	</note>
+	<outline>
+		<contour>
+			<point x="1264" y="244" type="line"/>
+			<point x="1219" y="43" type="line"/>
+			<point x="1406" y="43" type="line"/>
+			<point x="1354" y="251" type="line"/>
+			<point x="1508" y="102" type="line"/>
+			<point x="1601" y="264" type="line"/>
+			<point x="1405" y="325" type="line"/>
+			<point x="1601" y="381" type="line"/>
+			<point x="1508" y="543" type="line"/>
+			<point x="1356" y="403" type="line"/>
+			<point x="1406" y="602" type="line"/>
+			<point x="1219" y="602" type="line"/>
+			<point x="1262" y="409" type="line"/>
+			<point x="1117" y="543" type="line"/>
+			<point x="1024" y="381" type="line"/>
+			<point x="1221" y="325" type="line"/>
+			<point x="1024" y="264" type="line"/>
+			<point x="1117" y="102" type="line"/>
+		</contour>
+		<contour>
+			<point x="138" y="1411" type="line"/>
+			<point x="138" y="1277" type="line"/>
+			<point x="732" y="1277" type="line"/>
+			<point x="732" y="1411" type="line"/>
+		</contour>
+		<contour>
+			<point x="952" y="995" type="line"/>
+			<point x="952" y="819" type="line"/>
+			<point x="1086" y="819" type="line"/>
+			<point x="1086" y="995" type="line"/>
+		</contour>
+		<contour>
+			<point x="1310" y="1409" type="line"/>
+			<point x="1310" y="1275" type="line"/>
+			<point x="1484" y="1275" type="line"/>
+			<point x="1484" y="1409" type="line"/>
+		</contour>
+	</outline>
+</glyph>

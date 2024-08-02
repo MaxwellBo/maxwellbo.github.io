@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="asterisknb.ss07" format="2">
+	<advance width="1432"/>
+	<note>
+		periodcentered9
+	</note>
+	<outline>
+		<contour>
+			<point x="649" y="432" type="line"/>
+			<point x="649" y="0" type="line"/>
+			<point x="783" y="0" type="line"/>
+			<point x="783" y="451" type="line"/>
+			<point x="1136" y="101" type="line"/>
+			<point x="1231" y="197" type="line"/>
+			<point x="868" y="556" type="line"/>
+			<point x="1362" y="556" type="line"/>
+			<point x="1362" y="690" type="line"/>
+			<point x="904" y="690" type="line"/>
+			<point x="1181" y="969" type="line"/>
+			<point x="1086" y="1064" type="line"/>
+			<point x="783" y="758" type="line"/>
+			<point x="783" y="1204" type="line"/>
+			<point x="649" y="1204" type="line"/>
+			<point x="649" y="773" type="line"/>
+			<point x="326" y="1093" type="line"/>
+			<point x="231" y="998" type="line"/>
+			<point x="542" y="690" type="line"/>
+			<point x="88" y="690" type="line"/>
+			<point x="88" y="556" type="line"/>
+			<point x="583" y="556" type="line"/>
+			<point x="238" y="208" type="line"/>
+			<point x="334" y="114" type="line"/>
+		</contour>
+	</outline>
+</glyph>

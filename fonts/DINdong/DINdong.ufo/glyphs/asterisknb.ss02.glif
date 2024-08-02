@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="asterisknb.ss02" format="2">
+	<advance width="2904"/>
+	<note>
+		uF7033
+	</note>
+	<outline>
+		<contour>
+			<point x="1237" y="277" type="line"/>
+			<point x="1035" y="-624" type="line"/>
+			<point x="1873" y="-624" type="line"/>
+			<point x="1640" y="308" type="line"/>
+			<point x="2330" y="-360" type="line"/>
+			<point x="2747" y="366" type="line"/>
+			<point x="1869" y="639" type="line"/>
+			<point x="2747" y="890" type="line"/>
+			<point x="2330" y="1616" type="line"/>
+			<point x="1649" y="989" type="line"/>
+			<point x="1873" y="1880" type="line"/>
+			<point x="1035" y="1880" type="line"/>
+			<point x="1228" y="1016" type="line"/>
+			<point x="578" y="1616" type="line"/>
+			<point x="162" y="890" type="line"/>
+			<point x="1044" y="639" type="line"/>
+			<point x="162" y="366" type="line"/>
+			<point x="578" y="-360" type="line"/>
+		</contour>
+	</outline>
+</glyph>

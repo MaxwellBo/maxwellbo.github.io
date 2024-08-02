@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="T_E" format="2">
+	<advance width="2782"/>
+	<unicode hex="F4810"/>
+	<note>
+		uF4810
+	</note>
+	<outline>
+		<contour>
+			<point x="670" y="1130" type="line"/>
+			<point x="667" y="0" type="line"/>
+			<point x="801" y="0" type="line"/>
+			<point x="804" y="1130" type="line"/>
+			<point x="1380" y="1130" type="line"/>
+			<point x="1383" y="0" type="line"/>
+			<point x="2658" y="0" type="line"/>
+			<point x="2658" y="134" type="line"/>
+			<point x="1517" y="134" type="line"/>
+			<point x="1516" y="571" type="line"/>
+			<point x="2468" y="574" type="line"/>
+			<point x="2468" y="708" type="line"/>
+			<point x="1515" y="705" type="line"/>
+			<point x="1514" y="1128" type="line"/>
+			<point x="2656" y="1128" type="line"/>
+			<point x="2656" y="1263" type="line"/>
+			<point x="108" y="1263" type="line"/>
+			<point x="108" y="1130" type="line"/>
+		</contour>
+	</outline>
+</glyph>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="F_V_E.ss01" format="2">
+	<advance width="3739"/>
+	<unicode hex="F2061"/>
+	<note>
+		uF2061
+	</note>
+	<outline>
+		<contour>
+			<point x="1298" y="1128" type="line"/>
+			<point x="1783" y="-1" type="line"/>
+			<point x="3615" y="0" type="line"/>
+			<point x="3615" y="134" type="line"/>
+			<point x="2015" y="135" type="line"/>
+			<point x="2199" y="570" type="line"/>
+			<point x="3224" y="573" type="line"/>
+			<point x="3224" y="707" type="line"/>
+			<point x="2252" y="702" type="line"/>
+			<point x="2428" y="1128" type="line"/>
+			<point x="3613" y="1128" type="line"/>
+			<point x="3613" y="1262" type="line"/>
+			<point x="2337" y="1262" type="line"/>
+			<point x="2337" y="1261" type="line"/>
+			<point x="2334" y="1261" type="line"/>
+			<point x="1863" y="182" type="line"/>
+			<point x="1400" y="1261" type="line"/>
+			<point x="1399" y="1261" type="line"/>
+			<point x="1399" y="1262" type="line"/>
+			<point x="123" y="1262" type="line"/>
+			<point x="126" y="0" type="line"/>
+			<point x="260" y="0" type="line"/>
+			<point x="259" y="571" type="line"/>
+			<point x="1213" y="574" type="line"/>
+			<point x="1213" y="708" type="line"/>
+			<point x="258" y="705" type="line"/>
+			<point x="257" y="1128" type="line"/>
+		</contour>
+	</outline>
+</glyph>

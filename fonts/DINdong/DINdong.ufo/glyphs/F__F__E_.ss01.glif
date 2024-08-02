@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="F_F_E.ss01" format="2">
+	<advance width="3590"/>
+	<anchor x="598" y="0" name="bottom_1"/>
+	<anchor x="1795" y="0" name="bottom_2"/>
+	<anchor x="2992" y="0" name="bottom_3"/>
+	<anchor x="1196.667" y="0" name="caret_1"/>
+	<anchor x="2393.333" y="0" name="caret_2"/>
+	<anchor x="598" y="1129" name="top_1"/>
+	<anchor x="1795" y="1129" name="top_2"/>
+	<anchor x="2992" y="1129" name="top_3"/>
+	<note>
+		F_F_E.ss02
+	</note>
+	<outline>
+		<contour>
+			<point x="123" y="710" type="line"/>
+			<point x="126" y="-411" type="line"/>
+			<point x="260" y="-411" type="line"/>
+			<point x="257" y="-2" type="line"/>
+			<point x="792" y="1" type="line"/>
+			<point x="792" y="135" type="line"/>
+			<point x="257" y="138" type="line"/>
+			<point x="257" y="576" type="line"/>
+			<point x="1167" y="576" type="line"/>
+			<point x="1170" y="0" type="line"/>
+			<point x="1304" y="0" type="line"/>
+			<point x="1301" y="574" type="line"/>
+			<point x="1862" y="577" type="line"/>
+			<point x="1862" y="710" type="line"/>
+			<point x="1300" y="710" type="line"/>
+			<point x="1299" y="1131" type="line"/>
+			<point x="2188" y="1131" type="line"/>
+			<point x="2191" y="0" type="line"/>
+			<point x="3466" y="0" type="line"/>
+			<point x="3466" y="134" type="line"/>
+			<point x="2325" y="134" type="line"/>
+			<point x="2324" y="572" type="line"/>
+			<point x="3276" y="575" type="line"/>
+			<point x="3276" y="709" type="line"/>
+			<point x="2323" y="706" type="line"/>
+			<point x="2322" y="1132" type="line"/>
+			<point x="3464" y="1132" type="line"/>
+			<point x="3464" y="1266" type="line"/>
+			<point x="2188" y="1266" type="line"/>
+			<point x="2188" y="1265" type="line"/>
+			<point x="1165" y="1265" type="line"/>
+			<point x="1166" y="710" type="line"/>
+		</contour>
+	</outline>
+</glyph>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="L_L_E" format="2">
+	<advance width="4066"/>
+	<unicode hex="F3230"/>
+	<note>
+		uF3230
+	</note>
+	<outline>
+		<contour>
+			<point x="109" y="2" type="line"/>
+			<point x="109" y="0" type="line"/>
+			<point x="3942" y="0" type="line"/>
+			<point x="3942" y="134" type="line"/>
+			<point x="2801" y="134" type="line"/>
+			<point x="2800" y="571" type="line"/>
+			<point x="3752" y="574" type="line"/>
+			<point x="3752" y="708" type="line"/>
+			<point x="2799" y="705" type="line"/>
+			<point x="2798" y="1128" type="line"/>
+			<point x="3940" y="1128" type="line"/>
+			<point x="3940" y="1262" type="line"/>
+			<point x="2664" y="1262" type="line"/>
+			<point x="2667" y="134" type="line"/>
+			<point x="1543" y="134" type="line"/>
+			<point x="1543" y="1262" type="line"/>
+			<point x="1409" y="1262" type="line"/>
+			<point x="1406" y="134" type="line"/>
+			<point x="242" y="134" type="line"/>
+			<point x="245" y="1262" type="line"/>
+			<point x="111" y="1262" type="line"/>
+			<point x="108" y="2" type="line"/>
+		</contour>
+	</outline>
+</glyph>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="Iacute" format="2">
+	<advance width="735"/>
+	<unicode hex="00CD"/>
+	<note>
+		Iacute
+	</note>
+	<outline>
+		<contour>
+			<point x="228" y="1262" type="line"/>
+			<point x="225" y="0" type="line"/>
+			<point x="365" y="0" type="line"/>
+			<point x="362" y="1262" type="line"/>
+		</contour>
+		<contour>
+			<point x="223" y="1472" type="line"/>
+			<point x="223" y="1337" type="line"/>
+			<point x="807" y="1444" type="line"/>
+			<point x="807" y="1580" type="line"/>
+		</contour>
+	</outline>
+</glyph>

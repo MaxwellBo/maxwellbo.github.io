@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="Eacute_E.ss02" format="2">
+	<advance width="2791"/>
+	<unicode hex="F1822"/>
+	<note>
+		uF1822
+	</note>
+	<outline>
+		<contour>
+			<point x="114" y="1244" type="line"/>
+			<point x="117" y="-18" type="line"/>
+			<point x="2667" y="-18" type="line"/>
+			<point x="2667" y="116" type="line"/>
+			<point x="1526" y="116" type="line"/>
+			<point x="1525" y="553" type="line"/>
+			<point x="2477" y="556" type="line"/>
+			<point x="2477" y="690" type="line"/>
+			<point x="1524" y="687" type="line"/>
+			<point x="1523" y="1110" type="line"/>
+			<point x="2665" y="1110" type="line"/>
+			<point x="2665" y="1244" type="line"/>
+			<point x="617" y="1244" type="line"/>
+			<point x="1270" y="1417" type="line"/>
+			<point x="1270" y="1553" type="line"/>
+		</contour>
+		<contour>
+			<point x="249" y="687" type="line"/>
+			<point x="248" y="1110" type="line"/>
+			<point x="1389" y="1110" type="line"/>
+			<point x="1392" y="116" type="line"/>
+			<point x="251" y="116" type="line"/>
+			<point x="250" y="553" type="line"/>
+			<point x="1202" y="556" type="line"/>
+			<point x="1202" y="690" type="line"/>
+		</contour>
+	</outline>
+</glyph>

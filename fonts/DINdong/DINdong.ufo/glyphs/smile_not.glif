@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="smile_not" format="2">
+	<advance width="1622"/>
+	<note>
+		uni2323_not
+	</note>
+	<outline>
+		<contour>
+			<point x="138" y="1411" type="line"/>
+			<point x="138" y="1277" type="line"/>
+			<point x="732" y="1277" type="line"/>
+			<point x="732" y="1411" type="line"/>
+		</contour>
+		<contour>
+			<point x="671" y="408" type="line"/>
+			<point x="671" y="274" type="line"/>
+			<point x="1233" y="274" type="line"/>
+			<point x="1233" y="408" type="line"/>
+		</contour>
+		<contour>
+			<point x="949" y="960" type="line"/>
+			<point x="949" y="784" type="line"/>
+			<point x="1083" y="784" type="line"/>
+			<point x="1083" y="960" type="line"/>
+		</contour>
+		<contour>
+			<point x="1310" y="1409" type="line"/>
+			<point x="1310" y="1275" type="line"/>
+			<point x="1484" y="1275" type="line"/>
+			<point x="1484" y="1409" type="line"/>
+		</contour>
+	</outline>
+</glyph>

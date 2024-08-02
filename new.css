@@ -1,0 +1,149 @@
+
+@font-face {
+  font-family: 'DINdong';
+  src: 
+      url('fonts/DINdong/DINdong.woff2') format('woff2'),
+      url('fonts/DINdong/DINdong.woff') format('woff'),
+      url('fonts/DINdong/DINdong.ttf') format('truetype'),
+      url('fonts/DINdong/DINdong.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'Ductus Geometric';
+  src: 
+      url('fonts/ductus/webfonts/DuctusCalligraphic.woff2') format('woff2'),
+      url('fonts/ductus/webfonts/DuctusGeometric.woff') format('woff'),
+      url('fonts/ductus/ttf//DuctusGeometric.ttf') format('truetype'),
+      url('fonts/ductus/otf/DuctusGeometric.otf') format('opentype');
+}
+
+a {
+  color: color(display-p3 0 0 1);
+}
+
+a:active {
+  color: color(display-p3 1 1 0);
+}
+
+a:visited {
+  color: color(display-p3 1 0 1);
+}
+
+a:hover {
+  color: color(display-p3 1 0 0);
+}
+
+nav {
+  font-family: 'Ductus Geometric', sans-serif;
+
+  perspective: 100px;
+
+  ul {
+    list-style-type: none;
+    max-width: 20ch;
+
+    /* rotate */
+    transform: rotateY(3deg);
+
+    li {
+      border: 1px black solid;
+      margin: 0.5rem;
+      padding: 0.5rem;
+
+      /* :hover {
+        background-color: linear-gradient(to right, yellow, lightsalmon, mediumslateblue, mistyrose, mediumturquoise);
+      } */
+    }
+
+  }
+
+}
+
+main {
+  border: 1px solid black;
+  padding: 1rem;
+  margin: 1rem;
+}
+
+img.icon {
+  display: none;
+}
+
+header {
+  font-family: 'DINdong', sans-serif;
+  text-transform: uppercase;
+
+  perspective: 100px;
+
+  .wordmark {
+    border: 1px solid black;
+    font-size: 5rem;
+    transform: rotateZ(3deg) rotateX(2deg)
+  }
+}
+
+main {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px; /* Adjust the gap between sections as needed */
+}
+
+.listing {
+  display: flex;
+  align-items: center;
+
+  img {
+    aspect-ratio: 4/3;
+    max-width: 10ch;
+    object-fit: cover;
+    background-color: #e05e5e; /* For demonstration, replacing with actual image */
+  }
+
+  a {
+    display: flex;
+    align-items: center;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+}
+
+@media (min-width: 768px) {
+  body {
+    display: grid;
+    gap: 1rem;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: auto 1fr;
+    grid-template-areas:
+      "header header"
+      "nav main"
+      "footer footer";
+  }
+
+  header {
+    grid-area: header;
+  }
+
+  nav {
+    grid-area: nav;
+    overflow-y: scroll;
+  }
+
+  main {
+    grid-area: main;
+    overflow-y: scroll;
+  }
+
+  footer {
+    grid-area: footer;
+    position: sticky;
+    bottom: 0;
+  }
+}
