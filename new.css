@@ -34,6 +34,7 @@
 }
 
 #watermark {
+  display: none;
   font-family: 'Crozet';
   position: absolute;
   top: 50%;
