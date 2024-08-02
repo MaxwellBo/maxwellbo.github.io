@@ -24,6 +24,29 @@
     url('fonts/homoneta/otf/Homoneta-Regular.otf') format('opentype');
 }
 
+@font-face {
+  font-family: 'Crozet';
+  src:
+    url('fonts/crozet/webfonts/Crozet-Regular.woff2') format('woff2'),
+    url('fonts/crozet/webfonts/Crozet-Regular.woff') format('woff'),
+    url('fonts/crozet/otf/Crozet-Regular.otf') format('opentype'),
+    url('fonts/crozet/ttf/Crozet-Regular.ttf') format('truetype');
+}
+
+
+#watermark {
+  font-family: 'Crozet', sans-serif;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 400px;
+  color: rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+  pointer-events: none; /* Make sure it doesn't interfere with other elements */
+  z-index: -1; /* Push it to the back */
+}
+
 img.icon {
   display: none;
 }
