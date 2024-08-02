@@ -98,11 +98,11 @@ header {
   text-transform: uppercase;
 
   perspective: 100px;
+  transform: rotateZ(3deg) rotateX(2deg);
 
   .wordmark {
     border: 1px solid black;
     font-size: 5rem;
-    transform: rotateZ(3deg) rotateX(2deg)
   }
 }
 
@@ -110,10 +110,10 @@ footer {
   overflow-y: scroll;
   width: 100%;
   white-space: nowrap;
-
-  table {
-    font-family: monospace;
-  }
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid black;
+  font-family: monospace;
 }
 
 
