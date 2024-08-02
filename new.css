@@ -78,14 +78,10 @@ main {
   }
 
   h1, h2, h3 {
-    
     ::before {
       content: '*';
     }
 
-    ::after{
-      content: '↳';
-    }
     font-family: 'DINdong', sans-serif;
     color: black;
   }
@@ -110,6 +106,16 @@ header {
   }
 }
 
+footer {
+  overflow-y: scroll;
+  width: 100%;
+  white-space: nowrap;
+
+  table {
+    font-family: monospace;
+  }
+}
+
 
 @keyframes grow {
   from {
@@ -121,38 +127,22 @@ header {
 }
 
 .listing {
-  display: flex;
-  align-items: center;
   perspective: 30px;
 
   img {
+    max-width: 20ch;
     transform: rotateZ(-10deg);
     aspect-ratio: 4/3;
-    max-width: 10ch;
     object-fit: cover;
-    background-color: #e05e5e; /* For demonstration, replacing with actual image */
-
-
   }
+
   img:hover {
     animation: grow 10s linear;
   }
-
-  a {
-    display: flex;
-    align-items: center;
-  }
+  
   .title {
-    font-size: 1.3rem;
-    font-weight: bolder;
-    padding-right: 3px;
-    display: block;
-  }
-
-  .description {
-    font-size: 0.9rem;
-    font-style: italic;
-    display: block;
+    font-size: 1.1rem;
+    font-weight: bold;
   }
 
 }
@@ -168,9 +158,12 @@ html, body {
 }
 
 @media (min-width: 768px) {
-  main {
-    columns: 2;
+  div.cards {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15ch, 1fr));
   }
+
 
   body {
     display: grid;
@@ -202,21 +195,4 @@ html, body {
     position: sticky;
     bottom: 0;
   }
-}
-
-dl {
-  font-family: monospace;
-  display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
-}
-
-dt, dd {
-  display: block;
-  text-align: center;
-  width: 100px; 
-  margin: 0;
-}
-dd {
-  margin-top: 1em; /* Adjust spacing as needed */
 }

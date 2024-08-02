@@ -24,7 +24,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="The personal website and portfolio of Max Bo" />
   <meta name="robots" content="index, follow">
-  <link href="oldskool.css" rel="stylesheet">
+  <link href="new.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="img/cursor-dino.png">
 
   <meta name="og:title" content="Max Bo" />
@@ -45,69 +45,69 @@
 </head>
 
 <body>
+  <header>
+    <h1 class="wordmark">
+      <marquee>
+        ← Max Bo
+      </marquee>
+    </h1>
+  </header>
+  <nav>
+    <ul>
+      <li class="button">
+        <a href="mailto:max@maxbo.me">Email</a>
+      </li>
+      <li class="button">
+        <a href="https://mjbo.notion.site/Max-Bo-s-Notion-b33bd022b3604920afcef9870738b741">Wiki</a>
+      </li>
+      <li class="button">
+        <a href="https://mjbo.notion.site/Blogroll-04af18a8634a4a0ebeb2a36c45270ec5">Blogroll</a>
+      </li>
+      <li class="button">
+        <a href="https://github.com/MaxwellBo">GitHub</a>
+      </li>
+      <li class="button">
+        <a href="https://www.are.na/max-bo">Are.na</a>
+      </li>
+      <li class="button">
+        <a href="https://observablehq.com/@mjbo">Observable</a>
+      </li>
+      <li class="button">
+        <a href="https://www.linkedin.com/in/max-bo/">LinkedIn</a>
+      </li>
+      <li class="button">
+        <a href="https://twitter.com/_max_bo_">Twitter</a>
+      </li>
+      <li class="button">
+        <a href="https://mastodon.social/@mb@urbanists.social">Mastodon</a>
+      </li>
+      <li class="button">
+        <a href="https://open.spotify.com/user/aquahair_">Spotify</a>
+      </li>
+      <li class="button">
+        <a href="https://rateyourmusic.com/~mbo">RYM</a>
+      </li>
+      <li class="button">
+        <a href="https://letterboxd.com/mbo_/">Letterboxd</a>
+      </li>
+      <li class="button">
+        <a href="https://boardgamegeek.com/collection/user/mbo_">BGG</a>
+      </li>
+      <li class="button">
+        <a href="https://untappd.com/user/max_bo">Untappd</a>
+      </li>
+      <li class="button">
+        <a href="https://www.fragrantica.com/member/1619664">Fragrantica</a>
+      </li>
+      <!--<li class="button">
+                  <a href="http://zalgo-responsibly.tumblr.com/">Tumblr</a>
+              </li>-->
+      <!--<li class="button">
+                  <a href="https://github.com/MaxwellBo/Resume/raw/master/Maxwell_Bo_Resume.pdf">&darr; Resume</a>
+              </li>-->
+    </ul>
+  </nav>
   <main>
-    <header>
-      <h1 class="wordmark">
-        <marquee>
-          ← Max Bo
-        </marquee>
-      </h1>
-    </header>
-    <nav>
-      <ul>
-        <li class="button">
-          <a href="mailto:max@maxbo.me">Email</a>
-        </li>
-        <li class="button">
-          <a href="https://mjbo.notion.site/Max-Bo-s-Notion-b33bd022b3604920afcef9870738b741">Wiki</a>
-        </li>
-        <li class="button">
-          <a href="https://mjbo.notion.site/Blogroll-04af18a8634a4a0ebeb2a36c45270ec5">Blogroll</a>
-        </li>
-        <li class="button">
-          <a href="https://github.com/MaxwellBo">GitHub</a>
-        </li>
-        <li class="button">
-          <a href="https://www.are.na/max-bo">Are.na</a>
-        </li>
-        <li class="button">
-          <a href="https://observablehq.com/@mjbo">Observable</a>
-        </li>
-        <li class="button">
-          <a href="https://www.linkedin.com/in/max-bo/">LinkedIn</a>
-        </li>
-        <li class="button">
-          <a href="https://twitter.com/_max_bo_">Twitter</a>
-        </li>
-        <li class="button">
-          <a href="https://mastodon.social/@mb@urbanists.social">Mastodon</a>
-        </li>
-        <li class="button">
-          <a href="https://open.spotify.com/user/aquahair_">Spotify</a>
-        </li>
-        <li class="button">
-          <a href="https://rateyourmusic.com/~mbo">RYM</a>
-        </li>
-        <li class="button">
-          <a href="https://letterboxd.com/mbo_/">Letterboxd</a>
-        </li>
-        <li class="button">
-          <a href="https://boardgamegeek.com/collection/user/mbo_">BGG</a>
-        </li>
-        <li class="button">
-          <a href="https://untappd.com/user/max_bo">Untappd</a>
-        </li>
-        <li class="button">
-          <a href="https://www.fragrantica.com/member/1619664">Fragrantica</a>
-        </li>
-        <!--<li class="button">
-                    <a href="http://zalgo-responsibly.tumblr.com/">Tumblr</a>
-                </li>-->
-        <!--<li class="button">
-                    <a href="https://github.com/MaxwellBo/Resume/raw/master/Maxwell_Bo_Resume.pdf">&darr; Resume</a>
-                </li>-->
-      </ul>
-    </nav>
     <details>
       <summary>Resume</summary>
       <section>
@@ -184,7 +184,7 @@
         </article>
       </div>
     </section>
-    <section>
+    <section id="projects-section">
       <h2>
         <img class="icon" src="img/projects.gif" /><a id="projects">Projects</a>
       </h2>
@@ -623,14 +623,107 @@
         <li>Sim racing / rally</li>
       </ul>
     </section>
-    <section>
-      <footer>
-        <a href="https://github.com/MaxwellBo/maxwellbo.github.io"><img class="badge" src="img/pages.png" /></a>
-        <br />
-        <small>© 2024</small>
-      </footer>
-    </section>
   </main>
+  <footer>
+    <table>
+      <thead>
+        <tr>
+          <th>onLine</th>
+          <th>language</th>
+          <th>mousemove.x</th>
+          <th>mousemove.y</th>
+          <th>chargingchange</th>
+          <th>levelchange</th>
+          <th>chargingtimechange</th>
+          <th>dischargingtimechange</th>
+          <th>hardwareConcurrency</th>
+          <th>deviceMemory</th>
+          <th>storageEstimate</th>
+          <th>maxTouchPoints</th>
+          <th>cookieEnabled</th>
+          <th>doNotTrack</th>
+          <th>webDriver</th>
+          <th>userAgent</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td id="onLine"></td>
+          <td id="language"></td>
+          <td id="mousemove.x"></td>
+          <td id="mousemove.y"></td>
+          <td id="chargingchange"></td>
+          <td id="levelchange"></td>
+          <td id="chargingtimechange"></td>
+          <td id="dischargingtimechange"></td>
+          <td id="hardwareConcurrency"></td>
+          <td id="deviceMemory"></td>
+          <td id="storageEstimate"></td>
+          <td id="maxTouchPoints"></td>
+          <td id="cookieEnabled"></td>
+          <td id="doNotTrack"></td>
+          <td id="webDriver"></td>
+          <td id="userAgent"></td>
+        </tr>
+      </tbody>
+    </table>
+    <script>
+      navigator.getBattery().then(function (battery) {
+        battery.addEventListener('chargingchange', function () {
+          updateChargeInfo();
+        });
+        function updateChargeInfo() {
+          document.getElementById('chargingchange').textContent = battery.charging ? 'Charging' : 'Not charging';
+        }
+
+        battery.addEventListener('levelchange', function () {
+          updateLevelInfo();
+        });
+        function updateLevelInfo() {
+          document.getElementById('levelchange').textContent = battery.level * 100 + '%';
+        }
+
+        battery.addEventListener('chargingtimechange', function () {
+          updateChargingInfo();
+        });
+        function updateChargingInfo() {
+          document.getElementById('chargingtimechange').textContent = battery.chargingTime + ' seconds';
+        }
+
+        battery.addEventListener('dischargingtimechange', function () {
+          updateDischargingInfo();
+        });
+        function updateDischargingInfo() {
+          document.getElementById('dischargingtimechange').textContent = battery.dischargingTime + ' seconds';
+        }
+
+        updateChargeInfo();
+        updateLevelInfo();
+        updateChargingInfo();
+        updateDischargingInfo();
+
+        addEventListener('mousemove', function (event) {
+          document.getElementById('mousemove.x').textContent = event.clientX;
+          document.getElementById('mousemove.y').textContent = event.clientY;
+        });
+
+        document.getElementById('userAgent').textContent = navigator.userAgent;
+
+        document.getElementById('onLine').textContent = navigator.onLine ? 'Online' : 'Offline';
+        document.getElementById('language').textContent = navigator.language;
+        document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency;
+        document.getElementById('deviceMemory').textContent = navigator.deviceMemory;
+        navigator.storage.estimate().then(function (estimate) {
+          document.getElementById('storageEstimate').textContent = estimate.usage + ' / ' + estimate.quota;
+        });
+        document.getElementById('maxTouchPoints').textContent = navigator.maxTouchPoints;
+        document.getElementById('cookieEnabled').textContent = navigator.cookieEnabled;
+        document.getElementById('doNotTrack').textContent = navigator.doNotTrack;
+        document.getElementById('webDriver').textContent = navigator.webdriver;
+      });
+    </script>
+    <small>© 2024, <a href="old.html">old site</a></small>
+  </footer>
 </body>
 
 </html>
