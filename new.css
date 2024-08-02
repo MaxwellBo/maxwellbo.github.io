@@ -33,7 +33,6 @@
     url('fonts/crozet/ttf/Crozet-Regular.ttf') format('truetype');
 }
 
-
 #watermark {
   font-family: 'Crozet';
   position: absolute;
@@ -80,6 +79,7 @@ a:hover:active:visited {
 }
 
 body {
+  overflow-x: hidden;
   font-family: 'DINdong', sans-serif;
 }
 
