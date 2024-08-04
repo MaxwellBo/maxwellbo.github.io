@@ -256,7 +256,7 @@ article.listing {
     left: 50%;
     transform: translate(-50%, -50%);
     font-size: 20vw;
-    color: rgba(0, 0, 0, 0.1);
+    color: rgba(0, 0, 0, 0.15);
     white-space: nowrap;
     pointer-events: none; /* Make sure it doesn't interfere with other elements */
     z-index: -1; /* Push it to the back */
