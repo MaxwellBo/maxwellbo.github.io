@@ -33,6 +33,10 @@
     url('fonts/crozet/ttf/Crozet-Regular.ttf') format('truetype');
 }
 
+html {
+  cursor: url('kirby.png'), auto;
+}
+
 #watermark {
   display: none;
 }
