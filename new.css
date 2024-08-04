@@ -35,16 +35,6 @@
 
 #watermark {
   display: none;
-  font-family: 'Crozet';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 20vw;
-  color: rgba(0, 0, 0, 0.1);
-  white-space: nowrap;
-  pointer-events: none; /* Make sure it doesn't interfere with other elements */
-  z-index: -1; /* Push it to the back */
 }
 
 #clouds {
@@ -143,12 +133,15 @@ body {
 
 nav {
   ul {
+    columns: 2;
+    column-gap: 0px;
     max-width: 100%;
     list-style-type: none;
     padding-inline-start: 0px;
 
     li {
       border-bottom: 1px black solid;
+      border-right: 1px black solid;
       padding: 0.5rem;
 
       /* :hover {
@@ -210,7 +203,7 @@ script {
 
 div.cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(20ch, 20ch));
+  grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
 }
 
 article.art {
@@ -242,9 +235,19 @@ article.listing {
   }
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   #watermark {
     display: initial;
+    font-family: 'Crozet';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 20vw;
+    color: rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+    pointer-events: none; /* Make sure it doesn't interfere with other elements */
+    z-index: -1; /* Push it to the back */
   }
 
 
@@ -265,6 +268,14 @@ article.listing {
   nav {
     grid-area: nav;
     overflow-y: scroll;
+
+    ul {
+      columns: 1;
+
+      li {
+        border-right: none;
+      }
+    }
   }
 
   main {
