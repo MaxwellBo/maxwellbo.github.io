@@ -474,8 +474,8 @@
             <p class="title">Foundation shades</h3>
           </a>
         </article>
-        <article id="cycle" class="art">
-
+        <article class="art">
+           <img style="width:100%; image-rendering: pixelated;" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maxbo.me" />
         </article>
         <article class="listing">
           <a href="https://observablehq.com/@55th/every-fragrance-at-once">
@@ -669,6 +669,9 @@
             <p class="title">Intro to Property Based Testing</h3>
           </a>
           <p class="description">Lecture</p>
+        </article>
+        <article id="cycle" class="art">
+
         </article>
         <article class="listing">
           <a href="https://github.com/MaxwellBo/A-tour-of-Scala">
@@ -936,7 +939,14 @@
                 dx: -6,
                 fontSize: 10,
                 fill: "white"
-              })
+              }),
+              Plot.text([{ text: `${Math.round(level * 100)}` }], {
+                text: "text",
+                x: 0,
+                dx: 8,
+                fontSize: 10,
+                fill: "white"
+              }),
             ],
             width: 75,
             height: 25,
