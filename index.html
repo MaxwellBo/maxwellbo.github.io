@@ -131,11 +131,11 @@
           </a>
         </article>
         <article id="weather" class="art">
-          <p>I am living in Sydney, Australia</p>
-          <p>It is currently:</p>
+          <p>I am currently living in Sydney, Australia.</p>
+          <p>It is:</p>
           <p id="time"></p>
-          <p id="current"></p>
           <p id="conditions"></p>
+          <p id="currentTemp"></p>
           <small>L: <span id="low"></span></small>
           <small>H: <span id="high"></span></small>
 
@@ -145,7 +145,7 @@
             const me = document.getElementById('weather');
             const time = document.getElementById('time');
             const conditions = document.getElementById('conditions');
-            const current = document.getElementById('current');
+            const currentTemp = document.getElementById('currentTemp');
             const low = document.getElementById('low');
             const high = document.getElementById('high');
 
@@ -176,7 +176,7 @@
             fetch(url)
               .then(response => response.json())
               .then(data => {
-                current.textContent = data.current.temperature_2m.toFixed(1) + '°C';
+                currentTemp.textContent = data.current.temperature_2m.toFixed(1) + '°C';
                 high.textContent = data.daily.temperature_2m_max[0].toFixed(1) + '°C';
                 low.textContent = data.daily.temperature_2m_min[0].toFixed(1) + '°C';
 
@@ -325,7 +325,7 @@
                     Plot.barX(daily, {
                       y: "time",
                       x1: "min",
-                      x2: "max"
+                      x2: "max",
                     }),
                     // Dot for current temperature
                     Plot.dot([data.current], {

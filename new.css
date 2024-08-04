@@ -233,7 +233,7 @@ article.listing {
 
   img:hover {
     border: 1px solid black;
-    animation: grow 60s linear infinite;
+    animation: grow 60s ease-in-out infinite;
   }
 
   p.title {
