@@ -136,8 +136,8 @@
           <p id="time"></p>
           <p><span id="conditionsEmoji"></span> <span id="conditions"></span></p>
           <p id="currentTemp"></p>
-          <small>L: <span id="low"></span></small>
-          <small>H: <span id="high"></span></small>
+          <small id="low"></small>
+          <small id="high"></small>
 
           <script type="module">
             import * as Plot from 'https://esm.run/@observablehq/plot'
@@ -178,8 +178,8 @@
               .then(response => response.json())
               .then(data => {
                 currentTemp.textContent = data.current.temperature_2m.toFixed(1) + '°C';
-                high.textContent = data.daily.temperature_2m_max[0].toFixed(1) + '°C';
-                low.textContent = data.daily.temperature_2m_min[0].toFixed(1) + '°C';
+                high.textContent = "H: " + data.daily.temperature_2m_max[0].toFixed(1) + '°C';
+                low.textContent = "L: " + data.daily.temperature_2m_min[0].toFixed(1) + '°C';
 
                 // weather_code interpretation table as per https://open-meteo.com/en/docs
                 // 0	Clear sky
@@ -370,7 +370,7 @@
                       y: "time",
                       text: d => `${d.max.toFixed(0)}`,
                       dx: -6, // Position adjustment on x-axis
-                      fill: "white"
+                      fill: "white",
                     }),
                     // Text for min temperatures
                     Plot.text(daily, {
@@ -393,8 +393,11 @@
                     tickFormat: (d) => `${d}°C`,
                     grid: true
                   },
-                  width: 200,
-                  height: 150
+                  width: 175,
+                  height: 125,
+                  marginTop: 5,
+                  marginLeft: 20,
+                  marginBottom: 20,
                 });
 
                 // Render the plot
