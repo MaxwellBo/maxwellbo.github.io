@@ -124,7 +124,7 @@ a:visited {
 }
 
 a:hover {
-  background-color: color(display-p3 0 0 1);
+  background-color: color(display-p3 1 0 1);
   color: white;
 }
 
