@@ -957,7 +957,7 @@
       import * as Plot from 'https://esm.run/@observablehq/plot'
 
       navigator.getBattery().then((battery) => {
-        function updateBatteryInfo() {
+        function updateBatteryInfo(battery) {
           const level = battery.level;
           const charging = battery.charging;
 
@@ -1000,8 +1000,8 @@
 
         battery.addEventListener('chargingchange', updateBatteryInfo);
         battery.addEventListener('levelchange', updateBatteryInfo);
-        battery.addEventListener('chargingtimechange', updateBatteryInfo);
-        battery.addEventListener('dischargingtimechange', updateBatteryInfo);
+        // battery.addEventListener('chargingtimechange', updateBatteryInfo);
+        // battery.addEventListener('dischargingtimechange', updateBatteryInfo);
 
         updateBatteryInfo();
       });
