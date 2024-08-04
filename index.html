@@ -13,14 +13,6 @@
 
     gtag('config', 'UA-135030873-1');
   </script>
-  <script type="module">
-    /* be iframe friendly */
-    if (window.self !== window.top) {
-      document.querySelectorAll('a').forEach((link) => {
-        link.setAttribute('target', '_top');
-      });
-    }
-  </script>
   <title>Max Bo</title>
   <meta name="author" content="Max Bo, max@maxbo.me">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -138,7 +130,247 @@
             <p class="title">Perceptually uniform color models</h3>
           </a>
         </article>
-        <article id="clouds" class="art">
+        <article id="weather" class="art">
+          <p>I am living in Sydney, Australia</p>
+          <p>It is currently:</p>
+          <p id="time"></p>
+          <p id="current"></p>
+          <p id="conditions"></p>
+          <small>L: <span id="low"></span></small>
+          <small>H: <span id="high"></span></small>
+
+          <script type="module">
+            import * as Plot from 'https://esm.run/@observablehq/plot'
+            window.Plot = Plot
+
+            const me = document.getElementById('weather');
+            const time = document.getElementById('time');
+            const conditions = document.getElementById('conditions');
+            const current = document.getElementById('current');
+            const low = document.getElementById('low');
+            const high = document.getElementById('high');
+
+            const setTime = () => {
+              const time = new Date().toLocaleTimeString('en-AU', {
+                timeZone: 'Australia/Sydney',
+                hour: 'numeric',
+                minute: 'numeric',
+                second: 'numeric',
+                hour12: true
+              });
+              document.getElementById('time').textContent = time;
+            };
+
+            setTime();
+            setInterval(setTime, 1000);
+
+            const lat = -33.8688;
+            const lon = 151.2093;
+
+
+            const url = 'https://api.open-meteo.com/v1/forecast?'
+              + `latitude=${lat}&longitude=${lon}`
+              + '&daily=temperature_2m_max,temperature_2m_min'
+              + '&current=temperature_2m,is_day,weather_code'
+              + '&timezone=Australia%2FSydney';
+
+            fetch(url)
+              .then(response => response.json())
+              .then(data => {
+                current.textContent = data.current.temperature_2m.toFixed(1) + '°C';
+                high.textContent = data.daily.temperature_2m_max[0].toFixed(1) + '°C';
+                low.textContent = data.daily.temperature_2m_min[0].toFixed(1) + '°C';
+
+                // weather_code interpretation table as per https://open-meteo.com/en/docs
+                // 0	Clear sky
+                // 1, 2, 3	Mainly clear, partly cloudy, and overcast
+                // 45, 48	Fog and depositing rime fog
+                // 51, 53, 55	Drizzle: Light, moderate, and dense intensity
+                // 56, 57	Freezing Drizzle: Light and dense intensity
+                // 61, 63, 65	Rain: Slight, moderate and heavy intensity
+                // 66, 67	Freezing Rain: Light and heavy intensity
+                // 71, 73, 75	Snow fall: Slight, moderate, and heavy intensity
+                // 77	Snow grains
+                // 80, 81, 82	Rain showers: Slight, moderate, and violent
+                // 85, 86	Snow showers slight and heavy
+                // 95 *	Thunderstorm: Slight or moderate
+                // 96, 99 *	Thunderstorm with slight and heavy hail
+                switch (data.current.weather_code) {
+                  case 0:
+                    conditions.textContent = 'Clear sky';
+                    me.style.background = 'linear-gradient(90deg, #87CEEB, #FFD700)';
+                    break;
+                  case 1:
+                    conditions.textContent = 'Mainly clear';
+                    me.style.background = 'linear-gradient(90deg, #B0E2FF, #FFFACD)';
+                    break;
+                  case 2:
+                    conditions.textContent = 'Partly cloudy';
+                    me.style.background = 'linear-gradient(90deg, #CCCCFF, #F0E68C)';
+                    break;
+                  case 3:
+                    conditions.textContent = 'Overcast';
+                    me.style.background = 'linear-gradient(90deg, #A9A9A9, #778899)';
+                    break;
+                  case 45:
+                    conditions.textContent = 'Fog';
+                    me.style.background = 'linear-gradient(90deg, #696969, #C0C0C0)';
+                    break;
+                  case 48:
+                    conditions.textContent = 'Depositing rime fog';
+                    me.style.background = 'linear-gradient(90deg, #A8A8A8, #D3D3D3)';
+                    break;
+                  case 51:
+                    conditions.textContent = 'Light drizzle';
+                    me.style.background = 'linear-gradient(90deg, #B0E0E6, #778899)';
+                    break;
+                  case 53:
+                    conditions.textContent = 'Moderate drizzle';
+                    me.style.background = 'linear-gradient(90deg, #ADD8E6, #708090)';
+                    break;
+                  case 55:
+                    conditions.textContent = 'Dense drizzle';
+                    me.style.background = 'linear-gradient(90deg, #87CEFA, #4682B4)';
+                    break;
+                  case 56:
+                    conditions.textContent = 'Light freezing drizzle';
+                    me.style.background = 'linear-gradient(90deg, #E0FFFF, #5F9EA0)';
+                    break;
+                  case 57:
+                    conditions.textContent = 'Dense freezing drizzle';
+                    me.style.background = 'linear-gradient(90deg, #AFEEEE, #5F9EA0)';
+                    break;
+                  case 61:
+                    conditions.textContent = 'Slight rain';
+                    me.style.background = 'linear-gradient(90deg, #4682B4, #B0C4DE)';
+                    break;
+                  case 63:
+                    conditions.textContent = 'Moderate rain';
+                    me.style.background = 'linear-gradient(90deg, #4169E1, #B0C4DE)';
+                    break;
+                  case 65:
+                    conditions.textContent = 'Heavy rain';
+                    me.style.background = 'linear-gradient(90deg, #0000FF, #1E90FF)';
+                    break;
+                  case 66:
+                    conditions.textContent = 'Light freezing rain';
+                    me.style.background = 'linear-gradient(90deg, #6495ED, #4682B4)';
+                    break;
+                  case 67:
+                    conditions.textContent = 'Heavy freezing rain';
+                    me.style.background = 'linear-gradient(90deg, #5F9EA0, #4682B4)';
+                    break;
+                  case 71:
+                    conditions.textContent = 'Slight snowfall';
+                    me.style.background = 'linear-gradient(90deg, #FFFAFA, #B0E0E6)';
+                    break;
+                  case 73:
+                    conditions.textContent = 'Moderate snowfall';
+                    me.style.background = 'linear-gradient(90deg, #E0FFFF, #AFEEEE)';
+                    break;
+                  case 75:
+                    conditions.textContent = 'Heavy snowfall';
+                    me.style.background = 'linear-gradient(90deg, #F0FFF0, #AFEEEE)';
+                    break;
+                  case 77:
+                    conditions.textContent = 'Snow grains';
+                    me.style.background = 'linear-gradient(90deg, #B0E0E6, #AFEEEE)';
+                    break;
+                  case 80:
+                    conditions.textContent = 'Slight rain showers';
+                    me.style.background = 'linear-gradient(90deg, #B0E0E6, #87CEFA)';
+                    break;
+                  case 81:
+                    conditions.textContent = 'Moderate rain showers';
+                    me.style.background = 'linear-gradient(90deg, #87CEFA, #4682B4)';
+                    break;
+                  case 82:
+                    conditions.textContent = 'Violent rain showers';
+                    me.style.background = 'linear-gradient(90deg, #4682B4, #0000FF)';
+                    break;
+                  case 85:
+                    conditions.textContent = 'Slight snow showers';
+                    me.style.background = 'linear-gradient(90deg, #F0FFFF, #B0E0E6)';
+                    break;
+                  case 86:
+                    conditions.textContent = 'Heavy snow showers';
+                    me.style.background = 'linear-gradient(90deg, #E0FFFF, #AFEEEE)';
+                    break;
+                  case 95:
+                    conditions.textContent = 'Thunderstorm: Slight or moderate';
+                    me.style.background = 'linear-gradient(90deg, #FFD700, #FFA500)';
+                    break;
+                  case 96:
+                    conditions.textContent = 'Thunderstorm with slight hail';
+                    me.style.background = 'linear-gradient(90deg, #FFA500, #FF4500)';
+                    break;
+                  case 99:
+                    conditions.textContent = 'Thunderstorm with heavy hail';
+                    me.style.background = 'linear-gradient(90deg, #FF4500, #B22222)';
+                    break;
+                  default:
+                    conditions.textContent = 'Unknown weather code';
+                    me.style.background = 'linear-gradient(90deg, #696969, #8B8B8B)';
+                    break;
+                }
+
+                const daily = data.daily.time.map((time, i) => ({
+                  time,
+                  max: data.daily.temperature_2m_max[i],
+                  min: data.daily.temperature_2m_min[i]
+                }));
+
+                const plot = Plot.plot({
+                  marks: [
+                    // Bar for temperature ranges
+                    Plot.barX(daily, {
+                      y: "time",
+                      x1: "min",
+                      x2: "max"
+                    }),
+                    // Dot for current temperature
+                    Plot.dot([data.current], {
+                      x: "temperature_2m",
+                      y: (d) => daily[0].time,
+                      fill: "white",
+                      title: (d) => `Current Temp: ${d.temperature_2m}°C`
+                    }),
+                    Plot.text(daily, {
+                      x: "max",
+                      y: "time",
+                      text: d => `${d.max.toFixed(0)}`,
+                      dx: -6, // Position adjustment on x-axis
+                      fill: "white"
+                    }),
+                    // Text for min temperatures
+                    Plot.text(daily, {
+                      x: "min",
+                      y: "time",
+                      text: d => `${d.min.toFixed(0)}`,
+                      dx: 6, // Position adjustment on x-axis
+                      fill: "white"
+                    })
+                  ],
+                  y: {
+                    label: null,
+                    tickSize: 0,
+                    tickFormat: (d) => Plot.formatWeekday("en-AU", "narrow")(new Date(d).getDay()),
+                    type: "band",
+                  },
+                  x: {
+                    // label: "",
+                    // include celius in tick mark
+                    tickFormat: (d) => `${d}°C`,
+                    grid: true
+                  },
+                  width: 200,
+                  height: 130
+                });
+
+                // Render the plot
+                document.getElementById('weather').appendChild(plot);
+              });
+          </script>
         </article>
       </div>
     </section>
@@ -488,6 +720,8 @@
             <p class="title">chocolate matter</h3>
           </a>
         </article>
+        <article id="clouds" class="art">
+        </article>
       </div>
     </section>
     <section>
@@ -684,33 +918,33 @@
         <rect x="10" y="10" width="80" height="30" fill="none" stroke="black" />
         <rect id="batteryFill" x="10" y="10" width="0" height="30" fill="black" />
       </svg>
-    </article>
 
-    <script>
-      navigator.getBattery().then((battery) => {
-        function updateBatteryInfo() {
-          const batteryFill = document.getElementById('batteryFill');
-          const levelPercent = battery.level * 100;
+      <script>
+        navigator.getBattery().then((battery) => {
+          function updateBatteryInfo() {
+            const batteryFill = document.getElementById('batteryFill');
+            const levelPercent = battery.level * 100;
 
-          batteryFill.setAttribute('width', 80 * battery.level);
+            batteryFill.setAttribute('width', 80 * battery.level);
 
-          if (battery.charging) {
-            batteryFill.setAttribute('fill', 'green');
-          } else if (battery.level < 0.20) {
-            batteryFill.setAttribute('fill', 'red');
-          } else {
-            batteryFill.setAttribute('fill', 'black');
+            if (battery.charging) {
+              batteryFill.setAttribute('fill', 'green');
+            } else if (battery.level < 0.20) {
+              batteryFill.setAttribute('fill', 'red');
+            } else {
+              batteryFill.setAttribute('fill', 'black');
+            }
           }
-        }
 
-        battery.addEventListener('chargingchange', updateBatteryInfo);
-        battery.addEventListener('levelchange', updateBatteryInfo);
-        battery.addEventListener('chargingtimechange', updateBatteryInfo);
-        battery.addEventListener('dischargingtimechange', updateBatteryInfo);
+          battery.addEventListener('chargingchange', updateBatteryInfo);
+          battery.addEventListener('levelchange', updateBatteryInfo);
+          battery.addEventListener('chargingtimechange', updateBatteryInfo);
+          battery.addEventListener('dischargingtimechange', updateBatteryInfo);
 
-        updateBatteryInfo();
-      });
-    </script>
+          updateBatteryInfo();
+        });
+      </script>
+    </article>
     <article>
       <output id="userAgent"></output>
       <output id="language"></output>
