@@ -78,6 +78,10 @@
   font-size: 50px;
 }
 
+#weather {
+  padding: 0.3rem;
+}
+
 img.icon {
   display: none;
 }
@@ -86,6 +90,10 @@ img.favicon {
   width: 1rem;
   height: 1rem;
   display: inline-block;
+}
+
+dl {
+  padding-left: 0.6rem;
 }
 
 dt {
