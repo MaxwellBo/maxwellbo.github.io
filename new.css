@@ -186,13 +186,17 @@ header {
 
 footer {
   overflow-y: scroll;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   flex-direction: row;
   width: 100%;
   white-space: nowrap;
   gap: 1rem;
   border: 1px solid black;
+
+  * {
+    display: inline-flex;
+  }
 }
 
 script {

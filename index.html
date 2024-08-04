@@ -141,7 +141,6 @@
 
           <script type="module">
             import * as Plot from 'https://esm.run/@observablehq/plot'
-            window.Plot = Plot
 
             const me = document.getElementById('weather');
             const time = document.getElementById('time');
@@ -873,98 +872,116 @@
     </section>
   </main>
   <footer>
-    <p>© 2024, <a href="old.html">old site</a></p>
-    <article>
-      <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
-        <rect id="screen" x="0" y="0" width="100" height="100" fill="white" stroke="black" />
-        <circle id="cursor" cx="50" cy="50" r="2" fill="black" />
-      </svg>
-      <code>
-        <output id="x"></output>
-        <output id="y"></output>
-      </code>
+    © 2024 <a href="old.html">old site</a>
+    <div id="battery" style="min-width: 50px;"></div>
+    <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
+      <rect id="screen" x="0" y="0" width="100" height="100" fill="white" stroke="black" />
+      <circle id="cursor" cx="50" cy="50" r="2" fill="black" />
+    </svg>
+    <!-- <span id="userAgent"></span> -->
+    <span id="language"></span>
+    <!-- <div>
+      <p><span id="mousex"></span></p>
+      <p><span id="mousey"></span></p>
+    </div> -->
+    <!-- <svg id="batteryWidget" viewBox="0 0 100 50" style="max-height: 50px;">
+      <rect x="10" y="10" width="80" height="30" fill="none" stroke="black" />
+      <rect id="batteryFill" x="10" y="10" width="0" height="30" fill="black" />
+    </svg> -->
 
-      <script>
-        function updateWidget() {
-          const svg = document.getElementById('mouseWidget');
-          const rect = document.getElementById('screen');
-          const aspectRatio = window.innerWidth / window.innerHeight;
-          svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
-          rect.setAttribute('width', 100 * aspectRatio);
-          rect.setAttribute('height', 100);
-        }
+    <script>
+      function updateWidget() {
+        const svg = document.getElementById('mouseWidget');
+        const rect = document.getElementById('screen');
+        const aspectRatio = window.innerWidth / window.innerHeight;
+        svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
+        rect.setAttribute('width', 100 * aspectRatio);
+        rect.setAttribute('height', 100);
+      }
 
-        function updateDotPosition(event) {
-          const dot = document.getElementById('cursor');
-          const x = (event.clientX / window.innerWidth) * 100;
-          const y = (event.clientY / window.innerHeight) * 100;
-          dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
-          dot.setAttribute('cy', y);
+      function updateDotPosition(event) {
+        const dot = document.getElementById('cursor');
+        const x = (event.clientX / window.innerWidth) * 100;
+        const y = (event.clientY / window.innerHeight) * 100;
+        dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
+        dot.setAttribute('cy', y);
+      }
 
-          // document.getElementById('x').textContent = "x: " + event.clientX;
-          // document.getElementById('y').textContent = "y:" + event.clientY;
-        }
+      function updateMousePosition(event) {
+        document.getElementById('mousex').textContent = "x: " + event.clientX;
+        document.getElementById('mousey').textContent = "y:" + event.clientY;
+      }
 
-        window.addEventListener('resize', updateWidget);
-        document.addEventListener('mousemove', updateDotPosition);
+      window.addEventListener('resize', updateWidget);
+      document.addEventListener('mousemove', updateDotPosition);
+      // document.addEventListener('mousemove', updateMousePosition);
 
-        updateWidget();
-      </script>
+      updateWidget();
+    </script>
 
-    </article>
 
-    <article>
-      <svg id="batteryWidget" viewBox="0 0 100 50" style="max-height: 50px;">
-        <rect x="10" y="10" width="80" height="30" fill="none" stroke="black" />
-        <rect id="batteryFill" x="10" y="10" width="0" height="30" fill="black" />
-      </svg>
+    <script type="module">
+      import * as Plot from 'https://esm.run/@observablehq/plot'
 
-      <script>
-        navigator.getBattery().then((battery) => {
-          function updateBatteryInfo() {
-            const batteryFill = document.getElementById('batteryFill');
-            const levelPercent = battery.level * 100;
+      navigator.getBattery().then((battery) => {
+        function updateBatteryInfo() {
+          const level = battery.level;
+          const charging = battery.charging;
 
-            batteryFill.setAttribute('width', 80 * battery.level);
+          const plot = Plot.plot({
+            marks: [
+              Plot.frame(),
+              Plot.barX([{ level }], {
+                fill: (d) => (d.level < 0.2 ? "red" : charging ? "green" : "black"),
+                x: "level"
+              }),
+              Plot.text([{ text: charging ? "→" : "←", level }], {
+                text: "text",
+                x: "level",
+                dx: -6,
+                fontSize: 10,
+                fill: "white"
+              })
+            ],
+            width: 75,
+            height: 25,
 
-            if (battery.charging) {
-              batteryFill.setAttribute('fill', 'green');
-            } else if (battery.level < 0.20) {
-              batteryFill.setAttribute('fill', 'red');
-            } else {
-              batteryFill.setAttribute('fill', 'black');
+            x: {
+              axis: null,
+              domain: [0, 1]
+            },
+            y: {
+              axis: null
             }
-          }
+          })
 
-          battery.addEventListener('chargingchange', updateBatteryInfo);
-          battery.addEventListener('levelchange', updateBatteryInfo);
-          battery.addEventListener('chargingtimechange', updateBatteryInfo);
-          battery.addEventListener('dischargingtimechange', updateBatteryInfo);
+          document.getElementById('battery').replaceChildren(plot);
+        }
 
-          updateBatteryInfo();
-        });
-      </script>
-    </article>
-    <article>
-      <output id="userAgent"></output>
-      <output id="language"></output>
+        battery.addEventListener('chargingchange', updateBatteryInfo);
+        battery.addEventListener('levelchange', updateBatteryInfo);
+        battery.addEventListener('chargingtimechange', updateBatteryInfo);
+        battery.addEventListener('dischargingtimechange', updateBatteryInfo);
 
-      <script>
-        document.getElementById('userAgent').textContent = navigator.userAgent;
-        document.getElementById('language').textContent = navigator.language;
+        updateBatteryInfo();
+      });
+    </script>
 
-        // document.getElementById('onLine').textContent = navigator.onLine ? 'Online' : 'Offline';
-        // document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency;
-        // document.getElementById('deviceMemory').textContent = navigator.deviceMemory;
-        // navigator.storage.estimate().then(function (estimate) {
-        //   document.getElementById('storageEstimate').textContent = estimate.usage + ' / ' + estimate.quota;
-        // });
-        // document.getElementById('maxTouchPoints').textContent = navigator.maxTouchPoints;
-        // document.getElementById('cookieEnabled').textContent = navigator.cookieEnabled;
-        // document.getElementById('doNotTrack').textContent = navigator.doNotTrack;
-        // document.getElementById('webDriver').textContent = navigator.webdriver;
-      </script>
-    </article>
+    <script>
+      document.getElementById('userAgent').textContent = navigator.userAgent;
+      document.getElementById('language').textContent = navigator.language;
+
+      // document.getElementById('onLine').textContent = navigator.onLine ? 'Online' : 'Offline';
+      // document.getElementById('hardwareConcurrency').textContent = navigator.hardwareConcurrency;
+      // document.getElementById('deviceMemory').textContent = navigator.deviceMemory;
+      // navigator.storage.estimate().then(function (estimate) {
+      //   document.getElementById('storageEstimate').textContent = estimate.usage + ' / ' + estimate.quota;
+      // });
+      // document.getElementById('maxTouchPoints').textContent = navigator.maxTouchPoints;
+      // document.getElementById('cookieEnabled').textContent = navigator.cookieEnabled;
+      // document.getElementById('doNotTrack').textContent = navigator.doNotTrack;
+      // document.getElementById('webDriver').textContent = navigator.webdriver;
+    </script>
   </footer>
 </body>
 
