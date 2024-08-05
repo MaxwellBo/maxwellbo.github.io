@@ -197,7 +197,7 @@ header {
 }
 
 footer {
-  overflow-y: scroll;
+  overflow-y: auto;
   display: inline-flex;
   align-items: center;
   flex-direction: row;
@@ -318,7 +318,7 @@ article.listing {
 
   nav {
     grid-area: nav;
-    overflow-y: scroll;
+    overflow-y: auto;
 
     ul {
       columns: 1;
@@ -331,7 +331,7 @@ article.listing {
 
   main {
     grid-area: main;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 
   footer {
