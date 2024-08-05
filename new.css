@@ -116,7 +116,7 @@ a {
 }
 
 a:active {
-  color: color(display-p3 1 1 0);
+  color: orange;
 }
 
 a:visited {
@@ -135,7 +135,7 @@ a:hover:visited {
 
 a:hover:active:visited {
   background-color: color(display-p3 1 1 0);
-  color: white;
+  color: black;
 }
 
 body {
