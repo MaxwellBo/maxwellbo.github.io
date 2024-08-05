@@ -34,7 +34,7 @@
 }
 
 html {
-  cursor: url('kirby.png'), auto;
+  cursor: url('kirby.png') 11 13, auto;
 }
 
 #watermark {
