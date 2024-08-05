@@ -210,9 +210,15 @@ footer {
     display: inline-flex;
   }
 }
-
+  
 script {
   display: none;
+}
+
+@keyframes blink {
+  67% {
+    opacity: 0;
+  }
 }
 
 @keyframes grow {
@@ -269,11 +275,13 @@ article.listing {
     pointer-events: none; /* Make sure it doesn't interfere with other elements */
     z-index: -1; /* Push it to the back */
   }
-  
+
   #hover-a {
     font-size: 5rem;
+    color: color(display-p3 1 0 1);
     display: initial;
     width: 100vw;
+    /* animation: blink 1s step-end infinite; */
     word-wrap: break-all;
     position: absolute;
     bottom: 0;
