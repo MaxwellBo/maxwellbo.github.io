@@ -4,8 +4,8 @@
 <head>
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135030873-1"></script>
-  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
-  <link href="https://tools.aftertheflood.com/sparks/styles/font-faces.css" rel="stylesheet" />
+  <script async type="module"
+    src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
@@ -41,7 +41,7 @@
 <body>
   <p id="watermark">Max Bo</p>
   <header>
-    <h1 class="wordmark">
+    <h1 id="wordmark">
       <marquee>
         ← Max Bo
       </marquee>
@@ -1023,6 +1023,44 @@
       // document.getElementById('webDriver').textContent = navigator.webdriver;
     </script>
   </footer>
+  <script>
+    document.querySelectorAll('a').forEach(a => {
+      a.addEventListener('mouseover', (e) => {
+        if (!e.target.href) {
+          return;
+        }
+
+        const a = document.createElement('a');
+        a.href = e.target.href
+        a.textContent = e.target.href;
+        a.id = 'hover-a';
+        document.body.appendChild(a);
+      });
+
+      a.addEventListener('mouseout', () => {
+        const a = document.getElementById('hover-a');
+        if (a) {
+          a.remove();
+        }
+      });
+    })
+
+    document.querySelectorAll('img').forEach(img => {
+      img.addEventListener('mouseover', (e) => {
+        const img = document.createElement('img');
+        img.src = e.target.src;
+        img.id = 'hover-img';
+        document.body.appendChild(img);
+      });
+
+      img.addEventListener('mouseout', () => {
+        const img = document.getElementById('hover-img');
+        if (img) {
+          img.remove();
+        }
+      });
+    });
+  </script>
 </body>
 
 </html>

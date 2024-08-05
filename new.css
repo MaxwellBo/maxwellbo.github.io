@@ -143,6 +143,14 @@ body {
   font-family: 'DINdong', sans-serif;
 }
 
+#hover-img {
+  display: none;
+}
+
+#hover-a {
+  display: none;
+}
+
 nav {
   ul {
     columns: 2;
@@ -182,7 +190,7 @@ header {
   font-family: 'Ductus Geometric', sans-serif;
   text-transform: uppercase;
 
-  .wordmark {
+  #wordmark {
     font-family: 'DINdong';
     font-size: 3rem;
   }
@@ -235,10 +243,6 @@ article.listing {
     object-fit: cover;
   }
 
-  img:hover {
-    border: 1px solid black;
-    animation: grow 60s ease-in-out infinite;
-  }
 
   p.title {
     padding-left: 0.5rem;
@@ -264,6 +268,29 @@ article.listing {
     white-space: nowrap;
     pointer-events: none; /* Make sure it doesn't interfere with other elements */
     z-index: -1; /* Push it to the back */
+  }
+  
+  #hover-a {
+    font-size: 5rem;
+    display: initial;
+    width: 100vw;
+    word-wrap: break-all;
+    position: absolute;
+    bottom: 0;
+    transform-origin: bottom left;
+    pointer-events: none;
+  }
+
+  #hover-img {
+    display: initial;
+    position: absolute;
+    width: 400px;
+    border: 1px solid black;
+    bottom: 0;
+    right: 0;
+    transform-origin: bottom right;
+    z-index: 1000;
+    pointer-events: none;
   }
 
 
