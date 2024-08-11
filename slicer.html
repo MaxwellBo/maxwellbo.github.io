@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Frame Slicer</title>
+</head>
+<body>
+    <video id="myVideo" width="640" height="360" controls>
+        <source src="flower.webm" type="video/webm">
+        Your browser does not support the video tag.
+    </video>
+    <canvas id="myCanvas" width="360" height="360"></canvas>
+    <script>
+
+        const SLICE_WIDTH = 1;
+
+        let t = 0;
+        const video = document.getElementById('myVideo');
+        const canvas = document.getElementById('myCanvas');
+        const ctx = canvas.getContext('2d');
+        // Wait for the video metadata to load
+        video.addEventListener('loadedmetadata', () => {
+            video.addEventListener('timeupdate', () => {
+                t++;
+
+                console.log(t)
+                // Draw the current frame onto the canvas
+                const sx = 0
+                const sy = 0
+                const sw = SLICE_WIDTH;
+                const sh = video.videoHeight;
+
+                const dx = t * SLICE_WIDTH;
+                const dy = 0;
+                const dw = SLICE_WIDTH;
+                const dh = video.videoHeight;
+
+                ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
+            });
+            // Start playing the video
+            video.play();
+        });
+    </script>
+</body>
+</html>
