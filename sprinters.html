@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Olympic Sprinters Race</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+
+        .track {
+            width: 90%;
+            height: 400px;
+            position: relative;
+            border: 2px solid #000;
+            background-color: #fff;
+            overflow: hidden;
+        }
+
+        .finish-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            width: 5px;
+            height: 100%;
+            background-color: red;
+            transform: translateX(-50%);
+        }
+
+        .sprinter {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            top: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px; /* Adjust as needed */
+        }
+
+        .sprinter:nth-child(2) {
+            background-color: blue;
+            top: 60px;
+            animation: run1 5s linear infinite;
+        }
+
+        .sprinter:nth-child(3) {
+            background-color: green;
+            top: 120px;
+            animation: run2 4s linear infinite;
+        }
+
+        .sprinter:nth-child(4) {
+            background-color: orange;
+            top: 180px;
+            animation: run3 6s linear infinite;
+        }
+
+        .sprinter:nth-child(5) {
+            background-color: purple;
+            top: 240px;
+            animation: run4 7s linear infinite;
+        }
+
+        @keyframes run1 {
+            from { left: 0; }
+            to { left: calc(100% - 40px); }
+        }
+
+        @keyframes run2 {
+            from { left: 0; }
+            to { left: calc(100% - 40px); }
+        }
+
+        @keyframes run3 {
+            from { left: 0; }
+            to { left: calc(100% - 40px); }
+        }
+
+        @keyframes run4 {
+            from { left: 0; }
+            to { left: calc(100% - 40px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="track">
+        <div class="finish-line"></div>
+        <div class="sprinter">🏃‍➡️</div>
+        <div class="sprinter">🏃‍➡️</div>
+        <div class="sprinter">🏃‍➡️</div>
+        <div class="sprinter">🏃‍➡️</div>
+    </div>
+</body>
+</html>

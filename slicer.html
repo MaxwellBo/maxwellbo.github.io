@@ -10,15 +10,15 @@
 <body>
   https://www.hodinkee.com/articles/olympics-2024-mens-100m-photo-finish 
   <br />
-  <video id="myVideo" width="640" controls>
+  <video id="myVideo" width="1080" controls>
     <!-- <source src="flower.webm" type="video/webm"> -->
-    <source src="test.mp4" type="video/mp4">
+    <source src="sprinters.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   <br />
-  <input type="range" id="slicePosition" min="0" max="640" value="0" step="1" width="640">
+  <input type="range" id="slicePosition" min="0" max="1080" value="0" step="1" width="1080">
   <br />
-  <canvas style="border: 1px auto black;" id="myCanvas" width="640" height="800"></canvas>
+  <canvas style="border: 1px auto black;" id="myCanvas" width="1080" height="800"></canvas>
   <script>
 
     const SLICE_WIDTH = 1;
@@ -41,11 +41,11 @@
 
     function onFrame() {
       t++;
-      // Check if the video is still playing
+
       if (!video.paused && !video.ended) {
         drawFrame();
+        drawFrameTick();
 
-        // Request the next frame
         requestAnimationFrame(onFrame);
       }
     }
@@ -61,9 +61,20 @@
       const dx = t * SLICE_WIDTH;
       const dy = 0;
       const dw = SLICE_WIDTH;
-      const dh = 640 * (1 / aspectRatio); 
+      const dh = 1080 * (1 / aspectRatio); 
 
       ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
+    }
+
+    function drawFrameTick() {
+      if (t % 60 !== 0) {
+        return;
+      }
+
+
+      // Draw a tick mark at the current slice position
+      ctx.font = '20px Arial';
+      ctx.fillText(t, t * SLICE_WIDTH - 40, 20, 1080);
     }
   </script>
 </body>

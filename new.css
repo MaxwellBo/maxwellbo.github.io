@@ -33,6 +33,12 @@
     url('fonts/crozet/ttf/Crozet-Regular.ttf') format('truetype');
 }
 
+@font-face {
+  font-family: "Fake Receipt";
+  src:
+    url('fonts/FakeReceipt.otf') format('opentype');
+}
+
 html {
   cursor: url('kirby.png') 11 13, auto;
 }
@@ -197,6 +203,7 @@ header {
 }
 
 footer {
+  font-family: 'Fake Receipt', sans-serif;
   overflow-y: auto;
   display: inline-flex;
   align-items: center;
