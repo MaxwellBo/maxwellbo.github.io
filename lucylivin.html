@@ -68,23 +68,21 @@
     ];
 
     function createFavoriteElement(favorite) {
-      return htl.html`
-        <article class="favorite">
-          <small>${favorite.Category} - ${favorite["Sub-Category"]}</small>
-          <p>
-            <a href=${favorite["Referral Links"]}>
-              ${favorite.Name} - <i>${favorite.Brand}</i>
-            </a>
-          </p>
-          <p>${favorite.Comments}</p>
-          <small>${favorite.Price} ∙ ${favorite.Rating}</small>
-        </article>
+      return htl.html.fragment`<article class="favorite">
+        <small>${favorite.Category} - ${favorite["Sub-Category"]}</small>
+        <p>
+          <a href=${favorite["Referral Links"]}>
+            ${favorite.Name} - <i>${favorite.Brand}</i>
+          </a>
+        </p>
+        <p>${favorite.Comments}</p>
+        <small>${favorite.Price} ∙ ${favorite.Rating}</small>
+      </article>
       `;
     }
 
     function createGroupElement({ name, favorites }) {
-      return htl.html`
-        <section>
+      return htl.html.fragment`<section>
           <h2 id=${name}><a href="#${name}">#</a> ${name}</h2>
           <div class="grid">
             ${favorites.map(createFavoriteElement)}
