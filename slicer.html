@@ -10,14 +10,15 @@
 <body>
   https://www.hodinkee.com/articles/olympics-2024-mens-100m-photo-finish 
   <br />
-  <video id="myVideo" width="640" height="360" controls>
-    <source src="flower.webm" type="video/webm">
+  <video id="myVideo" width="640" controls>
+    <!-- <source src="flower.webm" type="video/webm"> -->
+    <source src="test.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   <br />
   <input type="range" id="slicePosition" min="0" max="640" value="0" step="1" width="640">
   <br />
-  <canvas id="myCanvas" width="800" height="360"></canvas>
+  <canvas style="border: 1px auto black;" id="myCanvas" width="640" height="800"></canvas>
   <script>
 
     const SLICE_WIDTH = 1;
@@ -51,7 +52,7 @@
 
     function drawFrame() {
       // Draw the current frame onto the canvas
-      const sx = parseInt(slicePosition.value);
+      const sx = parseInt(slicePosition.value) * (video.videoWidth / video.width);
       const sy = 0
       const sw = SLICE_WIDTH;
       const sh = video.videoHeight;
@@ -59,7 +60,7 @@
       const dx = t * SLICE_WIDTH;
       const dy = 0;
       const dw = SLICE_WIDTH;
-      const dh = video.videoHeight;
+      const dh = canvas.height; 
 
       ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
     }
