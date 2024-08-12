@@ -178,7 +178,9 @@ nav {
   }
 }
 
-h1, h2, h3 {
+h1,
+h2,
+h3 {
   font-family: 'Ductus Geometric', sans-serif;
 }
 
@@ -217,9 +219,37 @@ footer {
     display: inline-flex;
   }
 }
-  
+
 script {
   display: none;
+}
+
+.ticker-outer {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 73px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+
+.ticker-inner {
+  animation: ticker 3s ease-in-out infinite;
+
+  * {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+
+@keyframes ticker {
+  0%,
+  10% {
+    transform: translateX(0);
+  }
+
+  90%, 100% {
+    transform: translateX(-73px);
+  }
 }
 
 @keyframes blink {
@@ -279,8 +309,10 @@ article.listing {
     font-size: 20vw;
     color: rgba(0, 0, 0, 0.15);
     white-space: nowrap;
-    pointer-events: none; /* Make sure it doesn't interfere with other elements */
-    z-index: -1; /* Push it to the back */
+    pointer-events: none;
+    /* Make sure it doesn't interfere with other elements */
+    z-index: -1;
+    /* Push it to the back */
   }
 
   #hover-a {
