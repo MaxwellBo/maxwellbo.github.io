@@ -52,6 +52,7 @@
 
     function drawFrame() {
       // Draw the current frame onto the canvas
+      const aspectRatio = video.videoWidth / video.videoHeight;
       const sx = parseInt(slicePosition.value) * (video.videoWidth / video.width);
       const sy = 0
       const sw = SLICE_WIDTH;
@@ -60,7 +61,7 @@
       const dx = t * SLICE_WIDTH;
       const dy = 0;
       const dw = SLICE_WIDTH;
-      const dh = canvas.height; 
+      const dh = 640 * (1 / aspectRatio); 
 
       ctx.drawImage(video, sx, sy, sw, sh, dx, dy, dw, dh);
     }
