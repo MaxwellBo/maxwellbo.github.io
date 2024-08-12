@@ -50,6 +50,7 @@
   </style>
   <script type="module">
     import * as d3 from 'https://esm.sh/d3';
+    import * as htl from 'https://esm.run/htl';
 
     const csvUrl = "https://docs.google.com/spreadsheets/d/e/2PACX-1vRzPtzQ6vNbxRJ9DDwWec1o36ClysOuaMk2zsKiiQphZ1L5tUVKvpe_fbsU8dyvmewAoIbdolD3y5wt/pub?gid=1157602938&single=true&output=csv";
     const CATEGORY_ORDER = [
@@ -66,44 +67,31 @@
       "Lip Balm",
     ];
 
-    class FavoriteElement extends HTMLElement {
-      set favorite(favorite) {
-        this.innerHTML = `
-            <article class="favorite">
-              <small>${favorite.Category} - ${favorite["Sub-Category"]}</small>
-              <p>
-                <a href="${favorite["Referral Links"]}">
-                  ${favorite.Name} - <i>${favorite.Brand}</i>
-                </a>
-              </p>
-              <p>${favorite.Comments}</p>
-              <small>${favorite.Price} ∙ ${favorite.Rating}</small>
-            </article>
-          `;
-      }
+    function createFavoriteElement(favorite) {
+      return htl.html`
+        <article class="favorite">
+          <small>${favorite.Category} - ${favorite["Sub-Category"]}</small>
+          <p>
+            <a href=${favorite["Referral Links"]}>
+              ${favorite.Name} - <i>${favorite.Brand}</i>
+            </a>
+          </p>
+          <p>${favorite.Comments}</p>
+          <small>${favorite.Price} ∙ ${favorite.Rating}</small>
+        </article>
+      `;
     }
 
-    class GroupElement extends HTMLElement {
-      set group({ name, favorites }) {
-        this.innerHTML = `
-            <section>
-              <h2 id="${name}"><a href="#${name}">#</a> ${name}</h2>
-              <div class="grid">
-              </div>
-            </section>
-          `;
-
-        this.query = this.querySelector('.grid');
-        favorites.forEach(favorite => {
-          const favoriteEl = document.createElement('favorite-element');
-          favoriteEl.favorite = favorite;
-          this.query.appendChild(favoriteEl);
-        });
-      }
+    function createGroupElement({ name, favorites }) {
+      return htl.html`
+        <section>
+          <h2 id=${name}><a href="#${name}">#</a> ${name}</h2>
+          <div class="grid">
+            ${favorites.map(createFavoriteElement)}
+          </div>
+        </section>
+      `;
     }
-
-    customElements.define('favorite-element', FavoriteElement);
-    customElements.define('group-element', GroupElement);
 
     async function fetchFavorites() {
       const loadingDiv = document.getElementById('loading');
@@ -117,14 +105,10 @@
         let groups = Object.fromEntries(Object.entries(Object.groupBy(favorites, f => f.Category)).sort(([a], [b]) => CATEGORY_ORDER.indexOf(a) - CATEGORY_ORDER.indexOf(b)));
 
         const nav = document.querySelector('nav ul');
-        nav.innerHTML = Object.keys(groups).map(name => `<li><a href="#${name}">${name}</a></li>`).join('');
+        nav.append(...Object.keys(groups).map(name => htl.html`<li><a href="#${name}">${name}</a></li>`));
 
         const main = document.querySelector('main');
-        Object.entries(groups).forEach(([name, favorites]) => {
-          const groupEl = document.createElement('group-element');
-          groupEl.group = { name, favorites };
-          main.appendChild(groupEl);
-        });
+        main.append(...Object.entries(groups).map(([name, favorites]) => createGroupElement({ name, favorites })));
       } catch (error) {
         console.error('Error fetching favorites:', error);
       } finally {
