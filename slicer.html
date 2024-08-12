@@ -8,13 +8,14 @@
 </head>
 
 <body>
-
   https://www.hodinkee.com/articles/olympics-2024-mens-100m-photo-finish 
+  <br />
   <video id="myVideo" width="640" height="360" controls>
     <source src="flower.webm" type="video/webm">
     Your browser does not support the video tag.
   </video>
-  <input type="range" id="slicePosition" min="0" max="640" value="0" step="1">
+  <br />
+  <input type="range" id="slicePosition" min="0" max="640" value="0" step="1" width="640">
   <br />
   <canvas id="myCanvas" width="800" height="360"></canvas>
   <script>
@@ -26,6 +27,11 @@
     const canvas = document.getElementById('myCanvas');
     const slicePosition = document.getElementById('slicePosition');
     const ctx = canvas.getContext('2d');
+
+    // set range width to video width
+    slicePosition.max = video.width;
+    // ...and its style as well
+    slicePosition.style.width = video.width + 'px';
 
     video.addEventListener('play', () => {
       t = 0;
