@@ -189,6 +189,8 @@ h2 {
 }
 
 main {
+  background: transparent url(img/grid.svg) repeat 0 0;
+  background-repeat: repeat;
   font-family: 'DINdong', sans-serif;
   border-left: 1px solid black;
 }
@@ -379,7 +381,6 @@ article.listing {
     bottom: 0;
   }
 }
-
 
 /*
   Josh's Custom CSS Reset
