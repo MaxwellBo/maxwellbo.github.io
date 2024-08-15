@@ -188,9 +188,12 @@ h2 {
   font-size: 2rem
 }
 
-main {
+body {
   background: transparent url(img/grid.svg) repeat 0 0;
   background-repeat: repeat;
+}
+
+main {
   font-family: 'DINdong', sans-serif;
   border-left: 1px solid black;
 }
