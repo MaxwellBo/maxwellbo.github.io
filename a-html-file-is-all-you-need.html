@@ -91,34 +91,49 @@ I'll try and demonstrate these capabilities, literate programming style.
 
 
 First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiwyg/html.html">This page is a truly naked, brutalist html quine</a>, and create a CSS class called <code>echo</code> that will display/reflect <code>style</code> and <code>script</code> elements inline.
-<i>This <code>style</code> block has effectively styled itself.</i>
+<br />
+<br />
+Add in a <a href="https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/">font with built-in syntax highlighting</a> and <code>contenteditable</code> attribute and we have a basic code editor!
+<br />
+<br />
+I stress that <b>this <code>style</code> element is styling itself.</b> 
 
 <style class="echo" contenteditable="true">
+@font-face {
+  font-family: 'Monaspace';
+  src: 
+    url('fonts/MonaspaceKrypton-SyntaxHighlighter-Regular.woff2') 
+    format('woff2')
+  ;
+}
+
 .echo {
   display: block;
   white-space: pre;
-  font-family: monospace;
-  background-color: #EEE; /* change me! */
+  background-color: rgb(49, 49, 49); /* change me! */
   border: 3px inset;
   margin-bottom: 1rem;
   margin-top: 0.2rem;
   padding: 0.5rem 1rem 1rem 1rem;
   overflow: auto;
+  /* syntax highlighting */
+  color: ivory;
+  font-family: "Monaspace", monospace;
+  font-feature-settings: "colr", "calt";
 }
+
 script.echo::before {
   content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\">";
 }
 script.echo::after { 
   content: "<\/script>"; 
 }
+
 style.echo::before { 
   content: "<style class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
 }
 style.echo::after { 
   content: "<\/style>"; 
-}
-*.echo::before, *.echo::after {
-  color: darkgreen; 
 }
 </style>
 
