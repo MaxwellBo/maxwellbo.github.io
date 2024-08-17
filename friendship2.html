@@ -193,22 +193,27 @@
       fetchBracelet(braceletId);
     }
 
-    let leftText = '';
-    let rightText = '';
-
     function addToBracelet(side, emoji) {
       if (side === 'left') {
-        leftText += emoji;
-        document.getElementById('leftTextPath').textContent = leftText;
+        document.getElementById('leftTextPath').textContent += emoji;
       } else if (side === 'right') {
-        rightText += emoji;
-        document.getElementById('rightTextPath').textContent = rightText;
+        document.getElementById('rightTextPath').textContent += emoji;
       }
     }
 
-    window.addToBracelet = addToBracelet;
+    function popLeft() {
+      const leftTextPath = document.getElementById('leftTextPath').textContent;
+      document.getElementById('leftTextPath').textContent = leftTextPath.slice(0, -1);
+    }
+
+    function popRight() {
+      const rightTextPath = document.getElementById('rightTextPath').textContent;
+      document.getElementById('rightTextPath').textContent = rightTextPath.slice(0, -1);
+    }
 
     async function tieBracelet() {
+      const leftText = document.getElementById('leftTextPath').textContent;
+      const rightText = document.getElementById('rightTextPath').textContent;
       const fullText = leftText + rightText;
 
       // explain that bracelet is being tied and to wait
@@ -240,10 +245,6 @@
       // redirect to the new bracelet
       window.location.href = `friendship2.html?id=${responseData.id}`;
     }
-
-    
-
-    window.tieBracelet = tieBracelet;
 
     async function fetchBracelet(id) {
       const response = await fetch(`https://mbo-appallinggreenjackal.web.val.run?id=${id}`, {
@@ -296,6 +297,11 @@
     }
 
     fetchBracelets();
+
+    window.popLeft = popLeft;
+    window.popRight = popRight;
+    window.addToBracelet = addToBracelet;
+    window.tieBracelet = tieBracelet;
   </script>
 </body>
 
