@@ -116,6 +116,7 @@
         <button onclick="addToBracelet('left', 'X')">X</button>
         <button onclick="addToBracelet('left', 'Y')">Y</button>
         <button onclick="addToBracelet('left', 'Z')">Z</button>
+        <button onclick="popLeft()">remove from left</button>
       </div>
       <div>
         <h2>right (≧◡≦)</h2>
@@ -160,6 +161,7 @@
         <button onclick="addToBracelet('right', 'X')">X</button>
         <button onclick="addToBracelet('right', 'Y')">Y</button>
         <button onclick="addToBracelet('right', 'Z')">Z</button>
+        <button onclick="popRight()">remove from right</button>
       </div>
     </div>
 
@@ -238,6 +240,8 @@
       // redirect to the new bracelet
       window.location.href = `friendship2.html?id=${responseData.id}`;
     }
+
+    
 
     window.tieBracelet = tieBracelet;
 
