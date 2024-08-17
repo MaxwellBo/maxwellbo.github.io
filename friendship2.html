@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>friendship 2 ٩(◕‿◕｡)۶</title>
+  <title>friendship2 ٩(◕‿◕｡)۶</title>
   <style>
     @font-face {
       font-family: 'heart font';
@@ -79,6 +79,19 @@
     <div id="buttons">
       <div>
         <h2>left (๑˃ᴗ˂)ﻭ</h2>
+        <!-- heart emojis -->
+        <button onclick="addToBracelet('left', '💛')">💛</button>
+        <button onclick="addToBracelet('left', '💚')">💚</button>
+        <button onclick="addToBracelet('left', '💙')">💙</button>
+        <button onclick="addToBracelet('left', '💜')">💜</button>
+        <button onclick="addToBracelet('left', '💖')">💖</button>
+        <button onclick="addToBracelet('left', '💕')">💕</button>
+        <button onclick="addToBracelet('left', '💞')">💞</button>
+        <button onclick="addToBracelet('left', '💓')">💓</button>
+        <button onclick="addToBracelet('left', '💗')">💗</button>
+        <button onclick="addToBracelet('left', '💘')">💘</button>
+        <button onclick="addToBracelet('left', '💝')">💝</button>
+        <button onclick="addToBracelet('left', '💟')">💟</button>
         <button onclick="addToBracelet('left', '🔵')">🔵</button>
         <button onclick="addToBracelet('left', '🔴')">🔴</button>
         <button onclick="addToBracelet('left', '⚫')">⚫</button>
@@ -124,6 +137,18 @@
       </div>
       <div>
         <h2>right (≧◡≦)</h2>
+        <button onclick="addToBracelet('right', '💛')">💛</button>
+        <button onclick="addToBracelet('right', '💚')">💚</button>
+        <button onclick="addToBracelet('right', '💙')">💙</button>
+        <button onclick="addToBracelet('right', '💜')">💜</button>
+        <button onclick="addToBracelet('right', '💖')">💖</button>
+        <button onclick="addToBracelet('right', '💕')">💕</button>
+        <button onclick="addToBracelet('right', '💞')">💞</button>
+        <button onclick="addToBracelet('right', '💓')">💓</button>
+        <button onclick="addToBracelet('right', '💗')">💗</button>
+        <button onclick="addToBracelet('right', '💘')">💘</button>
+        <button onclick="addToBracelet('right', '💝')">💝</button>
+        <button onclick="addToBracelet('right', '💟')">💟</button>
         <button onclick="addToBracelet('right', '🔵')">🔵</button>
         <button onclick="addToBracelet('right', '🔴')">🔴</button>
         <button onclick="addToBracelet('right', '⚫')">⚫</button>
@@ -219,19 +244,17 @@
     async function tieBracelet() {
       const leftText = document.getElementById('leftTextPath').textContent;
       const rightText = document.getElementById('rightTextPath').textContent;
-      const fullText = leftText + rightText;
-
-      // explain that bracelet is being tied and to wait
-      alert('tying bracelet... please wait (´･ᴗ･ ` )');
-
-      // get recipient and creator
       const creator = document.getElementById('creator').value;
       const recipient = document.getElementById('recipient').value;
+      const fullText = leftText + rightText;
 
       if (!creator || !recipient) {
         alert('please tell me your name and the recipient\'s name (｡•́︿•̀｡)');
         return;
       }
+
+      // explain that bracelet is being tied and to wait
+      alert('tying bracelet... please wait (´･ᴗ･ ` )');
 
       // Send the POST request
       const response = await fetch('https://mbo-appallinggreenjackal.web.val.run', {
@@ -245,7 +268,7 @@
       });
 
       if (!response.ok) {
-        alert('Failed to save bracelet. Please try again.');
+        alert('failed to tie bracelet. please try again (｡•́︿•̀｡)');
         return;
       }
 
@@ -289,9 +312,11 @@
       // add the creator, recipient and id to the meta section
       const meta = document.getElementById('meta');
       meta.innerHTML = `
-        <p>creator: ${bracelet.creator}</p>
-        <p>recipient: ${bracelet.recipient}</p>
-        <p>id: ${bracelet.id}</p>
+        <i>
+          creator: ${bracelet.creator}<br />
+          recipient: ${bracelet.recipient}<br />
+          id: ${bracelet.id}<br />
+        </i>
       `;
     }
 
