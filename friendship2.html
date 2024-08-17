@@ -51,19 +51,20 @@
   <h1>Digital Friendship Bracelet Maker</h1>
   <svg id="bracelet" viewBox="0 0 500 500">
     <defs>
-      <path id="leftPath" d="M 250,400 C 250,250 100,150 100,50" />
-      <path id="rightPath" d="M 250,400 C 250,250 400,150 400,50" />
+      <path id="leftPath" d="M 250,400 C 250,250 100,150 100,50"stroke="black" stroke-width="2" />
+      <path id="rightPath" d="M 250,400 C 250,250 400,150 400,50" stroke="black" stroke-width="2"/>
       <path id ="fullPath" d="M 100, 0
         A 100,100 0 1,0 100,200
         A 100,100 0 1,0 100,0"
-        fill="none" stroke="black" />
+        fill="none" stroke="black" transform="rotate(-90 100 100)" />
     </defs>
+    <use id="useLeftPath" href="#leftPath" />
+    <use id="useRightPath" href="#rightPath" />
     <text fill="black" font-size="20">
       <textPath id="leftTextPath" href="#leftPath"></textPath>
       <textPath id="rightTextPath" href="#rightPath"></textPath>
       <textPath id="fullTextPath" href="#fullPath"></textPath>
     </text>
-    <circle id="circlePath" cx="250" cy="250" r="200" fill="none" stroke="none" />
   </svg>
 
   <div id="buttons">
@@ -100,6 +101,16 @@
       document.getElementById('leftTextPath').remove();
       document.getElementById('rightTextPath').remove();
       document.getElementById('fullTextPath').textContent = fullText;
+
+      // add a <use href="#leftPath" /> element to the SVG
+      const useFullPath = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      useFullPath.setAttribute('href', '#fullPath');
+      // add it to the SVG
+      document.getElementById('bracelet').appendChild(useFullPath);
+
+      // delete the old use paths
+      document.getElementById('useLeftPath').remove();
+      document.getElementById('useRightPath').remove();
     }
   </script>
 </body>
