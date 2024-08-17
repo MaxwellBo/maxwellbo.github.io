@@ -12,9 +12,8 @@
     }
 
     body {
-      /* font-family: 'heart font'; */
+      padding-left: 2rem !important;
       color: rgb(213, 41, 41);
-      text-align: center;
       margin: 0;
       padding: 0;
     }
@@ -177,6 +176,7 @@
 
   <section>
     <h2>others braclets ˖✧◝(⁰▿⁰)◜✧˖° </h2>
+    newest to oldest
     <ul>
     </ul>
   </section>
@@ -227,6 +227,11 @@
       // get recipient and creator
       const creator = document.getElementById('creator').value;
       const recipient = document.getElementById('recipient').value;
+
+      if (!creator || !recipient) {
+        alert('please tell me your name and the recipient\'s name (｡•́︿•̀｡)');
+        return;
+      }
 
       // Send the POST request
       const response = await fetch('https://mbo-appallinggreenjackal.web.val.run', {
@@ -303,6 +308,9 @@
       const bracelets = await response.json();
       const ul = document.querySelector('ul');
       ul.innerHTML = '';
+      // reverse the bracelets so the newest ones are at the top
+      bracelets.reverse();
+
       bracelets.forEach(bracelet => {
         const li = document.createElement('li');
         li.innerHTML = `<a href="friendship2.html?id=${bracelet.id}">${bracelet.content}</a>`;
