@@ -255,7 +255,7 @@
       alert('tying bracelet... please wait (´･ᴗ･ ` )');
 
       // Send the POST request
-      const response = await fetch('https://mbo-appallinggreenjackal.web.val.run', {
+      const response = await fetch('https://mbo-friendship2.web.val.run', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -278,7 +278,7 @@
     }
 
     async function fetchBracelet(id) {
-      const response = await fetch(`https://mbo-appallinggreenjackal.web.val.run?id=${id}`, {
+      const response = await fetch(`https://mbo-friendship2.web.val.run?id=${id}`, {
         method: 'GET'
       });
 
@@ -329,7 +329,7 @@
     }
 
     async function fetchBracelets() {
-      const response = await fetch('https://mbo-appallinggreenjackal.web.val.run', {
+      const response = await fetch('https://mbo-friendship2.web.val.run', {
         method: 'GET'
       });
 
@@ -359,7 +359,7 @@
         return;
       }
 
-      const response = await fetch(`https://mbo-appallinggreenjackal.web.val.run?id=${id}`, {
+      const response = await fetch(`https://mbo-friendship2.web.val.run?id=${id}`, {
         method: 'DELETE'
       });
 
