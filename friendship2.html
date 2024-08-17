@@ -194,8 +194,8 @@
       </div>
     </div>
 
-    <input type="text" id="creator" placeholder="Your name (required)" required />
-    <input type="text" id="recipient" placeholder="Recipient's name (required)" required />
+    <input type="text" id="creator" placeholder="your name (required)" required />
+    <input type="text" id="recipient" placeholder="recipient's name (required)" required />
     <button id="tie-button" onclick="tieBracelet()">tie bracelet</button>
   </section>
 
@@ -316,6 +316,7 @@
           creator: ${bracelet.creator}<br />
           recipient: ${bracelet.recipient}<br />
           id: ${bracelet.id}<br />
+          created at: ${bracelet.createdAt}
         </i>
       `;
     }
