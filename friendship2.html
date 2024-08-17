@@ -68,6 +68,8 @@
       <textPath id="fullTextPath" href="#fullPath"></textPath>
     </text>
   </svg>
+  <div id="embedinstructions">
+  </div>
 
 
   <section id="builder">
@@ -314,6 +316,15 @@
           id: ${bracelet.id}<br />
           created at: ${bracelet.createdAt}
         </i>
+      `;
+
+      // add embed instructions explaining how to iframe the bracelet
+      const embedInstructions = document.getElementById('embedinstructions');
+      embedInstructions.innerHTML = `
+        <p>copy and paste this code into your website to embed this bracelet</p>
+        <pre>
+          &lt;iframe src="maxbo.me/friendship2.html?id=${bracelet.id}" style="border: none;"&gt;&lt;/iframe&gt;
+        </pre>
       `;
     }
 
