@@ -4,10 +4,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>friendship 2</title>
+  <title>friendship 2 ٩(◕‿◕｡)۶</title>
   <style>
+    @font-face {
+      font-family: 'heart font';
+      src: url(fonts/heartfont.ttf) format('truetype');
+    }
+
     body {
-      color: purple;
+      /* font-family: 'heart font'; */
+      color: rgb(213, 41, 41);
       text-align: center;
       margin: 0;
       padding: 0;
@@ -59,7 +65,7 @@
 </head>
 
 <body>
-  <h1><a href="?">friendship2</a></h1>
+  <h1><a href="?">friendship2 (◕‿◕)</a></h1>
   <svg id="bracelet" viewBox="0 0 500 500" class="showiniframe">
     <defs>
       <path id="leftPath" d="M 250,400 C 250,250 100,150 100,50" stroke="black" stroke-width="2" />
@@ -188,6 +194,11 @@
     </ul>
   </section>
 
+  <footer>
+    <a href="/">← max bo</a>
+    <a href="https://github.com/MaxwellBo/maxwellbo.github.io/blob/master/friendship2.html">source</a>
+  </footer>
+
   <script type="module">
     // tag the document with an iframe CSS class if it's being rendered in an iframe
     if (window.self !== window.top) {
@@ -256,11 +267,14 @@
       });
 
       if (!response.ok) {
-        alert('Failed to fetch bracelet. Please check the ID and try again.');
+        alert('failed to fetch bracelet. please check the ID and try again (｡╯︵╰｡)');
         return;
       }
 
       const bracelet = await response.json();
+      // set the title
+      document.title = bracelet.content;
+
       if (document.getElementById('leftTextPath')) {
         document.getElementById('leftTextPath').remove();
       }
