@@ -1,0 +1,2288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Lighthouses in New South Wales</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      width: 100%;
+      height: 600px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lighthouses in New South Wales</h1>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+  <script id="data" type="application/json">
+{
+  "type": "FeatureCollection",
+  "generator": "overpass-turbo",
+  "copyright": "The data included in this document is from www.openstreetmap.org. The data is made available under ODbL.",
+  "timestamp": "2024-08-17T06:00:21Z",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/103262370",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "name": "Kiama Lighthouse",
+        "name:en": "Kiama Lighthouse",
+        "name:es": "Faro",
+        "name:zh": "Kiama燈塔",
+        "start_date": "1887",
+        "tourism": "attraction",
+        "wikidata": "Q6403705",
+        "wikipedia": "en:Kiama Light"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              150.8625673,
+              -34.6717872
+            ],
+            [
+              150.8625519,
+              -34.6718099
+            ],
+            [
+              150.8625569,
+              -34.6718326
+            ],
+            [
+              150.862586,
+              -34.6718468
+            ],
+            [
+              150.8626156,
+              -34.6718412
+            ],
+            [
+              150.8626321,
+              -34.6718199
+            ],
+            [
+              150.8626243,
+              -34.6717948
+            ],
+            [
+              150.862598,
+              -34.6717808
+            ],
+            [
+              150.8625673,
+              -34.6717872
+            ]
+          ]
+        ]
+      },
+      "id": "way/103262370"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/330361858",
+        "building": "lighthouse",
+        "man_made": "lighthouse",
+        "name": "Cape Baily Lighthouse",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:construction": "concreted",
+        "seamark:beacon_special_purpose:height": "9.1",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:group": "4",
+        "seamark:light:height": "55",
+        "seamark:light:period": "16",
+        "seamark:light:range": "13",
+        "seamark:light:reference": "K 2622",
+        "seamark:light:sequence": "1+(2)+1+(2)+1+(2)+1+(6)",
+        "seamark:name": "Cape Baily",
+        "seamark:type": "beacon_special_purpose",
+        "source": "US NGA Pub. 111. 2024-04-19.",
+        "tourism": "attraction",
+        "website": "https://www.nationalparks.nsw.gov.au/things-to-do/historic-buildings-places/cape-baily-lighthouse",
+        "wikidata": "Q5034579"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2221955,
+              -34.0351121
+            ],
+            [
+              151.2221669,
+              -34.0351388
+            ],
+            [
+              151.222195,
+              -34.0351595
+            ],
+            [
+              151.2222236,
+              -34.0351328
+            ],
+            [
+              151.2221955,
+              -34.0351121
+            ]
+          ]
+        ]
+      },
+      "id": "way/330361858"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/354264865",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "source": "bing",
+        "wikidata": "Q1065004"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2851611,
+              -33.8538585
+            ],
+            [
+              151.2851241,
+              -33.854065
+            ],
+            [
+              151.2852126,
+              -33.8540759
+            ],
+            [
+              151.2852496,
+              -33.8538694
+            ],
+            [
+              151.2851611,
+              -33.8538585
+            ]
+          ]
+        ]
+      },
+      "id": "way/354264865"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/435461991",
+        "building": "lighthouse",
+        "historic": "building",
+        "man_made": "lighthouse",
+        "name": "Hornby Lighthouse",
+        "seamark:beacon_special_purpose:colour": "white;red",
+        "seamark:beacon_special_purpose:colour_pattern": "horizontal",
+        "seamark:beacon_special_purpose:height": "9.1",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:character": "LFl",
+        "seamark:light:colour": "white",
+        "seamark:light:height": "27",
+        "seamark:light:period": "5",
+        "seamark:light:range": "15",
+        "seamark:light:reference": "K 2636",
+        "seamark:light:sequence": "2+(3)",
+        "seamark:name": "Hornby",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2024-04-19.",
+        "wikidata": "Q12060536",
+        "wikipedia": "en:Hornby Lighthouse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2810295,
+              -33.8335475
+            ],
+            [
+              151.281022,
+              -33.8335416
+            ],
+            [
+              151.2810125,
+              -33.8335381
+            ],
+            [
+              151.2810022,
+              -33.8335374
+            ],
+            [
+              151.2809928,
+              -33.8335394
+            ],
+            [
+              151.2809847,
+              -33.8335438
+            ],
+            [
+              151.2809786,
+              -33.8335501
+            ],
+            [
+              151.2809752,
+              -33.8335577
+            ],
+            [
+              151.2809749,
+              -33.8335657
+            ],
+            [
+              151.2809776,
+              -33.8335735
+            ],
+            [
+              151.2809832,
+              -33.8335801
+            ],
+            [
+              151.2809909,
+              -33.8335849
+            ],
+            [
+              151.2810001,
+              -33.8335875
+            ],
+            [
+              151.2810098,
+              -33.8335875
+            ],
+            [
+              151.2810196,
+              -33.8335847
+            ],
+            [
+              151.2810277,
+              -33.8335794
+            ],
+            [
+              151.2810332,
+              -33.8335721
+            ],
+            [
+              151.2810355,
+              -33.8335637
+            ],
+            [
+              151.2810342,
+              -33.8335552
+            ],
+            [
+              151.2810295,
+              -33.8335475
+            ]
+          ]
+        ]
+      },
+      "id": "way/435461991"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/472428594",
+        "alt_name": "Norah Head Light",
+        "building": "lighthouse",
+        "construction:start_date": "1901",
+        "email": "NorahHeadLighthouse@reflectionsholidays.com.au",
+        "man_made": "lighthouse",
+        "name": "Norah Head Lighthouse",
+        "note": "Highest point of the tower is 47m above sea level",
+        "operator": "Reflections Holidays",
+        "phone": "+61 2 4086 5503",
+        "seamark:type": "light_major",
+        "start_date": "1903",
+        "website": "https://reflectionsholidays.com.au/unique-stays/norah-head-lighthouse/",
+        "wikipedia": "en:Norah Head Light"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.5762761,
+              -33.2815859
+            ],
+            [
+              151.5762624,
+              -33.2816954
+            ],
+            [
+              151.5763626,
+              -33.2817042
+            ],
+            [
+              151.5763657,
+              -33.2816798
+            ],
+            [
+              151.5764224,
+              -33.2816848
+            ],
+            [
+              151.5764308,
+              -33.2816174
+            ],
+            [
+              151.5763764,
+              -33.2816126
+            ],
+            [
+              151.5763786,
+              -33.2815949
+            ],
+            [
+              151.5762761,
+              -33.2815859
+            ]
+          ]
+        ]
+      },
+      "id": "way/472428594"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/562114401",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "name": "Shark Island Light",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "red",
+        "seamark:light:group": "3",
+        "seamark:light:height": "12",
+        "seamark:light:period": "8",
+        "seamark:light:range": "6",
+        "seamark:light:reference": "K 2656",
+        "seamark:light:sequence": "1+(1)+1+(1)+1+(3)",
+        "seamark:name": "Shark Island",
+        "seamark:type": "beacon_special_purpose",
+        "source": "US NGA Pub. 111. 2024-04-13.",
+        "wikidata": "Q7489800",
+        "wikimedia_commons": "File:Shark_Island_Sydney.JPG",
+        "wikipedia": "en:Shark Island Light"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2572202,
+              -33.8565577
+            ],
+            [
+              151.2572259,
+              -33.8565526
+            ],
+            [
+              151.2572291,
+              -33.8565462
+            ],
+            [
+              151.2572297,
+              -33.8565397
+            ],
+            [
+              151.2572278,
+              -33.8565334
+            ],
+            [
+              151.2572236,
+              -33.856528
+            ],
+            [
+              151.2572176,
+              -33.8565239
+            ],
+            [
+              151.2572102,
+              -33.8565215
+            ],
+            [
+              151.2572024,
+              -33.8565213
+            ],
+            [
+              151.2571949,
+              -33.8565231
+            ],
+            [
+              151.2571885,
+              -33.8565267
+            ],
+            [
+              151.2571837,
+              -33.8565319
+            ],
+            [
+              151.2571812,
+              -33.856538
+            ],
+            [
+              151.2571812,
+              -33.8565442
+            ],
+            [
+              151.2571812,
+              -33.856545
+            ],
+            [
+              151.257184,
+              -33.8565515
+            ],
+            [
+              151.2571892,
+              -33.8565568
+            ],
+            [
+              151.2571964,
+              -33.8565604
+            ],
+            [
+              151.2572045,
+              -33.8565618
+            ],
+            [
+              151.2572128,
+              -33.8565609
+            ],
+            [
+              151.2572202,
+              -33.8565577
+            ]
+          ]
+        ]
+      },
+      "id": "way/562114401"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/583604937",
+        "alt_name": "Flagstaff Hill Lighthouse",
+        "alt_name_1": "Flagstaff Point Light",
+        "building": "yes",
+        "description": "AKA Flagstaff Point Lighthouse",
+        "man_made": "lighthouse",
+        "name": "Wollongong Head Lighthouse",
+        "seamark:light:1:character": "Oc",
+        "seamark:light:1:colour": "red",
+        "seamark:light:1:height": "40",
+        "seamark:light:1:period": "6",
+        "seamark:light:1:range": "15",
+        "seamark:light:1:sector_end": "213",
+        "seamark:light:1:sector_start": "188",
+        "seamark:light:1:sequence": "4.5+(1.5)",
+        "seamark:light:2:character": "Oc",
+        "seamark:light:2:colour": "white",
+        "seamark:light:2:height": "40",
+        "seamark:light:2:period": "6",
+        "seamark:light:2:range": "18",
+        "seamark:light:2:sector_end": "312",
+        "seamark:light:2:sector_start": "213",
+        "seamark:light:2:sequence": "4.5+(1.5)",
+        "seamark:light:reference": "K 2614",
+        "seamark:name": "Wollongong Head",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.;survey;local knowledge",
+        "wikidata": "Q8030369",
+        "wikipedia": "en:Wollongong Head Lighthouse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              150.9096822,
+              -34.421952
+            ],
+            [
+              150.909691,
+              -34.4219562
+            ],
+            [
+              150.9097009,
+              -34.4219578
+            ],
+            [
+              150.909711,
+              -34.4219567
+            ],
+            [
+              150.9097201,
+              -34.421953
+            ],
+            [
+              150.9097273,
+              -34.421947
+            ],
+            [
+              150.9097318,
+              -34.4219394
+            ],
+            [
+              150.909733,
+              -34.421931
+            ],
+            [
+              150.9097308,
+              -34.4219227
+            ],
+            [
+              150.9097255,
+              -34.4219154
+            ],
+            [
+              150.9097175,
+              -34.42191
+            ],
+            [
+              150.9097079,
+              -34.421907
+            ],
+            [
+              150.9096976,
+              -34.4219068
+            ],
+            [
+              150.9096878,
+              -34.4219093
+            ],
+            [
+              150.9096795,
+              -34.4219144
+            ],
+            [
+              150.9096737,
+              -34.4219214
+            ],
+            [
+              150.909671,
+              -34.4219295
+            ],
+            [
+              150.9096716,
+              -34.4219379
+            ],
+            [
+              150.9096755,
+              -34.4219456
+            ],
+            [
+              150.9096822,
+              -34.421952
+            ]
+          ]
+        ]
+      },
+      "id": "way/583604937"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/583604938",
+        "alt_name": "Wollongong Harbour Lighthouse",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "name": "Wollongong Breakwater Lighthouse",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "green",
+        "seamark:light:period": "3",
+        "seamark:light:range": "3",
+        "seamark:light:reference": "K 2617",
+        "seamark:light:sequence": "1+(2)",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "wikidata": "Q8030373",
+        "wikipedia": "en:Wollongong Breakwater Lighthouse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              150.9067715,
+              -34.4196929
+            ],
+            [
+              150.9067778,
+              -34.4196941
+            ],
+            [
+              150.9067843,
+              -34.4196935
+            ],
+            [
+              150.9067901,
+              -34.4196912
+            ],
+            [
+              150.9067948,
+              -34.4196875
+            ],
+            [
+              150.9067978,
+              -34.4196827
+            ],
+            [
+              150.9067987,
+              -34.4196774
+            ],
+            [
+              150.9067974,
+              -34.4196722
+            ],
+            [
+              150.9067942,
+              -34.4196675
+            ],
+            [
+              150.9067893,
+              -34.419664
+            ],
+            [
+              150.9067833,
+              -34.419662
+            ],
+            [
+              150.9067768,
+              -34.4196617
+            ],
+            [
+              150.9067706,
+              -34.4196631
+            ],
+            [
+              150.9067652,
+              -34.4196661
+            ],
+            [
+              150.9067613,
+              -34.4196704
+            ],
+            [
+              150.9067594,
+              -34.4196756
+            ],
+            [
+              150.9067596,
+              -34.4196809
+            ],
+            [
+              150.9067618,
+              -34.4196859
+            ],
+            [
+              150.9067659,
+              -34.4196901
+            ],
+            [
+              150.9067715,
+              -34.4196929
+            ]
+          ]
+        ]
+      },
+      "id": "way/583604938"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/963363240",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "name": "Yamba Lighthouse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              153.3640373,
+              -29.432436
+            ],
+            [
+              153.3640241,
+              -29.4324395
+            ],
+            [
+              153.3640139,
+              -29.4324465
+            ],
+            [
+              153.3640101,
+              -29.4324621
+            ],
+            [
+              153.3640125,
+              -29.4324746
+            ],
+            [
+              153.3640212,
+              -29.4324828
+            ],
+            [
+              153.364034,
+              -29.4324874
+            ],
+            [
+              153.3640497,
+              -29.4324867
+            ],
+            [
+              153.3640608,
+              -29.4324798
+            ],
+            [
+              153.3640672,
+              -29.4324656
+            ],
+            [
+              153.3640635,
+              -29.4324489
+            ],
+            [
+              153.3640527,
+              -29.43244
+            ],
+            [
+              153.3640373,
+              -29.432436
+            ]
+          ]
+        ]
+      },
+      "id": "way/963363240"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1101023921",
+        "building": "yes",
+        "fee": "yes",
+        "man_made": "lighthouse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.199264,
+              -33.8686837
+            ],
+            [
+              151.1992735,
+              -33.8686873
+            ],
+            [
+              151.199284,
+              -33.8686881
+            ],
+            [
+              151.1992941,
+              -33.8686859
+            ],
+            [
+              151.1993028,
+              -33.868681
+            ],
+            [
+              151.199309,
+              -33.8686739
+            ],
+            [
+              151.199312,
+              -33.8686656
+            ],
+            [
+              151.1993114,
+              -33.8686569
+            ],
+            [
+              151.1993073,
+              -33.8686488
+            ],
+            [
+              151.1993002,
+              -33.8686424
+            ],
+            [
+              151.1992909,
+              -33.8686383
+            ],
+            [
+              151.1992805,
+              -33.8686371
+            ],
+            [
+              151.1992714,
+              -33.8686385
+            ],
+            [
+              151.1992631,
+              -33.8686421
+            ],
+            [
+              151.1992565,
+              -33.8686476
+            ],
+            [
+              151.1992523,
+              -33.8686545
+            ],
+            [
+              151.1992506,
+              -33.8686621
+            ],
+            [
+              151.1992519,
+              -33.8686698
+            ],
+            [
+              151.1992565,
+              -33.8686776
+            ],
+            [
+              151.199264,
+              -33.8686837
+            ]
+          ]
+        ]
+      },
+      "id": "way/1101023921"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1168929089",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "name": "Endeavour Light"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2381765,
+              -33.9982327
+            ],
+            [
+              151.2381726,
+              -33.9982317
+            ],
+            [
+              151.2381686,
+              -33.9982319
+            ],
+            [
+              151.2381651,
+              -33.9982331
+            ],
+            [
+              151.2381622,
+              -33.9982352
+            ],
+            [
+              151.2381602,
+              -33.9982379
+            ],
+            [
+              151.2381594,
+              -33.998241
+            ],
+            [
+              151.2381598,
+              -33.9982441
+            ],
+            [
+              151.2381614,
+              -33.998247
+            ],
+            [
+              151.238164,
+              -33.9982493
+            ],
+            [
+              151.2381673,
+              -33.9982508
+            ],
+            [
+              151.238171,
+              -33.9982514
+            ],
+            [
+              151.2381748,
+              -33.9982509
+            ],
+            [
+              151.2381784,
+              -33.9982494
+            ],
+            [
+              151.2381811,
+              -33.998247
+            ],
+            [
+              151.2381828,
+              -33.9982439
+            ],
+            [
+              151.2381831,
+              -33.9982406
+            ],
+            [
+              151.238182,
+              -33.9982374
+            ],
+            [
+              151.2381797,
+              -33.9982346
+            ],
+            [
+              151.2381765,
+              -33.9982327
+            ]
+          ]
+        ]
+      },
+      "id": "way/1168929089"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1241529472",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "name": "Bradleys Head Lighthouse",
+        "seamark:beacon_cardinal:category": "south",
+        "seamark:beacon_cardinal:colour": "white",
+        "seamark:beacon_cardinal:shape": "tower",
+        "seamark:light:character": "Oc",
+        "seamark:light:colour": "green",
+        "seamark:light:height": "7",
+        "seamark:light:period": "3",
+        "seamark:light:range": "6",
+        "seamark:light:reference": "K 2662",
+        "seamark:light:sequence": "2+(1)",
+        "seamark:name": "20 / Bradleys Head",
+        "seamark:type": "beacon_cardinal",
+        "source": "US NGA Pub. 111. 2024-04-13.",
+        "wikidata": "Q897057",
+        "wikipedia": "en:Bradleys Head Light"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2467202,
+              -33.853626
+            ],
+            [
+              151.2467261,
+              -33.8536282
+            ],
+            [
+              151.2467326,
+              -33.8536287
+            ],
+            [
+              151.2467389,
+              -33.8536275
+            ],
+            [
+              151.2467444,
+              -33.8536246
+            ],
+            [
+              151.2467485,
+              -33.8536204
+            ],
+            [
+              151.2467507,
+              -33.8536154
+            ],
+            [
+              151.2467509,
+              -33.85361
+            ],
+            [
+              151.2467489,
+              -33.8536048
+            ],
+            [
+              151.246745,
+              -33.8536005
+            ],
+            [
+              151.2467397,
+              -33.8535974
+            ],
+            [
+              151.2467334,
+              -33.8535959
+            ],
+            [
+              151.2467269,
+              -33.8535962
+            ],
+            [
+              151.2467234,
+              -33.8535974
+            ],
+            [
+              151.2467208,
+              -33.8535983
+            ],
+            [
+              151.2467158,
+              -33.8536019
+            ],
+            [
+              151.2467126,
+              -33.8536067
+            ],
+            [
+              151.2467114,
+              -33.8536121
+            ],
+            [
+              151.2467124,
+              -33.8536175
+            ],
+            [
+              151.2467154,
+              -33.8536223
+            ],
+            [
+              151.2467202,
+              -33.853626
+            ]
+          ]
+        ]
+      },
+      "id": "way/1241529472"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1244693280",
+        "architect": "James Barnet",
+        "automated": "yes",
+        "building": "yes",
+        "elevation": "91",
+        "height": "19.5",
+        "man_made": "lighthouse",
+        "material": "sandstone",
+        "name": "Barrenjoey Lighthouse",
+        "phone": "+61 2 9451 3479",
+        "ref": "K 2702",
+        "seamark:light:1:character": "Fl",
+        "seamark:light:1:colour": "white",
+        "seamark:light:1:group": "4",
+        "seamark:light:1:height": "113",
+        "seamark:light:1:period": "20",
+        "seamark:light:1:range": "19",
+        "seamark:light:1:sector_end": "343",
+        "seamark:light:1:sector_start": "12",
+        "seamark:light:1:sequence": "1+(2),1+(2),1+(2),1+(10)",
+        "seamark:light:reference": "K 2702",
+        "seamark:name": "Barranjoey Head",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "start_date": "1881",
+        "wikidata": "Q15196838",
+        "wikipedia": "en:Barrenjoey Head Lighthouse"
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.3298058,
+              -33.5801998
+            ],
+            [
+              151.3298094,
+              -33.5802032
+            ],
+            [
+              151.3298144,
+              -33.5802062
+            ],
+            [
+              151.3298202,
+              -33.5802081
+            ],
+            [
+              151.3298263,
+              -33.5802088
+            ],
+            [
+              151.3298343,
+              -33.5802077
+            ],
+            [
+              151.3298415,
+              -33.5802046
+            ],
+            [
+              151.3298472,
+              -33.5801997
+            ],
+            [
+              151.3298507,
+              -33.5801936
+            ],
+            [
+              151.3298517,
+              -33.5801869
+            ],
+            [
+              151.32985,
+              -33.5801803
+            ],
+            [
+              151.329846,
+              -33.5801744
+            ],
+            [
+              151.3298399,
+              -33.5801699
+            ],
+            [
+              151.3298324,
+              -33.5801673
+            ],
+            [
+              151.3298244,
+              -33.5801667
+            ],
+            [
+              151.3298165,
+              -33.5801684
+            ],
+            [
+              151.3298096,
+              -33.580172
+            ],
+            [
+              151.3298053,
+              -33.5801762
+            ],
+            [
+              151.3298027,
+              -33.5801804
+            ],
+            [
+              151.3298014,
+              -33.5801849
+            ],
+            [
+              151.3298014,
+              -33.5801905
+            ],
+            [
+              151.3298031,
+              -33.5801958
+            ],
+            [
+              151.3298058,
+              -33.5801998
+            ]
+          ]
+        ]
+      },
+      "id": "way/1244693280"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1269050184",
+        "building": "yes",
+        "check_date": "2024-04-05",
+        "man_made": "lighthouse",
+        "name": "Vaucluse Bay Front Lighthouse",
+        "seamark:beacon_special_purpose:category": "leading",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:1:character": "F",
+        "seamark:light:1:colour": "red",
+        "seamark:light:1:height": "16",
+        "seamark:light:1:range": "5",
+        "seamark:light:1:sector_end": "231",
+        "seamark:light:1:sector_start": "143",
+        "seamark:light:reference": "K 2650",
+        "seamark:name": "Vaucluse Bay Front",
+        "seamark:topmark:colour": "white",
+        "seamark:topmark:shape": "cone, point up",
+        "seamark:type": "beacon_special_purpose",
+        "source": "US NGA Pub. 111. 2024."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2739285,
+              -33.8495701
+            ],
+            [
+              151.273933,
+              -33.8495712
+            ],
+            [
+              151.2739377,
+              -33.8495711
+            ],
+            [
+              151.273942,
+              -33.8495696
+            ],
+            [
+              151.2739455,
+              -33.849567
+            ],
+            [
+              151.2739478,
+              -33.8495636
+            ],
+            [
+              151.2739485,
+              -33.8495597
+            ],
+            [
+              151.2739475,
+              -33.8495559
+            ],
+            [
+              151.2739451,
+              -33.8495526
+            ],
+            [
+              151.2739414,
+              -33.8495501
+            ],
+            [
+              151.273937,
+              -33.8495488
+            ],
+            [
+              151.2739329,
+              -33.8495488
+            ],
+            [
+              151.2739289,
+              -33.8495498
+            ],
+            [
+              151.2739255,
+              -33.8495518
+            ],
+            [
+              151.273923,
+              -33.8495544
+            ],
+            [
+              151.2739215,
+              -33.8495576
+            ],
+            [
+              151.2739213,
+              -33.8495611
+            ],
+            [
+              151.2739222,
+              -33.8495644
+            ],
+            [
+              151.2739248,
+              -33.8495677
+            ],
+            [
+              151.2739285,
+              -33.8495701
+            ]
+          ]
+        ]
+      },
+      "id": "way/1269050184"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "way/1270366938",
+        "building": "yes",
+        "man_made": "lighthouse",
+        "name": "Vaucluse Bay Rear Lighthouse",
+        "seamark:beacon_special_purpose:category": "leading",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:character": "F",
+        "seamark:light:colour": "red",
+        "seamark:light:height": "84",
+        "seamark:light:range": "5",
+        "seamark:light:reference": "K 2650.10",
+        "seamark:name": "Vaucluse Bay Rear",
+        "seamark:topmark:colour": "white",
+        "seamark:topmark:shape": "cone, point up",
+        "seamark:type": "beacon_special_purpose",
+        "source": "US NGA Pub. 111. 2024-04-13."
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              151.2729435,
+              -33.8582144
+            ],
+            [
+              151.2729482,
+              -33.8582159
+            ],
+            [
+              151.2729532,
+              -33.858216
+            ],
+            [
+              151.272958,
+              -33.8582148
+            ],
+            [
+              151.272962,
+              -33.8582124
+            ],
+            [
+              151.2729649,
+              -33.858209
+            ],
+            [
+              151.2729664,
+              -33.8582051
+            ],
+            [
+              151.2729662,
+              -33.8582009
+            ],
+            [
+              151.2729644,
+              -33.858197
+            ],
+            [
+              151.2729612,
+              -33.8581938
+            ],
+            [
+              151.2729569,
+              -33.8581917
+            ],
+            [
+              151.2729521,
+              -33.8581908
+            ],
+            [
+              151.272947,
+              -33.8581912
+            ],
+            [
+              151.2729424,
+              -33.8581931
+            ],
+            [
+              151.2729387,
+              -33.858196
+            ],
+            [
+              151.2729365,
+              -33.8581999
+            ],
+            [
+              151.2729359,
+              -33.8582041
+            ],
+            [
+              151.272937,
+              -33.8582082
+            ],
+            [
+              151.2729396,
+              -33.8582118
+            ],
+            [
+              151.2729435,
+              -33.8582144
+            ]
+          ]
+        ]
+      },
+      "id": "way/1270366938"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/17022899",
+        "historic": "building",
+        "man_made": "lighthouse",
+        "name": "Tacking Point Lighthouse",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:group": "4",
+        "seamark:light:height": "34",
+        "seamark:light:period": "20",
+        "seamark:light:range": "16",
+        "seamark:light:reference": "K 2788",
+        "seamark:name": "Tacking Point",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          152.9372555,
+          -31.4756057
+        ]
+      },
+      "id": "node/17022899"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/33264622",
+        "man_made": "lighthouse",
+        "ref:admiralty": "K2588",
+        "ref:nga": "111-6504",
+        "seamark:information": "F.R. lights on radio masts 5M SW.",
+        "seamark:light:1:character": "Fl",
+        "seamark:light:1:colour": "white",
+        "seamark:light:1:height": "95",
+        "seamark:light:1:period": "10",
+        "seamark:light:1:range": "19",
+        "seamark:light:1:sector_end": "28",
+        "seamark:light:1:sector_start": "231",
+        "seamark:name": "Perpendicular Point",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "source:position": "NSW LPI Imagery",
+        "wikidata": "Q2100730"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.80432,
+          -35.0941453
+        ]
+      },
+      "id": "node/33264622"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/33616122",
+        "alt_name": "Byron Bay Lighthouse",
+        "man_made": "lighthouse",
+        "name": "Cape Byron Lighthouse",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:height": "118",
+        "seamark:light:period": "15",
+        "seamark:light:range": "27",
+        "seamark:light:reference": "K 2838",
+        "seamark:name": "Cape Byron",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.6363335,
+          -28.6385613
+        ]
+      },
+      "id": "node/33616122"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/46500819",
+        "direction": "114",
+        "man_made": "lighthouse",
+        "name": "Rosherville Lighthouse",
+        "operator": "Port Authority of New South Wales",
+        "operator:wikidata": "Q60742921",
+        "ref": "2B",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "green",
+        "seamark:light:height": "43",
+        "seamark:light:period": "3",
+        "seamark:light:range": "12",
+        "seamark:light:reference": "K 2638.10",
+        "seamark:light:sequence": "1+(2)",
+        "seamark:name": "2B / Rosherville",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2024-04-19.",
+        "start_date": "1911"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2463764,
+          -33.8121316
+        ]
+      },
+      "id": "node/46500819"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/97610242",
+        "man_made": "lighthouse",
+        "name": "Smoky Cape",
+        "seamark:information": "3 F.R. on tower 8.7 miles SW.",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:group": "3",
+        "seamark:light:height": "128",
+        "seamark:light:period": "20",
+        "seamark:light:range": "25",
+        "seamark:light:reference": "K 2796",
+        "seamark:light:sequence": "0.1+(3.1)+0.1+(3.1)+0.1+(13.5)",
+        "seamark:name": "Smoky Cape",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.0874871,
+          -30.92285
+        ]
+      },
+      "id": "node/97610242"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/97637286",
+        "man_made": "lighthouse",
+        "name": "Nobbys Lighthouse",
+        "official_name": "Nobbys Head Lighthouse",
+        "ref:nswgnb": "42564",
+        "seamark:fog_signal:category": "siren",
+        "seamark:information": "Storm, tidal, traffic, and night",
+        "seamark:light:1:character": "Fl",
+        "seamark:light:1:colour": "white",
+        "seamark:light:1:group": "2+1",
+        "seamark:light:1:height": "35",
+        "seamark:light:1:period": "20",
+        "seamark:light:1:range": "24",
+        "seamark:light:1:sector_end": "37",
+        "seamark:light:1:sector_start": "201",
+        "seamark:light:1:sequence": "0.3+(2.7),0.3+(8.2),0.3+(8.2)",
+        "seamark:light:reference": "K 2728",
+        "seamark:name": "Nobby's Head",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.7984008,
+          -32.9185696
+        ]
+      },
+      "id": "node/97637286"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/252033066",
+        "man_made": "lighthouse",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:group": "2",
+        "seamark:light:height": "36",
+        "seamark:light:period": "15",
+        "seamark:light:range": "17",
+        "seamark:light:reference": "K 2570",
+        "seamark:name": "Green Cape",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "tourism": "attraction"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.0493746,
+          -37.2614302
+        ]
+      },
+      "id": "node/252033066"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/281356861",
+        "check_date": "2023-07-01",
+        "man_made": "lighthouse",
+        "name": "Grotto Point Lighthouse",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:1:character": "Oc",
+        "seamark:light:1:colour": "green",
+        "seamark:light:1:group": "4",
+        "seamark:light:1:height": "19",
+        "seamark:light:1:period": "15",
+        "seamark:light:1:range": "9",
+        "seamark:light:1:sector_end": "288",
+        "seamark:light:1:sector_start": "276",
+        "seamark:light:1:sequence": "1+(1)+1+(1)+1+(1)+8+(1)",
+        "seamark:light:2:character": "Oc",
+        "seamark:light:2:colour": "white",
+        "seamark:light:2:group": "4",
+        "seamark:light:2:height": "19",
+        "seamark:light:2:period": "15",
+        "seamark:light:2:range": "12",
+        "seamark:light:2:sector_end": "306",
+        "seamark:light:2:sector_start": "288",
+        "seamark:light:2:sequence": "1+(1)+1+(1)+1+(1)+8+(1)",
+        "seamark:light:3:character": "Oc",
+        "seamark:light:3:colour": "red",
+        "seamark:light:3:group": "4",
+        "seamark:light:3:height": "19",
+        "seamark:light:3:period": "15",
+        "seamark:light:3:range": "9",
+        "seamark:light:3:sector_end": "312",
+        "seamark:light:3:sector_start": "306",
+        "seamark:light:3:sequence": "1+(1)+1+(1)+1+(1)+8+(1)",
+        "seamark:light:reference": "K 2638",
+        "seamark:name": "Grotto Point",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2024-04-19.",
+        "wikidata": "Q5610807",
+        "wikipedia": "en:Grotto Point Light"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2615567,
+          -33.8177323
+        ]
+      },
+      "id": "node/281356861"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/310478619",
+        "man_made": "lighthouse",
+        "name": "Crowdy Head Lighthouse",
+        "seamark:light:1:character": "Fl",
+        "seamark:light:1:colour": "white",
+        "seamark:light:1:group": "2",
+        "seamark:light:1:height": "61",
+        "seamark:light:1:period": "10",
+        "seamark:light:1:range": "16",
+        "seamark:light:1:sector_end": "197",
+        "seamark:light:1:sector_start": "227",
+        "seamark:light:1:sequence": "1+(2),1+(6)",
+        "seamark:light:2:character": "Fl",
+        "seamark:light:2:colour": "red",
+        "seamark:light:2:group": "2",
+        "seamark:light:2:height": "61",
+        "seamark:light:2:period": "10",
+        "seamark:light:2:range": "13",
+        "seamark:light:2:sector_end": "227",
+        "seamark:light:2:sector_start": "197",
+        "seamark:light:2:sequence": "1+(2),1+(6)",
+        "seamark:light:reference": "K 2784",
+        "seamark:name": "Crowdy Head",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          152.7535728,
+          -31.8434294
+        ]
+      },
+      "id": "node/310478619"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/318441760",
+        "building": "tower",
+        "heritage": "yes",
+        "man_made": "lighthouse",
+        "name": "Point Stephens Lighthouse",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:group": "4",
+        "seamark:light:height": "38",
+        "seamark:light:period": "30",
+        "seamark:light:range": "17",
+        "seamark:light:reference": "K 2770",
+        "seamark:name": "Point Stephens",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "start_date": "1862",
+        "wikidata": "Q7208171",
+        "wikipedia": "en:Point Stephens Light"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          152.201385,
+          -32.7470489
+        ]
+      },
+      "id": "node/318441760"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/318475725",
+        "created_by": "Potlatch 0.10f",
+        "man_made": "lighthouse",
+        "name": "Inner Light",
+        "source": "local_knowledge"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          152.1614092,
+          -32.7103476
+        ]
+      },
+      "id": "node/318475725"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1162539123",
+        "man_made": "lighthouse",
+        "name": "Macquarie Lighthouse",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:construction": "masonry",
+        "seamark:beacon_special_purpose:height": "25.9",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:1:character": "Fl",
+        "seamark:light:1:colour": "white",
+        "seamark:light:1:group": "2",
+        "seamark:light:1:height": "105",
+        "seamark:light:1:period": "10",
+        "seamark:light:1:range": "22",
+        "seamark:light:1:sector_end": "359",
+        "seamark:light:1:sector_start": "204",
+        "seamark:light:1:sequence": "0.1+(1.9)+0.1+(7.9)",
+        "seamark:light:reference": "K 2632",
+        "seamark:name": "Macquarie",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2024-04-19.",
+        "wikimedia_commons": "File:1_Macquarie_Lighthouse1.JPG"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2851907,
+          -33.8539417
+        ]
+      },
+      "id": "node/1162539123"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1191076033",
+        "description": "It is the first lighthouse designed by colonial architect James Barnet and one of only two towers in Australia with an external stairway.",
+        "man_made": "lighthouse",
+        "name": "Sugarloaf Point Lighthouse",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:height": "79",
+        "seamark:light:period": "7.5",
+        "seamark:light:range": "25",
+        "seamark:light:reference": "K 2776",
+        "seamark:light:sequence": "0.5+(7)",
+        "seamark:name": "Sugarloaf Point",
+        "seamark:type": "light_major",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "start_date": "1875"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          152.5391164,
+          -32.4410098
+        ]
+      },
+      "id": "node/1191076033"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1191078061",
+        "man_made": "lighthouse",
+        "name": "Western Channel Pile Light",
+        "seamark:beacon_lateral:category": "port",
+        "seamark:beacon_lateral:colour": "white",
+        "seamark:beacon_lateral:shape": "tower",
+        "seamark:light:character": "Oc",
+        "seamark:light:colour": "red",
+        "seamark:light:height": "8",
+        "seamark:light:period": "3",
+        "seamark:light:range": "5",
+        "seamark:light:reference": "K 2644",
+        "seamark:light:sequence": "2+(1)",
+        "seamark:name": "Western Channel Beacon",
+        "seamark:type": "beacon_lateral",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "wikidata": "Q7987710",
+        "wikimedia_commons": "File:Western_Channel_Pile_Light_located_on_Sydney_Harbour.jpg"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2642918,
+          -33.8404752
+        ]
+      },
+      "id": "node/1191078061"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/1191078118",
+        "man_made": "lighthouse",
+        "name": "Eastern Channel Pile Light",
+        "seamark:beacon_lateral:category": "starboard",
+        "seamark:beacon_lateral:colour": "white",
+        "seamark:beacon_lateral:shape": "tower",
+        "seamark:light:character": "Oc",
+        "seamark:light:colour": "green",
+        "seamark:light:height": "8",
+        "seamark:light:period": "3",
+        "seamark:light:range": "5",
+        "seamark:light:reference": "K 2652",
+        "seamark:light:sequence": "2+(1)",
+        "seamark:name": "Eastern Channel Beacon",
+        "seamark:type": "beacon_lateral",
+        "source": "US NGA Pub. 111. 2010-09-02.",
+        "wikidata": "Q5330051",
+        "wikimedia_commons": "File:East_Channel_Pile_Light.jpg"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2718219,
+          -33.8417938
+        ]
+      },
+      "id": "node/1191078118"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2097396988",
+        "man_made": "lighthouse",
+        "name": "Robertsons Point",
+        "seamark:beacon_lateral:category": "starboard",
+        "seamark:beacon_lateral:colour": "white",
+        "seamark:beacon_lateral:height": "7.9",
+        "seamark:beacon_lateral:shape": "tower",
+        "seamark:light:character": "Oc",
+        "seamark:light:colour": "green",
+        "seamark:light:height": "8",
+        "seamark:light:period": "3",
+        "seamark:light:range": "5",
+        "seamark:light:reference": "K 2664",
+        "seamark:light:sequence": "2+(1)",
+        "seamark:name": "Robertsons Point",
+        "seamark:type": "beacon_lateral",
+        "source": "US NGA Pub. 111. 2024-04-13.",
+        "wikidata": "Q1397837",
+        "wikipedia": "en:Robertson Point Light"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.233028,
+          -33.8487365
+        ]
+      },
+      "id": "node/2097396988"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2603850037",
+        "man_made": "lighthouse",
+        "name": "Ulladulla Lighthouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.4909287,
+          -35.3655781
+        ]
+      },
+      "id": "node/2603850037"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/2964007974",
+        "man_made": "lighthouse",
+        "name": "Fingal Head Lighthouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.5708441,
+          -28.1999958
+        ]
+      },
+      "id": "node/2964007974"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3353510873",
+        "building": "lighthouse",
+        "historic": "monument",
+        "man_made": "lighthouse",
+        "name": "Old Point Perpendicular Lighthouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.8043654,
+          -35.0938412
+        ]
+      },
+      "id": "node/3353510873"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3804113708",
+        "addr:housenumber": "6",
+        "addr:postcode": "2478",
+        "addr:state": "NSW",
+        "addr:street": "Harbourview Street",
+        "addr:suburb": "East Ballina",
+        "alt_name": "Ballina Lighthouse",
+        "height": "7",
+        "man_made": "lighthouse",
+        "name": "Richmond River Lighthouse",
+        "operator": "RMS",
+        "seamark:type": "light_major"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.5919141,
+          -28.8670494
+        ]
+      },
+      "id": "node/3804113708"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3877578942",
+        "description": "smaller light on metal tower, not main lighthouse.",
+        "man_made": "lighthouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.0498949,
+          -37.2618524
+        ]
+      },
+      "id": "node/3877578942"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/3976662488",
+        "man_made": "lighthouse",
+        "name": "Endeavour Light",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:height": "4.0",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:light:1:character": "Oc",
+        "seamark:light:1:colour": "red",
+        "seamark:light:1:height": "27",
+        "seamark:light:1:period": "3",
+        "seamark:light:1:range": "7",
+        "seamark:light:1:sector_end": "320",
+        "seamark:light:1:sector_start": "285",
+        "seamark:light:1:sequence": "2+(1)",
+        "seamark:light:2:character": "Oc",
+        "seamark:light:2:colour": "white",
+        "seamark:light:2:height": "27",
+        "seamark:light:2:period": "3",
+        "seamark:light:2:range": "7",
+        "seamark:light:2:sector_end": "103",
+        "seamark:light:2:sector_start": "320",
+        "seamark:light:2:sequence": "2+(1)",
+        "seamark:light:3:character": "Oc",
+        "seamark:light:3:colour": "red",
+        "seamark:light:3:height": "27",
+        "seamark:light:3:period": "3",
+        "seamark:light:3:range": "7",
+        "seamark:light:3:sector_end": "140",
+        "seamark:light:3:sector_start": "103",
+        "seamark:light:3:sequence": "2+(1)",
+        "seamark:light:4:character": "F",
+        "seamark:light:4:colour": "blue",
+        "seamark:light:4:sector_end": "114",
+        "seamark:light:4:sector_start": "260",
+        "seamark:light:reference": "K 2623",
+        "seamark:name": "Endeavour Light",
+        "seamark:type": "beacon_special_purpose",
+        "source": "US NGA Pub. 111. 2024-04-19."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.2381709,
+          -33.9982453
+        ]
+      },
+      "id": "node/3976662488"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4013678911",
+        "man_made": "lighthouse",
+        "name": "North Solitary Lighthouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.389766,
+          -29.9248535
+        ]
+      },
+      "id": "node/4013678911"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/4013719875",
+        "man_made": "lighthouse",
+        "name": "South Solitary Lighthouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          153.2673067,
+          -30.2067101
+        ]
+      },
+      "id": "node/4013719875"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/6086844044",
+        "man_made": "lighthouse",
+        "name": "Fort Denison Light",
+        "seamark:beacon_special_purpose:colour": "grey",
+        "seamark:beacon_special_purpose:construction": "concreted",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:fog_signal:category": "bell",
+        "seamark:light:character": "Fl",
+        "seamark:light:colour": "white",
+        "seamark:light:group": "4",
+        "seamark:light:height": "19",
+        "seamark:light:period": "15",
+        "seamark:light:range": "5",
+        "seamark:light:reference": "K 2666",
+        "seamark:light:sequence": "1+(2)+1+(2)+1+(2)+1+(5)",
+        "seamark:name": "Fort Denison",
+        "seamark:type": "beacon_special_purpose",
+        "source": "US NGA Pub. 111. 2024-04-13.",
+        "wikidata": "Q5471050",
+        "wikipedia": "en:Fort Denison Light"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.225921,
+          -33.8547589
+        ]
+      },
+      "id": "node/6086844044"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7743462930",
+        "alt_name": "Crookhaven Heads Light",
+        "man_made": "lighthouse",
+        "name": "Crookhaven Lighthouse",
+        "source:location": "NSW LPI Imagery",
+        "tourism": "attraction",
+        "wikidata": "Q5187897"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.7701666,
+          -34.8991151
+        ]
+      },
+      "id": "node/7743462930"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/7924909770",
+        "check_date": "2024-02-10",
+        "height": "4",
+        "man_made": "lighthouse",
+        "seamark:beacon_lateral:category": "starboard",
+        "seamark:beacon_lateral:shape": "mast",
+        "seamark:light:character": "Iso",
+        "seamark:light:colour": "green",
+        "seamark:light:height": "73",
+        "seamark:light:period": "2",
+        "seamark:light:range": "3",
+        "seamark:light:reference": "K 2637",
+        "seamark:type": "beacon_lateral",
+        "source": "US NGA Pub. 111. 2024-04-19."
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.3003673,
+          -33.8233736
+        ]
+      },
+      "id": "node/7924909770"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10220830273",
+        "check_date": "2024-04-14",
+        "direction": "101",
+        "man_made": "lighthouse",
+        "seamark:beacon_special_purpose:colour": "white",
+        "seamark:beacon_special_purpose:construction": "wooden",
+        "seamark:beacon_special_purpose:shape": "tower",
+        "seamark:information": "Lx 1 is F by day & Oc at night",
+        "seamark:light:1:character": "Oc",
+        "seamark:light:1:colour": "white",
+        "seamark:light:1:height": "13",
+        "seamark:light:1:period": "3",
+        "seamark:light:1:sequence": "2+(1)",
+        "seamark:light:2:character": "F",
+        "seamark:light:2:colour": "green",
+        "seamark:light:2:exhibition": "occasional",
+        "seamark:light:2:height": "7",
+        "seamark:light:2:range": "1.9",
+        "seamark:light:2:sector_end": "280.33",
+        "seamark:light:2:sector_start": "276.31",
+        "seamark:light:3:character": "F",
+        "seamark:light:3:colour": "white",
+        "seamark:light:3:exhibition": "occasional",
+        "seamark:light:3:height": "7",
+        "seamark:light:3:range": "4.7",
+        "seamark:light:3:sector_end": "281.67",
+        "seamark:light:3:sector_start": "280.33",
+        "seamark:light:4:character": "F",
+        "seamark:light:4:colour": "red",
+        "seamark:light:4:exhibition": "occasional",
+        "seamark:light:4:height": "7",
+        "seamark:light:4:range": "1.9",
+        "seamark:light:4:sector_end": "285.69",
+        "seamark:light:4:sector_start": "281.67",
+        "seamark:light:reference": "K 2695",
+        "seamark:name": "Goat Island Port Entry Light",
+        "seamark:type": "beacon_special_purpose",
+        "source": "US NGA Pub. 111. 2024-04-13.",
+        "start_date": "2020"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          151.1988497,
+          -33.851034
+        ]
+      },
+      "id": "node/10220830273"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "@id": "node/10253058566",
+        "man_made": "lighthouse",
+        "name": "Burrewarra Point Lighthouse"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          150.2334565,
+          -35.8339822
+        ]
+      },
+      "id": "node/10253058566"
+    }
+  ]
+}
+
+  </script>
+  <script>
+    // Initialize the map and set its view
+    const map = L.map('map').setView([-33.8688, 151.2093], 6);
+
+    // Add the OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    // Retrieve the GeoJSON data from the script tag
+    const geoJsonData = JSON.parse(document.getElementById('data').textContent);
+
+    // Add the GeoJSON data to the map
+    L.geoJSON(geoJsonData, {
+      onEachFeature: function (feature, layer) {
+        if (feature.geometry.type === "Point") {
+          layer.bindPopup(`<strong>Lighthouse</strong><br>ID: ${feature.properties.id}<br>Name: ${feature.properties.name}`);
+        }
+      }
+    }).addTo(map);
+  </script>
+</body>
+</html>
