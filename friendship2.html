@@ -18,14 +18,9 @@
       padding: 0;
     }
 
-    /** hide literally everything if the document is being rendered in an iframe */
-    .iframe * {
+    /** hide things that don't have the showiniframe class */
+    .iframe > :not(.showiniframe) {
       display: none;
-    }
-
-    /** except if its tagged with a special showiniframe class */
-    .iframe .showiniframe {
-      display: block;
     }
 
     #bracelet {
@@ -53,7 +48,7 @@
 
 <body>
   <h1><a href="?">friendship2 (◕‿◕)</a></h1>
-  make a friendship bracelet for someone please (´｡• ω •｡`) ♡
+  <p>make a friendship bracelet for someone please (´｡• ω •｡`) ♡</p>
 
   <div id="meta">
   </div>
@@ -214,7 +209,8 @@
   <script type="module">
     // tag the document with an iframe CSS class if it's being rendered in an iframe
     if (window.self !== window.top) {
-      document.documentElement.classList.add('iframe');
+      // set iframe on the body
+      document.body.classList.add('iframe');
     }
 
     const urlParams = new URLSearchParams(window.location.search);
