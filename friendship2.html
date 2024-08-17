@@ -164,9 +164,18 @@
     </div>
   </div>
 
+  <input type="text" id="creator" placeholder="Your name" />
+  <input type="text" id="recipient" placeholder="Recipient's name" />
+
   <button id="tie-button" onclick="tieBracelet()">Tie the Bracelet</button>
 
-  <script>
+  <script type="module">
+    const urlParams = new URLSearchParams(window.location.search);
+    const braceletId = urlParams.get('bracelet');
+    if (braceletId) {
+      fetchBracelet(braceletId);
+    }
+
     let leftText = '';
     let rightText = '';
 
@@ -180,7 +189,9 @@
       }
     }
 
-    function tieBracelet() {
+    window.addToBracelet = addToBracelet;
+
+    async function tieBracelet() {
       const fullText = leftText + rightText;
       document.getElementById('leftTextPath').remove();
       document.getElementById('rightTextPath').remove();
@@ -193,8 +204,63 @@
       document.getElementById('bracelet').appendChild(useFullPath);
 
       // delete the old use paths
-      document.getElementById('useLeftPath').remove();
-      document.getElementById('useRightPath').remove();
+
+      if (document.getElementById('leftTextPath')) {
+        document.getElementById('leftTextPath').remove();
+      }
+
+      if (document.getElementById('rightTextPath')) {
+        document.getElementById('rightTextPath').remove();
+      }
+
+      // get recipient and creator
+      const creator = document.getElementById('creator').value;
+      const recipient = document.getElementById('recipient').value;
+
+      // Send the POST request
+      const response = await fetch('https://mbo-appallinggreenjackal.web.val.run', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          content: fullText,
+          creator,
+          recipient
+        })
+      });
+
+      if (!response.ok) {
+        alert('Failed to save bracelet. Please try again.');
+        return;
+      }
+
+      const responseData = await response.json();
+      alert(`Bracelet saved! ID: ${responseData.id}`);
+    }
+
+    window.tieBracelet = tieBracelet;
+
+    async function fetchBracelet(id) {
+      const response = await fetch(`https://mbo-appallinggreenjackal.web.val.run?id=${id}`, {
+        method: 'GET'
+      });
+
+      if (!response.ok) {
+        alert('Failed to fetch bracelet. Please check the ID and try again.');
+        return;
+      }
+
+      const bracelet = await response.json();
+      if (document.getElementById('leftTextPath')) {
+        document.getElementById('leftTextPath').remove();
+      }
+      if (document.getElementById('rightTextPath')) {
+        document.getElementById('rightTextPath').remove();
+      }
+      document.getElementById('fullTextPath').textContent = bracelet.content;
+
+      const useFullPath = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      useFullPath.setAttribute('href', '#fullPath');
+      document.getElementById('bracelet').appendChild(useFullPath);
     }
   </script>
 </body>
