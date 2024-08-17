@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Friendship Bracelet Maker</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    #bracelet {
+      margin-top: 50px;
+      width: 80%;
+      height: 300px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .emoji-button {
+      font-size: 24px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    #buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    #buttons div {
+      margin: 0 10px;
+    }
+
+    #tie-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Digital Friendship Bracelet Maker</h1>
+  <svg id="bracelet" viewBox="0 0 500 500">
+    <defs>
+      <path id="leftPath" d="M 250,400 C 250,250 100,150 100,50" />
+      <path id="rightPath" d="M 250,400 C 250,250 400,150 400,50" />
+      <path id ="fullPath" d="M 100, 0
+        A 100,100 0 1,0 100,200
+        A 100,100 0 1,0 100,0"
+        fill="none" stroke="black" />
+    </defs>
+    <text fill="black" font-size="20">
+      <textPath id="leftTextPath" href="#leftPath"></textPath>
+      <textPath id="rightTextPath" href="#rightPath"></textPath>
+      <textPath id="fullTextPath" href="#fullPath"></textPath>
+    </text>
+    <circle id="circlePath" cx="250" cy="250" r="200" fill="none" stroke="none" />
+  </svg>
+
+  <div id="buttons">
+    <div>
+      <button class="emoji-button" onclick="addToBracelet('left', '😊')">😊</button>
+      <button class="emoji-button" onclick="addToBracelet('left', '🌟')">🌟</button>
+      <button class="emoji-button" onclick="addToBracelet('left', '❤️')">❤️</button>
+    </div>
+    <div>
+      <button class="emoji-button" onclick="addToBracelet('right', '😊')">😊</button>
+      <button class="emoji-button" onclick="addToBracelet('right', '🌟')">🌟</button>
+      <button class="emoji-button" onclick="addToBracelet('right', '❤️')">❤️</button>
+    </div>
+  </div>
+
+  <button id="tie-button" onclick="tieBracelet()">Tie the Bracelet</button>
+
+  <script>
+    let leftText = '';
+    let rightText = '';
+
+    function addToBracelet(side, emoji) {
+      if (side === 'left') {
+        leftText += emoji;
+        document.getElementById('leftTextPath').textContent = leftText;
+      } else if (side === 'right') {
+        rightText += emoji;
+        document.getElementById('rightTextPath').textContent = rightText;
+      }
+    }
+
+    function tieBracelet() {
+      const fullText = leftText + rightText;
+      document.getElementById('leftTextPath').remove();
+      document.getElementById('rightTextPath').remove();
+      document.getElementById('fullTextPath').textContent = fullText;
+    }
+  </script>
+</body>
+
+</html>
