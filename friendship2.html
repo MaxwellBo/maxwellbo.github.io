@@ -38,28 +38,16 @@
       margin-right: auto;
     }
 
-    .emoji-button {
-      font-size: 24px;
-      cursor: pointer;
-      margin: 5px;
-    }
-
-    #buttons {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-top: 20px;
-    }
-
-    #buttons div {
-      margin: 10px;
-    }
-
     #tie-button {
       margin-top: 20px;
       padding: 10px 20px;
       font-size: 16px;
-      cursor: pointer;
+    }
+
+    #buttons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -85,7 +73,8 @@
 
   <section id="builder">
     <div id="buttons">
-      <div class="left-column">
+      <div>
+        <h2>left (๑˃ᴗ˂)ﻭ</h2>
         <button onclick="addToBracelet('left', '🔵')">🔵</button>
         <button onclick="addToBracelet('left', '🔴')">🔴</button>
         <button onclick="addToBracelet('left', '⚫')">⚫</button>
@@ -128,7 +117,8 @@
         <button onclick="addToBracelet('left', 'Y')">Y</button>
         <button onclick="addToBracelet('left', 'Z')">Z</button>
       </div>
-      <div class="right-column">
+      <div>
+        <h2>right (≧◡≦)</h2>
         <button onclick="addToBracelet('right', '🔵')">🔵</button>
         <button onclick="addToBracelet('right', '🔴')">🔴</button>
         <button onclick="addToBracelet('right', '⚫')">⚫</button>
