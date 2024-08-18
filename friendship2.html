@@ -346,6 +346,11 @@
 
       for (const bracelet of bracelets) {
         const li = document.createElement('li');
+        if (bracelet.id === "5212b733-6602-4074-980e-ffa83b13a75c") {
+          // debug
+          continue
+        }
+
         li.innerHTML = `<a href="friendship2.html?id=${bracelet.id}">${bracelet.content}</a>`;
         ul.appendChild(li);
       }
