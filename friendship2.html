@@ -266,7 +266,8 @@
         body: JSON.stringify({
           content: fullText,
           creator,
-          recipient
+          recipient,
+          plea: "this is an exposed enpoint. please don't abuse this, i'm just trying to make something fun (｡•́︿•̀｡)"
         })
       });
 
@@ -327,8 +328,8 @@
       const embedInstructions = document.getElementById('embedinstructions');
       embedInstructions.innerHTML = `
         <p>copy and paste this code into your website to embed this bracelet</p>
-        <pre>
-          &lt;iframe src="maxbo.me/friendship2.html?id=${bracelet.id}" style="border: none;"&gt;&lt;/iframe&gt;
+        <pre style="overflow-y: wrap">
+  &lt;iframe src="maxbo.me/friendship2.html?id=${bracelet.id}" style="border: none;"&gt;&lt;/iframe&gt;
         </pre>
       `;
     }
@@ -363,25 +364,6 @@
 
     fetchBracelets();
 
-    async function deleteBracelet() {
-      const id = prompt('Enter the ID of the bracelet you want to delete:');
-      if (!id) {
-        return;
-      }
-
-      const response = await fetch(`https://mbo-friendship2.web.val.run?id=${id}`, {
-        method: 'DELETE'
-      });
-
-      if (!response.ok) {
-        alert('Failed to delete bracelet. Please try again.');
-        return;
-      }
-
-      alert('Bracelet deleted!');
-    }
-
-    window.deleteBracelet = deleteBracelet;
     window.popLeft = popLeft;
     window.popRight = popRight;
     window.addToBracelet = addToBracelet;
