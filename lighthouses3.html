@@ -2278,9 +2278,7 @@
     // Add the GeoJSON data to the map
     L.geoJSON(geoJsonData, {
       onEachFeature: function (feature, layer) {
-        if (feature.geometry.type === "Point") {
-          layer.bindPopup(`<strong>Lighthouse</strong><br>ID: ${feature.properties.id}<br>Name: ${feature.properties.name}`);
-        }
+        layer.bindPopup(`<strong>Lighthouse</strong><br>ID: ${feature.properties.id}<br>Name: ${feature.properties.name}`);
       }
     }).addTo(map);
   </script>

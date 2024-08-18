@@ -37,6 +37,7 @@
 
 <body>
 <main>
+<div class="slide">
 <header style="padding-bottom: 1rem">
   <nav>
     <h2>
@@ -51,8 +52,11 @@
   <h1 style="margin-bottom: 1rem">Can we build a reactive article in a single HTML file?</h1>
   <b>Yes</b> <small><i>(by standing on the shoulders of <a href="https://observablehq.com/">Observable</a>)</i></small>.
 </header>
+</div>
 
 <hr />
+
+<div class="slide">
 
 Before I start, why am I doing this?
 <br />
@@ -87,6 +91,9 @@ I'll try and demonstrate these capabilities, literate programming style.
   <img src="img/document.png" alt="A computer displays an open book" style="max-width: 125px; margin: 1rem" />
 </div>
 
+</div>
+
+<div class="slide">
 <h2>Cells</h2>
 
 
@@ -137,7 +144,9 @@ style.echo::after {
   content: "<\/style>"; 
 }
 </style>
+</div>
 
+<div class="slide">
 Now we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and the <a href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to <code>window</code>.
 We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
 
@@ -172,7 +181,9 @@ window.module = module;
 window.cell = cell;
 window.observer = observer;
 </script>
+</div>
 
+<div class="slide">
 Now we'll declare a cell called <code>counter</code> that emits a number every second.
 <b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
 
@@ -185,6 +196,9 @@ cell("counter", async function* () {
   }
 });
 </script>
+
+</div>
+<div class="slide">
 
 Now that we've created a our <code>counter</code> cell, we can create other cells that depend on it.
 
@@ -210,6 +224,9 @@ cell("fizzbuzz", ["counter"], (counter) => {
 });
 </script>
 
+</div>
+<div class="slide">
+
 We'll import <a href="https://observablehq.com/plot/what-is-plot">Observable Plot</a> and use the <code>counter</code> value in the plot.
 
 <script type="module" class="echo" id="plot">
@@ -228,6 +245,9 @@ cell("plot", ["counter"], (counter) => {
 });
 </script>
 
+</div>
+<div class="slide">
+
 <i>We should always store data in their own <code>script</code> elements, so that they can be easily referenced by other cells.</i>
 
 <br />
@@ -240,10 +260,13 @@ cell("plot", ["counter"], (counter) => {
   163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
 ]
 </script>
+</div>
 
 <div class="center-contents">
   <img src="img/up.png" alt="A computer displays a graph in the upward direction" style="max-width: 125px" />
 </div>
+
+<div class="slide">
 
 <h2>Inputs</h2>
 
@@ -270,8 +293,10 @@ function viewof(name, inputsOrDefinition, maybeDefinition) {
 window.viewof = viewof;
 </script>
 
-Wiggle the range input and see another dependent cell update.
+</div>
+<div class="slide">
 
+Wiggle the range input and see another dependent cell update.
 
 <script type="module" class="echo" id="range">
 viewof("range", () => {
@@ -284,7 +309,9 @@ cell("rangePlot", ["range"], (range) => {
   return Plot.tickX([range]).plot({ x: { domain: [0, 100] } });
 });
 </script>
+</div>
 
+<div class="slide">
 <h2>Mutability</h2>
 
 Purely functional dataflow is great, but sometimes you just need to mutate state.
@@ -334,6 +361,9 @@ cell("sword", ["ref"], (ref) => {
 });
 </script>
 
+</div>
+<div class="slide">
+
 <h2>TeX, Markdown, Graphviz</h2>
 
 What's the point otherwise?
@@ -348,6 +378,9 @@ cell("tex", async () => {
     \,d\xi`
 });
 </script>
+
+</div>
+<div class="slide">
 
 <script type="module" class="echo" id="markdown">
 const elements = JSON.parse(document.getElementById("elements").text);
@@ -371,6 +404,9 @@ cell("markdown", async () => {
 ]
 </script>
 
+</div>
+<div class="slide">
+
 <script type="module" class="echo" id="dot">
 cell("dot", async () => {
   const dot = await library.dot();
@@ -382,11 +418,14 @@ digraph G {
 });
 </script>
 
+</div>
+
 <div class="center-contents">
   <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data" style="max-width: 125px; margin: 1rem" />
 </div>
 
-
+<div class="slide">
+  
 <h2>SQLite</h2>
 
 I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
@@ -410,8 +449,8 @@ cell("sqlite", async () => {
   });
 });
 </script>
-
-
+</div>
+<div class="slide">
 <h2>Python</h2>
 
 The <a href="http://pyodide.org/">Pyodide</a> CPython WASM distribution includes <a href="https://numpy.org/">NumPy</a>, <a href="https://pandas.pydata.org/">Pandas</a>, <a href="https://matplotlib.org/">Matplotlib</a>, <a href="https://scikit-learn.org/">scikit-learn</a>, and <a href="https://scipy.org/">Scipy</a>.
@@ -454,6 +493,8 @@ buf.seek(0)
 });
 </script>
 
+</div>
+<div class="slide">
 <h2>R</h2>
 
 You know the drill. It's R, using <a href="https://docs.r-wasm.org/webr/latest/">WebR</a>. 
@@ -527,6 +568,8 @@ cell("model", async () => {
   `;
 });
 </script> -->
+</div>
+<div class="slide">
 
 <h2>Cell status</h2>
 
@@ -568,6 +611,9 @@ cell("error", () => {
 });
 </script>
 
+</div>
+<div class="slide">
+
 <h2>What's next?</h2>
 
 I will try and cram all of this into a library with some proper documentation. Stay tuned.
@@ -576,6 +622,55 @@ I will try and cram all of this into a library with some proper documentation. S
 <div class="center-contents">
   <img src="img/typing.gif" alt="A computer terminal receives text" style="margin: 1rem" />
 </div>
+
+</div>
+<div class="slide">
+
+<h2>Slide infrastructure</h2>
+
+<style>
+  .slide {
+    scroll-margin-top: 2rem;
+  }
+</style>
+
+<script type="module" class="echo">
+  let slide = -1;
+  window.addEventListener('keydown', (event) => {
+    if (event.shiftKey && event.key === 'N') {
+      slide++;
+      paint();
+    }
+
+    if (event.shiftKey && event.key === 'B') {
+      slide--;
+      paint();
+    }
+
+    if (event.shiftKey && event.key === 'R') {
+      slide = -1;
+      paint();
+    }
+  });
+
+  function paint() {
+    for (const s of document.querySelectorAll('.slide')) {
+      s.style.border = 'none';
+      s.style.opacity = 1;
+    }
+
+    if (slide >= 0) {
+      document.querySelectorAll('.slide')[slide].style.border = '1px dotted grey';
+      document.querySelectorAll('.slide')[slide].scrollIntoView({ behavior: 'smooth' });
+
+      for (const s of document.querySelectorAll('.slide')) {
+        if (s !== document.querySelectorAll('.slide')[slide]) {
+          s.style.opacity = 0.4;
+        }
+      }
+    }
+  }
+</script>
 
 <!-- To the reader
 
