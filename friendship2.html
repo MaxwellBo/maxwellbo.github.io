@@ -344,11 +344,11 @@
       // reverse the bracelets so the newest ones are at the top
       bracelets.reverse();
 
-      bracelets.forEach(bracelet => {
+      for (const bracelet of bracelets) {
         const li = document.createElement('li');
         li.innerHTML = `<a href="friendship2.html?id=${bracelet.id}">${bracelet.content}</a>`;
         ul.appendChild(li);
-      });
+      }
     }
 
     fetchBracelets();
