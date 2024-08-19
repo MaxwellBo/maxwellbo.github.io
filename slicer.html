@@ -13,12 +13,16 @@
   <h1>slicer</h1>
   inspired by <a href="https://www.hodinkee.com/articles/olympics-2024-mens-100m-photo-finish">How Omega Captured The Men's 100m Final Photo Finish (And The Watch Noah Lyles Wore While Winning)</a>
   <br />
+  <br />
+  <input type="file" id="videoUploader" accept="video/*">
+  <br />
+  <br />
   <video id="myVideo" width="1080" controls>
-    <source src="sprinters2.mp4" type="video/mp4">
+    <source id="videoSource" src="sprinters2.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
   <br />
-  <input type="range" id="slicePosition" min="0" max="1080" value="0" step="1" width="1080">
+  <input type="range" id="slicePosition" min="0" max="1080" value="536" step="1" width="1080">
   <br />
   Align the slider with the finish line, then play the video to start slicing.
   <br />
@@ -29,6 +33,8 @@
 
     let t = 0;
     const video = document.getElementById('myVideo');
+    const videoSource = document.getElementById('videoSource');
+    const videoUploader = document.getElementById('videoUploader');
     const canvas = document.getElementById('myCanvas');
     const slicePosition = document.getElementById('slicePosition');
     const ctx = canvas.getContext('2d');
@@ -37,6 +43,16 @@
     slicePosition.max = video.width;
     // ...and its style as well
     slicePosition.style.width = video.width + 'px';
+
+    // Handle video upload
+    videoUploader.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const fileURL = URL.createObjectURL(file);
+        videoSource.src = fileURL;
+        video.load();
+      }
+    });
 
     video.addEventListener('play', () => {
       t = 0;
@@ -74,7 +90,6 @@
       if (t % 60 !== 0) {
         return;
       }
-
 
       // Draw a tick mark at the current slice position
       ctx.font = '20px Arial';
