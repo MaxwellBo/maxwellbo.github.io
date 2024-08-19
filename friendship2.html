@@ -28,6 +28,10 @@
       touch-action: manipulation;
     }
 
+    .break-all {
+      word-break: break-all;
+    }
+
     #bracelet {
       margin-top: 50px;
       width: 80%;
@@ -357,7 +361,7 @@
           continue
         }
 
-        li.innerHTML = `<a href="friendship2.html?id=${bracelet.id}">${bracelet.content}</a>`;
+        li.innerHTML = `<a class="break-all" href="friendship2.html?id=${bracelet.id}">${bracelet.content}</a>`;
         ul.appendChild(li);
       }
     }
