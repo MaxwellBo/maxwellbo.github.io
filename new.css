@@ -129,17 +129,17 @@ a:visited {
   color: color(display-p3 1 0 1);
 }
 
-a:hover {
+a:hover, a:hover * {
   background-color: color(display-p3 1 0 1);
   color: white;
 }
 
-a:hover:visited {
+a:hover:visited, a:hover:visited * {
   background-color: color(display-p3 1 0 1);
   color: white;
 }
 
-a:hover:active:visited {
+a:hover:active:visited, a:hover:active:visited * {
   background-color: color(display-p3 1 1 0);
   color: black;
 }
