@@ -159,30 +159,20 @@ const runtime = new Runtime();
 const module = runtime.module();
 
 function cell(name, inputsOrDefinition, maybeDefinition) {
-  const maybeVar = module._scope.get(name);
-
-  if (maybeVar) {
-      if (maybeDefinition) {
-      const inputs = inputsOrDefinition;
-      const definition = maybeDefinition;
-      maybeVar.define(name, inputs, definition);
-    } else {
-      const definition = inputsOrDefinition;
-      maybeVar.define(name, definition);
-    }
-    return;
-  }
+  // if the variable already is in scope, get it, otherwise create a fresh one
+  const variable = module._scope.get(name) || module.variable(observer(name));
 
   if (maybeDefinition) {
     const inputs = inputsOrDefinition;
     const definition = maybeDefinition;
-    module.variable(observer(name)).define(name, inputs, definition);
+    variable.define(name, inputs, definition);
   } else {
     const definition = inputsOrDefinition;
-    module.variable(observer(name)).define(name, definition);
+    variable.define(name, definition);
   }
 }
 
+// use the Observable inspector to display the cell's output above the script block
 function observer(cellName) {
   const div = document.createElement("div");
   const cellElement = document.getElementById(cellName)
