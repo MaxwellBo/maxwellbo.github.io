@@ -442,9 +442,7 @@ cell("tex", async () => {
 <div class="slide">
 
 <script type="module" class="echo" id="markdown" contenteditable="true">
-const elements = JSON.parse(document.getElementById("elements").text);
-
-cell("markdown", async () => {
+cell("markdown", ["elements"], async (elements) => {
   const md = await library.md();
   return md`
 | Name      | Symbol      | Atomic number |
@@ -454,13 +452,15 @@ cell("markdown", async () => {
 });
 </script>
 
-<script class="echo" id="elements" type="application/json">
-[
-  { "symbol": "Co", "name": "Cobalt", "number": 27 },
-  { "symbol": "Cu", "name": "Copper", "number": 29 },
-  { "symbol": "Sn", "name": "Tin", "number": 50 },
-  { "symbol": "Pb", "name": "Lead", "number": 82 }
-]
+<script type="module" class="echo" id="elements" contenteditable="true">
+cell("elements", () => {
+  return [
+    { "symbol": "Co", "name": "Cobalt", "number": 27 },
+    { "symbol": "Cu", "name": "Copper", "number": 29 },
+    { "symbol": "Sn", "name": "Tin", "number": 50 },
+    { "symbol": "Pb", "name": "Lead", "number": 82 }
+  ];
+});
 </script>
 
 </div>
