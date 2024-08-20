@@ -188,9 +188,26 @@ window.observer = observer;
 </div>
 
 <div class="slide">
+
+Now we'll declare a cell called <code>counter</code> that emits a number every second.
+<b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
+
+<script type="module" class="echo" id="counter" contenteditable="true">
+cell("counter", async function* () {
+  let i = 0;
+  while (true) {
+    await library.Promises.delay(1000);
+    yield i++
+  }
+});
+</script>
+
+</div>
+<div class="slide">
+
 <h3>contenteditable</h3>
 
-We need to ensure that when modifying a <code>script</code> element, we force it's re-evaluation.
+We can get <code>contenteditable</code> working by ensuring that whenever we blur a <code>script</code> element, we force its re-evaluation.
 
 <script type="module" class="echo">
 function reevaluate(event) {
@@ -211,22 +228,6 @@ function reevaluate(event) {
 // we want to redeclare scripts onblur
 document.querySelectorAll('script.echo').forEach((script) => {
   script.addEventListener('blur', reevaluate);
-});
-</script>
-
-</div>
-<div class="slide">
-
-Now we'll declare a cell called <code>counter</code> that emits a number every second.
-<b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
-
-<script type="module" class="echo" id="counter" contenteditable="true">
-cell("counter", async function* () {
-  let i = 0;
-  while (true) {
-    await library.Promises.delay(1000);
-    yield i++
-  }
 });
 </script>
 
