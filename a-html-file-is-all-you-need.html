@@ -361,9 +361,10 @@ cell("rangePlot", ["range"], (range) => {
   return Plot.tickX([range]).plot({ x: { domain: [0, 100] } });
 });
 </script>
-</div>
 
+</div>
 <div class="slide">
+
 <h2>Mutability</h2>
 
 Purely functional dataflow is great, but sometimes you just need to mutate state.
@@ -393,6 +394,9 @@ function mutable(name, value) {
 }
 window.mutable = mutable;
 </script>
+
+</div>
+<div class="slide">
 
 <script type="module" class="echo" id="ref">
 window.ref = mutable("ref", 3)
