@@ -323,109 +323,9 @@ cell("numbers", () => {
 
 <div class="slide">
 
-<h2>Inputs</h2>
-
-We'll create a new cell type <code>viewof</code> that works specifically with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.
-
-It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> - one for the value, and one for the DOM element itself.
-
-<script type="module" class="echo">
-import * as Inputs from 'https://esm.run/@observablehq/inputs'
-window.Inputs = Inputs
-
-function viewof(name, inputsOrDefinition, maybeDefinition) {
-  if (maybeDefinition) {
-    const inputs = inputsOrDefinition;
-    const definition = maybeDefinition;
-    module.variable(observer(name)).define(`viewof ${name}`, inputs, definition);
-    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
-  } else {
-    const definition = inputsOrDefinition
-    module.variable(observer(name)).define(`viewof ${name}`, definition);
-    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
-  }
-}
-window.viewof = viewof;
-</script>
-
-</div>
-<div class="slide">
-
-Wiggle the range input and see another dependent cell update.
-
-<script type="module" class="echo" id="range">
-viewof("range", () => {
-  return Inputs.range([0, 100], { step: 1 });
-});
-</script>
-
-<script type="module" class="echo" id="rangePlot">
-cell("rangePlot", ["range"], (range) => {
-  return Plot.tickX([range]).plot({ x: { domain: [0, 100] } });
-});
-</script>
-
-</div>
-<div class="slide">
-
-<h2>Mutability</h2>
-
-Purely functional dataflow is great, but sometimes you just need to mutate state.
-We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a> values when the value is mutated - in the runtime.
-
-<script type="module" class="echo" id="mutable">
-/** Hijacked from https://github.com/observablehq/stdlib/blob/main/src/mutable.js */
-function Mutable(value) {
-  let change;
-  return Object.defineProperty(
-    library.Generators.observe((_) => {
-      change = _;
-      if (value !== undefined) change(value);
-    }),
-    "value",
-    {
-      get: () => value,
-      set: (x) => void change((value = x))
-    }
-  );
-}
-
-function mutable(name, value) {
-  const m = Mutable(value);
-  cell(name, m);
-  return m;
-}
-window.mutable = mutable;
-</script>
-
-</div>
-<div class="slide">
-
-<script type="module" class="echo" id="ref">
-window.ref = mutable("ref", 3)
-</script>
-
-<script type="module" class="echo" id="increment">
-viewof("increment", () => {
-  const increment = () => ++ref.value;
-  const reset = () => ref.value = 0;
-
-  return Inputs.button([["Increment", increment], ["Reset", reset]]);
-});
-</script>
-
-<script type="module" class="echo" id="sword">
-cell("sword", ["ref"], (ref) => {
-  return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
-});
-</script>
-
-</div>
-<div class="slide">
-
 <h2>TeX, Markdown, Graphviz</h2>
 
-What's the point otherwise?
+We can return any type of DOM element from a cell
 
 <script type="module" class="echo" id="tex" contenteditable="true">
 cell("tex", async () => {
@@ -604,6 +504,109 @@ hist(track_data$Milliseconds,
 });
 </script>
 
+</div>
+<div class="slide">
+
+<h2>Inputs</h2>
+
+We'll create a new cell type <code>viewof</code> that works specifically with <a href="https://github.com/observablehq/inputs">Observable Inputs</a>.
+
+It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> - one for the value, and one for the DOM element itself.
+
+<script type="module" class="echo">
+import * as Inputs from 'https://esm.run/@observablehq/inputs'
+window.Inputs = Inputs
+
+function viewof(name, inputsOrDefinition, maybeDefinition) {
+  if (maybeDefinition) {
+    const inputs = inputsOrDefinition;
+    const definition = maybeDefinition;
+    module.variable(observer(name)).define(`viewof ${name}`, inputs, definition);
+    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
+  } else {
+    const definition = inputsOrDefinition
+    module.variable(observer(name)).define(`viewof ${name}`, definition);
+    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
+  }
+}
+window.viewof = viewof;
+</script>
+
+</div>
+<div class="slide">
+
+Wiggle the range input and see another dependent cell update.
+
+<script type="module" class="echo" id="range">
+viewof("range", () => {
+  return Inputs.range([0, 100], { step: 1 });
+});
+</script>
+
+<script type="module" class="echo" id="rangePlot">
+cell("rangePlot", ["range"], (range) => {
+  return Plot.tickX([range]).plot({ x: { domain: [0, 100] } });
+});
+</script>
+
+</div>
+<div class="slide">
+
+<h2>Mutability</h2>
+
+Purely functional dataflow is great, but sometimes you just need to mutate state.
+We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a> values when the value is mutated - in the runtime.
+
+<script type="module" class="echo" id="mutable">
+/** Hijacked from https://github.com/observablehq/stdlib/blob/main/src/mutable.js */
+function Mutable(value) {
+  let change;
+  return Object.defineProperty(
+    library.Generators.observe((_) => {
+      change = _;
+      if (value !== undefined) change(value);
+    }),
+    "value",
+    {
+      get: () => value,
+      set: (x) => void change((value = x))
+    }
+  );
+}
+
+function mutable(name, value) {
+  const m = Mutable(value);
+  cell(name, m);
+  return m;
+}
+window.mutable = mutable;
+</script>
+
+</div>
+<div class="slide">
+
+<script type="module" class="echo" id="ref">
+window.ref = mutable("ref", 3)
+</script>
+
+<script type="module" class="echo" id="increment">
+viewof("increment", () => {
+  const increment = () => ++ref.value;
+  const reset = () => ref.value = 0;
+
+  return Inputs.button([["Increment", increment], ["Reset", reset]]);
+});
+</script>
+
+<script type="module" class="echo" id="sword">
+cell("sword", ["ref"], (ref) => {
+  return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
+});
+</script>
+
+</div>
+
+
 <!-- <h2>3D models</h2>
 
 We can use Google's <a href="https://modelviewer.dev/"><code>&lt;model-viewer&gt;</code></a> <a href="https://www.webcomponents.org/introduction">Web Component</a> to display 3D models.
@@ -627,7 +630,7 @@ cell("model", async () => {
   `;
 });
 </script> -->
-</div>
+
 <div class="slide">
 
 <h2>Cell status</h2>
