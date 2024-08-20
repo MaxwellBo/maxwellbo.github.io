@@ -206,7 +206,7 @@ function reevaluate(event) {
 }
 
 // we want to redeclare scripts onblur
-document.querySelectorAll('.echo').forEach((script) => {
+document.querySelectorAll('script.echo').forEach((script) => {
   script.addEventListener('blur', reevaluate);
 });
 </script>
@@ -508,7 +508,7 @@ cell("sqlite", async () => {
 The <a href="http://pyodide.org/">Pyodide</a> CPython WASM distribution includes <a href="https://numpy.org/">NumPy</a>, <a href="https://pandas.pydata.org/">Pandas</a>, <a href="https://matplotlib.org/">Matplotlib</a>, <a href="https://scikit-learn.org/">scikit-learn</a>, and <a href="https://scipy.org/">Scipy</a>.
 We'll rebuild the plot seen above, but using Matplotlib and Python's <code>sqlite3</code> module instead.
 
-<script type="module" class="echo" id="python">
+<script type="module" class="echo" id="python" contenteditable="true">
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
 cell("python", async () => {
   const pyodide = await loadPyodide();
