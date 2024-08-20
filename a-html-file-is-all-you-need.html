@@ -427,7 +427,7 @@ cell("sword", ["ref"], (ref) => {
 
 What's the point otherwise?
 
-<script type="module" class="echo" id="tex">
+<script type="module" class="echo" id="tex" contenteditable="true">
 cell("tex", async () => {
   const tex = await library.tex()
   return tex`
@@ -441,7 +441,7 @@ cell("tex", async () => {
 </div>
 <div class="slide">
 
-<script type="module" class="echo" id="markdown">
+<script type="module" class="echo" id="markdown" contenteditable="true">
 const elements = JSON.parse(document.getElementById("elements").text);
 
 cell("markdown", async () => {
@@ -466,7 +466,7 @@ cell("markdown", async () => {
 </div>
 <div class="slide">
 
-<script type="module" class="echo" id="dot">
+<script type="module" class="echo" id="dot" contenteditable="true">
 cell("dot", async () => {
   const dot = await library.dot();
   return dot`
