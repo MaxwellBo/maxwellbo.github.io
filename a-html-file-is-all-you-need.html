@@ -554,11 +554,10 @@ I didn't figure out how to get <a href="https://ggplot2.tidyverse.org/">ggplot2<
 
 <i>I must disclose that this cell seems to be a bit flaky on iOS. I have not had a chance to investigate further, nor will I.</i>
 
-<script type="module" class="echo" id="r">
+<script type="module" class="echo" id="r" contenteditable="true">
 import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
 
 cell("r", async () => {
-  return; // TODO REMOVE ME
   const webR = new WebR();
   await webR.init();
 
