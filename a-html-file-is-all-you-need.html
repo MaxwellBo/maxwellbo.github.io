@@ -131,7 +131,7 @@ I stress that <b>this <code>style</code> element is styling itself.</b>
 }
 
 script.echo::before {
-  content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\">";
+  content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
 }
 script.echo::after { 
   content: "<\/script>"; 
@@ -159,6 +159,20 @@ const runtime = new Runtime();
 const module = runtime.module();
 
 function cell(name, inputsOrDefinition, maybeDefinition) {
+  const maybeVar = module._scope.get(name);
+
+  if (maybeVar) {
+      if (maybeDefinition) {
+      const inputs = inputsOrDefinition;
+      const definition = maybeDefinition;
+      maybeVar.define(name, inputs, definition);
+    } else {
+      const definition = inputsOrDefinition;
+      maybeVar.define(name, definition);
+    }
+    return;
+  }
+
   if (maybeDefinition) {
     const inputs = inputsOrDefinition;
     const definition = maybeDefinition;
@@ -184,10 +198,35 @@ window.observer = observer;
 </div>
 
 <div class="slide">
+<h3>contenteditable</h3>
+
+We need to ensure that when modifying a <code>script</code> element, we force it's re-evaluation.
+
+<script type="module" class="echo">
+function reevaluate(event) {
+  const existingScript = event.target;
+  const scriptContent = existingScript.textContent;
+  const newScript = document.createElement('script');
+  newScript.textContent = scriptContent;
+  for (let i = 0; i < existingScript.attributes.length; i++) {
+    newScript.setAttribute(existingScript.attributes[i].name, existingScript.attributes[i].value || '');
+  }
+  existingScript.parentNode.insertBefore(newScript, existingScript);
+  existingScript.parentNode.removeChild(existingScript);
+}
+
+// we want to redeclare scripts onblur
+document.querySelectorAll('.echo').forEach((script) => {
+  script.addEventListener('blur', reevaluate);
+});
+</script>
+</div>
+
+<div class="slide">
 Now we'll declare a cell called <code>counter</code> that emits a number every second.
 <b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
 
-<script type="module" class="echo" id="counter">
+<script type="module" class="echo" id="counter" contenteditable="true">
 cell("counter", async function* () {
   let i = 0;
   while (true) {
@@ -506,6 +545,7 @@ I didn't figure out how to get <a href="https://ggplot2.tidyverse.org/">ggplot2<
 import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
 
 cell("r", async () => {
+  return; // TODO REMOVE ME
   const webR = new WebR();
   await webR.init();
 
@@ -612,6 +652,7 @@ cell("error", () => {
 </script>
 
 </div>
+
 <div class="slide">
 
 <h2>What's next?</h2>
@@ -671,28 +712,6 @@ I will try and cram all of this into a library with some proper documentation. S
     }
   }
 </script>
-
-<!-- To the reader
-
-I was going to try and get this section working but this article didn't do
-well on HN so I gave up. Rather not scream into the void.
-
-<h2>contenteditable</h2>
-
-<script>
-function rerun(event) {
-  const existingScript = event.target;
-  const scriptContent = existingScript.textContent;
-  const newScript = document.createElement('script');
-  newScript.textContent = scriptContent;
-  for (let i = 0; i < existingScript.attributes.length; i++) {
-    newScript.setAttribute(existingScript.attributes[i].name, existingScript.attributes[i].value || '');
-  }
-  existingScript.parentNode.insertBefore(newScript, existingScript);
-  existingScript.parentNode.removeChild(existingScript);
-}
-</script> 
--->
 
 <footer>
     <a href="https://github.com/MaxwellBo/maxwellbo.github.io"><img class="badge" src="img/pages.png" /></a>
