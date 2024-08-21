@@ -235,8 +235,9 @@ Now that we've created a our <code>counter</code> cell, we can create other cell
 
 <br />
 
-We'll import <a href="https://github.com/observablehq/htl">Hypertext Literal</a> and use it to format the
-<code>counter</code> value.
+We'll import <a href="https://observablehq.com/@observablehq/htl">Hypertext Literal</a> and use it to format the
+<code>counter</code> value. <code>htl</code> implements a full-blown HTML5 parser that performs automatic escaping and 
+interpolation of non-serializable values, such as event listeners, style objects, and other DOM nodes.
 
 <script type="module" class="echo" id="fizzbuzz">
 import * as htl from 'https://esm.run/htl';
