@@ -157,9 +157,9 @@ aside {
   margin-left: 0.5rem;
   float: right;
   margin-left: 5px;
-  border-left: teal 1px solid;
+  border-left: darkslategray 1px solid;
   font-style: italic;
-  color: teal;
+  color: darkslategray;
 }
 
 aside > p {

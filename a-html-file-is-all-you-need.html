@@ -66,8 +66,8 @@ Before I start, why am I doing this?
 <br />
 Instead, people will:
 <ol>
-  <li>First use an interactive notebook like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://plutojl.org/">Pluto.jl</a> or <a href="https://observablehq.com/">Observable</a> to do data exploration, analysis and visualisation,</li>
-  <li>Then move to publishing platforms like <a href="https://quarto.org/">Quarto</a>, <a href="https://typst.app/">Typst</a>, <a href="https://overleaf.com">Overleaf</a>, pure <a href="https://www.latex-project.org/">LaTeX</a>, or a <a href="https://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor to typeset their work.</li>
+  <li>First use an interactive notebook like <a href="https://jupyter.org/">Jupyter</a>, <a href="https://rmarkdown.rstudio.com/lesson-10.html">RStudio</a>, <a href="https://plutojl.org/">Pluto.jl</a> or <a href="https://observablehq.com/">Observable</a> to do data exploration, analysis and visualisation,</li>
+  <li>Then move to publishing platforms like <a href="https://typst.app/">Typst</a>, <a href="https://overleaf.com">Overleaf</a>, pure <a href="https://www.latex-project.org/">LaTeX</a>, or a <a href="https://en.wikipedia.org/wiki/WYSIWYG">WYSIWYG</a> editor to typeset their work.</li>
 </ol>
 <br />
 I think self-contained HTML files can be used for both of these stages, and prevent a lot of faffing around with CLI tooling, CI steps, or 3rd-party platforms.
@@ -77,15 +77,12 @@ HTML's typesetting capabilities are well documented, but its capabilities as a p
 <br />
 <aside>
   <p>
-    While I have not used <a href="https://htmx.org/">htmx</a>, I believe I am obligated to mention it.
-    I think it's a great advance for HTML hypermedia.
+    This article takes heavy inspiration from Anton Zhiyanov's <a href="https://antonz.org/in-browser-code-playgrounds/">In-browser code playgrounds</a>, Cristóbal Sciutto</a>'s <a href="https://cristobal.space/note">Self-modifying HTML notes</a>, <a href="https://quarto.org/">Quarto</a>, and <a href="https://observablehq.com/framework/">Observable Framework</a>
   </p>
 </aside>
 <br />
 I'll try and demonstrate these capabilities, literate programming style.
 <br />
-<br />
-<i>NB: This article takes heavy inspiration from Anton Zhiyanov's <a href="https://antonz.org/in-browser-code-playgrounds/">In-browser code playgrounds</a></i>.
 
 <div class="center-contents">
   <img src="img/document.png" alt="A computer displays an open book" style="max-width: 125px; margin: 1rem" />
