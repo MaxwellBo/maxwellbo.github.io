@@ -323,7 +323,9 @@ cell("numbers", () => {
 
 <h2>TeX, Markdown, Graphviz</h2>
 
-We can return any type of DOM element from a cell
+We can return any type of DOM element from a cell. 
+<br />
+In this case, the <code>tex</code>, <code>md</code>, and <code>dot</code> cells return <code>span</code>, <code>table</code> and <code>svg</code> elements respectively.
 
 <script type="module" class="echo" id="tex" contenteditable="true">
 cell("tex", async () => {
@@ -379,6 +381,52 @@ digraph G {
 
 <div class="center-contents">
   <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data" style="max-width: 125px; margin: 1rem" />
+</div>
+
+<div class="slide">
+
+<h2>Cell status</h2>
+
+We can also return a <code>Promise</code>, or throw an <code>Error</code>, from a cell.
+
+Observable's <code>Inspector</code> will apply an <code>observablehq--running</code> or
+<code>observablehq--error</code> class to the cell's <code>div</code> <code>Inspector</code> element respectively.
+We'll style them appropriately:
+
+<style class="echo" contenteditable="true">
+@keyframes blink {
+  67% {
+    opacity: 0;
+  }
+}
+
+.observablehq {
+  margin-top: 1rem;
+}
+
+.observablehq--running::before {
+  content: 'LOADING';
+  animation: blink 1s step-end infinite;
+}
+
+.observablehq--error {
+  color: #d00;
+}
+</style>
+
+<script type="module" class="echo" id="running">
+cell("running", () => {
+  // this cell will run forever
+  return new Promise(() => { });
+});
+</script>
+
+<script type="module" class="echo" id="error">
+cell("error", () => {
+  throw new Error("This cell has thrown an error");
+});
+</script>
+
 </div>
 
 <div class="slide">
@@ -629,49 +677,6 @@ cell("model", async () => {
 });
 </script> -->
 
-<div class="slide">
-
-<h2>Cell status</h2>
-
-Observable's <code>Inspector</code> can apply an <code>observablehq--running</code> or
-<code>observablehq--error</code> class to the cell's <code>div</code> result element.
-We'll style them appropriately:
-
-<style class="echo" contenteditable="true">
-@keyframes blink {
-  67% {
-    opacity: 0;
-  }
-}
-
-.observablehq {
-  margin-top: 1rem;
-}
-
-.observablehq--running::before {
-  content: 'LOADING';
-  animation: blink 1s step-end infinite;
-}
-
-.observablehq--error {
-  color: #d00;
-}
-</style>
-
-<script type="module" class="echo" id="running">
-cell("running", () => {
-  // this cell will run forever
-  return new Promise(() => { });
-});
-</script>
-
-<script type="module" class="echo" id="error">
-cell("error", () => {
-  throw new Error("This cell has thrown an error");
-});
-</script>
-
-</div>
 <!-- <div class="slide"> -->
 
 <!-- <h2>Saving contenteditable changes</h2>
