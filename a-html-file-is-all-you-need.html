@@ -390,7 +390,7 @@ digraph G {
 We can also return a <code>Promise</code>, or throw an <code>Error</code>, from a cell.
 
 Observable's <code>Inspector</code> will apply an <code>observablehq--running</code> or
-<code>observablehq--error</code> class to the cell's <code>div</code> <code>Inspector</code> element respectively.
+<code>observablehq--error</code> class to the cell's outer <code>div</code> element respectively.
 We'll style them appropriately:
 
 <style class="echo" contenteditable="true">
@@ -596,6 +596,8 @@ cell("rangePlot", ["range"], (range) => {
   return Plot.tickX([range]).plot({ x: { domain: [0, 100] } });
 });
 </script>
+
+NB: How Observable Inputs work is a bit arcane. This demo of <a href="https://observablehq.com/@observablehq/synchronized-inputs">Synchronized Inputs</a> may shed some light.
 
 </div>
 <div class="slide">
