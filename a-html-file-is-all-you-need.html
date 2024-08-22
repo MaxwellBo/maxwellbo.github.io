@@ -441,7 +441,7 @@ I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sa
 Now we'll use a <a href="https://observablehq.com/framework/lib/sqlite">WASM-backed SQLite client</a> to query it.
 <br />
 <br />
-<i>Try adding <code>WHERE Milliseconds &gt; 1000000</code> to the SQL query!</i>
+<i>Try adding <code>WHERE Milliseconds &lt; 1000000</code> to the SQL query!</i>
 
 <script type="module" class="echo" id="sqlite" contenteditable="true">
 cell("sqlite", async () => {
