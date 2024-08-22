@@ -205,22 +205,22 @@ cell("counter", async function* () {
 
 <h3>contenteditable</h3>
 
-We can get <code>contenteditable</code> working by ensuring that whenever we blur a <code>script</code> element, we force its re-evaluation.
+We can get <code>contenteditable</code> working by ensuring that whenever we blur a <code>script</code> element, we force its re-evaluation by building a clone.
 
 <script type="module" class="echo">
 function reevaluate(event) {
-  const existingScript = event.target;
-  const scriptContent = existingScript.textContent;
-  const newScript = document.createElement('script');
-  newScript.textContent = scriptContent;
-  for (let i = 0; i < existingScript.attributes.length; i++) {
-    newScript.setAttribute(existingScript.attributes[i].name, existingScript.attributes[i].value || '');
+  const old = event.target;
+  const neww = document.createElement('script');
+  neww.textContent = old.textContent;
+  
+  for (let i = 0; i < old.attributes.length; i++) {
+    neww.setAttribute(old.attributes[i].name, old.attributes[i].value || '');
   }
   // register the blur listener again (given we've made a new script element)
-  newScript.addEventListener('blur', reevaluate);
+  neww.addEventListener('blur', reevaluate);
   
-  existingScript.parentNode.insertBefore(newScript, existingScript);
-  existingScript.parentNode.removeChild(existingScript);
+  old.parentNode.insertBefore(neww, old);
+  old.parentNode.removeChild(old);
 }
 
 // we want to redeclare scripts onblur
