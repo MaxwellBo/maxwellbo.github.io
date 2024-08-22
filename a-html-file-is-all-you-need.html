@@ -170,10 +170,11 @@ function cell(name, inputsOrDefinition, maybeDefinition) {
 }
 
 // use the Observable inspector to display the cell's output above the script block
-function observer(cellName) {
+function observer(name) {
   const div = document.createElement("div");
-  const cellElement = document.getElementById(cellName)
-  cellElement.parentNode.insertBefore(div, cellElement);
+  // can't use document.currentScript as it's null in module scripts
+  const currentScript = document.getElementById(name);
+  currentScript.parentNode.insertBefore(div, currentScript);
   return new Inspector(div);
 }
 
@@ -438,8 +439,11 @@ cell("error", () => {
 
 I've hosted the <a href="https://github.com/lerocha/chinook-database">Chinook sample database</a> on my website at <a href="https://maxbo.me/chinook.db">https://maxbo.me/chinook.db</a>.
 Now we'll use a <a href="https://observablehq.com/framework/lib/sqlite">WASM-backed SQLite client</a> to query it.
+<br />
+<br />
+<i>Try adding <code>WHERE Milliseconds &gt; 1000000</code> to the SQL query!</i>
 
-<script type="module" class="echo" id="sqlite">
+<script type="module" class="echo" id="sqlite" contenteditable="true">
 cell("sqlite", async () => {
   const url = "https://maxbo.me/chinook.db";
   const db = await library.SQLiteDatabaseClient().open(url);
