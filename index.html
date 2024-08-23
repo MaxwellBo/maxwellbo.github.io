@@ -830,7 +830,8 @@
         </article>
         <article class="art">
           <a href="https://tamanotchi.world/14470c">
-            <img style="margin-left: auto; margin-right: auto;" src="https://tamanotchi.world/i2/14470" alt="it's tamaNOTchi! click to feed!">
+            <img style="margin-left: auto; margin-right: auto;" src="https://tamanotchi.world/i2/14470"
+              alt="it's tamaNOTchi! click to feed!">
           </a>
           <p>it's tamaNOTchi! click to feed!</p>
         </article>
@@ -964,13 +965,40 @@
     <img src="img/graphic-checker.svg" />
     <!-- <span id="userAgent"></span> -->
     DO NOT EXPOSE TO WATER
-    
+
     <div class="ticker-outer">
       <div class="ticker-inner">
         <span>PLEASE</span>
         <span>PLEASE</span>
       </div>
     </div>
+
+    <div id="size"></div>
+
+    <script>
+      window.addEventListener('load', () => {
+        // const resources = performance.getEntriesByType('resource');
+        const resources = performance.getEntries();
+        let totalSize = 0;
+
+        resources.forEach(resource => {
+          totalSize += resource.transferSize || 0;
+        });
+
+        const size = document.getElementById('size');
+        size.innerText = `${formatBytes(totalSize)}`;
+      });
+
+      function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+      }
+
+    </script>
 
     <span id="language"></span>
     <!-- <div>
