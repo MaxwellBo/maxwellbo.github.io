@@ -111,7 +111,6 @@
     const fileElem = document.getElementById('fileElem');
     const canvas = document.getElementById('canvas');
     const contents = document.getElementById('contents');
-    const ctx = canvas.getContext('2d');
 
     // Prevent default drag behaviors
     ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
@@ -148,11 +147,10 @@
       });
       const [prelude, base64] = preludeAndBase64.split(',');
 
-      const img = new Image();
-      img.src = reader.result;
-      img.onload = async function () {
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      }
+      dropArea.style.backgroundImage = `url(${reader.result})`;
+      dropArea.style.backgroundSize = 'contain';
+      dropArea.style.backgroundRepeat = 'no-repeat';
+      dropArea.style.backgroundPosition = 'center';
 
       // const response = await getProductsFromReceipt(base64);
       // const products = extractProductsFromResponse(response);
@@ -160,23 +158,29 @@
 
       for (const product of products) {
         const imgSrc = await searchImage(product.product);
+        // <img class="img" src="${imgSrc}" alt="${product.product}" style="width: 100px; height: 100px;">
         contents.innerHTML += `
           <div class="line">
-            <img class="img" src="${imgSrc}" alt="${product.product}" style="width: 100px; height: 100px;">
             <span class="product">${product.product}</span>
             <span class="weight">${product.weight}</span>
             <span class="price">$${product.price}</span>
           </div>
         `;
 
-        // put the product images onto the canvas in a bunch of random positions
+        // draw image elements positioned absolutely all over the screen
         const img = new Image();
         img.src = imgSrc;
-        img.onload = function () {
-          const x = Math.random() * canvas.width;
-          const y = Math.random() * canvas.height;
-          ctx.drawImage(img, x, y, 100, 100);
+        img.onload = () => {
+          const x = Math.random() * window.innerWidth;
+          const y = Math.random() * window.innerHeight;
+          img.style.position = 'absolute';
+          img.style.left = x + 'px';
+          img.style.top = y + 'px';
+          img.style.width = '100px';
+          img.style.height = '100px';
+          document.body.appendChild(img);
         }
+
       }
     }
 
