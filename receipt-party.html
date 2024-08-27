@@ -268,44 +268,19 @@
         img.src = imgSrc;
         img.onload = () => {
           const x = Math.random() * window.innerWidth;
-          const y = 0 * window.innerHeight;
+          const y = Math.random() * window.innerHeight;
           img.style.position = 'absolute';
           img.style.left = x + 'px';
           img.style.top = y + 'px';
           img.style.width = '100px';
           img.style.height = '100px';
+          img.style.border = '1px solid black';
           img.className = 'affected-by-gravity';
           document.body.appendChild(img);
         }
 
       }
     }
-
-    // every animation frame, find all images and apply gravity
-    // when they hit the bottom of the screen, they should bounce up a bit, but still be affected by gravity
-
-    const gravity = 0.1;
-    const bounce = 0.6;
-    
-    function applyGravity() {
-      const images = document.getElementsByClassName('affected-by-gravity');
-
-      for (const img of images) {
-        let y = parseFloat(img.style.top);
-        let vy = parseFloat(img.getAttribute('vy')) || 0;
-        vy += gravity;
-        y += vy;
-        if (y > window.innerHeight - 100) {
-          y = window.innerHeight - 100;
-          vy *= -bounce;
-        }
-        img.style.top = y + 'px';
-        img.setAttribute('vy', vy);
-      }
-      requestAnimationFrame(applyGravity);
-    }
-
-    applyGravity();
 
     async function getProductsFromReceipt(base64) {
       return HARDCODED_PRODUCTS
@@ -332,6 +307,30 @@
       const data = await response.json();
       return data.value[0].thumbnailUrl;
     }
+
+    const gravity = 0.1;
+    const bounce = 0.6;
+    
+    function applyGravity() {
+      const images = document.getElementsByClassName('affected-by-gravity');
+
+      for (const img of images) {
+        let y = parseFloat(img.style.top);
+        let vy = parseFloat(img.getAttribute('vy')) || 0;
+        vy += gravity;
+        y += vy;
+        if (y > window.innerHeight - 100) {
+          y = window.innerHeight - 100;
+          vy *= -bounce;
+        }
+        img.style.top = y + 'px';
+        img.setAttribute('vy', vy);
+      }
+      requestAnimationFrame(applyGravity);
+    }
+
+    // applyGravity();
+
   </script>
 </body>
 
