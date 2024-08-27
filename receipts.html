@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Receipt OCR and Image Search</title>
+  <style>
+    #drop-area {
+      border: 2px dashed #ccc;
+      border-radius: 20px;
+      width: 80%;
+      height: 200px;
+      margin: 20px auto;
+      padding: 20px;
+      text-align: center;
+      font-family: 'Arial';
+    }
+
+    #canvas {
+      margin: 20px auto;
+      display: block;
+      border: 1px solid black;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="drop-area">
+    <h2>Drag and Drop your receipt photos here</h2>
+    <input type="file" id="fileElem" multiple accept="image/*" style="display:none;">
+    <button onclick="document.getElementById('fileElem').click();">Select some files</button>
+  </div>
+  <div id="contents"></div>
+  <canvas id="canvas" width="800" height="600"></canvas>
+
+  <script type="module">
+    const HARDCODED_PRODUCTS = [
+      {
+        "product": "CHOBANI GREEK YOGURT",
+        "weight": 160,
+        "price": 1.35
+      },
+      {
+        "product": "CHOBANI YOGURT GREEK",
+        "weight": 160,
+        "price": 1.35
+      },
+      {
+        "product": "CHOBANI POUCH STRAWB",
+        "weight": 140,
+        "price": 1.35
+      },
+      {
+        "product": "CHOBANI POUCH RASP",
+        "weight": 140,
+        "price": 1.35
+      },
+      {
+        "product": "SIGGI'S POUCH VANILL",
+        "weight": 150,
+        "price": 1.25
+      },
+      {
+        "product": "SIGGI'S POUCH STRAWB",
+        "weight": 150,
+        "price": 1.25
+      },
+      {
+        "product": "CHOBANI POUCH BLUEBE",
+        "weight": 140,
+        "price": 1.35
+      },
+      {
+        "product": "HP CHICKPEAS LITSALT",
+        "weight": 200,
+        "price": 5
+      },
+      {
+        "product": "ARNOTTS TIM TAM ORIG",
+        "weight": 200,
+        "price": 2.5
+      }
+    ]
+
+
+    const dropArea = document.getElementById('drop-area');
+    const fileElem = document.getElementById('fileElem');
+    const canvas = document.getElementById('canvas');
+    const contents = document.getElementById('contents');
+    const ctx = canvas.getContext('2d');
+
+    // Prevent default drag behaviors
+    ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+      dropArea.addEventListener(eventName, preventDefaults, false)
+      document.body.addEventListener(eventName, preventDefaults, false)
+    });
+
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    // Handle dropped files
+    dropArea.addEventListener('drop', handleDrop, false)
+    fileElem.addEventListener('change', handleFiles, false)
+
+    function handleDrop(e) {
+      let dt = e.dataTransfer
+      let files = dt.files
+      handleFiles({ target: { files } });
+    }
+
+    function handleFiles(e) {
+      let files = e.target.files
+        ;[...files].forEach(processFile)
+    }
+
+    async function processFile(file) {
+      let reader = new FileReader();
+      reader.readAsDataURL(file);
+      const preludeAndBase64 = await new Promise((resolve, reject) => {
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = error => reject(error);
+      });
+      const [prelude, base64] = preludeAndBase64.split(',');
+
+      const img = new Image();
+      img.src = reader.result;
+      img.onload = async function () {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+
+      // const response = await getProductsFromReceipt(base64);
+      // const products = extractProductsFromResponse(response);
+      const products = HARDCODED_PRODUCTS;
+      contents.innerHTML = products.map(p => `${p.product} (${p.weight}g) $${p.price}`).join('<br>');
+    }
+
+    async function getProductsFromReceipt(base64) {
+      return HARDCODED_PRODUCTS
+
+      let endpoint = 'https://mbo-receipt.web.val.run';
+      let response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ image: base64 })
+      });
+
+      const json = response.json();
+      const { content } = response.msg;
+      const products = JSON.parse(content[0].text);
+
+      return products;
+    }
+
+    async function searchImage(query, quantity) {
+      let apiKey = 'YOUR_BING_API_KEY';
+      let endpoint = `https://api.bing.microsoft.com/v7.0/images/search?q=${encodeURIComponent(query)}&count=${quantity}`;
+      let response = await fetch(endpoint, {
+        headers: { 'Ocp-Apim-Subscription-Key': apiKey }
+      });
+      let data = await response.json();
+      data.value.forEach((img, index) => {
+        let imgElement = new Image();
+        imgElement.src = img.thumbnailUrl;
+        imgElement.onload = () => {
+          ctx.drawImage(imgElement, 50 * index, canvas.height - 100, 100, 100);
+        };
+      });
+    }
+  </script>
+</body>
+
+</html>
