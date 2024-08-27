@@ -39,6 +39,10 @@
     url('fonts/FakeReceipt.otf') format('opentype');
 }
 
+.fake-receipt {
+  font-family: "Fake Receipt";
+}
+
 html {
   cursor: url('kirby.png') 11 13, auto;
 }
