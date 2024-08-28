@@ -295,10 +295,8 @@
         body: JSON.stringify({ image: base64 })
       });
 
-      const json = response.json();
-      const { content } = response.msg;
-      const products = JSON.parse(content[0].text);
-      return products;
+      const json = await response.json();
+      return JSON.parse(json.msg.content[0].text);
     }
 
     async function searchImage(query) {
