@@ -271,13 +271,16 @@
         img.onload = () => {
           const x = Math.random() * window.innerWidth;
           const y = Math.random() * window.innerHeight;
+          // rotate randomly between range of -10 and 10 degrees
+          const theta = (Math.random() * 20) - 10;
           img.style.position = 'absolute';
           img.style.left = x + 'px';
           img.style.top = y + 'px';
           img.style.width = '100px';
           img.style.height = '100px';
-          img.style.border = '1px solid black';
           img.className = 'affected-by-gravity';
+          img.style.boxShadow = '1px 1px 1px rgba(0, 0, 0, 0.1)';
+          img.style.transform = `rotate(${theta}deg)`;
           document.body.appendChild(img);
         }
 
