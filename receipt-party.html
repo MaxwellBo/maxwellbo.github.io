@@ -251,9 +251,9 @@
       dropArea.style.backgroundRepeat = 'no-repeat';
       dropArea.style.backgroundPosition = 'center';
 
-      // const response = await getProductsFromReceipt(base64);
-      // const products = extractProductsFromResponse(response);
-      const products = HARDCODED_PRODUCTS;
+      const response = await getProductsFromReceipt(base64);
+      const products = extractProductsFromResponse(response);
+      // const products = HARDCODED_PRODUCTS;
 
       for (const product of products) {
         const imgSrc = await searchImage(product.product);
