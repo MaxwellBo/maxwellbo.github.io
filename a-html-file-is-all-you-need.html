@@ -111,20 +111,23 @@ I stress that <b>this <code>style</code> element is styling itself.</b>
   ;
 }
 
+[contenteditable] {
+  border: 3px inset;
+}
+
 .echo {
   display: block;
-  white-space: pre;
-  background-color: rgb(49, 49, 49); /* change me! */
-  border: 3px inset;
   margin-bottom: 1rem;
   margin-top: 0.2rem;
   padding: 0.5rem 1rem 1rem 1rem;
   overflow: auto;
   /* syntax highlighting */
-  color: ivory;
   font-family: "Monaspace", monospace;
+  white-space: pre;
   font-feature-settings: "colr", "calt";
   font-size: 0.9rem;
+  color: ivory;
+  background-color: rgb(49, 49, 49); /* change me! */
 }
 
 script.echo::before {
@@ -284,7 +287,7 @@ cell("hidden", ["counter"], (counter) => {
 
 We can use cell values in more complex outputs. We'll import <a href="https://observablehq.com/plot/what-is-plot">Observable Plot</a> and use the <code>counter</code> value in a plot.
 
-<script type="module" class="echo" id="plot">
+<script type="module" class="echo" id="plot" contenteditable="true">
 import * as Plot from 'https://esm.run/@observablehq/plot'
 window.Plot = Plot
 
@@ -395,7 +398,7 @@ Observable's <code>Inspector</code> will apply an <code>observablehq--running</c
 <code>observablehq--error</code> class to the cell's outer <code>div</code> element respectively.
 We'll style them appropriately:
 
-<style class="echo" contenteditable="true">
+<style class="echo">
 @keyframes blink {
   67% {
     opacity: 0;
