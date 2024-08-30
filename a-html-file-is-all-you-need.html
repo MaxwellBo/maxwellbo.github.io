@@ -211,8 +211,8 @@ cell("counter", async function* () {
 We can get <code>contenteditable</code> working by ensuring that whenever we blur a <code>script</code> element, we force its re-evaluation by building a clone.
 
 <script type="module" class="echo">
-function reevaluate(script) {
-  const old = script;
+function reevaluate(event) {
+  const old = event.target;
   const neww = document.createElement('script');
   neww.textContent = old.textContent;
   
@@ -228,7 +228,7 @@ function reevaluate(script) {
 
 // we want to redeclare scripts onblur
 document.querySelectorAll('script.echo').forEach((script) => {
-  script.addEventListener('blur', event => reevaluate(/*script=*/event.target));
+  script.addEventListener('blur', reevaluate);
 });
 </script>
 
