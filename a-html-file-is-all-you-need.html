@@ -158,9 +158,9 @@ const library = new stdlib.Library();
 const runtime = new Runtime();
 const module = runtime.module();
 
-function cell(name, inputsOrDefinition, maybeDefinition) {
+function cell(name, inputsOrDefinition, maybeDefinition, observe = true) {
   // if the variable already is in scope, get it, otherwise create a fresh one
-  const variable = module._scope.get(name) || module.variable(observer(name));
+  const variable = module._scope.get(name) || module.variable(observe ? observer(name) : undefined);
 
   if (maybeDefinition) {
     const inputs = inputsOrDefinition;
@@ -574,16 +574,8 @@ import * as Inputs from 'https://esm.run/@observablehq/inputs'
 window.Inputs = Inputs
 
 function viewof(name, inputsOrDefinition, maybeDefinition) {
-  if (maybeDefinition) {
-    const inputs = inputsOrDefinition;
-    const definition = maybeDefinition;
-    module.variable(observer(name)).define(`viewof ${name}`, inputs, definition);
-    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
-  } else {
-    const definition = inputsOrDefinition
-    module.variable(observer(name)).define(`viewof ${name}`, definition);
-    module.variable().define(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt));
-  }
+  cell(`viewof ${name}`, inputsOrDefinition, maybeDefinition);
+  cell(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt), /*observe=*/false);
 }
 window.viewof = viewof;
 </script>
@@ -591,15 +583,19 @@ window.viewof = viewof;
 </div>
 <div class="slide">
 
-Wiggle the range input and see another dependent cell update.
+To display the input above the cell, we set the cell <code>id</code> to <code>viewof NAME</code>.
+<br />
+<br />
+<i>Wiggle the range input and see another dependent cell update.</i>
 
-<script type="module" class="echo" id="range">
+<div id="range"></div>
+<script type="module" class="echo" id="viewof range" contenteditable="true">
 viewof("range", () => {
   return Inputs.range([0, 100], { step: 1 });
 });
 </script>
 
-<script type="module" class="echo" id="rangePlot">
+<script type="module" class="echo" id="rangePlot" contenteditable="true">
 cell("rangePlot", ["range"], (range) => {
   return Plot.tickX([range]).plot({ x: { domain: [0, 100] } });
 });
@@ -613,7 +609,7 @@ cell("rangePlot", ["range"], (range) => {
 <h2>Mutability</h2>
 
 Purely functional dataflow is great, but sometimes you just need to mutate state.
-We'll create a new cell type <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a> values when the value is mutated - in the runtime.
+We'll create a new helper function <code>mutable</code>. It registers a <code>Mutable</code> - an object that yields new <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator"><code>Generator</code></a> values when the value is mutated - in the runtime.
 
 <script type="module" class="echo" id="mutable">
 /** Hijacked from https://github.com/observablehq/stdlib/blob/main/src/mutable.js */
@@ -643,11 +639,15 @@ window.mutable = mutable;
 </div>
 <div class="slide">
 
+<i>Try editing the initial state of the <code>mutable</code>.</i>
+
 <script type="module" class="echo" id="ref" contenteditable="true">
 window.ref = mutable("ref", 3)
 </script>
 
-<script type="module" class="echo" id="increment" contenteditable="true">
+<i>Try editing the button labels.</i>
+
+<script type="module" class="echo" id="viewof increment" contenteditable="true">
 viewof("increment", () => {
   const increment = () => ++ref.value;
   const reset = () => ref.value = 0;
