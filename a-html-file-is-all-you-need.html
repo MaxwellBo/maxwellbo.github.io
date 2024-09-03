@@ -643,11 +643,11 @@ window.mutable = mutable;
 </div>
 <div class="slide">
 
-<script type="module" class="echo" id="ref">
+<script type="module" class="echo" id="ref" contenteditable="true">
 window.ref = mutable("ref", 3)
 </script>
 
-<script type="module" class="echo" id="increment">
+<script type="module" class="echo" id="increment" contenteditable="true">
 viewof("increment", () => {
   const increment = () => ++ref.value;
   const reset = () => ref.value = 0;
@@ -656,7 +656,7 @@ viewof("increment", () => {
 });
 </script>
 
-<script type="module" class="echo" id="sword">
+<script type="module" class="echo" id="sword" contenteditable="true">
 cell("sword", ["ref"], (ref) => {
   return htl.html`↜(╰ •ω•)╯ |${'═'.repeat(ref)}═ﺤ`
 });
