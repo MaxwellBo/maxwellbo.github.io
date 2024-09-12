@@ -210,7 +210,8 @@ cell("counter", async function* () {
 We can get <code>contenteditable</code> working by ensuring that whenever we blur a <code>script</code> element, we force its re-evaluation by building a clone of it.
 <br />
 <br />
-<i>Try deleting a <code>0</code> from the delay duration above, and then defocus the <code>script</code>.</i>
+<i>Try changing the initial counter value <code>i</code> to a much bigger number, and then defocus the <code>script</code>.</i>
+<br />
 
 <script type="module" class="echo">
 function reevaluate(event) {
