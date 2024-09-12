@@ -762,6 +762,14 @@ I initially thought it should be called <code>incel</code> (short for <i>inline 
 
 I demo'd this article at <a href="https://www.youtube.com/@SydJSMeetup">SydJS</a>. This is the code I used to turn the article into a slideshow.
 
+<ul>
+  <li><kbd>Shift</kbd> + <kbd>N</kbd> - Start slideshow / next slide</li>
+  <li><kbd>Shift</kbd> + <kbd>B</kbd> - Previous slide</li>
+  <li><kbd>Shift</kbd> + <kbd>E</kbd> - End slideshow</li>
+</ul>
+
+<br />
+
 <style class="echo">
   .slide {
     scroll-margin-top: 3rem;
@@ -781,7 +789,7 @@ I demo'd this article at <a href="https://www.youtube.com/@SydJSMeetup">SydJS</a
       paint();
     }
 
-    if (event.shiftKey && event.key === 'R') {
+    if (event.shiftKey && event.key === 'E') {
       slide = -1;
       paint();
     }
