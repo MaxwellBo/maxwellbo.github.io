@@ -25,7 +25,7 @@ h1, h2 {
 }
 
 main {
-  max-width: min(80vw, 72ch);
+  max-width: min(90vw, 80ch);
   margin: 5vw auto;
   padding-bottom: 2em;
 }
