@@ -260,10 +260,6 @@ I stress that <b>this <code>style</code> element is styling itself to be visible
   ;
 }
 
-[contenteditable] {
-  border: 3px inset;
-}
-
 .echo {
   display: block;
   margin-bottom: 1rem;
@@ -291,6 +287,10 @@ style.echo::before {
 }
 style.echo::after { 
   content: "<\/style>"; 
+}
+ 
+[contenteditable] {
+  border: 3px inset;
 }
 </style>
 </div>
