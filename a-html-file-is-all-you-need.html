@@ -244,7 +244,7 @@ First, we'll steal a trick from <a href="https://secretgeek.github.io/html_wysiw
 Add in a <a href="https://blog.glyphdrawing.club/font-with-built-in-syntax-highlighting/">font with built-in syntax highlighting</a> and a <code>contenteditable</code> attribute and we have a basic code editor!
 <br />
 <br />
-I stress that <b>this <code>style</code> element is styling itself.</b> 
+I stress that <b>this <code>style</code> element is styling itself to be visible.</b> 
 <br />
 <br />
 <i>Try changing <code>.echo</code>'s <code>background-color</code>!</i>
@@ -257,10 +257,6 @@ I stress that <b>this <code>style</code> element is styling itself.</b>
     url('fonts/MonaspaceKrypton-SyntaxHighlighter-Regular.woff2') 
     format('woff2')
   ;
-}
-
-[contenteditable] {
-  border: 3px inset;
 }
 
 .echo {
@@ -290,6 +286,10 @@ style.echo::before {
 }
 style.echo::after { 
   content: "<\/style>"; 
+}
+ 
+[contenteditable] {
+  border: 3px inset;
 }
 </style>
 </div>
@@ -712,7 +712,7 @@ hist(track_data$Milliseconds,
 
   shelter.purge();
 
-  return output
+  return output;
 });
 </script>
 
@@ -959,11 +959,12 @@ I demo'd this article at <a href="https://www.youtube.com/@SydJSMeetup">SydJS</a
     }
 
     if (slide >= 0) {
-      document.querySelectorAll('.slide')[slide].style.border = '1px dotted grey';
-      document.querySelectorAll('.slide')[slide].scrollIntoView({ behavior: 'smooth' });
+      const elem = document.querySelectorAll('.slide')[slide];
+      elem.style.border = '1px dotted grey';
+      elem.scrollIntoView({ behavior: 'smooth' });
 
       for (const s of document.querySelectorAll('.slide')) {
-        if (s !== document.querySelectorAll('.slide')[slide]) {
+        if (s !== elem) {
           s.style.opacity = 0.4;
         }
       }
