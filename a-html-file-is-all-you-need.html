@@ -960,11 +960,12 @@ I demo'd this article at <a href="https://www.youtube.com/@SydJSMeetup">SydJS</a
     }
 
     if (slide >= 0) {
-      document.querySelectorAll('.slide')[slide].style.border = '1px dotted grey';
-      document.querySelectorAll('.slide')[slide].scrollIntoView({ behavior: 'smooth' });
+      const elem = document.querySelectorAll('.slide')[slide];
+      elem.style.border = '1px dotted grey';
+      elem.scrollIntoView({ behavior: 'smooth' });
 
       for (const s of document.querySelectorAll('.slide')) {
-        if (s !== document.querySelectorAll('.slide')[slide]) {
+        if (s !== elem) {
           s.style.opacity = 0.4;
         }
       }
