@@ -299,8 +299,8 @@ Now we'll import the <a href="https://github.com/observablehq/stdlib">Observable
 We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
 
 <script type="module" class="echo">
-import * as stdlib from 'https://esm.run/@observablehq/stdlib'
-import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime";
+import * as stdlib from 'https://esm.run/@observablehq/stdlib@5.8.8'
+import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime@5.9.9";
 
 const library = new stdlib.Library();
 const runtime = new Runtime();
@@ -396,7 +396,7 @@ We'll import <a href="https://observablehq.com/@observablehq/htl">Hypertext Lite
 interpolation of non-serializable values, such as event listeners, style objects, and other DOM nodes.
 
 <script type="module" class="echo" id="fizzbuzz" contenteditable="true">
-import * as htl from 'https://esm.run/htl';
+import * as htl from 'https://esm.run/htl@0.3.1';
 window.htl = htl;
 
 cell("fizzbuzz", ["counter"], (counter) => {
@@ -420,7 +420,7 @@ We can still observe the output of a cell without needing to show its definition
 This makes them useful as a rendering primitive.
 
 <script type="module" id="hidden">
-import * as htl from 'https://esm.run/htl';
+import * as htl from 'https://esm.run/htl@0.3.1';
 window.htl = htl;
 
 cell("hidden", ["counter"], (counter) => {
@@ -440,7 +440,7 @@ cell("hidden", ["counter"], (counter) => {
 We can use cell values in more complex outputs. We'll import <a href="https://observablehq.com/plot/what-is-plot">Observable Plot</a> and use the <code>counter</code> value in a plot.
 
 <script type="module" class="echo" id="plot" contenteditable="true">
-import * as Plot from 'https://esm.run/@observablehq/plot';
+import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 window.Plot = Plot;
 
 cell("plot", ["counter", "numbers"], (counter, numbers) => {
@@ -730,7 +730,7 @@ We'll create a new cell type <code>viewof</code> that works specifically with <a
 It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> - one for the value, and one for the DOM element itself.
 
 <script type="module" class="echo">
-import * as Inputs from 'https://esm.run/@observablehq/inputs'
+import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0'
 window.Inputs = Inputs
 
 function viewof(name, inputsOrDefinition, maybeDefinition) {
