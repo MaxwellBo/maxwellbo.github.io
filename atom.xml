@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Max Bo's Atom feed</title>
-    <link href="https://maxbo.me/feed.atom" rel="self"/>
+    <link href="https://maxbo.me/atom.xml" rel="self"/>
     <link href="https://maxbo.me/"/>
     <updated>2024-09-18T00:00:00Z</updated>
 
@@ -11,12 +11,15 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
-        <title>@celine/celine</title>
+        <title>I released @celine/celine today!</title>
         <link href="https://maxbo.me/celine"/>
         <id>https://maxbo.me/celine</id>
         <updated>2024-09-18T00:00:00Z</updated>
         <summary>
             @celine/celine is a microlibrary for building reactive HTML notebooks.
         </summary>
+        <author>
+            <name>Max Bo</name>
+        </author>
     </entry>
 </feed>
