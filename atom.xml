@@ -8,7 +8,7 @@
     <author>
         <name>Max Bo</name>
     </author>
-    <id>https://maxbo.me/feed</id>
+    <id>https://maxbo.me/atom.xml</id>
 
     <entry>
         <title>@celine/celine</title>
