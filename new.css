@@ -59,6 +59,10 @@ html {
   animation: cycle 30s linear infinite;
 }
 
+#ticker {
+  font-family: 'DINdong', sans-serif;
+}
+
 @keyframes cycle {
   0% {
     background-color: yellow;
@@ -205,10 +209,10 @@ main {
 header {
   border-bottom: 1px solid black;
   font-family: 'Ductus Geometric', sans-serif;
-  text-transform: uppercase;
 
   #wordmark {
     font-family: 'DINdong';
+    text-transform: uppercase;
     font-size: 3rem;
   }
 }

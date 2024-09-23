@@ -48,6 +48,38 @@
         ← Max Bo
       </marquee>
     </h1>
+    <marquee id="ticker" class="dindong"></marquee>
+    <script>
+      fetch('atom.xml')
+        .then(response => response.text())
+        .then(data => {
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(data, 'text/xml');
+          const items = xmlDoc.getElementsByTagName('entry');
+
+          const ticker = document.getElementById('ticker');
+            Array.from(items).forEach(item => {
+            const title = item.getElementsByTagName('title')[0].textContent;
+            const link = item.getElementsByTagName('link')[0].textContent;
+            const updated = new Date(item.getElementsByTagName('updated')[0].textContent);
+            const summary = item.getElementsByTagName('summary')[0].textContent;
+            const shortDate = updated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+            const prefixedTitle = `${shortDate} - ${title}`;
+            const a = document.createElement('a');
+            a.href = link;
+            a.textContent = prefixedTitle;
+            const small = document.createElement('small');
+            small.textContent = ` ${summary}`;
+            ticker.appendChild(a);
+            ticker.appendChild(small);
+            ticker.appendChild(document.createTextNode(' • '));
+            });
+          // Remove the last ' • ' separator
+          if (ticker.lastChild) {
+            ticker.removeChild(ticker.lastChild);
+          }
+        });
+    </script>
   </header>
   <nav>
     <ul>
@@ -630,8 +662,7 @@
         </article>
         <article class="listing">
           <a href="RECEIPT_PARTY.html">
-            <img
-              src="img/receipt-party.png" />
+            <img src="img/receipt-party.png" />
             <p class="title fake-receipt">RECEIPT PARTY</p>
           </a>
         </article>
