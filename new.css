@@ -428,3 +428,27 @@ select {
 #__next {
   isolation: isolate;
 }
+
+
+/** scrollbar */
+::-webkit-scrollbar {
+  width: 24px;
+  background: #d6ecf3;
+}
+
+::-webkit-scrollbar-track {
+  background: -webkit-linear-gradient(top, #ffb5cd 2%, #ffcca8 17%, #fff6b7 35%, #daffb7 55%, #aadeff 76%, #cebafc 97%);
+  border-radius: 0px;
+  width: 0px;
+  border: 1px dotted #8f38ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d6ecf3;
+  border: 1px dotted #8f38ff;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: fuchsia;
+}
