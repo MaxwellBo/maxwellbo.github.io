@@ -445,7 +445,7 @@ select {
 
 ::-webkit-scrollbar-thumb {
   background: #d6ecf3;
-  border: 1px dotted #8f38ff;
+  border: 1px dotted fuchsia;
   border-radius: 0px;
 }
 
