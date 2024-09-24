@@ -50,7 +50,7 @@
     </h1>
     <marquee id="ticker" class="dindong">
       <a href="atom.xml"><img src="img/atom.svg" style="max-height: 16px; display: inline-block;" /> atom.xml</a>
-      󱠡󱤢󱤢
+      󱠡
     </marquee>
     <script>
       fetch('atom.xml')
@@ -75,7 +75,7 @@
             small.textContent = ` ${summary}`;
             a.appendChild(small);
             ticker.appendChild(a);
-            ticker.appendChild(document.createTextNode(' • '));
+            ticker.appendChild(document.createTextNode(' 󱠡 '));
           });
         });
     </script>
