@@ -58,7 +58,7 @@
           const items = xmlDoc.getElementsByTagName('entry');
 
           const ticker = document.getElementById('ticker');
-            Array.from(items).forEach(item => {
+          Array.from(items).forEach(item => {
             const title = item.getElementsByTagName('title')[0].textContent;
             const link = item.getElementsByTagName('link')[0].textContent;
             const updated = new Date(item.getElementsByTagName('updated')[0].textContent);
@@ -73,7 +73,13 @@
             ticker.appendChild(a);
             ticker.appendChild(small);
             ticker.appendChild(document.createTextNode(' • '));
-            });
+          });
+          // Add <icon class="rss">&nbsp;&nbsp;</icon> at the start of each item
+          const icon = document.createElement('icon');
+          icon.className = 'rss';
+          icon.innerHTML = '&nbsp;&nbsp;';
+          ticker.insertBefore(icon, ticker.firstChild);
+
           // Remove the last ' • ' separator
           if (ticker.lastChild) {
             ticker.removeChild(ticker.lastChild);
@@ -536,6 +542,10 @@
               src="https://static.observableusercontent.com/thumbnail/71f8557d139405a96e0c1495196f51d17fdd6c15778c6e87849a7630ff02f42d.jpg" />
             <p class="title">Informal voting in the 2019/2022 federal elections</p>
           </a>
+        </article>
+        <article class="art">
+          <!-- https://x.com/natalie_thenerd/status/1831035235926155384?s=46&t=EdAVFnBtXHgoommIJOTYjw -->
+          <img src="img/gc.png" />
         </article>
         <article class="listing">
           <a href="https://yimbymelbourne.observablehq.cloud/data-portal/distance">
