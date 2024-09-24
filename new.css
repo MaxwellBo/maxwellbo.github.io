@@ -436,7 +436,7 @@ select {
 
 /** scrollbar */
 ::-webkit-scrollbar {
-  width: 24px;
+  width: 20px;
   background: #d6ecf3;
 }
 
