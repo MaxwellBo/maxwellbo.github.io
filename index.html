@@ -48,7 +48,10 @@
         ← Max Bo
       </marquee>
     </h1>
-    <marquee id="ticker" class="dindong"></marquee>
+    <marquee id="ticker" class="dindong">
+      <a href="atom.xml"><img src="img/atom.svg" style="max-height: 16px; display: inline-block;" /> atom.xml</a>
+      · · · �
+    </marquee>
     <script>
       fetch('atom.xml')
         .then(response => response.text())
@@ -64,26 +67,16 @@
             const updated = new Date(item.getElementsByTagName('updated')[0].textContent);
             const summary = item.getElementsByTagName('summary')[0].textContent;
             const shortDate = updated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
-            const prefixedTitle = `${shortDate} - ${title}`;
+
             const a = document.createElement('a');
             a.href = link;
-            a.textContent = prefixedTitle;
+            a.textContent = `[${shortDate}] ${title}`;;
             const small = document.createElement('small');
             small.textContent = ` ${summary}`;
+            a.appendChild(small);
             ticker.appendChild(a);
-            ticker.appendChild(small);
             ticker.appendChild(document.createTextNode(' • '));
           });
-          // Add <icon class="rss">&nbsp;&nbsp;</icon> at the start of each item
-          const icon = document.createElement('icon');
-          icon.className = 'rss';
-          icon.innerHTML = '&nbsp;&nbsp;';
-          ticker.insertBefore(icon, ticker.firstChild);
-
-          // Remove the last ' • ' separator
-          if (ticker.lastChild) {
-            ticker.removeChild(ticker.lastChild);
-          }
         });
     </script>
   </header>
@@ -91,9 +84,6 @@
     <ul>
       <li class="button">
         <a href="https://walky.space/mb-guestbook">Guestbook</a>
-      </li>
-      <li class="button">
-        <a href="atom.xml">atom.xml
       </li>
       <li class="button">
         <a href="mailto:maxwell.j.bo+website@gmail.com">Email</a>
