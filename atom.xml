@@ -11,8 +11,8 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
-        <title>I published hello-notebook-http-mode.fly.dev/ today!</title>
-        <link href="https://hello-notebook-http-mode.fly.dev/"/>
+        <title>I published hello-notebook-http-mode.fly.dev today!</title>
+        <link href="https://hello-notebook-http-mode.fly.dev"/>
         <id>https://hello-notebook-http-mode.fly.dev/</id>
         <updated>2024-09-25T00:00:00Z</updated>
         <summary>
