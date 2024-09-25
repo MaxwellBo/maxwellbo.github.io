@@ -11,6 +11,19 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
+        <title>I published hello-notebook-http-mode.fly.dev/ today!</title>
+        <link href="https://hello-notebook-http-mode.fly.dev/"/>
+        <id>https://hello-notebook-http-mode.fly.dev/</id>
+        <updated>2024-09-25T00:00:00Z</updated>
+        <summary>
+            A notebook serving itself and an API from fly.io using Jupyter Kernel Gateway notebook-http mode.
+        </summary>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
+
+    <entry>
         <title>I released @celine/celine today!</title>
         <link href="https://maxbo.me/celine"/>
         <id>https://maxbo.me/celine</id>
