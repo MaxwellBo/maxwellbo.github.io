@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Japanese fonts</title>
+
+
+  <script>
+    (function(d) {
+      var config = {
+        kitId: 'eun4uzv',
+        scriptTimeout: 3000,
+        async: true
+      },
+      h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+    })(document);
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@500&display=swap');
+
+    @font-face {
+      font-family: 'MS Mincho';
+      src: url('fonts/MSMINCHO.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    @font-face {
+      font-family: 'SimSun';
+      src: url('fonts/SIMSUN.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    .simsun {
+      font-family: "SimSun", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .ms-mincho {
+      font-family: "MS Mincho", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .noto-serif-jp {
+      font-family: "Noto Serif JP", system-ui;
+      font-optical-sizing: auto;
+      font-weight: 500;
+      font-style: normal;
+    }
+    
+    .source-han-serif-japanese {
+      font-family: "source-han-serif-japanese", serif;
+      font-weight: 400;
+      font-style: normal;
+    }
+
+    .big {
+      font-size: 4em;
+    }
+
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+
+    blockquote {
+      border-left: 1px dotted #000;
+      padding-left: 15px;
+      margin-left: 15px;
+    }
+
+    p {
+      margin-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <a href="/">← max bo</a>
+  <h1>Subordinate Latin</h1>
+  <b>September 26 2024</b>
+
+  <blockquote>
+    <b>The Latin inside Japanese fonts</b>
+    <br />
+    <br />
+
+    Japanese typeface designers call the Latin script section of their projects the “Subordinate Latin.” The typical Latin typeface has glyphs with varying proportional widths, but Kanji are designed to fit within a square space which means they are much wider than most Latin letterforms. This means a typical Latin font will look much too narrow when mixed in among Japanese characters.  To allow Latin to blend with the other scripts in Japanese text, Latin letterforms are modified to be slightly wider and have shorter ascenders and descenders and bigger counters. In addition to this adjusted Latin, Japanese fonts also include a “full width” Latin design.
+
+    <br />
+
+    <img src="https://lh5.googleusercontent.com/GWV60kF-8L_085b92jL6fQFnprZvWoEhaZ7FSSxO-07u5DNA2gklFkndFbtiKyDnri9vWrrmPnnnlCdISGIcQtbh2LtYmzc45JEMHoDQ4bFFQ6afI1_bHZymTK8Ca_BsL6rDKJlB=w640-h375" alt="“Hello Type” set in Shippori Mincho Subordinate Latin vs. Times New Roman">
+
+    <br />
+
+    ~ <a href="https://fonts.googleblog.com/2021/10/say-hello-to-our-big-new-japanese.html"><cite>Say Hello to our big new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by Min-Young Kim
+
+  </blockquote>
+
+  <hr />
+
+  <textarea id="tester" rows="3" cols="80">
+Sphinx of black quartz, judge my vow.
+  </textarea>
+
+  <script type="module">
+    const tester = document.getElementById('tester');
+    tester.addEventListener('input', propogate);
+
+    function propogate() {
+      const text = tester.value;
+      const elements = document.querySelectorAll('.propogate');
+      elements.forEach(element => {
+        element.textContent = text;
+      });
+    }
+  </script>
+
+  <h2><a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP</a></h2>
+  <p class="noto-serif-jp big propogate">Sphinx of black quartz, judge my vow.</p>
+
+  <h2><a href="https://source.typekit.com/source-han-serif">Source Han Serif</h2></a>
+  <p class="source-han-serif-japanese big propogate">Sphinx of black quartz, judge my vow.</p>
+
+  <h2><a href="https://learn.microsoft.com/en-us/typography/font-list/simsun">SimSun</a></h2>
+  <p class="simsun big propogate">Sphinx of black quartz, judge my vow.</p>
+
+  <h2><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-mincho">MS Mincho</a></h2>
+  <p class="ms-mincho big propogate">Sphinx of black quartz, judge my vow.</p>
+
+
+  <footer>
+    <a href="https://github.com/MaxwellBo/maxwellbo.github.io/edit/master/subordinate-latin.html">Submit more fonts?</a>
+    <br />
+    <br />
+    (˶˃ ᵕ ˂˶)
+
+  </footer>
+</body>
+</html>
