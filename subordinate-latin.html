@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Japanese fonts</title>
-
-
+  <meta name="description" content="Japanese typeface designers call the Latin script section of their projects the 'Subordinate Latin'">
+  <meta name="og:title" content="Subordinate Latin">
+  <meta name="og:description" content="Japanese typeface designers call the Latin script section of their projects the 'Subordinate Latin'">
+  <meta name="keywords" content="Japanese, Typeface, Latin, Subordinate Latin, Fonts, Typography">
+  <meta name="author" content="Max Bo">
+  <title>Subordinate Latin</title>
   <script>
     (function(d) {
       var config = {
@@ -59,15 +62,20 @@
       font-style: normal;
     }
 
-    .big {
+    .preview {
       font-size: 4em;
+      white-space: pre-wrap;
     }
 
     body {
+      padding: 16px;
       max-width: 800px;
       margin: 0 auto;
     }
 
+    .full-width {
+      font-variant-east-asian: full-width;
+    }
 
     blockquote {
       border-left: 1px dotted #000;
@@ -90,31 +98,34 @@
     <br />
     <br />
 
-    Japanese typeface designers call the Latin script section of their projects the “Subordinate Latin.” The typical Latin typeface has glyphs with varying proportional widths, but Kanji are designed to fit within a square space which means they are much wider than most Latin letterforms. This means a typical Latin font will look much too narrow when mixed in among Japanese characters.  To allow Latin to blend with the other scripts in Japanese text, Latin letterforms are modified to be slightly wider and have shorter ascenders and descenders and bigger counters. In addition to this adjusted Latin, Japanese fonts also include a “full width” Latin design.
+    Japanese typeface designers call the Latin script section of their projects the “Subordinate Latin.” The typical Latin typeface has glyphs with varying proportional widths, but Kanji are designed to fit within a square space which means they are much wider than most Latin letterforms. This means a typical Latin font will look much too narrow when mixed in among Japanese characters.  To allow Latin to blend with the other scripts in Japanese text, Latin letterforms are modified to be slightly wider and have shorter ascenders and descenders and previewger counters. In addition to this adjusted Latin, Japanese fonts also include a “full width” Latin design.
+    <br />
+    <br />
+    <img
+      style="width: 100%; max-width: 600px;"
+      src="https://lh5.googleusercontent.com/GWV60kF-8L_085b92jL6fQFnprZvWoEhaZ7FSSxO-07u5DNA2gklFkndFbtiKyDnri9vWrrmPnnnlCdISGIcQtbh2LtYmzc45JEMHoDQ4bFFQ6afI1_bHZymTK8Ca_BsL6rDKJlB=w640-h375" 
+      alt="“Hello Type” set in Shippori Mincho Subordinate Latin vs. Times New Roman">
 
     <br />
-
-    <img src="https://lh5.googleusercontent.com/GWV60kF-8L_085b92jL6fQFnprZvWoEhaZ7FSSxO-07u5DNA2gklFkndFbtiKyDnri9vWrrmPnnnlCdISGIcQtbh2LtYmzc45JEMHoDQ4bFFQ6afI1_bHZymTK8Ca_BsL6rDKJlB=w640-h375" alt="“Hello Type” set in Shippori Mincho Subordinate Latin vs. Times New Roman">
-
     <br />
 
-    ~ <a href="https://fonts.googleblog.com/2021/10/say-hello-to-our-big-new-japanese.html"><cite>Say Hello to our big new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by Min-Young Kim
+    ~ <a href="https://fonts.googleblog.com/2021/10/say-hello-to-our-preview-new-japanese.html"><cite>Say Hello to our preview new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by Min-Young Kim
 
   </blockquote>
 
   <hr />
 
-  <textarea id="tester" rows="3" cols="80">
-Sphinx of black quartz, judge my vow.
-  </textarea>
+  <h2>Type tester</h2>
+
+  <textarea id="tester" rows="3" cols="80">Sphinx of black quartz, judge my vow.</textarea>
 
   <script type="module">
     const tester = document.getElementById('tester');
-    tester.addEventListener('input', propogate);
+    tester.addEventListener('input', preview);
 
-    function propogate() {
+    function preview() {
       const text = tester.value;
-      const elements = document.querySelectorAll('.propogate');
+      const elements = document.querySelectorAll('.preview');
       elements.forEach(element => {
         element.textContent = text;
       });
@@ -122,20 +133,22 @@ Sphinx of black quartz, judge my vow.
   </script>
 
   <h2><a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP</a></h2>
-  <p class="noto-serif-jp big propogate">Sphinx of black quartz, judge my vow.</p>
+  <p class="noto-serif-jp preview">Sphinx of black quartz, judge my vow.</p>
 
   <h2><a href="https://source.typekit.com/source-han-serif">Source Han Serif</h2></a>
-  <p class="source-han-serif-japanese big propogate">Sphinx of black quartz, judge my vow.</p>
+  <p class="source-han-serif-japanese preview">Sphinx of black quartz, judge my vow.</p>
+  <p><code>font-variant-east-asian: full-width;</code></p>
+  <p class="source-han-serif-japanese preview full-width">Sphinx of black quartz, judge my vow.</p>
 
   <h2><a href="https://learn.microsoft.com/en-us/typography/font-list/simsun">SimSun</a></h2>
-  <p class="simsun big propogate">Sphinx of black quartz, judge my vow.</p>
+  <p class="simsun preview">Sphinx of black quartz, judge my vow.</p>
 
   <h2><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-mincho">MS Mincho</a></h2>
-  <p class="ms-mincho big propogate">Sphinx of black quartz, judge my vow.</p>
+  <p class="ms-mincho preview">Sphinx of black quartz, judge my vow.</p>
 
 
   <footer>
-    <a href="https://github.com/MaxwellBo/maxwellbo.github.io/edit/master/subordinate-latin.html">Submit more fonts?</a>
+    <a href="https://github.com/MaxwellBo/maxwellbo.github.io/blob/master/subordinate-latin.html">Submit more fonts?</a>
     <br />
     <br />
     (˶˃ ᵕ ˂˶)
