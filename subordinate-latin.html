@@ -28,6 +28,12 @@
       margin: 5px;
     }
 
+    @media (max-width: 768px) {
+      h1 {
+        font-size: calc(3em);
+      }
+    }
+
     html, body { 
       font-family: Georgia, serif; 
     }
@@ -153,7 +159,7 @@
   </style>
 </head>
 <body>
-  <a href="/">← max bo</a>
+  <a href="index.html">← max bo</a>
   <h1>Subordinate Latin</h1>
   <p>September 26 2024</p>
 
@@ -234,7 +240,7 @@
       <td class="ms-mincho preview">Sphinx of black quartz, judge my vow.</td>
     </tr>
     <tr>
-      <td><a href="https://source.typekit.com/source-han-serif">Source Han Serif*</a></td>
+      <td><a href="https://source.typekit.com/source-han-serif">Source Han Serif</a><sup><a href="#[a]">[a]</sup></td>
       <td class="source-han-serif-japanese preview">Sphinx of black quartz, judge my vow.</td>
     </tr>
     <tr>
@@ -245,7 +251,7 @@
 
   <br />
 
-  * Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP</a> is just a subset of Source Han Serif, but on Google Fonts, but doesn't include the <code>font-variant-east-asian: full-width</code> feature.
+  <a id="[a]" href="#[a]"><sup>[a]</sup></a> Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP</a> is just a subset of Source Han Serif available on Google Fonts, but for some reason doesn't include  <code>font-variant-east-asian: full-width</code> / <code>font-feature-settings: 'fwid'</code>.
 
   <br />
   <br />
