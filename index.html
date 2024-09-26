@@ -186,7 +186,7 @@
         <article class="listing">
           <a href="https://hello-notebook-http-mode.fly.dev/">
             <img src="img/hnhm.png" />
-            <p class="title">Hello, <code>notebook-http</code> mode</p> 
+            <p class="title">Hello, <code>notebook-http</code> mode</p>
           </a>
         </article>
         <article class="listing">
@@ -1007,10 +1007,44 @@
       </dl>
     </section>
     <br />
-    Fonts from <a href="https://typotheque.genderfluid.space/">Typothèque Bye Bye Binary</a>. Inspiration from <a
-      href="https://s-i-l-o.fr/">SILO</a> & <a href="https://solar.lowtechmagazine.com/">LOW←TECH MAGAZINE</a>. Some
-    graphics are <a href="https://observablehq.com/plot/">Observable Plot</a>. Weather data from <a
-      href="https://open-meteo.com/">Open-Meteo</a>.
+    <p style="padding: 2px">
+      Fonts from <a href="https://typotheque.genderfluid.space/">Typothèque Bye Bye Binary</a>. Inspiration from <a
+        href="https://s-i-l-o.fr/">SILO</a> & <a href="https://solar.lowtechmagazine.com/">LOW←TECH MAGAZINE</a>. Some
+      graphics are <a href="https://observablehq.com/plot/">Observable Plot</a>. Weather data from <a
+        href="https://open-meteo.com/">Open-Meteo</a>.
+    </p>
+    <section style="border-top: 1px solid black">
+      <marquee id="feed" >
+        <a href="https://letterboxd.com/mbo_/rss/">⚛</a> <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
+        ඞ
+
+      </marquee>
+      <script type="module">
+        import * as htl from 'https://esm.run/htl@0.3.1';
+
+        const response = await fetch('https://mbo-letterboxdrss.web.val.run');
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(text, 'application/xml');
+
+        const items = Array.from(xmlDoc.getElementsByTagName("item"));
+
+        const feed = document.getElementById('feed');
+
+        for (const item of items) {
+          let title = item.getElementsByTagName("title")[0].textContent;
+          const [name, stars] = title.split(" - ")
+          title = stars + " - " + name;
+
+          const link = item.getElementsByTagName("link")[0].textContent;
+          const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toDateString();
+          const description = item.getElementsByTagName("description")[0].textContent;
+
+          feed.append(htl.html`<a href=${link} class="item-title">${title}</a> <small>${date}</small>`);
+          feed.append(document.createTextNode(' ■ '))
+        }
+      </script>
+    </section>
   </main>
   <footer>
     <a href="old.html">← old site</a> © 2024
