@@ -21,6 +21,17 @@
   </script>
 
   <style>
+    h1 {
+      font-size: 5em;
+      font-weight: normal;
+      padding: 0px;
+      margin: 5px;
+    }
+
+    html, body { 
+      font-family: Georgia, serif; 
+    }
+
     @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400&display=swap');
 
     @font-face {
@@ -63,7 +74,7 @@
     }
 
     .preview {
-      font-size: 4em;
+      font-size: 2em;
       white-space: pre-wrap;
     }
 
@@ -87,12 +98,64 @@
     p {
       margin-top: 0;
     }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    th:first-child, td:first-child {
+      width: 100px; /* Adjust the width as needed */
+      background-color: #f2f2f2;
+    }
+
+
+    @media (max-width: 600px) {
+      table, th, td {
+        display: block;
+        width: 100%;
+      }
+
+      th, td {
+        box-sizing: border-box;
+      }
+
+      th {
+        background-color: transparent;
+        border-bottom: 1px solid #ddd;
+      }
+
+      tr {
+        margin-bottom: 10px;
+      }
+
+      tr:after {
+        content: "";
+        display: table;
+        clear: both;
+      }
+
+      th:first-child, td:first-child {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <a href="/">← max bo</a>
   <h1>Subordinate Latin</h1>
-  <b>September 26 2024</b>
+  <p>September 26 2024</p>
 
   <blockquote>
     <b>The Latin inside Japanese fonts</b>
@@ -120,7 +183,7 @@
   <br />
 
   <p style="border: 1px dotted black; padding: 32px">
-    I really <i>really</i> fw the look of this <q>Subordiante Latin</q> so I thought I'd compile a collection of the most common (free for personal use) Japanese fonts.
+    i really fw the look of this <q>Subordiante Latin</q> so I thought I'd compile a collection of the most common (free for personal use) Japanese fonts.
   </p>
   <center>▼▼▼</center>
 
@@ -157,22 +220,37 @@
     }
   </script>
 
-  <h2><a href="https://source.typekit.com/source-han-serif">Source Han Serif</a></h2> 
+  <table>
+    <tr></tr>
+      <th>Font</th>
+      <th>Test</th>
+    </tr>
+    <tr>
+      <td><a href="https://learn.microsoft.com/en-us/typography/font-list/simsun">SimSun</a></td>
+      <td class="simsun preview">Sphinx of black quartz, judge my vow.</td>
+    </tr>
+    <tr>
+      <td><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-mincho">MS Mincho</a></td>
+      <td class="ms-mincho preview">Sphinx of black quartz, judge my vow.</td>
+    </tr>
+    <tr>
+      <td><a href="https://source.typekit.com/source-han-serif">Source Han Serif*</a></td>
+      <td class="source-han-serif-japanese preview">Sphinx of black quartz, judge my vow.</td>
+    </tr>
+    <tr>
+      <td><code>font-variant-east-asian: full-width;</code></td>
+      <td class="source-han-serif-japanese preview full-width">Sphinx of black quartz, judge my vow.</td>
+    </tr>
+  </table>
 
-  Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP</a> is just a subset of Source Han Serif, but on Google Fonts, but doesn't include the <code>font-variant-east-asian: full-width</code> feature.
+  <br />
 
-  <p class="source-han-serif-japanese preview">Sphinx of black quartz, judge my vow.</p>
-  <p><code>font-variant-east-asian: full-width;</code></p>
-  <p class="source-han-serif-japanese preview full-width">Sphinx of black quartz, judge my vow.</p>
+  * Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP</a> is just a subset of Source Han Serif, but on Google Fonts, but doesn't include the <code>font-variant-east-asian: full-width</code> feature.
 
-  <h2><a href="https://learn.microsoft.com/en-us/typography/font-list/simsun">SimSun</a></h2>
-  <p class="simsun preview">Sphinx of black quartz, judge my vow.</p>
-  <!-- <p class="simsun preview full-width">Sphinx of black quartz, judge my vow.</p> -->
-
-  <h2><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-mincho">MS Mincho</a></h2>
-  <p class="ms-mincho preview">Sphinx of black quartz, judge my vow.</p>
-  <!-- <p class="ms-mincho preview full-width">Sphinx of black quartz, judge my vow.</p> -->
-
+  <br />
+  <br />
+  <br />
+  <br />
 
   <footer>
     <a href="https://github.com/MaxwellBo/maxwellbo.github.io/blob/master/subordinate-latin.html">Submit more fonts?</a>
