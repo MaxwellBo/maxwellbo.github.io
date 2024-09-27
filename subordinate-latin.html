@@ -63,28 +63,17 @@
       font-style: normal;
     }
 
-    .simsun {
-      font-family: "SimSun", serif;
-      font-weight: 400;
+    @font-face {
+      font-family: 'MS PGothic';
+      src: url('fonts/MSPGOTHIC.ttf') format('truetype');
+      font-weight: normal;
       font-style: normal;
     }
 
-    .ms-mincho {
-      font-family: "MS Mincho", serif;
-      font-weight: 400;
-      font-style: normal;
-    }
-
-    .noto-serif-jp {
-      font-family: "Noto Serif JP", system-ui;
-      font-optical-sizing: auto;
-      font-weight: 400;
-      font-style: normal;
-    }
-
-    .source-han-serif-japanese {
-      font-family: "source-han-serif-japanese", serif;
-      font-weight: 400;
+    @font-face {
+      font-family: 'Meiryo';
+      src: url('fonts/Meiryo.ttf') format('truetype');
+      font-weight: normal;
       font-style: normal;
     }
 
@@ -182,14 +171,20 @@
     style="position: sticky; top: 0; background-color: white; padding: 10px; border-bottom: 1px solid #ddd; z-index: 1000;">
     <label for="font-selector">Choose a font:</label>
     <select id="font-selector">
-      <option value="ms-mincho">MS Mincho</option>
-      <option value="simsun">SimSun</option>
+      <option disabled>SERIF</option>
+      <option value="MS Mincho">MS Mincho</option>
+      <option value="SimSun">SimSun</option>
       <option value="source-han-serif-japanese">Source Han Serif</option>
+      <option disabled>SANS SERIF</option>
+      <option value="Hiragino Kaku Gothic Pro">Hiragino Kaku Gothic Pro</option>
+      <option value="Osaka">Osaka</option>
+      <option value="Meiryo">Meiryo</option>
+      <option value="MS PGothic">MS PGothic</option>
     </select>
     <script>
       const fontSelector = document.getElementById('font-selector');
       fontSelector.addEventListener('change', function () {
-        document.body.className = fontSelector.value;
+        document.body.style.fontFamily = fontSelector.value;
       });
     </script>
   </div>
@@ -280,19 +275,35 @@
       </tr>
       <tr>
         <td><a href="https://learn.microsoft.com/en-us/typography/font-list/simsun">SimSun</a></td>
-        <td class="simsun preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'SimSun', serif;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-mincho">MS Mincho</a></td>
-        <td class="ms-mincho preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'MS Mincho', serif;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://source.typekit.com/source-han-serif">Source Han Serif</a><sup><a href="#[a]">[a]</sup></td>
-        <td class="source-han-serif-japanese preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'source-han-serif-japanese', serif;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><code>font-variant-east-asian: full-width;</code></td>
-        <td class="source-han-serif-japanese preview full-width">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'source-han-serif-japanese', serif;" class="preview full-width">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/hiragino-kaku-gothic-pro">Hiragino Kaku Gothic Pro</a></td>
+        <td style="font-family: 'Hiragino Kaku Gothic Pro', serif;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/osaka">Osaka</a></td>
+        <td style="font-family: 'Osaka', serif;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/meiryo">Meiryo</a></td>
+        <td style="font-family: 'Meiryo', serif;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic">MS PGothic</a></td>
+        <td style="font-family: 'MS PGothic', serif;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
     </table>
 
