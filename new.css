@@ -40,8 +40,8 @@
 }
 
 @font-face {
-  font-family: 'MS Mincho';
-  src: url('fonts/MSMincho.ttf') format('truetype');
+  font-family: 'SimSun';
+  src: url('fonts/SIMSUN.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
 }
