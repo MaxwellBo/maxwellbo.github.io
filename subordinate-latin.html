@@ -63,7 +63,7 @@
 
     html,
     body {
-      font-family: 'MS Mincho', 'Hiragino Mincho ProN', 'Source Han Serif', serif;
+      font-family: 'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'Source Han Serif', serif;
     }
 
     /* @font-face {
@@ -74,34 +74,6 @@
     @font-face {
       font-family: 'Hello Kitty'; 
       src: url('fonts/HelloKitty.otf') format('opentype');
-    }
-
-    @font-face {
-      font-family: 'MS Mincho';
-      src: url('fonts/MSMincho.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: 'SimSun';
-      src: url('fonts/SIMSUN.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: 'MS PGothic';
-      src: url('fonts/MSPGOTHIC.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
-    }
-
-    @font-face {
-      font-family: 'Meiryo';
-      src: url('fonts/Meiryo.ttf') format('truetype');
-      font-weight: normal;
-      font-style: normal;
     }
 
     .preview {
@@ -218,32 +190,32 @@
     <select id="font-selector"></select>
     <script>
       const fonts = [
-        { value: "'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif" },
-        { value: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman", note: 'a' },
-        { value: "MS Mincho", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-mincho" },
+        { value: "'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif", note: 'a' },
+        { value: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman", note: 'b' },
         { value: "SimSun", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/simsun" },
-        { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, note: 'b' },
+        { value: "MS Mincho", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-mincho" },
+        { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, note: 'c' },
         { value: "Hina Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Hina+Mincho" },
         { value: "Sawarabi Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Sawarabi+Mincho" },
         { value: "Shippori Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Shippori+Mincho" },
         { value: "Zen Old Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Zen+Old+Mincho" },
+        { value: "Hiragino Mincho ProN", platform: "MacOS, iOS", style: "serif", supportsFullWidth: true },
         { value: "YuMincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
         { value: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true },
         { value: "Toppan Bunkyu Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
         { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
         { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true },
-        { value: "Hiragino Mincho ProN", platform: "MacOS", style: "serif", supportsFullWidth: true },
-        { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", note: 'a' },
+        { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", note: 'b' },
         { value: "MS PGothic", platform: "Windows", style: "sans serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic" },
         { value: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
         { value: "Osaka", platform: "MacOS", style: "sans serif" },
+        { value: "Hiragino Kaku Gothic Pro", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Hiragino Maru Gothic ProN", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Hiragino Sans", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true },
         { value: "Toppan Bunkyu Midashi Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
         { value: "Tsukushi A Round Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
         { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
         { value: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Hiragino Kaku Gothic Pro", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Hiragino Maru Gothic ProN", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Hiragino Sans", platform: "MacOS", style: "sans serif", supportsFullWidth: true }
       ];
       const fontSelector = document.getElementById('font-selector');
       let currentStyle = '';
@@ -429,13 +401,15 @@
       }
     </script>
 
-    <br />
-
-    <a id="[a]" href="#[a]"><sup>[a]</sup></a> Control font for comparison.
+    <a id="[a]" href="#[a]"><sup>[a]</sup></a> This is the article's <code>&lt;body&gt;</code> font stack. 
 
     <br />
 
-    <a id="[b]" href="#[b]"><sup>[b]</sup></a> 
+    <a id="[b]" href="#[b]"><sup>[b]</sup></a> Control font for comparison.
+
+    <br />
+
+    <a id="[c]" href="#[c]"><sup>[c]</sup></a> 
     Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP is just the Google Font version of Source Han Serif</a>, 
     but for some reason doesn't include <code>font-variant-east-asian: full-width</code> / <code>font-feature-settings: 'fwid'</code>.
 
