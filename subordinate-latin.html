@@ -194,23 +194,23 @@
         { value: "Sawarabi Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Sawarabi+Mincho" },
         { value: "Shippori Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Shippori+Mincho" },
         { value: "Zen Old Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Zen+Old+Mincho" },
-        { value: "YuMincho", platform: "MacOS", style: "serif" },
-        { value: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif" },
-        { value: "Toppan Bunkyu Mincho", platform: "MacOS", style: "serif" },
-        { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif" },
-        { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif" },
-        { value: "Hiragino Mincho ProN", platform: "MacOS", style: "serif" },
+        { value: "YuMincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
+        { value: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true },
+        { value: "Toppan Bunkyu Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
+        { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
+        { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true },
+        { value: "Hiragino Mincho ProN", platform: "MacOS", style: "serif", supportsFullWidth: true },
         { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", note: 'a' },
         { value: "MS PGothic", platform: "Windows", style: "sans serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic" },
         { value: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
         { value: "Osaka", platform: "MacOS", style: "sans serif" },
-        { value: "Toppan Bunkyu Midashi Gothic", platform: "MacOS", style: "sans serif" },
-        { value: "Tsukushi A Round Gothic", platform: "MacOS", style: "sans serif" },
-        { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif" },
-        { value: "Klee", platform: "MacOS", style: "sans serif" },
-        { value: "Hiragino Kaku Gothic Pro", platform: "MacOS", style: "sans serif" },
-        { value: "Hiragino Maru Gothic ProN", platform: "MacOS", style: "sans serif" },
-        { value: "Hiragino Sans", platform: "MacOS", style: "sans serif" }
+        { value: "Toppan Bunkyu Midashi Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Tsukushi A Round Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
+        { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Hiragino Kaku Gothic Pro", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Hiragino Maru Gothic ProN", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Hiragino Sans", platform: "MacOS", style: "sans serif", supportsFullWidth: true }
       ];
       const fontSelector = document.getElementById('font-selector');
       let currentStyle = '';
@@ -333,32 +333,39 @@
       </tbody>
     </table>
 
-    <script>
-      const fontTableBody = document.getElementById('font-table-body');
+    <br />
+    <br />
 
-      function createFontRow(font, isFullWidth = false) {
+    Some fonts have a full-width variant. It can be enabled with either <code>font-variant-east-asian: full-width</code> or <code>font-feature-settings: 'fwid'</code>.
+
+    <br />
+    <br />
+
+    <table>
+      <thead>
+      <tr>
+        <th>Font</th>
+        <th>Platform</th>
+        <th>Test</th>
+      </tr>
+      </thead>
+      <tbody id="font-table-body-fullwidth">
+      </tbody>
+    </table>
+
+    <script>
+
+      function makeFontRow(font, isFullWidth = false) {
         const row = document.createElement('tr');
         const fontCell = document.createElement('td');
         const platformCell = document.createElement('td');
         const testCell = document.createElement('td');
 
-        if (isFullWidth) {
-          const fullWidthCell = document.createElement('td');
-          fullWidthCell.colSpan = 2;
-          fullWidthCell.textContent = 'font-variant-east-asian: full-width';
-          row.appendChild(fullWidthCell);
-        } else {
-          const fontCell = document.createElement('td');
-          const platformCell = document.createElement('td');
-          fontCell.innerHTML = font.link ? `<a href="${font.link}">${font.name ?? font.value}</a>` : (font.name ?? font.value);
-          platformCell.textContent = font.platform ?? 'Unknown';
+        fontCell.innerHTML = font.link ? `<a href="${font.link}">${font.name ?? font.value}</a>` : (font.name ?? font.value);
+        platformCell.textContent = font.platform ?? 'Unknown';
 
-          if (font.note) {
-            fontCell.innerHTML += ` <a href="#[${font.note}]"><sup>[${font.note}]</sup></a>`;
-          }
-
-          row.appendChild(fontCell);
-          row.appendChild(platformCell);
+        if (font.note) {
+          fontCell.innerHTML += ` <a href="#[${font.note}]"><sup>[${font.note}]</sup></a>`;
         }
 
         testCell.style.fontFamily = `${font.value}, Webdings`;
@@ -366,19 +373,25 @@
         testCell.textContent = 'Sphinx of black quartz, judge my vow.';
         testCell.fontVariantEastAsian = isFullWidth ? 'full-width' : 'normal';
 
+        row.appendChild(fontCell);
+        row.appendChild(platformCell);
         row.appendChild(testCell);
 
         if (font.control) {
           row.classList.add('control');
         }
 
-        fontTableBody.appendChild(row);
+        return row;
       }
 
+      const fontTableBody = document.getElementById('font-table-body');
+      const fontTableBodyFullwidth = document.getElementById('font-table-body-fullwidth');
+
       for (const font of fonts) {
-        createFontRow(font);
+        fontTableBody.append(makeFontRow(font));
+
         if (font.supportsFullWidth) {
-          createFontRow(font, true);
+          fontTableBodyFullwidth.append(makeFontRow(font, true));
         }
       }
     </script>
