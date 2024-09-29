@@ -186,10 +186,10 @@
     <script>
       const fonts = [
         { value: "'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif" },
-        { value: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman" },
+        { value: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman", note: 'a' },
         { value: "MS Mincho", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-mincho" },
         { value: "SimSun", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/simsun" },
-        { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, note: 'a' },
+        { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, note: 'b' },
         { value: "Hina Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Hina+Mincho" },
         { value: "Sawarabi Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Sawarabi+Mincho" },
         { value: "Shippori Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Shippori+Mincho" },
@@ -200,7 +200,7 @@
         { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif" },
         { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif" },
         { value: "Hiragino Mincho ProN", platform: "MacOS", style: "serif" },
-        { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial" },
+        { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", note: 'a' },
         { value: "MS PGothic", platform: "Windows", style: "sans serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic" },
         { value: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
         { value: "Osaka", platform: "MacOS", style: "sans serif" },
@@ -382,10 +382,13 @@
 
     <br />
 
-    <a id="[a]" href="#[a]"><sup>[a]</sup></a> 
-    Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP is just a subset
-    of Source Han Serif available on Google Fonts, but for some reason doesn't include
-    <code>font-variant-east-asian: full-width</code> / <code>font-feature-settings: 'fwid'</code></a>.
+    <a id="[a]" href="#[a]"><sup>[a]</sup></a> Control font for comparison.
+
+    <br />
+
+    <a id="[b]" href="#[b]"><sup>[b]</sup></a> 
+    Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP is just the Google Font version of Source Han Serif</a>, 
+    but for some reason doesn't include <code>font-variant-east-asian: full-width</code> / <code>font-feature-settings: 'fwid'</code>.
 
     <footer style="padding-top: 32px; padding-bottom: 32px;">
       <a href="https://github.com/MaxwellBo/maxwellbo.github.io/blob/master/subordinate-latin.html">Submit more
