@@ -308,11 +308,8 @@
 
     <h2>Type tester</h2>
 
-    If you see <span style="font-family: 'Hello Kitty', Webdings">Webdings</span>, then the font is either unavailable on your platform or has failed to load.
+    <p>If you see <span style="font-family: 'Hello Kitty', Webdings">Webdings</span>, then the font is either unavailable on your platform or has failed to load.</p>
     
-    <br />
-    <br />
-
     <textarea id="tester" rows="3" style="width: 100%">Sphinx of black quartz, judge my vow.</textarea>
 
     <script type="module">
@@ -354,13 +351,11 @@
       </tbody>
     </table>
 
-    <br />
-    <br />
+    <h3>Fullwidth forms</h3>
 
-    Some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">fullwidth forms</a>. It can be enabled with either <code>font-variant-east-asian: full-width</code> or <code>font-feature-settings: 'fwid'</code>.
-
-    <br />
-    <br />
+    <p>Some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">fullwidth forms</a>. They can be enabled with either <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a> or <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a> CSS properties.</p>
+    <p>Like monospace fonts, fullwidth characters occupy the same horizontal space regardless of their natural width.
+    <p><b>Unlike</b>true monospace fonts, <code>full-width</code> only affects certain characters (mainly ASCII characters), so it doesn't guarantee that all characters in the text will have the same width.</p>
 
     <table>
       <thead>
