@@ -287,7 +287,7 @@
 
     <h2>Type tester</h2>
 
-    If you see <span style="font-family: Webdings">Webdings</span>, then the font is either unavailable on your platform or has failed to load.
+    If you see <span style="font-family: Webdings, 'Bodoni Ornaments', 'ZapfDingbatsITC'">Webdings</span>, then the font is either unavailable on your platform or has failed to load.
     
     <br />
     <br />
@@ -368,7 +368,7 @@
           fontCell.innerHTML += ` <a href="#[${font.note}]"><sup>[${font.note}]</sup></a>`;
         }
 
-        testCell.style.fontFamily = `${font.value}, Webdings`;
+        testCell.style.fontFamily = `${font.value}, Webdings, 'Bodoni Ornaments', 'ZapfDingbatsITC'`;
         testCell.className = 'preview' + (isFullWidth ? ' full-width' : '');
         testCell.textContent = 'Sphinx of black quartz, judge my vow.';
         testCell.fontVariantEastAsian = isFullWidth ? 'full-width' : 'normal';
