@@ -55,7 +55,7 @@
 
     html,
     body {
-      font-family: "SimSun", Georgia, serif;
+      font-family: 'MS Mincho', 'Hiragino Mincho ProN', 'Source Han Serif', serif;
     }
 
     @font-face {
@@ -184,19 +184,35 @@
     style="position: sticky; top: 0; background-color: white; padding: 10px; border-bottom: 1px solid #ddd; z-index: 1000;">
     <label for="font-selector">Choose a font:</label>
     <select id="font-selector">
+      <option value="'MS Mincho', 'Hiragino Mincho ProN', 'Source Han Serif', serif">'MS Mincho', 'Hiragino Mincho ProN', 'Source Han Serif', serif</option>
       <option disabled>SERIF</option>
-      <option value="SimSun">SimSun</option>
-      <option value="MS Mincho">MS Mincho</option>
+      <option value="SimSun">SimSun (Windows)</option>
+      <option value="MS Mincho">MS Mincho (Windows)</option>
+
       <option value="source-han-serif-japanese">Source Han Serif</option>
       <option value="Sawarabi Mincho">Sawarabi Mincho</option>
       <option value="Shippori Mincho">Shippori Mincho</option>
       <option value="Zen Old Mincho">Zen Old Mincho</option>
       <option value="Hina Mincho">Hina Mincho</option>
+      <option value="YuMincho">YuMincho (MacOS)</option>
+      <option value="Toppan Bunkyu Gothic">Toppan Bunkyu Gothic (MacOS)</option>
+      <option value="Toppan Bunkyu Mincho">Toppan Bunkyu Mincho (MacOS)</option>
+      <option value="Toppan Bunkyu Midashi Mincho">Toppan Bunkyu Midashi Mincho (MacOS)</option>
+      <option value="Tsukushi B Round Gothic">Tsukushi B Round Gothic (MacOS)</option>
+      <option value="Hiragino Mincho ProN">Hiragino Mincho ProN (MacOS)</option>
+
       <option disabled>SANS SERIF</option>
-      <option value="MS PGothic">MS PGothic</option>
-      <option value="Osaka">Osaka</option>
-      <option value="Hiragino Kaku Gothic Pro">Hiragino Kaku Gothic Pro</option>
-      <option value="Meiryo">Meiryo</option>
+
+      <option value="MS PGothic">MS PGothic (Windows)</option>
+      <option value="Meiryo">Meiryo (Windows)</option>
+      <option value="Osaka">Osaka (MacOS)</option>
+      <option value="Toppan Bunkyu Midashi Gothic">Toppan Bunkyu Midashi Gothic (MacOS)</option>
+      <option value="Tsukushi A Round Gothic">Tsukushi A Round Gothic (MacOS)</option>
+      <option value="YuKyokasho Yoko">YuKyokasho Yoko (MacOS)</option>
+      <option value="Klee">Klee (MacOS)</option>
+      <option value="Hiragino Kaku Gothic Pro">Hiragino Kaku Gothic Pro (MacOS)</option>
+      <option value="Hiragino Maru Gothic ProN">Hiragino Maru Gothic ProN (MacOS)</option>
+      <option value="Hiragino Sans">Hiragino Sans (MacOS)</option>
     </select>
     <script>
       const fontSelector = document.getElementById('font-selector');
@@ -256,6 +272,10 @@
 
     <h2>Type tester</h2>
 
+    If you see <span style="font-family: Webdings">a weird fallback font</span>, then the font has failed to load.
+
+    I will not be rehosting proprietary fonts.
+
     <textarea id="tester" rows="3" style="width: 100%">Sphinx of black quartz, judge my vow.</textarea>
 
     <script type="module">
@@ -285,9 +305,6 @@
       }
     </script>
 
-
-    If you see a <span style="font-family: fantasy">weird fallback font</span>, then the font has failed to load.
-
     <table>
       <tr></tr>
       <th>Font</th>
@@ -295,63 +312,115 @@
       </tr>
       <tr class="control">
         <td><a href="https://learn.microsoft.com/en-us/typography/font-list/times-new-roman">Times New Roman</a> (control)</td>
-        <td style="font-family: 'Times New Roman', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'Times New Roman', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://learn.microsoft.com/en-us/typography/font-list/simsun">SimSun</a></td>
-        <td style="font-family: 'SimSun', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'SimSun', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-mincho">MS Mincho</a></td>
-        <td style="font-family: 'MS Mincho', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'MS Mincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://source.typekit.com/source-han-serif">Source Han Serif</a><sup><a href="#[a]">[a]</sup></td>
-        <td style="font-family: 'source-han-serif-japanese', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'source-han-serif-japanese', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://fonts.google.com/specimen/Sawarabi+Mincho">Sawarabi Mincho</a></td>
-        <td style="font-family: 'Sawarabi Mincho', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'Sawarabi Mincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://fonts.google.com/specimen/Shippori+Mincho">Shippori Mincho</a></td>
-        <td style="font-family: 'Shippori Mincho', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'Shippori Mincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://fonts.google.com/specimen/Zen+Old+Mincho">Zen Old Mincho</a></td>
-        <td style="font-family: 'Zen Old Mincho', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'Zen Old Mincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><a href="https://fonts.google.com/specimen/Hina+Mincho">Hina Mincho</a></td>
-        <td style="font-family: 'Hina Mincho', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'Hina Mincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><code>font-variant-east-asian: full-width;</code></td>
-        <td style="font-family: 'source-han-serif-japanese', fantasy;" class="preview full-width">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'source-han-serif-japanese', Webdings;" class="preview full-width">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr class="control">
         <td><a href="https://learn.microsoft.com/en-us/typography/font-list/arial">Arial</a> (control)</td>
-        <td style="font-family: 'Arial', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'Arial', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
-        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic">MS PGothic</a></td>
-        <td style="font-family: 'MS PGothic', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic">MS PGothic</a> (Windows)</td>
+        <td style="font-family: 'MS PGothic', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
-        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/osaka">Osaka</a></td>
-        <td style="font-family: 'Osaka', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td>Osaka (MacOS)</td>
+        <td style="font-family: 'Osaka', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
-        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/hiragino-kaku-gothic-pro">Hiragino Kaku Gothic Pro</a></td>
-        <td style="font-family: 'Hiragino Kaku Gothic Pro', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/hiragino-kaku-gothic-pro">Hiragino Kaku Gothic Pro</a> (Windows)</td>
+        <td style="font-family: 'Hiragino Kaku Gothic Pro', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
-        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/meiryo">Meiryo</a></td>
-        <td style="font-family: 'Meiryo', fantasy;" class="preview">Sphinx of black quartz, judge my vow.</td>
+        <td><a href="https://learn.microsoft.com/en-us/typography/font-list/meiryo">Meiryo</a> (Windows)</td>
+        <td style="font-family: 'Meiryo', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
       <tr>
         <td><code>font-variant-east-asian: full-width;</code></td>
-        <td style="font-family: 'Meiryo', fantasy;" class="preview full-width">Sphinx of black quartz, judge my vow.</td>
+        <td style="font-family: 'Meiryo', Webdings;" class="preview full-width">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/YuMincho">YuMincho</a> (MacOS)</td>
+        <td style="font-family: 'YuMincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Toppan+Bunkyu+Gothic">Toppan Bunkyu Gothic</a> (MacOS)</td>
+        <td style="font-family: 'Toppan Bunkyu Gothic', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Toppan+Bunkyu+Mincho">Toppan Bunkyu Mincho</a> (MacOS)</td>
+        <td style="font-family: 'Toppan Bunkyu Mincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Toppan+Bunkyu+Midashi+Mincho">Toppan Bunkyu Midashi Mincho</a> (MacOS)</td>
+        <td style="font-family: 'Toppan Bunkyu Midashi Mincho', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Tsukushi+B+Round+Gothic">Tsukushi B Round Gothic</a> (MacOS)</td>
+        <td style="font-family: 'Tsukushi B Round Gothic', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Hiragino+Mincho+ProN">Hiragino Mincho ProN</a> (MacOS)</td>
+        <td style="font-family: 'Hiragino Mincho ProN', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Toppan+Bunkyu+Midashi+Gothic">Toppan Bunkyu Midashi Gothic</a> (MacOS)</td>
+        <td style="font-family: 'Toppan Bunkyu Midashi Gothic', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Tsukushi+A+Round+Gothic">Tsukushi A Round Gothic</a> (MacOS)</td>
+        <td style="font-family: 'Tsukushi A Round Gothic', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/YuKyokasho+Yoko">YuKyokasho Yoko</a> (MacOS)</td>
+        <td style="font-family: 'YuKyokasho Yoko', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Klee">Klee</a> (MacOS)</td>
+        <td style="font-family: 'Klee', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Hiragino+Kaku+Gothic+Pro">Hiragino Kaku Gothic Pro</a> (MacOS)</td>
+        <td style="font-family: 'Hiragino Kaku Gothic Pro', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Hiragino+Maru+Gothic+ProN">Hiragino Maru Gothic ProN</a> (MacOS)</td>
+        <td style="font-family: 'Hiragino Maru Gothic ProN', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
+      </tr>
+      <tr>
+        <td><a href="https://fonts.google.com/specimen/Hiragino+Sans">Hiragino Sans</a> (MacOS)</td>
+        <td style="font-family: 'Hiragino Sans', Webdings;" class="preview">Sphinx of black quartz, judge my vow.</td>
       </tr>
     </table>
 
