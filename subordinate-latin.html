@@ -124,7 +124,12 @@
     td:first-child {
       width: 100px;
       /* Adjust the width as needed */
-      background-color: #f2f2f2;
+      background-color: #f1e9e9;
+    }
+
+    th:nth-child(2),
+    td:nth-child(2) {
+      background-color: #eef3f5;
     }
 
     .control {
@@ -272,8 +277,8 @@
       Latin typeface has glyphs with varying proportional widths, but Kanji are designed to fit within a square space
       which means they are much wider than most Latin letterforms. This means a typical Latin font will look much too
       narrow when mixed in among Japanese characters. To allow Latin to blend with the other scripts in Japanese text,
-      Latin letterforms are modified to be slightly wider and have shorter ascenders and descenders and bigger counters.
-      In addition to this adjusted Latin, Japanese fonts also include a “full width” Latin design.
+      Latin letterforms are modified to be slightly wider and have shorter <a href="https://fonts.google.com/knowledge/glossary/ascenders_descenders">ascenders and descenders</a> and bigger <a href="https://fonts.google.com/knowledge/glossary/counter">counters</a>.
+      In addition to this adjusted Latin, [some] Japanese fonts also include a <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">“full width”</a> Latin design.
       <br />
       <br />
 
@@ -352,7 +357,7 @@
     <br />
     <br />
 
-    Some fonts have a full-width variant. It can be enabled with either <code>font-variant-east-asian: full-width</code> or <code>font-feature-settings: 'fwid'</code>.
+    Some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">fullwidth forms</a>. It can be enabled with either <code>font-variant-east-asian: full-width</code> or <code>font-feature-settings: 'fwid'</code>.
 
     <br />
     <br />
