@@ -93,6 +93,11 @@
       font-feature-settings: 'fwid';
     }
 
+    .half-width {
+      font-variant-east-asian: half-width;
+      font-feature-settings: 'hwid';
+    }
+
     blockquote {
       border-left: 1px dotted #000;
       padding-left: 15px;
@@ -210,28 +215,28 @@
         { value: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman", note: 'b' },
         { value: "SimSun", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/simsun" },
         { value: "MS Mincho", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-mincho" },
-        { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, note: 'c' },
+        { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, supportsHalfWidth: true, note: 'c' },
         { value: "Hina Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Hina+Mincho" },
         { value: "Sawarabi Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Sawarabi+Mincho" },
         { value: "Shippori Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Shippori+Mincho" },
         { value: "Zen Old Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Zen+Old+Mincho" },
-        { value: "Hiragino Mincho ProN", platform: "MacOS, iOS", style: "serif", supportsFullWidth: true },
-        { value: "YuMincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
-        { value: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true },
-        { value: "Toppan Bunkyu Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
-        { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true },
-        { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true },
+        { value: "Hiragino Mincho ProN", platform: "MacOS, iOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "YuMincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Toppan Bunkyu Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
         { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", note: 'b' },
         { value: "MS PGothic", platform: "Windows", style: "sans serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic" },
-        { value: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
+        { value: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
         { value: "Osaka", platform: "MacOS", style: "sans serif" },
-        { value: "Hiragino Kaku Gothic Pro", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Hiragino Maru Gothic ProN", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Hiragino Sans", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Toppan Bunkyu Midashi Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Tsukushi A Round Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
-        { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
-        { value: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true },
+        { value: "Hiragino Kaku Gothic Pro", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Hiragino Maru Gothic ProN", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Hiragino Sans", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Toppan Bunkyu Midashi Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Tsukushi A Round Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+        { value: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
       ];
       const fontSelector = document.getElementById('font-selector');
       let currentStyle = '';
@@ -371,9 +376,25 @@
       </tbody>
     </table>
 
+    <h3>Halfwidth forms</h3>
+
+    Just like fullwidth, some fonts also support a halfwidth variant enabled with the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'hwid'</code></a> CSS property.
+
+    <table>
+      <thead>
+      <tr>
+        <th>Font</th>
+        <th>Platform</th>
+        <th>Test</th>
+      </tr>
+      </thead>
+      <tbody id="font-table-body-halfwidth">
+      </tbody>
+    </table>
+
     <script>
 
-      function makeFontRow(font, isFullWidth = false) {
+      function makeFontRow(font, variant) {
         const row = document.createElement('tr');
         const fontCell = document.createElement('td');
         const platformCell = document.createElement('td');
@@ -387,9 +408,9 @@
         }
 
         testCell.style.fontFamily = `${font.value}, 'Hello Kitty', Webdings`;
-        testCell.className = 'preview' + (isFullWidth ? ' full-width' : '');
-        testCell.textContent = 'Sphinx of black quartz, judge my vow.' + (isFullWidth ? '\nハローワールド' : '');
-        testCell.fontVariantEastAsian = isFullWidth ? 'full-width' : 'normal';
+        testCell.textContent = 'Sphinx of black quartz, judge my vow.' + (variant ? '\nハローワールド' : '');
+        testCell.className = 'preview' + (variant ? ' ' + variant : '');
+        testCell.fontVariantEastAsian = variant;
 
         row.appendChild(fontCell);
         row.appendChild(platformCell);
@@ -404,12 +425,17 @@
 
       const fontTableBody = document.getElementById('font-table-body');
       const fontTableBodyFullwidth = document.getElementById('font-table-body-fullwidth');
+      const fontTableBodyHalfwidth = document.getElementById('font-table-body-halfwidth');
 
       for (const font of fonts) {
         fontTableBody.append(makeFontRow(font));
 
         if (font.supportsFullWidth) {
-          fontTableBodyFullwidth.append(makeFontRow(font, true));
+          fontTableBodyFullwidth.append(makeFontRow(font, 'full-width'));
+        }
+
+        if (font.supportsHalfWidth) {
+          fontTableBodyHalfwidth.append(makeFontRow(font, 'half-width'));
         }
       }
     </script>
