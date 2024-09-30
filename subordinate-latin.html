@@ -43,12 +43,17 @@
       margin: 5px;
     }
 
+    a:hover {
+      text-decoration-thickness: 3px;
+    }
+
     a:active {
-      background-color: cyan;
+      background-color: yellow;
+      text-underline-offset: 4px;
     }
 
     a:target {
-      background-color: cyan;
+      background-color: yellow;
     }
 
     b,
@@ -191,8 +196,6 @@
         border-bottom: 1px solid #ddd;
       }
 
-      tr {}
-
       tr:after {
         content: "";
         display: table;
@@ -203,10 +206,6 @@
       td:first-child {
         width: 100%;
       }
-    }
-
-    a:hover {
-      text-decoration-thickness: 3px;
     }
 
     figure {
