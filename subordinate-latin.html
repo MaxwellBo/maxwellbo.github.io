@@ -211,9 +211,6 @@
       margin: 0;
     }
   </style>
-</head>
-
-<body>
   <script>
     const fonts = [
       { value: "'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif", note: 'a' },
@@ -243,6 +240,39 @@
       { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
       { value: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
     ];
+  </script>
+</head>
+
+<body>
+  <div
+    style="position: sticky; top: 0; background-color: rgba(255, 255, 255, 0.681); padding: 10px; border-bottom: 1px solid #ddd; z-index: 1000;">
+    <label for="font-selector">Choose a font:</label>
+    <select id="font-selector"></select>
+  </div>
+  <script>
+    const fontSelector = document.getElementById('font-selector');
+    let currentStyle = '';
+
+    for (const font of fonts) {
+      if (font.control) continue;
+
+      if (font.style !== currentStyle) {
+        const disabledOption = document.createElement('option');
+        disabledOption.disabled = true;
+        disabledOption.textContent = font.style.toUpperCase();
+        fontSelector.appendChild(disabledOption);
+        currentStyle = font.style;
+      }
+      const option = document.createElement('option');
+      option.value = font.value;
+      option.textContent = `${font.name ?? font.value} ${font.platform ? `(${font.platform})` : ''}`;
+      fontSelector.appendChild(option);
+    };
+
+    fontSelector.addEventListener('change', function () {
+      const selectedFont = fontSelector.value;
+      document.body.style.fontFamily = selectedFont;
+    });
   </script>
   <main>
     <div style="padding-top: 16px;">
@@ -465,36 +495,6 @@
         fonts?</a>
     </footer>
   </main>
-  <div
-    style="position: sticky; bottom: 0; background-color: white; padding: 10px; border-top: 2px solid #ddd; z-index: 1000;">
-    <label for="font-selector">Choose a font:</label>
-    <select id="font-selector"></select>
-  </div>
-  <script>
-    const fontSelector = document.getElementById('font-selector');
-    let currentStyle = '';
-
-    for (const font of fonts) {
-      if (font.control) continue;
-
-      if (font.style !== currentStyle) {
-        const disabledOption = document.createElement('option');
-        disabledOption.disabled = true;
-        disabledOption.textContent = font.style.toUpperCase();
-        fontSelector.appendChild(disabledOption);
-        currentStyle = font.style;
-      }
-      const option = document.createElement('option');
-      option.value = font.value;
-      option.textContent = `${font.name ?? font.value} ${font.platform ? `(${font.platform})` : ''}`;
-      fontSelector.appendChild(option);
-    };
-
-    fontSelector.addEventListener('change', function () {
-      const selectedFont = fontSelector.value;
-      document.body.style.fontFamily = selectedFont;
-    });
-  </script>
 </body>
 
 </html>
