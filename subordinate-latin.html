@@ -353,9 +353,9 @@
 
     <h3>Fullwidth forms</h3>
 
-    <p>Some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">fullwidth forms</a>. They can be enabled with either <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a> or <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a> CSS properties.</p>
+    <p>Some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">Latin fullwidth forms</a>, matching the width of non-Latin <a href="https://en.wikipedia.org/wiki/CJK_characters">CJK characters</a>. They can be enabled with either <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a> or <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a> CSS properties.</p>
     <p>Like monospace fonts, fullwidth characters occupy the same horizontal space regardless of their natural width.
-    <p><b>Unlike</b>true monospace fonts, <code>full-width</code> only affects certain characters (mainly ASCII characters), so it doesn't guarantee that all characters in the text will have the same width.</p>
+    <p><b>Unlike</b> true monospace fonts, <code>full-width</code> only affects certain characters (mainly <a href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it doesn't guarantee that all characters in the text will have the same width.</p>
 
     <table>
       <thead>
@@ -386,7 +386,7 @@
 
         testCell.style.fontFamily = `${font.value}, 'Hello Kitty', Webdings`;
         testCell.className = 'preview' + (isFullWidth ? ' full-width' : '');
-        testCell.textContent = 'Sphinx of black quartz, judge my vow.';
+        testCell.textContent = 'Sphinx of black quartz, judge my vow.'; + (isFullWidth ? ' ハローワールド' : '');
         testCell.fontVariantEastAsian = isFullWidth ? 'full-width' : 'normal';
 
         row.appendChild(fontCell);
