@@ -316,7 +316,6 @@
     <p>If you see <span style="font-family: 'Hello Kitty', Webdings">Webdings</span>, then the font is either unavailable on your platform or has failed to load.</p>
     
     <textarea id="tester" rows="3" style="width: 100%">Sphinx of black quartz, judge my vow.</textarea>
-
     <script type="module">
       const tester = document.getElementById('tester');
       tester.addEventListener('input', onInput);
@@ -344,6 +343,13 @@
       }
     </script>
 
+    <small>
+      Jump to: 
+      <a href="#fullwidth-forms">Fullwidth forms</a>, 
+      <a href="#halfwidth-forms">Halfwidth forms</a>
+    </small>
+
+
     <table>
       <thead>
       <tr>
@@ -356,11 +362,11 @@
       </tbody>
     </table>
 
-    <h3>Fullwidth forms</h3>
+    <h3 id="fullwidth-forms">Fullwidth forms</h3>
 
     <p>So that mixed-Latin/<a href="https://en.wikipedia.org/wiki/CJK_characters">CJK</a> text is visually <q>harmonious</q>
       some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">Latin fullwidth forms</a>, matching the width of CJK characters. 
-      They can be enabled with either <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a> or <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a> CSS properties.</p>
+      They are rendered by either enabling the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a> or <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a> CSS properties, or by using <a href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.
     <p>Like monospace fonts, fullwidth characters occupy the same horizontal space regardless of their natural width.
     <p><b>Unlike</b> true monospace fonts, <code>full-width</code> only affects certain characters (mainly <a href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it doesn't guarantee that all characters in the text will have the same width.</p>
 
@@ -376,9 +382,9 @@
       </tbody>
     </table>
 
-    <h3>Halfwidth forms</h3>
+    <h3 id="halfwidth-forms">Halfwidth forms</h3>
 
-    Just like fullwidth, some fonts also support a halfwidth variant enabled with the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'hwid'</code></a> CSS property.
+    <p>Some fonts also support a <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">halfwidth</a> variant, rendered by either enabling the <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'hwid'</code></a> CSS property, or by using <a href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
 
     <table>
       <thead>
