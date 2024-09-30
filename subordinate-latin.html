@@ -218,60 +218,60 @@
   <div style="position: sticky; top: 0; background-color: white; padding: 10px; border-bottom: 1px solid #ddd; z-index: 1000;">
     <label for="font-selector">Choose a font:</label>
     <select id="font-selector"></select>
-    <script>
-      const fonts = [
-        { value: "'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif", note: 'a' },
-        { value: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman", note: 'b' },
-        { value: "SimSun", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/simsun" },
-        { value: "MS Mincho", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-mincho" },
-        { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, supportsHalfWidth: true, note: 'c' },
-        { value: "Hina Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Hina+Mincho" },
-        { value: "Sawarabi Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Sawarabi+Mincho" },
-        { value: "Shippori Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Shippori+Mincho" },
-        { value: "Zen Old Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Zen+Old+Mincho" },
-        { value: "Hiragino Mincho ProN", platform: "MacOS, iOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "YuMincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Toppan Bunkyu Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", note: 'b' },
-        { value: "MS PGothic", platform: "Windows", style: "sans serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic" },
-        { value: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
-        { value: "Osaka", platform: "MacOS", style: "sans serif" },
-        { value: "Hiragino Kaku Gothic Pro", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Hiragino Maru Gothic ProN", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Hiragino Sans", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Toppan Bunkyu Midashi Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Tsukushi A Round Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
-        { value: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
-      ];
-      const fontSelector = document.getElementById('font-selector');
-      let currentStyle = '';
-
-      for (const font of fonts) {
-        if (font.control) continue;
-
-        if (font.style !== currentStyle) {
-          const disabledOption = document.createElement('option');
-          disabledOption.disabled = true;
-          disabledOption.textContent = font.style.toUpperCase();
-          fontSelector.appendChild(disabledOption);
-          currentStyle = font.style;
-        }
-        const option = document.createElement('option');
-        option.value = font.value;
-        option.textContent = `${font.name ?? font.value} ${font.platform ? `(${font.platform})` : ''}`;
-        fontSelector.appendChild(option);
-      };
-
-      fontSelector.addEventListener('change', function () {
-        const selectedFont = fontSelector.value;
-        document.body.style.fontFamily = selectedFont;
-      });
-    </script>
   </div>
+  <script>
+    const fonts = [
+      { value: "'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif", note: 'a' },
+      { value: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman", note: 'b' },
+      { value: "SimSun", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/simsun" },
+      { value: "MS Mincho", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-mincho" },
+      { name: "Source Han Serif", value: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, supportsHalfWidth: true, note: 'c' },
+      { value: "Hina Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Hina+Mincho" },
+      { value: "Sawarabi Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Sawarabi+Mincho" },
+      { value: "Shippori Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Shippori+Mincho" },
+      { value: "Zen Old Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Zen+Old+Mincho" },
+      { value: "Hiragino Mincho ProN", platform: "MacOS, iOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "YuMincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Toppan Bunkyu Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", note: 'b' },
+      { value: "MS PGothic", platform: "Windows", style: "sans serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic" },
+      { value: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
+      { value: "Osaka", platform: "MacOS", style: "sans serif" },
+      { value: "Hiragino Kaku Gothic Pro", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Hiragino Maru Gothic ProN", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Hiragino Sans", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Toppan Bunkyu Midashi Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Tsukushi A Round Gothic", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+      { value: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
+    ];
+    const fontSelector = document.getElementById('font-selector');
+    let currentStyle = '';
+
+    for (const font of fonts) {
+      if (font.control) continue;
+
+      if (font.style !== currentStyle) {
+        const disabledOption = document.createElement('option');
+        disabledOption.disabled = true;
+        disabledOption.textContent = font.style.toUpperCase();
+        fontSelector.appendChild(disabledOption);
+        currentStyle = font.style;
+      }
+      const option = document.createElement('option');
+      option.value = font.value;
+      option.textContent = `${font.name ?? font.value} ${font.platform ? `(${font.platform})` : ''}`;
+      fontSelector.appendChild(option);
+    };
+
+    fontSelector.addEventListener('change', function () {
+      const selectedFont = fontSelector.value;
+      document.body.style.fontFamily = selectedFont;
+    });
+  </script>
   <main>
     <div style="padding-top: 16px;">
       <a href="index.html">← max bo</a>
