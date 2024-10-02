@@ -90,6 +90,11 @@
     body {
       padding-left: 16px;
       padding-right: 16px;
+      /* max-width: 800px;
+      margin: 0 auto; */
+    }
+
+    .maxwidth {
       max-width: 800px;
       margin: 0 auto;
     }
@@ -131,19 +136,15 @@
       text-align: left;
     }
 
-    th {
-      background-color: #f2f2f2;
-    }
-
     th:first-child,
     td:first-child {
       width: 100px;
-      /* Adjust the width as needed */
       background-color: #fff7f2;
     }
 
     th:nth-child(2),
     td:nth-child(2) {
+      width: 100px;
       background-color: #f0fbff;
     }
 
@@ -177,8 +178,12 @@
       content: close-quote;
     }
 
-    @media (max-width: 600px) {
+    figure {
+      padding: 0;
+      margin: 0;
+    }
 
+    @media (max-width: 600px) {
       table,
       th,
       td {
@@ -191,28 +196,194 @@
         box-sizing: border-box;
       }
 
-      th {
-        background-color: transparent;
-        border-bottom: 1px solid #ddd;
+      th:first-child{
+        width: 100%;
       }
-
-      tr:after {
-        content: "";
-        display: table;
-        clear: both;
-      }
-
-      th:first-child,
       td:first-child {
         width: 100%;
       }
-    }
 
-    figure {
-      padding: 0;
-      margin: 0;
+      th:nth-child(2) {
+        width: 100% !important;
+      }
+      td:nth-child(2) {
+        width: 100% !important;
+      }
     }
   </style>
+</head>
+
+<body></body>
+  <div
+    class="maxwidth"
+    style="position: sticky; top: 0; background-color: rgba(255, 255, 255, 0.681); padding: 10px; border-bottom: 1px solid #ddd; z-index: 1000;">
+    <label for="font-selector">Choose a font:</label>
+    <select id="font-selector"></select>
+  </div>
+  <main>
+
+    <div class="maxwidth">
+
+      <div style="padding-top: 16px;">
+        <a href="index.html">← max bo</a>
+      </div>
+
+      <header>
+        <h1><q>Subordinate Latin</q></h1>
+        <p>September 26 2024</p>
+      </header>
+
+      <blockquote>
+        <b>The Latin inside Japanese fonts</b>
+        <br />
+        <br />
+
+        Japanese typeface designers call the Latin script section of their projects the “Subordinate Latin.” The typical
+        Latin typeface has glyphs with varying proportional widths, but Kanji are designed to fit within a square space
+        which means they are much wider than most Latin letterforms. This means a typical Latin font will look much too
+        narrow when mixed in among Japanese characters. To allow Latin to blend with the other scripts in Japanese text,
+        Latin letterforms are modified to be slightly wider and have shorter <a
+          href="https://fonts.google.com/knowledge/glossary/ascenders_descenders">ascenders and descenders</a> and
+        bigger
+        <a href="https://fonts.google.com/knowledge/glossary/counter">counters</a>.
+        In addition to this adjusted Latin, [some] Japanese fonts also include a <a
+          href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">“full width”</a> Latin design.
+        <br />
+        <br />
+
+        <figure>
+          <img style="width: 100%; max-width: 600px;" src="img/comparison.png"
+            alt="“Hello Type” set in Shippori Mincho Subordinate Latin vs. Times New Roman">
+
+          <figcaption>Japanese Subordinate Latin (top) compared to Times New Roman (bottom)</figcaption>
+
+        </figure>
+      </blockquote>
+      ~ <a href="https://fonts.googleblog.com/2021/10/say-hello-to-our-big-new-japanese.html"><cite>Say Hello to our
+          preview new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by
+      Min-Young Kim
+
+      <br />
+      <br />
+      <br />
+
+      <p style="border: 1px dotted black; padding: 32px">
+        i really fw the look of <q>Subordinate Latin</q> so i thought i'd compile a collection of fonts that feature it
+      </p>
+      <center>▼▼▼</center>
+
+      <br />
+
+      <h2>Type tester</h2>
+
+      <p>If you see <span style="font-family: 'Hello Kitty', Webdings">dingbats</span>, then the font is either
+        unavailable on your platform or has failed to load.</p>
+
+      <textarea id="tester" rows="3" style="width: 100%">Sphinx of black quartz, judge my vow.</textarea>
+      <script type="module">
+      </script>
+
+      <small>
+        Jump to:
+        <a href="#fullwidth-forms">Fullwidth forms</a>,
+        <a href="#halfwidth-forms">Halfwidth forms</a>
+      </small>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Font</th>
+          <th>Platform</th>
+          <th>Test</th>
+        </tr>
+      </thead>
+      <tbody id="font-table-body">
+      </tbody>
+    </table>
+
+    <div class="maxwidth">
+      <h3 id="fullwidth-forms"><a href="#fullwidth-forms">#</a> Fullwidth forms</h3>
+
+      <p>So that mixed-Latin/<a href="https://en.wikipedia.org/wiki/CJK_characters">CJK</a> text is visually
+        <q>harmonious</q>
+        some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">Latin fullwidth forms</a>,
+        matching the width of CJK characters.
+        They are rendered by either enabling the <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a>
+        or <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a>
+        CSS properties, or by using <a
+          href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
+          Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.
+      <p>Like monospace fonts, fullwidth characters occupy the same horizontal space regardless of their natural width.
+      <p><b>Unlike</b> true monospace fonts, <code>full-width</code> only affects certain characters (mainly <a
+          href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
+        doesn't guarantee that all characters in the text will have the same width.</p>
+
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Font</th>
+          <th>Platform</th>
+          <th>Test</th>
+        </tr>
+      </thead>
+      <tbody id="font-table-body-fullwidth">
+      </tbody>
+    </table>
+
+    <div class="maxwidth">
+
+      <h3 id="halfwidth-forms"><a href="#halfwidth-forms">#</a> Halfwidth forms</h3>
+
+      <p>Some fonts also support a <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">halfwidth</a>
+        variant, rendered by either enabling the <a
+          href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'hwid'</code></a>
+        CSS property, or by using <a
+          href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
+          Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
+
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Font</th>
+          <th>Platform</th>
+          <th>Test</th>
+        </tr>
+      </thead>
+      <tbody id="font-table-body-halfwidth">
+      </tbody>
+    </table>
+
+    <div class="maxwidth">
+      <a id="[a]" href="#[a]"><sup>[a]</sup></a> This is the article's <code>&lt;body&gt;</code> font stack. <a
+        href="#ref[a]">⤣</a>
+
+      <br />
+
+      <a id="[b]" href="#[b]"><sup>[b]</sup></a> A <q>typical Latin font</q> for comparison. <a href="#ref[b]">⤣</a>
+
+      <br />
+
+      <a id="[c]" href="#[c]"><sup>[c]</sup></a>
+      Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP is just
+        the Google Font version of Source Han Serif</a>,
+      but for some reason doesn't include <code>font-variant-east-asian: full-width</code> /
+      <code>font-feature-settings: 'fwid'</code>. <a href="#ref[c]">⤣</a>
+
+      <footer style="padding-top: 32px; padding-bottom: 32px;">
+        <a href="https://github.com/MaxwellBo/maxwellbo.github.io/blob/master/subordinate-latin.html">Submit more
+          fonts?</a>
+      </footer>
+
+    </div>
+  </main>
+
   <script>
     const fonts = [
       { fontFamily: "'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif", note: 'a' },
@@ -245,16 +416,7 @@
       { fontFamily: "YuKyokasho Yoko", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
       { fontFamily: "Klee", platform: "MacOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
     ];
-  </script>
-</head>
 
-<body>
-  <div
-    style="position: sticky; top: 0; background-color: rgba(255, 255, 255, 0.681); padding: 10px; border-bottom: 1px solid #ddd; z-index: 1000;">
-    <label for="font-selector">Choose a font:</label>
-    <select id="font-selector"></select>
-  </div>
-  <script>
     const fontSelector = document.getElementById('font-selector');
     let currentStyle = '';
 
@@ -278,228 +440,79 @@
       const selectedFont = fontSelector.value;
       document.body.style.fontFamily = selectedFont;
     });
+
+
+    function makeFontRow(font, variant) {
+      const row = document.createElement('tr');
+      const fontCell = document.createElement('td');
+      const platformCell = document.createElement('td');
+      const testCell = document.createElement('td');
+
+      fontCell.innerHTML = font.link ? `<a href="${font.link}">${font.name ?? font.fontFamily}</a>` : (font.name ?? font.fontFamily);
+      platformCell.textContent = font.platform ?? 'Unknown';
+
+      if (font.note) {
+        fontCell.innerHTML += ` <a id="ref[${font.note}]" href="#[${font.note}]"><sup>[${font.note}]</sup></a>`;
+      }
+
+      testCell.style.fontFamily = `${font.fontFamily}, 'Hello Kitty', Webdings`;
+      testCell.textContent = 'Sphinx of black quartz, judge my vow.' + (variant ? '\nハローワールド' : '');
+      testCell.className = 'preview' + (variant ? ' ' + variant : '');
+      testCell.fontVariantEastAsian = variant;
+
+      row.appendChild(fontCell);
+      row.appendChild(platformCell);
+      row.appendChild(testCell);
+
+      if (font.control) {
+        row.classList.add('control');
+      }
+
+      return row;
+    }
+
+    const fontTableBody = document.getElementById('font-table-body');
+    const fontTableBodyFullwidth = document.getElementById('font-table-body-fullwidth');
+    const fontTableBodyHalfwidth = document.getElementById('font-table-body-halfwidth');
+
+    for (const font of fonts) {
+      fontTableBody.append(makeFontRow(font));
+
+      if (font.supportsFullWidth) {
+        fontTableBodyFullwidth.append(makeFontRow(font, 'full-width'));
+      }
+
+      if (font.supportsHalfWidth) {
+        fontTableBodyHalfwidth.append(makeFontRow(font, 'half-width'));
+      }
+    }
+
+
+    const tester = document.getElementById('tester');
+    tester.addEventListener('input', onInput);
+    tester.addEventListener('blur', onBlur);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const textParam = urlParams.get('text');
+
+    if (textParam) {
+      tester.value = textParam;
+      onInput();
+    }
+
+    function onInput() {
+      const elements = document.querySelectorAll('.preview');
+      elements.forEach(element => {
+        element.textContent = tester.value;
+      });
+    }
+
+    function onBlur() {
+      const url = new URL(window.location);
+      url.searchParams.set('text', tester.value);
+      window.history.replaceState({}, '', url);
+    }
   </script>
-  <main>
-    <div style="padding-top: 16px;">
-      <a href="index.html">← max bo</a>
-    </div>
-
-    <header>
-      <h1><q>Subordinate Latin</q></h1>
-      <p>September 26 2024</p>
-    </header>
-
-    <blockquote>
-      <b>The Latin inside Japanese fonts</b>
-      <br />
-      <br />
-
-      Japanese typeface designers call the Latin script section of their projects the “Subordinate Latin.” The typical
-      Latin typeface has glyphs with varying proportional widths, but Kanji are designed to fit within a square space
-      which means they are much wider than most Latin letterforms. This means a typical Latin font will look much too
-      narrow when mixed in among Japanese characters. To allow Latin to blend with the other scripts in Japanese text,
-      Latin letterforms are modified to be slightly wider and have shorter <a
-        href="https://fonts.google.com/knowledge/glossary/ascenders_descenders">ascenders and descenders</a> and bigger
-      <a href="https://fonts.google.com/knowledge/glossary/counter">counters</a>.
-      In addition to this adjusted Latin, [some] Japanese fonts also include a <a
-        href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">“full width”</a> Latin design.
-      <br />
-      <br />
-
-      <figure>
-        <img style="width: 100%; max-width: 600px;" src="img/comparison.png"
-          alt="“Hello Type” set in Shippori Mincho Subordinate Latin vs. Times New Roman">
-
-        <figcaption>Japanese Subordinate Latin (top) compared to Times New Roman (bottom)</figcaption>
-
-      </figure>
-    </blockquote>
-    ~ <a href="https://fonts.googleblog.com/2021/10/say-hello-to-our-big-new-japanese.html"><cite>Say Hello to our
-        preview new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by
-    Min-Young Kim
-
-    <br />
-    <br />
-    <br />
-
-    <p style="border: 1px dotted black; padding: 32px">
-      i really fw the look of <q>Subordinate Latin</q> so i thought i'd compile a collection of fonts that feature it
-    </p>
-    <center>▼▼▼</center>
-
-    <br />
-
-    <h2>Type tester</h2>
-
-    <p>If you see <span style="font-family: 'Hello Kitty', Webdings">dingbats</span>, then the font is either
-      unavailable on your platform or has failed to load.</p>
-
-    <textarea id="tester" rows="3" style="width: 100%">Sphinx of black quartz, judge my vow.</textarea>
-    <script type="module">
-      const tester = document.getElementById('tester');
-      tester.addEventListener('input', onInput);
-      tester.addEventListener('blur', onBlur);
-
-      const urlParams = new URLSearchParams(window.location.search);
-      const textParam = urlParams.get('text');
-
-      if (textParam) {
-        tester.value = textParam;
-        onInput();
-      }
-
-      function onInput() {
-        const elements = document.querySelectorAll('.preview');
-        elements.forEach(element => {
-          element.textContent = tester.value;
-        });
-      }
-
-      function onBlur() {
-        const url = new URL(window.location);
-        url.searchParams.set('text', tester.value);
-        window.history.replaceState({}, '', url);
-      }
-    </script>
-
-    <small>
-      Jump to:
-      <a href="#fullwidth-forms">Fullwidth forms</a>,
-      <a href="#halfwidth-forms">Halfwidth forms</a>
-    </small>
-
-
-    <table>
-      <thead>
-        <tr>
-          <th>Font</th>
-          <th>Platform</th>
-          <th>Test</th>
-        </tr>
-      </thead>
-      <tbody id="font-table-body">
-      </tbody>
-    </table>
-
-    <h3 id="fullwidth-forms"><a href="#fullwidth-forms">#</a> Fullwidth forms</h3>
-
-    <p>So that mixed-Latin/<a href="https://en.wikipedia.org/wiki/CJK_characters">CJK</a> text is visually
-      <q>harmonious</q>
-      some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">Latin fullwidth forms</a>,
-      matching the width of CJK characters.
-      They are rendered by either enabling the <a
-        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a>
-      or <a
-        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a>
-      CSS properties, or by using <a
-        href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
-        Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.
-    <p>Like monospace fonts, fullwidth characters occupy the same horizontal space regardless of their natural width.
-    <p><b>Unlike</b> true monospace fonts, <code>full-width</code> only affects certain characters (mainly <a
-        href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
-      doesn't guarantee that all characters in the text will have the same width.</p>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Font</th>
-          <th>Platform</th>
-          <th>Test</th>
-        </tr>
-      </thead>
-      <tbody id="font-table-body-fullwidth">
-      </tbody>
-    </table>
-
-    <h3 id="halfwidth-forms"><a href="#halfwidth-forms">#</a> Halfwidth forms</h3>
-
-    <p>Some fonts also support a <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">halfwidth</a>
-      variant, rendered by either enabling the <a
-        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'hwid'</code></a>
-      CSS property, or by using <a
-        href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
-        Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Font</th>
-          <th>Platform</th>
-          <th>Test</th>
-        </tr>
-      </thead>
-      <tbody id="font-table-body-halfwidth">
-      </tbody>
-    </table>
-
-    <script>
-
-      function makeFontRow(font, variant) {
-        const row = document.createElement('tr');
-        const fontCell = document.createElement('td');
-        const platformCell = document.createElement('td');
-        const testCell = document.createElement('td');
-
-        fontCell.innerHTML = font.link ? `<a href="${font.link}">${font.name ?? font.fontFamily}</a>` : (font.name ?? font.fontFamily);
-        platformCell.textContent = font.platform ?? 'Unknown';
-
-        if (font.note) {
-          fontCell.innerHTML += ` <a id="ref[${font.note}]" href="#[${font.note}]"><sup>[${font.note}]</sup></a>`;
-        }
-
-        testCell.style.fontFamily = `${font.fontFamily}, 'Hello Kitty', Webdings`;
-        testCell.textContent = 'Sphinx of black quartz, judge my vow.' + (variant ? '\nハローワールド' : '');
-        testCell.className = 'preview' + (variant ? ' ' + variant : '');
-        testCell.fontVariantEastAsian = variant;
-
-        row.appendChild(fontCell);
-        row.appendChild(platformCell);
-        row.appendChild(testCell);
-
-        if (font.control) {
-          row.classList.add('control');
-        }
-
-        return row;
-      }
-
-      const fontTableBody = document.getElementById('font-table-body');
-      const fontTableBodyFullwidth = document.getElementById('font-table-body-fullwidth');
-      const fontTableBodyHalfwidth = document.getElementById('font-table-body-halfwidth');
-
-      for (const font of fonts) {
-        fontTableBody.append(makeFontRow(font));
-
-        if (font.supportsFullWidth) {
-          fontTableBodyFullwidth.append(makeFontRow(font, 'full-width'));
-        }
-
-        if (font.supportsHalfWidth) {
-          fontTableBodyHalfwidth.append(makeFontRow(font, 'half-width'));
-        }
-      }
-    </script>
-
-    <a id="[a]" href="#[a]"><sup>[a]</sup></a> This is the article's <code>&lt;body&gt;</code> font stack. <a
-      href="#ref[a]">⤣</a>
-
-    <br />
-
-    <a id="[b]" href="#[b]"><sup>[b]</sup></a> A <q>typical Latin font</q> for comparison. <a href="#ref[b]">⤣</a>
-
-    <br />
-
-    <a id="[c]" href="#[c]"><sup>[c]</sup></a>
-    Note that <a href="https://fonts.google.com/noto/specimen/Noto+Serif+JP?query=noto+serif+jp">Noto Serif JP is just
-      the Google Font version of Source Han Serif</a>,
-    but for some reason doesn't include <code>font-variant-east-asian: full-width</code> /
-    <code>font-feature-settings: 'fwid'</code>. <a href="#ref[c]">⤣</a>
-
-    <footer style="padding-top: 32px; padding-bottom: 32px;">
-      <a href="https://github.com/MaxwellBo/maxwellbo.github.io/blob/master/subordinate-latin.html">Submit more
-        fonts?</a>
-    </footer>
-  </main>
 </body>
 
 </html>
