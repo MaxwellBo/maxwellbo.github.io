@@ -321,6 +321,7 @@
           href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
         doesn't guarantee that all characters in the text will have the same width.</p>
 
+        <button onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
     </div>
 
     <table>
@@ -346,6 +347,7 @@
           href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
           Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
 
+        <button onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
     </div>
 
     <table>
@@ -442,6 +444,8 @@
     });
 
 
+    const HELLO_WORLD_IN_JAPANESE = 'ハローワールド';
+
     function makeFontRow(font, variant) {
       const row = document.createElement('tr');
       const fontCell = document.createElement('td');
@@ -456,7 +460,7 @@
       }
 
       testCell.style.fontFamily = `${font.fontFamily}, 'Hello Kitty', Webdings`;
-      testCell.textContent = 'Sphinx of black quartz, judge my vow.' + (variant ? '\nハローワールド' : '');
+      testCell.textContent = 'Sphinx of black quartz, judge my vow.' + (variant ? '\n' + HELLO_WORLD_IN_JAPANESE : '');
       testCell.className = 'preview' + (variant ? ' ' + variant : '');
       testCell.fontVariantEastAsian = variant;
 
@@ -511,6 +515,13 @@
       const url = new URL(window.location);
       url.searchParams.set('text', tester.value);
       window.history.replaceState({}, '', url);
+    }
+
+    function stripHelloWorld() {
+      const elements = document.querySelectorAll('.preview');
+      elements.forEach(element => {
+        element.textContent = element.textContent.replace(HELLO_WORLD_IN_JAPANESE, '').trim();
+      });
     }
   </script>
 </body>
