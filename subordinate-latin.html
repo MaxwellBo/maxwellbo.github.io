@@ -537,7 +537,7 @@
       fontTableBodyHalfwidth.append(makeTesterRow(font, 'half-width'));
     }
 
-    if (!font.control) {
+    if (!font.control && font.platform !== 'multiplatform') {
       fontTableBodySupport.append(makeSupportRow(font));
     }
   }
