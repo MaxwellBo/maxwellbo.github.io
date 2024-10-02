@@ -321,7 +321,7 @@
           href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
         doesn't guarantee that all characters in the text will have the same width.</p>
 
-        <button onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
+        <button class="strip" onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
     </div>
 
     <table>
@@ -347,7 +347,7 @@
           href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
           Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
 
-        <button onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
+        <button class="strip" onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
     </div>
 
     <table>
@@ -361,6 +361,21 @@
       <tbody id="font-table-body-halfwidth">
       </tbody>
     </table>
+
+
+    <!-- <h2>Font support table</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Font</th>
+          <th>Platform</th>
+          <th>Test</th>
+        </tr>
+      </thead>
+      <tbody id="font-table-body-halfwidth">
+      </tbody>
+    </table> -->
 
     <div class="maxwidth">
       <a id="[a]" href="#[a]"><sup>[a]</sup></a> This is the article's <code>&lt;body&gt;</code> font stack. <a
@@ -518,9 +533,14 @@
     }
 
     function stripHelloWorld() {
-      const elements = document.querySelectorAll('.preview');
-      elements.forEach(element => {
+      const previews = document.querySelectorAll('.preview');
+      const buttons = document.querySelectorAll('.strip');
+      previews.forEach(element => {
         element.textContent = element.textContent.replace(HELLO_WORLD_IN_JAPANESE, '').trim();
+      });
+
+      buttons.forEach(button => {
+        button.disabled = true;
       });
     }
   </script>
