@@ -59,7 +59,8 @@
 }
 
 html {
-  cursor: url('kirby.png') 11 13, auto;
+  /* cursor: url('kirby.png') 11 13, auto; */
+  cursor: url('img/kirbywand.cur'), auto;
 }
 
 #watermark {
@@ -153,6 +154,7 @@ a:visited {
 }
 
 a:hover, a:hover * {
+  cursor: url('img/kirbywandpuff.cur'), auto;
   background-color: color(display-p3 1 0 1);
   color: white;
 }
