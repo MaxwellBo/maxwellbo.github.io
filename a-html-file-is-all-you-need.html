@@ -184,7 +184,7 @@
 
 <body>
 <div style="background-color: black; color: white; text-align: center; padding: 1rem; font-family: monospace;">
-  I've packaged this article up and released a library, <a href="https://maxbo.me/celine" style="color: white;">@celine/celine</a>. Check it out (o˘◡˘o)
+  I've packaged this article up and released a library, <a href="https://maxbo.me/celine" style="color: white;">@celine/celine</a>. It has a slightly nicer API too. Check it out (o˘◡˘o)
 </div>
 
 <main>
@@ -298,71 +298,8 @@ style.echo::after {
 </div>
 
 <div class="slide">
-Now we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and the <a href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to <code>window</code>.
-We'll define helper methods <code>cell</code> and <code>observer</code> that wrap some of the runtime API.
 
-<script type="module" class="echo">
-import * as stdlib from 'https://esm.run/@observablehq/stdlib@5.8.8'
-import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime@5.9.9";
-
-const library = new stdlib.Library();
-const runtime = new Runtime();
-const module = runtime.module();
-
-function cell(name, inputsOrDefinition, maybeDefinition, observe = true) {
-  // if the variable already is in scope, get it, otherwise create a fresh one
-  const variable = module._scope.get(name) || module.variable(observe ? observer(name) : undefined);
-
-  if (maybeDefinition) {
-    const inputs = inputsOrDefinition;
-    const definition = maybeDefinition;
-    variable.define(name, inputs, definition);
-  } else {
-    const definition = inputsOrDefinition;
-    variable.define(name, definition);
-  }
-}
-
-// use the Observable inspector to display the cell's output above the script block
-function observer(name) {
-  const div = document.createElement("div");
-  // can't use document.currentScript as it's null in module scripts
-  const currentScript = document.getElementById(name);
-  currentScript.parentNode.insertBefore(div, currentScript);
-  return new Inspector(div);
-}
-
-window.library = library;
-window.module = module;
-window.cell = cell;
-window.observer = observer;
-</script>
-</div>
-
-<div class="slide">
-
-Now we'll declare a cell called <code>counter</code> that emits a number every second.
-<b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
-
-<script type="module" class="echo" id="counter" contenteditable="true">
-cell("counter", async function* () {
-  let i = 0;
-  while (true) {
-    await library.Promises.delay(1000);
-    yield i++;
-  }
-});
-</script>
-
-</div>
-<div class="slide">
-
-<h3>contenteditable</h3>
-
-We can get <code>contenteditable</code> working by ensuring that whenever we blur a <code>script</code> element, we force its re-evaluation by building a clone of it.
-<br />
-<br />
-<i>Try changing the initial counter value <code>i</code> above to a much bigger number, and then defocus the <code>script</code>.</i>
+We also want <code>contenteditable</code> <code>script</code>s to be re-evaluated on blur by building a clone of the <code>script</code> and then removing the original.
 <br />
 
 <script type="module" class="echo">
@@ -384,6 +321,65 @@ function reevaluate(event) {
 // we want to redeclare scripts onblur
 document.querySelectorAll('script.echo').forEach((script) => {
   script.addEventListener('blur', reevaluate);
+});
+</script>
+
+</div>
+
+<div class="slide">
+
+Now we'll import the <a href="https://github.com/observablehq/stdlib">Observable standard library</a> and the <a href="https://github.com/observablehq/runtime">Observable runtime</a>, and bind them to <code>window</code>.
+We'll export only 2 symbols to <code>window</code>, <code>library</code> and <code>cell</code>.
+
+<script type="module" class="echo">
+import * as stdlib from 'https://esm.run/@observablehq/stdlib@5.8.8'
+import { Runtime, Inspector } from "https://esm.run/@observablehq/runtime@5.9.9";
+
+const library = new stdlib.Library();
+const runtime = new Runtime();
+const module = runtime.module();
+
+function cell(name, inputs, definition, observerVisibility = "visible") {
+  // should we show the variable state above the cell?
+  const observer = observerVisibility === "visible" ? makeInspector(name) : undefined;
+  // if the variable already is in scope, get it, otherwise create a fresh one.
+  // (this is why re-evaluated contenteditable propogate new definitions)
+  const variable = module._scope.get(name) || module.variable(observer);
+
+  variable.define(name, inputs, definition);
+}
+
+// use the Observable inspector to display the cell's output above the script block
+function makeInspector(name) {
+  const div = document.createElement("div");
+  // can't use document.currentScript as it's null in module scripts
+  const currentScript = document.getElementById(name);
+  currentScript.parentNode.insertBefore(div, currentScript);
+  return new Inspector(div);
+}
+
+window.library = library;
+window.cell = cell;
+</script>
+</div>
+
+<div class="slide">
+
+Now we'll declare a cell called <code>counter</code> that emits a number every second.
+<b>The <code>script</code>'s <code>id</code> attribute is the same as the <code>name</code> parameter passed to <code>cell</code></b>.
+
+<br />
+<br />
+
+<i>Try changing the initial counter value <code>i</code> above to a much bigger number, and then defocus the <code>script</code>.</i>
+
+<script type="module" class="echo" id="counter" contenteditable="true">
+cell("counter", [], async function* () {
+  let i = 0;
+  while (true) {
+    await library.Promises.delay(1000);
+    yield i++;
+  }
 });
 </script>
 
@@ -436,6 +432,40 @@ cell("hidden", ["counter"], (counter) => {
 
 <br />
 <br />
+
+<div class="slide">
+
+Alternatively, we can create a cell type that doesn't display its output at all.
+<br />
+We can use these cells to store intermediate values or datastructures.
+
+
+<script type="module" class="echo">
+function silent(name, inputs, definition) {
+  cell(name, inputs, definition, "hidden");
+}
+
+window.silent = silent;
+</script>
+
+<script type="module" id="negative" class="echo" contenteditable="true">
+silent("negative", ["counter"], (n) => {
+  return -n;
+});
+</script>
+
+<script type="module" id="reallyNegative" class="echo">
+cell("reallyNegative", ["negative"], (n) => {
+  return n * 10
+});
+</script>
+
+
+
+</div>
+
+<br />
+<br />
 <br />
 
 <div class="slide">
@@ -464,7 +494,7 @@ cell("plot", ["counter", "numbers"], (counter, numbers) => {
 <br />
 
 <script type="module" class="echo" id="numbers" contenteditable="true">
-cell("numbers", () => {
+cell("numbers", [], () => {
   return [
     170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
     176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
@@ -492,7 +522,7 @@ In this case, the <code>tex</code>, <code>md</code>, and <code>dot</code> cells 
 <br />
 
 <script type="module" class="echo" id="tex" contenteditable="true">
-cell("tex", async () => {
+cell("tex", [], async () => {
   const tex = await library.tex()
   return tex`
 \def\f#1#2{#1f(#2)}
@@ -517,7 +547,7 @@ cell("markdown", ["elements"], async (elements) => {
 </script>
 
 <script type="module" class="echo" id="elements" contenteditable="true">
-cell("elements", () => {
+cell("elements", [], () => {
   return [
     { "symbol": "Co", "name": "Cobalt", "number": 27 },
     { "symbol": "Cu", "name": "Copper", "number": 29 },
@@ -531,7 +561,7 @@ cell("elements", () => {
 <div class="slide">
 
 <script type="module" class="echo" id="dot" contenteditable="true">
-cell("dot", async () => {
+cell("dot", [], async () => {
   const dot = await library.dot();
   return dot`
 digraph G {
@@ -582,14 +612,14 @@ We'll style them appropriately:
 <div class="slide">
 
 <script type="module" class="echo" id="running">
-cell("running", () => {
+cell("running", [], () => {
   // this cell will run forever
   return new Promise(() => { });
 });
 </script>
 
 <script type="module" class="echo" id="error">
-cell("error", () => {
+cell("error", [], () => {
   throw new Error("This cell has thrown an error");
 });
 </script>
@@ -606,7 +636,7 @@ Now we'll use a <a href="https://observablehq.com/framework/lib/sqlite">WASM-bac
 <i>Try adding <code>WHERE Milliseconds &lt; 1000000</code> to the SQL query!</i>
 
 <script type="module" class="echo" id="sqlite" contenteditable="true">
-cell("sqlite", async () => {
+cell("sqlite", [], async () => {
   const url = "https://maxbo.me/chinook.db";
   const db = await library.SQLiteDatabaseClient().open(url);
   const tracks = await db.query("SELECT * FROM tracks");
@@ -636,7 +666,7 @@ We'll rebuild the plot seen above, but using Matplotlib and Python's <code>sqlit
 
 <script type="module" class="echo" id="python" contenteditable="true">
 import { loadPyodide } from 'https://cdn.jsdelivr.net/pyodide/v0.25.1/full/pyodide.mjs'
-cell("python", async () => {
+cell("python", [], async () => {
   const pyodide = await loadPyodide();
 
   const response = await fetch('https://maxbo.me/chinook.db');
@@ -683,7 +713,7 @@ I didn't figure out how to get <a href="https://ggplot2.tidyverse.org/">ggplot2<
 <script type="module" class="echo" id="r" contenteditable="true">
 import { WebR } from 'https://webr.r-wasm.org/latest/webr.mjs';
 
-cell("r", async () => {
+cell("r", [], async () => {
   const webR = new WebR();
   await webR.init();
 
@@ -736,9 +766,9 @@ It declares 2 reactive cells: <code>NAME</code> and <code>viewof NAME</code> - o
 import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0'
 window.Inputs = Inputs
 
-function viewof(name, inputsOrDefinition, maybeDefinition) {
-  cell(`viewof ${name}`, inputsOrDefinition, maybeDefinition);
-  cell(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt), /*observe=*/false);
+function viewof(name, inputs, definition) {
+  cell(`viewof ${name}`, inputs, definition);
+  cell(name, [`viewof ${name}`], (inpt) => library.Generators.input(inpt), "hidden");
 }
 window.viewof = viewof;
 </script>
@@ -753,7 +783,7 @@ To display the input above the cell, we set the cell <code>id</code> to <code>vi
 
 <div id="range"></div>
 <script type="module" class="echo" id="viewof range" contenteditable="true">
-viewof("range", () => {
+viewof("range", [], () => {
   return Inputs.range([0, 100], { step: 1 });
 });
 </script>
@@ -793,7 +823,7 @@ function Mutable(value) {
 
 function mutable(name, value) {
   const m = Mutable(value);
-  cell(name, m);
+  cell(name, [], m);
   return m;
 }
 window.mutable = mutable;
@@ -811,7 +841,7 @@ window.ref = mutable("ref", 3)
 <i>Try editing the button labels.</i>
 
 <script type="module" class="echo" id="viewof increment" contenteditable="true">
-viewof("increment", () => {
+viewof("increment", [], () => {
   const increment = () => ++ref.value;
   const reset = () => ref.value = 0;
 
