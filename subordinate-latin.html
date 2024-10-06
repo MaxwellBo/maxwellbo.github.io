@@ -375,13 +375,13 @@
       </tbody>
     </table>
 
-  <div  style="border: 1px dotted black; padding: 32px; margin: 32px">
-      honestly i really think that Source Han Serif looks the "cleanest" <i>and</i> is available free on Adobe Fonts (and Google Fonts<sup><a href="#[c]">[c]</a></sup>)
+  <div style="border: 1px dotted black; padding: 32px; margin: 32px">
+    honestly i really think that <a href="#Source Han Serif">Source Han Serif</a> looks the "cleanest" <i>and</i> is available free on Adobe Fonts (and <a href="#Noto Serif JP">Google Fonts</a><sup><a href="#[c]">[c]</a></sup>)
 
-      <br />
-      <br />
+    <br />
+    <br />
 
-      special mention to Hiragino Mincho ProN which is really quite pretty, and the general goofiness of SimSun and MS Mincho
+    special mention to <a href="#Hiragino Mincho ProN">Hiragino Mincho ProN</a> which is really quite pretty, and the general goofiness of <a href="#SimSun">SimSun</a> and <a href="#MS Mincho">MS Mincho</a>
   </div>
 
     <a id="[a]" href="#[a]"><sup>[a]</sup></a> This is the article's <code>&lt;body&gt;</code> font stack. <a
@@ -482,7 +482,7 @@
     const platformCell = document.createElement('td');
     const testCell = document.createElement('td');
 
-    fontCell.innerHTML = font.link ? `<a href="${font.link}">${font.name ?? font.fontFamily}</a>` : (font.name ?? font.fontFamily);
+    fontCell.innerHTML = !variant ? makeAnchorLinkAndFontLink(font) : makeFontLink(font);
     platformCell.textContent = font.platform ?? 'Unknown';
 
     for (const note of font.notes ?? []) {
@@ -512,7 +512,7 @@
     const fullwidthCell = document.createElement('td');
     const halfwidthCell = document.createElement('td');
 
-    fontCell.innerHTML = font.link ? `<a href="${font.link}">${font.name ?? font.fontFamily}</a>` : (font.name ?? font.fontFamily);
+    fontCell.innerHTML = makeFontLink(font);
     platformCell.textContent = font.platform ?? 'Unknown';
     fullwidthCell.textContent = font.supportsFullWidth ? '✔️' : '❌';
     halfwidthCell.textContent = font.supportsHalfWidth ? '✔️' : '❌';
@@ -529,6 +529,16 @@
     row.appendChild(halfwidthCell);
 
     return row;
+  }
+
+  function makeAnchorLinkAndFontLink(font) {
+    const href = font.name ?? font.fontFamily;
+    return `<a id="${href}" href="#${href}">#</a> ` + makeFontLink(font);
+  }
+
+  function makeFontLink(font) {
+    const display = font.name ?? font.fontFamily;
+    return font.link ? `<a href="${font.link}">${display}</a>` : (display);
   }
 
   const fontTableBody = document.getElementById('font-table-body');
