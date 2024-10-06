@@ -34,7 +34,7 @@
   </script>
 
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Shippori+Mincho&family=Zen+Old+Mincho&family=Hina+Mincho&family=Zen+Old+Mincho&family=Noto+Sans+JP&family=Noto+Serif+JP&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Sawarabi+Mincho&family=Shippori+Mincho&family=Zen+Old+Mincho&family=Hina+Mincho&family=Zen+Old+Mincho&family=Noto+Sans+JP&family=Noto+Serif+JP&family=BIZ+UDMincho&display=swap');
 
     h1 {
       font-size: 4em;
@@ -69,7 +69,7 @@
 
     html,
     body {
-      font-family: 'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'Source Han Serif', serif;
+      font-family: 'source-han-serif-japanese', 'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', serif;
     }
 
     /* @font-face {
@@ -264,11 +264,7 @@
         preview new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by
     Min-Young Kim
 
-    <br />
-    <br />
-    <br />
-
-    <p style="border: 1px dotted black; padding: 32px">
+    <p style="border: 1px dotted black; padding: 32px; margin: 32px">
       i really fw the look of <q>Subordinate Latin</q> so i thought i'd compile a collection of fonts that feature it
     </p>
     <center>▼▼▼</center>
@@ -363,7 +359,6 @@
     </tbody>
   </table>
 
-
   <div class="maxwidth">
     <h2>Form support table</h2>
 
@@ -379,6 +374,15 @@
       <tbody id="font-table-body-support">
       </tbody>
     </table>
+
+  <div  style="border: 1px dotted black; padding: 32px; margin: 32px">
+      honestly i really think that Source Han Serif looks the "cleanest" <i>and</i> is available free on Adobe Fonts (and Google Fonts<sup><a href="#[c]">[c]</a></sup>)
+
+      <br />
+      <br />
+
+      special mention to Hiragino Mincho ProN which is really quite pretty, and the general goofiness of SimSun and MS Mincho
+  </div>
 
     <a id="[a]" href="#[a]"><sup>[a]</sup></a> This is the article's <code>&lt;body&gt;</code> font stack. <a
       href="#ref[a]">⤣</a>
@@ -413,16 +417,17 @@
 
 <script>
   const fonts = [
-    { fontFamily: "'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', 'source-han-serif-japanese'", platform: "multiplatform", style: "serif", notes: ['a'] },
+    { fontFamily: "'source-han-serif-japanese', 'SimSun', 'MS Mincho', 'Hiragino Mincho ProN'", platform: "multiplatform", style: "serif", notes: ['a'] },
     { fontFamily: 'Times New Roman', platform: 'multiplatform', style: 'serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/times-new-roman", notes: ['b'] },
+    { name: "Source Han Serif", fontFamily: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, supportsHalfWidth: true, notes: ['c', 'd'] },
     { fontFamily: "SimSun", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/simsun" },
     { fontFamily: "MS Mincho", platform: "Windows", style: "serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-mincho" },
-    { name: "Source Han Serif", fontFamily: "source-han-serif-japanese", platform: "Adobe Fonts", style: "serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, supportsHalfWidth: true, notes: ['c', 'd'] },
     { fontFamily: "Noto Serif JP", platform: "Google Fonts / Android", style: "serif", link: "https://fonts.google.com/noto/specimen/Noto+Serif+JP", supportsFullWidth: false, supportsHalfWidth: false, notes: ['c'] },
     { fontFamily: "Hina Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Hina+Mincho" },
     { fontFamily: "Sawarabi Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Sawarabi+Mincho" },
     { fontFamily: "Shippori Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Shippori+Mincho" },
     { fontFamily: "Zen Old Mincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/Zen+Old+Mincho" },
+    { fontFamily: "BIZ UDMincho", platform: "Google Fonts", style: "serif", link: "https://fonts.google.com/specimen/BIZ+UDMincho" },
     { fontFamily: "Hiragino Mincho ProN", platform: "MacOS, iOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
     { fontFamily: "YuMincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
     { fontFamily: "Toppan Bunkyu Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
@@ -430,9 +435,9 @@
     { fontFamily: "Toppan Bunkyu Midashi Mincho", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
     { fontFamily: "Tsukushi B Round Gothic", platform: "MacOS", style: "serif", supportsFullWidth: true, supportsHalfWidth: true },
     { fontFamily: 'Arial', platform: 'multiplatform', style: 'sans serif', control: true, link: "https://learn.microsoft.com/en-us/typography/font-list/arial", notes: ['b'] },
+    { name: "Source Han Sans", fontFamily: "source-han-sans-japanese", platform: "Adobe Fonts", style: "sans serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, supportsHalfWidth: true, notes: ['c', 'd'] },
     { fontFamily: "MS PGothic", platform: "Windows", style: "sans serif", link: "https://learn.microsoft.com/en-us/typography/font-list/ms-pgothic" },
     { fontFamily: "Meiryo", platform: "Windows", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true, link: "https://learn.microsoft.com/en-us/typography/font-list/meiryo" },
-    { name: "Source Han Sans", fontFamily: "source-han-sans-japanese", platform: "Adobe Fonts", style: "sans serif", link: "https://source.typekit.com/source-han-serif", supportsFullWidth: true, supportsHalfWidth: true, notes: ['c', 'd'] },
     { fontFamily: "Noto Sans JP", platform: "Google Fonts / Android", style: "sans serif", link: "https://fonts.google.com/noto/specimen/Noto+Sans+JP", supportsFullWidth: false, supportsHalfWidth: false, notes: ['c'] },
     { fontFamily: "Osaka", platform: "MacOS", style: "sans serif" },
     { fontFamily: "Hiragino Kaku Gothic Pro", platform: "MacOS, iOS", style: "sans serif", supportsFullWidth: true, supportsHalfWidth: true },
