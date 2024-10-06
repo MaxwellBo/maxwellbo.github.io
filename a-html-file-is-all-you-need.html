@@ -448,11 +448,7 @@ function silent(name, inputs, definition) {
 window.silent = silent;
 </script>
 
-<script type="module" id="negative" class="echo" contenteditable="true">
-silent("negative", ["counter"], (n) => {
-  return -n;
-});
-</script>
+Also note that cells can be declared out of order.
 
 <script type="module" id="reallyNegative" class="echo">
 cell("reallyNegative", ["negative"], (n) => {
@@ -460,12 +456,14 @@ cell("reallyNegative", ["negative"], (n) => {
 });
 </script>
 
-
+<script type="module" id="negative" class="echo" contenteditable="true">
+silent("negative", ["counter"], (n) => {
+  return -n;
+});
+</script>
 
 </div>
 
-<br />
-<br />
 <br />
 
 <div class="slide">
@@ -476,7 +474,14 @@ We can use cell values in more complex outputs. We'll import <a href="https://ob
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 window.Plot = Plot;
 
-cell("plot", ["counter", "numbers"], (counter, numbers) => {
+cell("plot", ["counter"], (counter) => {
+  const numbers =  [
+    170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
+    176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
+    166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
+    163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
+  ];
+
   return Plot.plot({
     marks: [
       Plot.lineY(numbers, { x: (d, i) => i, y: d => d }),
@@ -486,23 +491,6 @@ cell("plot", ["counter", "numbers"], (counter, numbers) => {
 });
 </script>
 
-</div>
-<div class="slide">
-
-<i>We should always store data in their own <code>script</code> elements, so that they can be easily referenced by other cells. Observe that cells can be declared in any order, such that earlier cells may depend on later cells.</i>
-
-<br />
-
-<script type="module" class="echo" id="numbers" contenteditable="true">
-cell("numbers", [], () => {
-  return [
-    170.16, 172.53, 172.54, 173.44, 174.35, 174.55, 173.16, 174.59, 176.18, 177.90,
-    176.15, 179.37, 178.61, 177.30, 177.30, 177.25, 174.51, 172.00, 170.16, 165.53,
-    166.87, 167.17, 166.00, 159.10, 154.83, 163.09, 160.29, 157.07, 158.50, 161.95,
-    163.04, 169.79, 172.36, 172.05, 172.83, 171.80, 173.67, 176.35, 179.10, 179.26
-  ];
-});
-</script>
 </div>
 
 <div class="center-contents">
@@ -536,24 +524,20 @@ cell("tex", [], async () => {
 <div class="slide">
 
 <script type="module" class="echo" id="markdown" contenteditable="true">
-cell("markdown", ["elements"], async (elements) => {
+cell("markdown", [], async () => {
+  const elements = [
+    { "symbol": "Co", "name": "Cobalt", "number": 27 },
+    { "symbol": "Cu", "name": "Copper", "number": 29 },
+    { "symbol": "Sn", "name": "Tin", "number": 50 },
+    { "symbol": "Pb", "name": "Lead", "number": 82 }
+  ];
+  
   const md = await library.md();
   return md`
 | Name      | Symbol      | Atomic number |
 |-----------|-------------|---------------|${elements.map(e => `
 | ${e.name} | ${e.symbol} | ${e.number}   |`)}
 `;
-});
-</script>
-
-<script type="module" class="echo" id="elements" contenteditable="true">
-cell("elements", [], () => {
-  return [
-    { "symbol": "Co", "name": "Cobalt", "number": 27 },
-    { "symbol": "Cu", "name": "Copper", "number": 29 },
-    { "symbol": "Sn", "name": "Tin", "number": 50 },
-    { "symbol": "Pb", "name": "Lead", "number": 82 }
-  ];
 });
 </script>
 
