@@ -11,6 +11,19 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
+        <title>Subordinate Lati</title>
+        <link href="https://maxbo.me/subordinate-latin"/>
+        <id>https://maxbo.me/subordinate-latin</id>
+        <updated>2024-10-08T00:00:00Z</updated>
+        <summary>
+            Japanese typeface designers call the Latin script section of their projects the 'Subordinate Latin'. What does it look like?
+        </summary>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
+
+    <entry>
         <title>I published hello-notebook-http-mode.fly.dev today!</title>
         <link href="https://hello-notebook-http-mode.fly.dev"/>
         <id>https://hello-notebook-http-mode.fly.dev/</id>
