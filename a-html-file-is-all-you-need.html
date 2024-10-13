@@ -500,7 +500,7 @@ cell("plot", ["counter"], (counter) => {
 
 <div class="slide">
 
-<h2>TeX, Markdown, Graphviz</h2>
+<h2>TeX, Markdown, Graphviz, Typst</h2>
 
 We can return any type of DOM element from a cell. 
 <br />
@@ -557,6 +557,21 @@ digraph G {
 </script>
 
 </div>
+
+
+<div class="slide">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/wypst@0.0.8/dist/wypst.min.js" crossorigin="anonymous"></script>
+  
+<script type="module" class="echo" id="typst" contenteditable="true">
+cell("typst", [], async () => {
+  const div = document.createElement("div");
+  await wypst.initialize()
+  wypst.render("sum_(k=1)^n k = (n(n+1)) / 2", div);
+  return div
+});
+</script>
 
 <div class="center-contents">
   <img src="img/data.png" alt="A computer with an open CD tray is surrounded by data" style="max-width: 125px; margin: 1rem" />
