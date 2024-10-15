@@ -11,6 +11,19 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
+        <title>blogroll.html</title>
+        <link href="https://maxbo.me/blogroll.html"/>
+        <id>https://maxbo.me/blogroll.html</id>
+        <updated>2024-10-15T00:00:00Z</updated>
+        <summary>
+            I created my blogroll.html to share a list of my favorite blogs and websites.
+        </summary>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
+
+    <entry>
         <title>Subordinate Latin</title>
         <link href="https://maxbo.me/subordinate-latin"/>
         <id>https://maxbo.me/subordinate-latin</id>
