@@ -473,3 +473,16 @@ select {
 ::-webkit-scrollbar-thumb:hover {
   background: fuchsia;
 }
+
+
+/* vectorheart */
+
+.vectorheart {
+  display: inline-block;
+  padding: 10px 20px;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  transition: all 0.3s ease;
+}
