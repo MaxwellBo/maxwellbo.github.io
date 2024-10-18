@@ -191,7 +191,7 @@
             applyTransformation();
         }
 
-        function sampleColors(imageData, maxPoints = 1000) {
+        function sampleColors(imageData) {
             const pixels = imageData.data;
             const sampledColors = new Set();
             const originalColors = [];
@@ -207,7 +207,7 @@
                 // Create a color key to ensure uniqueness
                 const colorKey = `${r},${g},${b}`;
                 
-                if (!sampledColors.has(colorKey) && sampledColors.size < maxPoints) {
+                if (!sampledColors.has(colorKey)) {
                     sampledColors.add(colorKey);
                     originalColors.push([r, g, b]);
                     
