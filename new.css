@@ -8,6 +8,11 @@
 }
 
 @font-face {
+  font-family: 'HerscheyTimes';
+  src: url("fonts/hersheytimes.otf");
+}
+
+@font-face {
   font-family: 'Ductus Geometric';
   src:
     url('fonts/ductus/webfonts/DuctusCalligraphic.woff2') format('woff2'),
@@ -203,14 +208,13 @@ nav {
   }
 }
 
-h1,
-h2,
-h3 {
+/* h1 {
   font-family: 'Ductus Geometric', sans-serif;
-}
+} */
 
-h2 {
-  font-size: 2rem
+h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  font-family: 'HerscheyTimes', sans-serif;
 }
 
 body {
