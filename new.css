@@ -1,3 +1,8 @@
+/**
+ * This website is licensed under CC 4.0 Attribution
+ * so you're welcome to strip-mine this stylesheet.
+ */
+
 @font-face {
   font-family: 'DINdong';
   src:
@@ -12,22 +17,22 @@
   src: url("fonts/hersheytimes.otf");
 }
 
-@font-face {
+/* @font-face {
   font-family: 'Ductus Geometric';
   src:
     url('fonts/ductus/webfonts/DuctusCalligraphic.woff2') format('woff2'),
     url('fonts/ductus/webfonts/DuctusGeometric.woff') format('woff'),
     url('fonts/ductus/ttf//DuctusGeometric.ttf') format('truetype'),
     url('fonts/ductus/otf/DuctusGeometric.otf') format('opentype');
-}
+} */
 
-@font-face {
+/* @font-face {
   font-family: 'Homoneta';
   src:
     url('fonts/homoneta/woff/Homoneta-Regular.woff2') format('woff2'),
     url('fonts/homoneta/woff/Homoneta-Regular.woff') format('woff'),
     url('fonts/homoneta/otf/Homoneta-Regular.otf') format('opentype');
-}
+} */
 
 @font-face {
   font-family: 'Crozet';
@@ -42,13 +47,6 @@
   font-family: "Fake Receipt";
   src:
     url('fonts/FakeReceipt.otf') format('opentype');
-}
-
-@font-face {
-  font-family: 'MS Mincho';
-  src: url('fonts/MSMincho.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
 }
 
 .fake-receipt {
