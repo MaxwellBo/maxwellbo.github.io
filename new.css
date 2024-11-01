@@ -492,3 +492,29 @@ select {
   clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
   transition: all 0.3s ease;
 }
+
+.annex {
+  display: grid;
+}
+
+.annex > section {
+  border: 0.5px solid black;
+}
+
+@media (min-width: 600px) {
+  .annex {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .annex {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .annex {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
