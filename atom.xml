@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/feed.xsl" type="text/xsl"?>
+<?xml-stylesheet href="/atom.xsl" type="text/xsl"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>Max Bo's Atom feed</title>
     <link href="https://maxbo.me/atom.xml" rel="self"/>

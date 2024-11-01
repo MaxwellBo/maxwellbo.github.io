@@ -57,12 +57,14 @@
         <section>
           <xsl:apply-templates select="atom:feed/atom:entry" />
         </section>
+        <footer>
+          <a href="/index.html">← Max Bo</a>
+        </footer>
       </body>
     </html>
   </xsl:template>
 
   <xsl:template match="atom:feed">
-    <a href="/index.html">← Max Bo</a>
     <h1><xsl:value-of select="atom:title"/></h1>
   </xsl:template>
 
