@@ -932,6 +932,40 @@
           </a>
           <p class="description">UQ-exclusive schedule sharing app</p>
         </article>
+        <article class="art wide">
+          <div id="silhouette">
+          </div>
+        </article>
+
+        <script type="module">
+          import * as Plot from 'https://esm.run/@observablehq/plot';
+
+          const silhouetteData = [
+            10.5, 12.5, 13, 14, 14, 12, 10, 11, 12, 13, 13, 13, 13, 12, 12, 11, 11, 10,
+            9, 8, 7, 7, 7, 7, 7, 7, 10, 15, 14
+          ].map((x) => x - 4);
+
+          const plot = Plot.plot({
+            height: 150,
+            x: {
+              label: "length"
+            },
+            y: {
+              label: "height"
+            },
+            marks: [
+              Plot.barY(silhouetteData, {
+                x: (y, i) => i,
+                y: (y, i) => y,
+                fill: "darkred",
+                tip: true,
+                rx: 4 // rounded corners
+              })
+            ]
+          });
+
+          document.getElementById('silhouette').appendChild(plot);
+        </script>
       </div>
     </section>
     <section>
