@@ -306,7 +306,13 @@ article.art {
 }
 
 article.art.wide {
-  grid-column: span 4;
+  grid-column: span 2;
+}
+
+.bottom-align {
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
 }
 
 article.listing {
@@ -498,6 +504,9 @@ select {
 }
 
 .annex > section {
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 16px;
   border: 0.5px solid black;
 }
 
