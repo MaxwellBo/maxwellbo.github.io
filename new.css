@@ -252,6 +252,24 @@ script {
   display: none;
 }
 
+
+ol, ul {
+  padding-left: 1.2rem;
+}
+
+ul {
+  list-style-type: none;
+}
+
+ul li::before {
+  content: "🝒 ";
+}
+
+nav ul li::before {
+  content: none;
+}
+
+
 .ticker-outer {
   overflow: hidden;
   white-space: nowrap;
