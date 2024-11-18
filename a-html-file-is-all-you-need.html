@@ -279,7 +279,7 @@ I stress that <b>this <code>style</code> element is styling itself to be visible
 }
 
 script.echo::before {
-  content: "<script type=\"" attr(type) "\" class=\"" attr(class) "\" id=\"" attr(id) "\" contenteditable=\"" attr(contenteditable) "\">";
+  content: "<script id=\"" attr(id) "\" type=\"" attr(type) "\" class=\"" attr(class) "\" contenteditable=\"" attr(contenteditable) "\">";
 }
 script.echo::after { 
   content: "<\/script>"; 
