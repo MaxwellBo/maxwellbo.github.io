@@ -307,6 +307,7 @@ style.echo::after {
 We also want <code>contenteditable</code> <code>script</code>s to be re-evaluated on blur by building a clone of the <code>script</code> and then removing the original.
 <br />
 (Why can't we just use <code>eval</code>? For one, <code>eval</code> doesn't work with code with <code>import</code> statements in it.)
+<br />
 
 <script type="module" class="echo">
 function reevaluate(event) {
