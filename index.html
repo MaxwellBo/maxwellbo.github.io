@@ -64,7 +64,7 @@
           const ticker = document.getElementById('ticker');
           Array.from(items).forEach(item => {
             const title = item.getElementsByTagName('title')[0].textContent;
-            const link = item.getElementsByTagName('link')[0].textContent;
+            const link = item.getElementsByTagName('link')[0].getAttribute('href');
             const updated = new Date(item.getElementsByTagName('updated')[0].textContent);
             const summary = item.getElementsByTagName('summary')[0].textContent;
             const shortDate = updated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
