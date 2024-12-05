@@ -16,6 +16,8 @@
         <link href="https://maxbo.me/celine/bibhtml"/>
         <id>https://maxbo.me/celine/bibhtml</id>
         <updated>2024-12-5T00:00:00Z</updated>
+        <summary>
+            A Web Components-based referencing system for HTML documents
         <author>
             <name>Max Bo</name>
         </author>
@@ -26,9 +28,9 @@
         <link href="https://maxbo.me/blogroll.html"/>
         <id>https://maxbo.me/blogroll.html</id>
         <updated>2024-10-15T00:00:00Z</updated>
-        <!-- <summary>
+        <summary>
             I created my blogroll.html to share a list of my favorite blogs and websites.
-        </summary> -->
+        </summary>
         <author>
             <name>Max Bo</name>
         </author>
@@ -39,9 +41,9 @@
         <link href="https://maxbo.me/subordinate-latin"/>
         <id>https://maxbo.me/subordinate-latin</id>
         <updated>2024-10-08T00:00:00Z</updated>
-        <!-- <summary>
+        <summary>
             Japanese typeface designers call the Latin script section of their projects the 'Subordinate Latin'. What does it look like?
-        </summary> -->
+        </summary>
         <author>
             <name>Max Bo</name>
         </author>
@@ -52,9 +54,9 @@
         <link href="https://hello-notebook-http-mode.fly.dev"/>
         <id>https://hello-notebook-http-mode.fly.dev/</id>
         <updated>2024-09-25T00:00:00Z</updated>
-        <!-- <summary>
+        <summary>
             A notebook serving itself and an API from fly.io using Jupyter Kernel Gateway notebook-http mode.
-        </summary> -->
+        </summary>
         <author>
             <name>Max Bo</name>
         </author>
@@ -65,9 +67,9 @@
         <link href="https://maxbo.me/celine"/>
         <id>https://maxbo.me/celine</id>
         <updated>2024-09-18T00:00:00Z</updated>
-        <!-- <summary>
+        <summary>
             @celine/celine is a microlibrary for building reactive HTML notebooks.
-        </summary> -->
+        </summary>
         <author>
             <name>Max Bo</name>
         </author>
