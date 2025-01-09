@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What happens when you send your competitors Factorio?</title>
+
+  <script type="module">
+  import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.1.0';
+  import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+  import * as htl from 'https://esm.run/htl@0.3.1';
+
+  window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+  window.library = celine.library; /* @observablehq/stdlib */
+  window.Inputs = Inputs;
+  window.htl = htl;
+
+  registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+  </script>
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/celine@4.1.0/cell.css" />
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/libertine@10.1.0/libertine.css" />
+</head>
+<body>
+  <main>
+    <h1>How easy is to sabotage your competitors by sending Factorio to their engineers?</h1>
+    <div class="authors">
+      <div class="author">
+        <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span> 
+      </div>
+    </div>
+
+    <center>
+      <figure>
+        <img style="max-width: 300px;" src="factorio/bryan.webp" />
+        <figcaption>TODO link</figcaption>
+      </figure>
+    </center>
+
+    <p>In light of the above tweet, and Ned Beauman's <a href="https://www.ft.com/content/b9e419c6-acf1-420b-8ae6-908feb52c94e"><cite>How ‘Factorio’ seduced Silicon Valley — and me</cite></a>,
+      I wanted to actually quantify the actual magnitude of damage you could inflict with a Mass Steam Gifting Event.</p>
+
+
+    <p>
+      My mate <a href="https://au.linkedin.com/in/huwsername">Huw</a> made this funky library called <a href="https://observablehq.com/@huw/dist">dist</a>, a
+      <q>a lightweight alternative to <a href="https://squiggle-language/">Squiggle</a> designed to be used with a batteries-included notebook environment such as Observable.</q>,
+      where Squggle is a <q>Squiggle is a minimalist programming language for probabilistic estimation.</q>
+    </p>
+
+<script type="module" class="echo">import * as dist from 'https://esm.sh/jsr/@huw/dist@0.4.3';
+window.dist = dist;</script>
+
+
+    <p>
+      So using my own HTML-embeddable notebook environment <a href="https://maxbo.me/celine">@celine/celine</a>, let's begin:
+    </p>
+
+    <br />
+    <center>***</center>
+    <br />
+
+    <p>
+      First, we'll need a distribution of the compensation granted to an engineer.
+    </p>
+    
+
+<script type="module">
+import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
+import * as d3 from 'https://esm.sh/d3@7.0.0';
+window.d3 = d3;
+import * as kde from 'https://esm.sh/fast-kde@0.2.2';
+
+function plot(sample) {
+  const density = [...kde.density1d(sample).points("point", "density")];
+
+  const summary = [
+    { type: "Mean", point: d3.mean(sample), strokeDasharray: null },
+    { type: "Min", point: d3.min(sample), strokeDasharray: null },
+    { type: "Max", point: d3.max(sample), strokeDasharray: null },
+    { type: "p5", point: d3.quantile(sample, 0.05), strokeDasharray: "5, 3" },
+    { type: "p95", point: d3.quantile(sample, 0.95), strokeDasharray: "5, 3" },
+    { type: "Median", point: d3.median(sample), strokeDasharray: "2, 2" }
+  ].map((entry) => ({
+    ...entry,
+    density:
+      density[
+        d3.bisectCenter(
+          density.map(({ point }) => point),
+          entry.point
+        )
+      ].density
+  }));
+
+  return Plot.plot({
+    margin: 12,
+    marginTop: 24,
+    marginBottom: 24,
+    y: { axis: null },
+    clip: true,
+    x: { label: null, tickFormat: "s", domain: [0, d3.max(density, (d) => d.point)] },
+    height: 196,
+    marks: [
+      Plot.areaY(density, { x: "point", y: "density", fillOpacity: 0.1 }),
+      Plot.ruleY([0]),
+      Plot.lineY(density, { x: "point", y: "density" }),
+      ...Object.entries(Object.groupBy(summary, (d) => d.strokeDasharray)).map(
+        ([strokeDasharray, values]) =>
+          Plot.ruleX(values, {
+            x: "point",
+            y1: "density",
+            strokeDasharray,
+            strokeOpacity: 0.3
+          })
+      ),
+      Plot.tip(
+        summary,
+        Plot.pointerX({
+          x: "point",
+          y: "density",
+          channels: {
+            type: "type",
+            value: "point"
+          },
+          format: { type: true, value: true, x: false, y: false }
+        })
+      ),
+      Plot.axisX(
+        summary.map(({ point }) => point),
+        occludeAxisX({
+          tickFormat: "s",
+          padding: 12
+        })
+      ),
+      Plot.crosshairX(density, { x: "point" })
+    ]
+  });
+}
+
+function occludeAxisX({ padding = 8, ...options } = {}) {
+  return occludeAxis({ ...options, axis: "x", dy: padding + 4, padding });
+}
+function occludeAxisY({ padding = 8, ...options } = {}) {
+  return occludeAxis({ ...options, axis: "y", dx: -padding - 4, padding });
+}
+
+function occludeAxis({ axis, ...options } = {}) {
+  const orthogonalAxis = axis === "y" ? "x" : "y";
+  return Plot.initializer(
+    (axis === "y" ? Plot.dodgeX : Plot.dodgeY)(options),
+    (data, facets, channels, scales, dimensions, context) => {
+      // To determine the preserved indices, we take the data points that have a resolved channel-value equal to the maximum/minimum channel-value.
+
+      console.log(typeof channels[orthogonalAxis].value);
+
+      const extent = (axis === "y" ? Math.min : Math.max)(
+        ...channels[orthogonalAxis].value
+      );
+      const preservedIndices = channels[orthogonalAxis].value.reduce(
+        (acc, value, index) => (value === extent ? [...acc, index] : acc),
+        []
+      );
+
+      // Then filter out the channels
+      // We don't need to filter data and facets because this is an initializer transform!
+
+      const newChannels = Object.fromEntries(
+        Object.entries(channels).map(([key, { value, ...channel }]) => [
+          key,
+          { ...channel, value: preservedIndices.map((index) => value[index]) }
+        ])
+      );
+
+      return { data, facets, channels: newChannels };
+    }
+  );
+}
+
+window.density = plot;
+    </script>
+
+<script id="dist" type="module" class="echo">celine.cell('dist', () => {
+    return dist
+  })
+</script>
+
+
+<p>
+  Let's take a look at the engineering compensation levels of some random company on Levels.fyi. Perhaps <a href="  https://www.levels.fyi/companies/adobe/salaries/software-engineer?country=254">Adobe</a>.
+</p>
+
+<p>
+  I think 224500AUD as a 5%entile and 755300AUD as a 95%entile is a good range.
+</p>
+
+<script id="compdensity" type="module">celine.cell('compdensity', ['comp'], (c) => 
+  density(c))</script>
+
+<script id="comp" type="module" class="echo" contenteditable="true">celine.cell('comp', () => {
+  return dist.to(224500, 755300)
+})</script>
+
+
+<p>
+  Let's normalize to a per-minute rate to make it easier to compare with the next distribution.
+</p>
+
+<script id="compPerMinute density" type="module">celine.cell('compPerMinute density', ['compPerMinute'], (compPerMinute) => 
+  density(compPerMinute))</script>
+<script id="compPerMinute" type="module" class="echo">celine.cell('compPerMinute', ['comp'], (comp) => {
+  const WORK_MINUTES_PER_YEAR = 48 /* weeks */ * 5 /* days */ * 8 /* hours */ * 60 /* minutes */;
+  return dist.dist`${comp} / ${WORK_MINUTES_PER_YEAR}`
+})</script>
+
+
+<p>
+  Let's say for a given gifting of Factorio to an engineer, 60% play nothing, but 40% lose 15mins to 1hr each week to Factiro (which some may say is a significant underestimate).
+</p>
+
+
+<script id="lostWorkMinsPerWeek density" type="module">celine.cell('lostWorkMinsPerWeek density', ['lostWorkMinsPerWeek'], (lostWorkMinsPerWeek) => 
+  density(lostWorkMinsPerWeek))</script>
+<script id="lostWorkMinsPerWeek" type="module" class="echo">celine.cell('lostWorkMinsPerWeek', [], () =>
+  dist.mixture([0, dist.to(15, 60)], [0.6, 0.4])
+)</script>
+
+
+<p>
+  So now let's figure out what the total lost value per week is:
+</p>
+
+<script id="totalValuePerWeek density" type="module">celine.cell('totalValuePerWeek density', ['totalValuePerWeek'], (totalValuePerWeek) => 
+  density(totalValuePerWeek))</script>
+<script id="totalValuePerWeek" type="module" class="echo">celine.cell('totalValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) =>
+  dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
+)</script>
+
+<script id="totalValuePerWeek stats" type="module">celine.cell('totalValuePerWeek stats', ['totalValuePerWeek'], (totalValuePerWeek) => {
+  return htl.html`<table>
+    <tr><th>Statistic</th><th>Value</th></tr>
+    <tr><td>Mean</td><td>$${d3.mean(totalValuePerWeek).toFixed(0)}AUD</td></tr>
+    <tr><td>Median</td><td>$${d3.median(totalValuePerWeek).toFixed(0)}AUD</td></tr>
+    <tr><td>p5</td><td>$${d3.quantile(totalValuePerWeek, 0.05).toFixed(0)}AUD</td></tr>
+    <tr><td>p95</td><td>$${d3.quantile(totalValuePerWeek, 0.95).toFixed(0)}AUD</td></tr>
+  </table>`
+})</script>
+
+<center>
+  <figure>
+    <img style="max-width: 300px;" src="factorio/steam.png" />
+    <figcaption>TODO link</figcaption>
+  </figure>
+</center>
+
+<p>
+  So it would take about 2 weeks to break even.
+</p>
+
+</main>
+</body>
+</html>
