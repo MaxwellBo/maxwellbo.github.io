@@ -185,7 +185,7 @@ function occludeAxis({ axis, ...options } = {}) {
 
 window.density = plot;
     </script>
-    
+
 <p>
   Let's take a look at the engineering compensation levels of some random company on Levels.fyi. Perhaps <a href="  https://www.levels.fyi/companies/adobe/salaries/software-engineer?country=254">Adobe</a>.
 </p>
@@ -208,7 +208,7 @@ window.density = plot;
 
 <script id="compPerMinute density" type="module">celine.cell('compPerMinute density', ['compPerMinute'], (compPerMinute) => 
   density(compPerMinute))</script>
-<script id="compPerMinute" type="module" class="echo">celine.cell('compPerMinute', ['comp'], (comp) => {
+<script id="compPerMinute" type="module" class="echo" contenteditable="true">celine.cell('compPerMinute', ['comp'], (comp) => {
   const WORK_MINUTES_PER_YEAR = 48 /* weeks */ * 5 /* days */ * 8 /* hours */ * 60 /* minutes */;
   return dist.dist`${comp} / ${WORK_MINUTES_PER_YEAR}`
 })</script>
@@ -221,7 +221,7 @@ window.density = plot;
 
 <script id="lostWorkMinsPerWeek density" type="module">celine.cell('lostWorkMinsPerWeek density', ['lostWorkMinsPerWeek'], (lostWorkMinsPerWeek) => 
   density(lostWorkMinsPerWeek))</script>
-<script id="lostWorkMinsPerWeek" type="module" class="echo">celine.cell('lostWorkMinsPerWeek', [], () =>
+<script id="lostWorkMinsPerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostWorkMinsPerWeek', [], () =>
   dist.mixture([0, dist.to(15, 60)], [0.6, 0.4])
 )</script>
 
@@ -232,7 +232,7 @@ window.density = plot;
 
 <script id="totalValuePerWeek density" type="module">celine.cell('totalValuePerWeek density', ['totalValuePerWeek'], (totalValuePerWeek) => 
   density(totalValuePerWeek))</script>
-<script id="totalValuePerWeek" type="module" class="echo">celine.cell('totalValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) =>
+<script id="totalValuePerWeek" type="module" class="echo" contenteditable="true">celine.cell('totalValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) =>
   dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
 )</script>
 
@@ -246,10 +246,12 @@ window.density = plot;
   </table>`
 })</script>
 
+<br />
+
 <center>
   <figure>
     <img style="max-width: 800px;" src="factorio/steam.png" />
-    <figcaption>TODO link</figcaption>
+    <figcaption><a href="https://store.steampowered.com/app/427520/Factorio/">Steam</a></figcaption>
   </figure>
 </center>
 
