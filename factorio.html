@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>What happens when you send your competitors Factorio?</title>
+  <title>How easy is to sabotage your competitors by sending Factorio to their engineers?</title>
 
   <script type="module">
   import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.6.0';
@@ -41,7 +41,7 @@
     </center>
 
     <p>In light of the above tweet, and Ned Beauman's <a href="https://www.ft.com/content/b9e419c6-acf1-420b-8ae6-908feb52c94e"><img class="favicon" src="https://favicon.garden/ft.com"> <cite>How ‘Factorio’ seduced Silicon Valley — and me</cite></a>,
-      I wanted to actually quantify the actual magnitude of damage you could inflict with a Mass Steam Gifting Event.</p>
+      I wanted to actually quantify the actual magnitude of damage you could inflict with a Mass Steam Gifting Event of <a href="https://www.factorio.com/"><img class="favicon" src="https://www.factorio.com/favicon.ico"> Factorio</a>.
 
     <p>
       My mate <a href="https://au.linkedin.com/in/huwsername">
@@ -235,19 +235,19 @@ window.density = plot;
   So now let's figure out what the total lost value per week is:
 </p>
 
-<script id="totalValuePerWeek density" type="module">celine.cell('totalValuePerWeek density', ['totalValuePerWeek'], (totalValuePerWeek) => 
-  density(totalValuePerWeek))</script>
-<script id="totalValuePerWeek" type="module" class="echo" contenteditable="true">celine.cell('totalValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) =>
+<script id="lostValuePerWeek density" type="module">celine.cell('lostValuePerWeek density', ['lostValuePerWeek'], (lostValuePerWeek) => 
+  density(lostValuePerWeek))</script>
+<script id="lostValuePerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) =>
   dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
 )</script>
 
-<script id="totalValuePerWeek stats" type="module">celine.cell('totalValuePerWeek stats', ['totalValuePerWeek'], (totalValuePerWeek) => {
+<script id="lostValuePerWeek stats" type="module">celine.cell('lostValuePerWeek stats', ['lostValuePerWeek'], (lostValuePerWeek) => {
   return htl.html`<table>
     <tr><th>Statistic</th><th>Value</th></tr>
-    <tr><td>Mean</td><td>$${d3.mean(totalValuePerWeek).toFixed(0)}AUD</td></tr>
-    <tr><td>Median</td><td>$${d3.median(totalValuePerWeek).toFixed(0)}AUD</td></tr>
-    <tr><td>p5</td><td>$${d3.quantile(totalValuePerWeek, 0.05).toFixed(0)}AUD</td></tr>
-    <tr><td>p95</td><td>$${d3.quantile(totalValuePerWeek, 0.95).toFixed(0)}AUD</td></tr>
+    <tr><td>Mean</td><td>$${d3.mean(lostValuePerWeek).toFixed(0)}AUD</td></tr>
+    <tr><td>Median</td><td>$${d3.median(lostValuePerWeek).toFixed(0)}AUD</td></tr>
+    <tr><td>p5</td><td>$${d3.quantile(lostValuePerWeek, 0.05).toFixed(0)}AUD</td></tr>
+    <tr><td>p95</td><td>$${d3.quantile(lostValuePerWeek, 0.95).toFixed(0)}AUD</td></tr>
   </table>`
 })</script>
 
