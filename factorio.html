@@ -47,15 +47,20 @@
     <p>
       My mate <a href="https://au.linkedin.com/in/huwsername">Huw</a> made this funky library called <a href="https://observablehq.com/@huw/dist">dist</a>, a
       <q>a lightweight alternative to <a href="https://squiggle-language/">Squiggle</a> designed to be used with a batteries-included notebook environment such as Observable.</q>,
-      where Squggle is a <q>Squiggle is a minimalist programming language for probabilistic estimation.</q>
+      where Squggle is a <q>minimalist programming language for probabilistic estimation</q>.
     </p>
 
-<script type="module" class="echo">import * as dist from 'https://esm.sh/jsr/@huw/dist@0.4.3';
-window.dist = dist;</script>
+    <p>
+      Let's import it, and view the interface with my own HTML-embeddable notebook environment <a href="https://maxbo.me/celine">@celine/celine</a>:
+    </p>
 
+<script type="module" class="echo" id="dist">import * as dist from 'https://esm.sh/jsr/@huw/dist@0.4.3';
+window.dist = dist;
+celine.cell('dist', dist)
+</script>
 
     <p>
-      So using my own HTML-embeddable notebook environment <a href="https://maxbo.me/celine">@celine/celine</a>, let's begin:
+      Let's begin:
     </p>
 
     <br />
@@ -180,13 +185,7 @@ function occludeAxis({ axis, ...options } = {}) {
 
 window.density = plot;
     </script>
-
-<script id="dist" type="module" class="echo">celine.cell('dist', () => {
-    return dist
-  })
-</script>
-
-
+    
 <p>
   Let's take a look at the engineering compensation levels of some random company on Levels.fyi. Perhaps <a href="  https://www.levels.fyi/companies/adobe/salaries/software-engineer?country=254">Adobe</a>.
 </p>
