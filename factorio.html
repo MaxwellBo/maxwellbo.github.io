@@ -249,8 +249,8 @@ window.density = plot;
   Let's figure out what the total lost value per week is:
 </p>
 
-<script id="lostValuePerWeek density" type="module">celine.cell('lostValuePerWeek density', ['lostValuePerWeek'], (lostValuePerWeek) => 
-  density(lostValuePerWeek, { tickFormat: "$s"})</script>
+<script id="lostValuePerWeek density" type="module">celine.cell('lostValuePerWeek density', ['lostValuePerWeek'], (c) => 
+  density(c, { tickFormat: "$s"}))</script>
 <script id="lostValuePerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) => {
   return dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
 })</script>
