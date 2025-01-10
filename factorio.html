@@ -74,7 +74,7 @@
     </div>
 
     <p>In light of the above tweet, and Ned Beauman's <a href="https://www.ft.com/content/b9e419c6-acf1-420b-8ae6-908feb52c94e"><img class="favicon" src="https://favicon.garden/ft.com"> <cite>How ‘Factorio’ seduced Silicon Valley — and me</cite></a> (<a href="https://archive.is/2sRrE">permalink</a>),
-      I wanted to actually quantify the actual magnitude of damage you could inflict with a Mass Steam Gifting Event of <a href="https://www.factorio.com/"><img class="favicon" src="https://www.factorio.com/static/img/favicon.ico"> Factorio</a>.
+      I wanted to actually quantify the magnitude of damage you could inflict with a Mass Steam Gifting Event of <a href="https://www.factorio.com/"><img class="favicon" src="https://www.factorio.com/static/img/favicon.ico"> Factorio</a>.
 
     <p>
       My mate <a href="https://au.linkedin.com/in/huwsername">
@@ -144,7 +144,7 @@ function plot(sample) {
     marginBottom: 24,
     y: { axis: null },
     clip: true,
-    x: { label: null, tickFormat: "s", domain: [0, d3.max(density, (d) => d.point)] },
+    x: { label: null, tickFormat: "$s", domain: [0, d3.max(density, (d) => d.point)] },
     height: 196,
     marks: [
       Plot.areaY(density, { x: "point", y: "density", fillOpacity: 0.1 }),
@@ -174,7 +174,7 @@ function plot(sample) {
       Plot.axisX(
         summary.map(({ point }) => point),
         occludeAxisX({
-          tickFormat: "s",
+          tickFormat: "$s",
           padding: 12
         })
       ),
@@ -303,7 +303,7 @@ window.density = plot;
 
 <p>
   it would take about <script type="module" id="breakeven">celine.cell('breakeven', ['lostValuePerWeek'], (lostValuePerWeek) =>
-  htl.html`<output>${(100 / d3.mean(lostValuePerWeek)).toFixed(1)} weeks</output>`
+  htl.html`<output>${(70 / d3.mean(lostValuePerWeek)).toFixed(1)} weeks</output>`
   )</script> to break even.
 </p>
 
