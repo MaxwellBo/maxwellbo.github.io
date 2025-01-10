@@ -46,6 +46,11 @@
       output {
         font-family: monospace;
       }
+
+      time {
+        font-variant: small-caps;
+        font-family: 'Libertinus Sans'
+      }
     </style>
 </head>
 <body>
@@ -55,6 +60,10 @@
       <div class="author">
         <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span> 
       </div>
+    </div>
+
+    <div class="date"></div>
+      <time datetime="2025-01-10">January 10, 2025</time>
     </div>
 
     <div class="center">
@@ -70,25 +79,16 @@
     <p>
       My mate <a href="https://au.linkedin.com/in/huwsername">
         <img src="https://linkedin.com/favicon.ico" class="favicon"> 
-         Huw</a> made this funky library called <a href="https://observablehq.com/@huw/dist">
+         Huw</a> recently made this funky library called <a href="https://observablehq.com/@huw/dist">
         <img src="https://observablehq.com/favicon.ico" class="favicon"> dist</a>, a
       <i><q>lightweight alternative to <a href="https://www.squiggle-language.com/"><img class="favicon"  src="https://www.squiggle-language.com/favicon.ico"> Squiggle</a> designed to be used with a batteries-included notebook environment such as Observable</q></i>,
       where Squggle is a <i><q>minimalist programming language for probabilistic estimation</q></i>.
     </p>
 
     <p>
-      Let's import it, and view the interface with my own HTML-embeddable notebook environment <a href="https://maxbo.me/celine">
+      Let's put dist, and my HTML-embeddable notebook environment <a href="https://maxbo.me/celine">
         <a href="https://maxbo.me/celine"><img src="https://maxbo.me/celine/static/favicon-32x32.png" class="favicon">
-        @celine/celine</a>:
-    </p>
-
-<script type="module" class="echo" id="dist">import * as dist from 'https://esm.sh/jsr/@huw/dist@0.4.3';
-window.dist = dist;
-celine.cell('dist', dist)
-</script>
-
-    <p>
-      Let's begin:
+        @celine/celine</a> through their paces:
     </p>
 
     <br />
@@ -96,9 +96,20 @@ celine.cell('dist', dist)
     <br />
 
     <p>
-      First, we'll need a distribution of the compensation granted to an engineer.
+      First, we'll import dist and make it available globally. It's got a bunch of useful 
+
+      <a href="https://jsr.io/@huw/dist/doc">
+        <img src="https://jsr.io/favicon.ico" class="favicon"> distribution creation functions
+      </a> mirroring <a href="https://www.squiggle-language.com/docs/Guides/DistributionCreation">
+        <img
+          src="https://www.squiggle-language.com/favicon.ico" class="favicon"> those in Squiggle.
+      </a>
     </p>
-    
+
+    <script type="module" class="echo" id="dist">import * as dist from 'https://esm.sh/jsr/@huw/dist@0.4.3';
+window.dist = dist;
+celine.cell('dist', dist)
+</script>
 
 <script type="module">
 import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
@@ -212,12 +223,8 @@ window.density = plot;
     </script>
 
 <p>
-  Let's take a look at the engineering compensation levels of some random company on Levels.fyi. Perhaps <a href="https://www.levels.fyi/companies/adobe/salaries/software-engineer?country=254">
-    <img src="https://www.levels.fyi/assets/favicon.png" class="favicon"> Adobe</a>.
-</p>
-
-<p>
-  Salary distributions are typically <a href="https://www.squiggle-language.com/docs/Guides/DistributionCreation#to">
+  Now, we'll build a distribution of the compensation granted to an engineer. Let's take a look at the engineering compensation levels of some random company on Levels.fyi. Perhaps <a href="https://www.levels.fyi/companies/adobe/salaries/software-engineer?country=254">
+    <img src="https://www.levels.fyi/assets/favicon.png" class="favicon"> Adobe</a>. Salary distributions are typically <a href="https://www.squiggle-language.com/docs/Guides/DistributionCreation#to">
     <img src="https://www.squiggle-language.com/favicon.ico" class="favicon"> lognormal</a>, so plugging in $224500AUD as a 5%entile and $755300AUD as a 95%entile seems fine.
 </p>
 
