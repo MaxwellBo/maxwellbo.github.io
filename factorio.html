@@ -96,7 +96,9 @@ import * as d3 from 'https://esm.sh/d3@7.0.0';
 window.d3 = d3;
 import * as kde from 'https://esm.sh/fast-kde@0.2.2';
 
-function plot(sample) {
+function plot(sample, options = {
+  tickFormat: "s"
+}) {
   const density = [...kde.density1d(sample).points("point", "density")];
 
   const summary = [
@@ -123,7 +125,7 @@ function plot(sample) {
     marginBottom: 24,
     y: { axis: null },
     clip: true,
-    x: { label: null, tickFormat: "$s", domain: [0, d3.max(density, (d) => d.point)] },
+    x: { label: null, tickFormat: options.tickFormat, domain: [0, d3.max(density, (d) => d.point)] },
     height: 196,
     marks: [
       Plot.areaY(density, { x: "point", y: "density", fillOpacity: 0.1 }),
@@ -153,7 +155,7 @@ function plot(sample) {
       Plot.axisX(
         summary.map(({ point }) => point),
         occludeAxisX({
-          tickFormat: "$s",
+          tickFormat: options.tickFormat,
           padding: 12
         })
       ),
@@ -208,7 +210,7 @@ window.density = plot;
 </p>
 
 <script id="compdensity" type="module">celine.cell('compdensity', ['comp'], (c) => 
-  density(c))</script>
+  density(c, { tickFormat: "$s"}))</script>
 
 <script id="comp" type="module" class="echo" contenteditable="true">celine.cell('comp', () => {
   return dist.to(228000, 406000)
@@ -248,7 +250,7 @@ window.density = plot;
 </p>
 
 <script id="lostValuePerWeek density" type="module">celine.cell('lostValuePerWeek density', ['lostValuePerWeek'], (lostValuePerWeek) => 
-  density(lostValuePerWeek))</script>
+  density(lostValuePerWeek, { tickFormat: "$s"})</script>
 <script id="lostValuePerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) => {
   return dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
 })</script>
