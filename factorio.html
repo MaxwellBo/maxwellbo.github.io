@@ -23,6 +23,30 @@
   <link 
     rel="stylesheet" 
     href="https://esm.sh/jsr/@celine/libertine@10.1.0/libertine.css" />
+
+
+    <style>
+      figure {
+        margin: 1em;
+        padding: 0.5em;
+        border: 1px solid #ccc;
+        background-color: #f9f9f9;
+      }
+
+      figure figcaption {
+        padding-top: 0.5em;
+      }
+
+      .center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      output {
+        font-family: monospace;
+      }
+    </style>
 </head>
 <body>
   <main>
@@ -33,15 +57,15 @@
       </div>
     </div>
 
-    <center>
-      <figure>
+    <div class="center">
+      <figure class="card">
         <img style="width: 50ch" src="factorio/bryan.webp" />
         <figcaption><a href="https://x.com/bryancsk/status/1825498316400164922"><img class="favicon"  src="https://twitter.com/favicon.ico"> Twitter</a></figcaption>
       </figure>
-    </center>
+    </div>
 
     <p>In light of the above tweet, and Ned Beauman's <a href="https://www.ft.com/content/b9e419c6-acf1-420b-8ae6-908feb52c94e"><img class="favicon" src="https://favicon.garden/ft.com"> <cite>How ‘Factorio’ seduced Silicon Valley — and me</cite></a>,
-      I wanted to actually quantify the actual magnitude of damage you could inflict with a Mass Steam Gifting Event of <a href="https://www.factorio.com/"><img class="favicon" src="https://www.factorio.com/favicon.ico"> Factorio</a>.
+      I wanted to actually quantify the actual magnitude of damage you could inflict with a Mass Steam Gifting Event of <a href="https://www.factorio.com/"><img class="favicon" src="https://www.factorio.com/static/img/favicon.ico"> Factorio</a>.
 
     <p>
       My mate <a href="https://au.linkedin.com/in/huwsername">
@@ -161,9 +185,6 @@ function occludeAxis({ axis, ...options } = {}) {
     (axis === "y" ? Plot.dodgeX : Plot.dodgeY)(options),
     (data, facets, channels, scales, dimensions, context) => {
       // To determine the preserved indices, we take the data points that have a resolved channel-value equal to the maximum/minimum channel-value.
-
-      console.log(typeof channels[orthogonalAxis].value);
-
       const extent = (axis === "y" ? Math.min : Math.max)(
         ...channels[orthogonalAxis].value
       );
@@ -241,28 +262,37 @@ window.density = plot;
   dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
 )</script>
 
-<script id="lostValuePerWeek stats" type="module">celine.cell('lostValuePerWeek stats', ['lostValuePerWeek'], (lostValuePerWeek) => {
-  return htl.html`<table>
-    <tr><th>Statistic</th><th>Value</th></tr>
-    <tr><td>Mean</td><td>$${d3.mean(lostValuePerWeek).toFixed(0)}AUD</td></tr>
-    <tr><td>Median</td><td>$${d3.median(lostValuePerWeek).toFixed(0)}AUD</td></tr>
-    <tr><td>p5</td><td>$${d3.quantile(lostValuePerWeek, 0.05).toFixed(0)}AUD</td></tr>
-    <tr><td>p95</td><td>$${d3.quantile(lostValuePerWeek, 0.95).toFixed(0)}AUD</td></tr>
-  </table>`
-})</script>
+
+<p>
+  So an average of 
+  <script id="average" type="module">
+    celine.cell('average', ['lostValuePerWeek'], (lostValuePerWeek) => 
+    
+    htl.html`<output>$${d3.mean(lostValuePerWeek).toFixed(0)}AUD</output>`
+    )
+  </script> is lost per week.
+</p>
 
 <br />
 
-<center>
-  <figure>
+<p>
+  And given that Factorio (bundled with its far more potent expansion, <a href="https://store.steampowered.com/app/645390/Factorio_Space_Age/">
+    <img class="favicon"  src="https://store.steampowered.com/favicon.ico"> Space Age</a>)
+    costs $100AUD all up:
+</p>
+
+<div class="center">
+  <figure class="card">
     <img src="factorio/steam.png" />
     <figcaption><a href="https://store.steampowered.com/app/427520/Factorio/">
       <img class="favicon"  src="https://store.steampowered.com/favicon.ico"> Steam</a></figcaption>
   </figure>
-</center>
+</div>
 
 <p>
-  So it would take about 2 weeks to break even.
+  it would take about <script type="module" id="breakeven">celine.cell('breakeven', ['lostValuePerWeek'], (lostValuePerWeek) =>
+  htl.html`<output>${(100 / d3.mean(lostValuePerWeek)).toFixed(1)} weeks</output>`
+  )</script> to break even.
 </p>
 
 </main>
