@@ -72,8 +72,8 @@
         <img src="https://linkedin.com/favicon.ico" class="favicon"> 
          Huw</a> made this funky library called <a href="https://observablehq.com/@huw/dist">
         <img src="https://observablehq.com/favicon.ico" class="favicon"> dist</a>, a
-      <q>lightweight alternative to <a href="https://www.squiggle-language.com/"><img class="favicon"  src="https://www.squiggle-language.com/favicon.ico"> Squiggle</a> designed to be used with a batteries-included notebook environment such as Observable</q>,
-      where Squggle is a <q>minimalist programming language for probabilistic estimation</q>.
+      <i><q>lightweight alternative to <a href="https://www.squiggle-language.com/"><img class="favicon"  src="https://www.squiggle-language.com/favicon.ico"> Squiggle</a> designed to be used with a batteries-included notebook environment such as Observable</q></i>,
+      where Squggle is a <i><q>minimalist programming language for probabilistic estimation</q></i>.
     </p>
 
     <p>
@@ -217,7 +217,7 @@ window.density = plot;
 </p>
 
 <p>
-  I think 224500AUD as a 5%entile and 755300AUD as a 95%entile is a good range.
+  I think $224500AUD as a 5%entile and $755300AUD as a 95%entile is a good range.
 </p>
 
 <script id="compdensity" type="module">celine.cell('compdensity', ['comp'], (c) => 
@@ -241,15 +241,19 @@ window.density = plot;
 
 
 <p>
-  Let's say for a given gifting of Factorio to an engineer, 60% play nothing, but 40% lose 15mins to 1hr each week to Factiro (which some may say is a significant underestimate).
+  Let's say for a given gifting of Factorio to an engineer, 80% play nothing, but 20% lose 1hr to 5hr each week to game play (which some may argue is a significant underestimate).
 </p>
 
 
 <script id="lostWorkMinsPerWeek density" type="module">celine.cell('lostWorkMinsPerWeek density', ['lostWorkMinsPerWeek'], (lostWorkMinsPerWeek) => 
   density(lostWorkMinsPerWeek))</script>
 <script id="lostWorkMinsPerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostWorkMinsPerWeek', [], () =>
-  dist.mixture([0, dist.to(15, 60)], [0.6, 0.4])
+  dist.mixture([0, dist.to(60, 60 * 5)], [0.80, 0.20])
 )</script>
+
+<p>
+  Now you may disagree with this assumption here, so feel free to edit the code above (and then <abbr>blur</abbr> to save the change) and see how it affects the results below.
+</p>
 
 
 <p>
