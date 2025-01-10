@@ -240,8 +240,8 @@ window.density = plot;
   Let's normalize to a per-minute rate to make it easier to compare with the next distribution.
 </p>
 
-<script id="compPerMinute density" type="module">celine.cell('compPerMinute density', ['compPerMinute'], (compPerMinute) => 
-  density(compPerMinute))</script>
+<!-- <script id="compPerMinute density" type="module">celine.cell('compPerMinute density', ['compPerMinute'], (compPerMinute) => 
+  density(compPerMinute))</script> -->
 <script id="compPerMinute" type="module" class="echo" contenteditable="true">celine.cell('compPerMinute', ['comp'], (comp) => {
   const WORK_MINUTES_PER_YEAR = 48 /* weeks */ * 5 /* days */ * 8 /* hours */ * 60 /* minutes */;
   return dist.dist`${comp} / ${WORK_MINUTES_PER_YEAR}`
@@ -255,9 +255,9 @@ window.density = plot;
 
 <script id="lostWorkMinsPerWeek density" type="module">celine.cell('lostWorkMinsPerWeek density', ['lostWorkMinsPerWeek'], (lostWorkMinsPerWeek) => 
   density(lostWorkMinsPerWeek))</script>
-<script id="lostWorkMinsPerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostWorkMinsPerWeek', [], () =>
-  dist.mixture([0, dist.to(60, 60 * 5)], [0.80, 0.20])
-)</script>
+<script id="lostWorkMinsPerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostWorkMinsPerWeek', [], () => {
+  return dist.mixture([0, dist.to(60, 60 * 5)], [0.80, 0.20])
+})</script>
 
 <p>
   Now you may disagree with this assumption here, so feel free to edit the code above (and then <abbr>blur</abbr> to save the change) and see how it affects the results below.
@@ -270,9 +270,9 @@ window.density = plot;
 
 <script id="lostValuePerWeek density" type="module">celine.cell('lostValuePerWeek density', ['lostValuePerWeek'], (lostValuePerWeek) => 
   density(lostValuePerWeek))</script>
-<script id="lostValuePerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) =>
-  dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
-)</script>
+<script id="lostValuePerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostValuePerWeek', ['compPerMinute', 'lostWorkMinsPerWeek'], (compPerMinute, lostWorkMinsPerWeek) => {
+  return dist.dist`${compPerMinute} * ${lostWorkMinsPerWeek}`
+})</script>
 
 
 <p>
