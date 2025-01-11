@@ -12,6 +12,17 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
+        <title>Is sending Factorio to your competitors' engineers a cost-effective means of sabotage?</title>
+        <link href="https://maxbo.me/factorio"/>
+        <id>https://maxbo.me/factorio</id>
+        <updated>2025-01-10T00:00:00Z</updated>
+        <summary>Yes</summary>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
+
+    <entry>
         <title>@celine/bibhtml</title>
         <link href="https://maxbo.me/celine/bibhtml"/>
         <id>https://maxbo.me/celine/bibhtml</id>
