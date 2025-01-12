@@ -83,7 +83,7 @@
         <img src="https://linkedin.com/favicon.ico" class="favicon"> 
          Huw</a> recently made this funky library called <a href="https://observablehq.com/@huw/dist">
         <img src="https://observablehq.com/favicon.ico" class="favicon"> dist</a>, a
-      <i><q>lightweight alternative to <a href="https://www.squiggle-language.com/"><img class="favicon"  src="https://www.squiggle-language.com/favicon.ico"> Squiggle</a> designed to be used with a batteries-included notebook environment such as Observable</q></i>,
+      <i><q>lightweight alternative to <a href="https://www.squiggle-language.com/docs"><img class="favicon"  src="https://www.squiggle-language.com/favicon.ico"> Squiggle</a> designed to be used with a batteries-included notebook environment such as Observable</q></i>,
       where Squiggle is a <i><q>minimalist programming language for probabilistic estimation</q></i>.
     </p>
 
@@ -252,7 +252,7 @@ window.density = plot;
 })</script>
 
 <p>
-  Let's say for a given gifting of Factorio to an engineer, 80% play nothing, but 20% lose 1hr to 5hr<sup><a id="fnref:1" href="#fn:1">†</a></sup> of productive work to playing Factorio instead.<sup><a id="fnref:2" href="#fn:2">‡</a></sup>
+  Let's say for a given gifting of Factorio to an engineer 20% already own it, 60% play nothing, but 20% lose 1hr to 5hr<sup><a id="fnref:1" href="#fn:1">†</a></sup> of productive work to playing Factorio instead.<sup><a id="fnref:2" href="#fn:2">‡</a></sup>
 </p>
 
 <aside>
@@ -267,13 +267,15 @@ window.density = plot;
 </aside>
 
 <aside>
-  You may disagree with this assumptions here, so feel free to edit the code below (and <abbr>blur</abbr> to propagate changes) to see how it affects the results.
+  <p>
+    You may disagree with this assumptions here, so feel free to edit the code below (and <abbr>blur</abbr> to propagate changes) to see how it affects the results.
+  </p>
 </aside>
 
 <script id="lostWorkMinsPerWeek density" type="module">celine.cell('lostWorkMinsPerWeek density', ['lostWorkMinsPerWeek'], (lostWorkMinsPerWeek) => 
   density(lostWorkMinsPerWeek))</script>
 <script id="lostWorkMinsPerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostWorkMinsPerWeek', [], () => {
-  return dist.mixture([0, dist.to(60, 60 * 5)], [0.80, 0.20])
+  return dist.mixture([0, 0, dist.to(60, 60 * 5)], [0.20, 0.60, 0.20])
 })</script>
 
 <p>
