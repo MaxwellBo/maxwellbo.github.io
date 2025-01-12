@@ -252,7 +252,7 @@ window.density = plot;
 })</script>
 
 <p>
-  Let's say for a given gifting of Factorio to an engineer, 80% play nothing, but 20% lose 1hr to 5hr<sup><a id="fnref:1" href="#fn:1">†</a></sup> of productive work to playing Factorio instead.<sup><a id="fnref:2" href="#fn:2">‡</a></sup>
+  Let's say for a given gifting of Factorio to an engineer 20% already own it, 60% play nothing, but 20% lose 1hr to 5hr<sup><a id="fnref:1" href="#fn:1">†</a></sup> of productive work to playing Factorio instead.<sup><a id="fnref:2" href="#fn:2">‡</a></sup>
 </p>
 
 <aside>
@@ -275,7 +275,7 @@ window.density = plot;
 <script id="lostWorkMinsPerWeek density" type="module">celine.cell('lostWorkMinsPerWeek density', ['lostWorkMinsPerWeek'], (lostWorkMinsPerWeek) => 
   density(lostWorkMinsPerWeek))</script>
 <script id="lostWorkMinsPerWeek" type="module" class="echo" contenteditable="true">celine.cell('lostWorkMinsPerWeek', [], () => {
-  return dist.mixture([0, dist.to(60, 60 * 5)], [0.80, 0.20])
+  return dist.mixture([0, 0, dist.to(60, 60 * 5)], [0.20, 0.60, 0.20])
 })</script>
 
 <p>
