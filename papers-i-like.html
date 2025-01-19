@@ -35,6 +35,7 @@
       <bh-cite><a href="#dunning2021">?</a></bh-cite>
       <bh-cite><a href="#Masson_2019">?</a></bh-cite>
       <bh-cite><a href="#hyperloglog">?</a></bh-cite>
+      <bh-cite><a href="#litt2022">?</a></bh-cite>
     </div>
 
     <bh-reference id="dusa">
@@ -278,11 +279,31 @@
         author={Masson, Charles and Rim, Jee E. and Lee, Homin K.},
         year={2019},
         month=aug, pages={2195–2205} }
-
     </bh-reference>
 
     <bh-reference id="hyperloglog">
       10.1.1.76.4286
+    </bh-reference>
+
+    <bh-reference id="litt2022">
+      @article{10.1145/3555644,
+        author = {Litt, Geoffrey and Lim, Sarah and Kleppmann, Martin and van Hardenberg, Peter},
+        title = {Peritext: A CRDT for Collaborative Rich Text Editing},
+        year = {2022},
+        issue_date = {November 2022},
+        publisher = {Association for Computing Machinery},
+        address = {New York, NY, USA},
+        volume = {6},
+        number = {CSCW2},
+        url = {https://doi.org/10.1145/3555644},
+        doi = {10.1145/3555644},
+        abstract = {Conflict-Free Replicated Data Types (CRDTs) support decentralized collaborative editing of shared data, enabling peer-to-peer sharing and flexible branching and merging workflows. While there is extensive work on CRDTs for plain text, much less is known about CRDTs for rich text with formatting. No algorithms have been published, and existing open-source implementations do not always preserve user intent.In this paper, we describe a model of intent preservation in rich text editing, developed through a series of concurrent editing scenarios. We then describe Peritext, a CRDT algorithm for rich text that satisfies the criteria of our model. The key idea is to store formatting spans alongside the plaintext character sequence, linked to a stable identifier for the first and last character of each span, and then to derive the final formatted text from these spans in a deterministic way that ensures concurrent operations commute.We have prototyped our algorithm in TypeScript, validated it using randomized property-based testing, and integrated it with an editor UI. We also prove that our algorithm ensures convergence, and demonstrate its causality preservation and intention preservation properties.},
+        journal = {Proc. ACM Hum.-Comput. Interact.},
+        month = nov,
+        articleno = {531},
+        numpages = {36},
+        keywords = {rich text, conflict-free replicated data types, collaborative editing, asynchronous collaboration}
+        }
     </bh-reference>
 
     <p style="padding-top: 5ch;">
