@@ -36,14 +36,6 @@
             padding: 10px 0;
             border-radius: 15px;
         }
-        .fake-marquee {
-            white-space: nowrap;
-            animation: marquee 10s linear infinite;
-        }
-        @keyframes marquee {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
         .text {
             font-size: 24px;
             font-weight: bold;
@@ -54,9 +46,9 @@
 <body>
     <div class="flag">
         <div class="star">★</div>
-        <div class="marquee-container">
-            <div class="fake-marquee">&lt;marquee&gt; &lt;marquee&gt; &lt;marquee&gt; &lt;marquee&gt; &lt;marquee&gt;</div>
-        </div>
+        <marquee class="marquee-container">
+           &lt;marquee&gt; &lt;marquee&gt; &lt;marquee&gt; &lt;marquee&gt; &lt;marquee&gt;
+        </marquee>
         <div class="text">COME AND TAKE IT</div>
     </div>
 </body>
