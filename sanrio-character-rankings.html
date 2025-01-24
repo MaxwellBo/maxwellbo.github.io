@@ -2384,6 +2384,19 @@ fuwafuwanyanko`,
       vote_Spain: 21
     }];
 
+    // derive vote_Japan by substracting all other votes from vote_all
+    for (const char of window.rankings) {
+      let votes = 0
+
+      for (const key of Object.keys(char)) {
+        if (key.startsWith('vote_') && key !== 'vote_all') {
+          votes += char[key]
+        }
+      }
+
+      char.vote_Japan = char.vote_all - votes
+    }
+
     const voteKeys = Object.keys(window.rankings[0])
       .filter(key => key.startsWith('vote_') && key !== 'vote_all');
 
@@ -2425,6 +2438,8 @@ fuwafuwanyanko`,
 
     function countryToFlag(country) {
       switch (country) {
+        case "Japan":
+          return "🇯🇵";
         case "China":
           return "🇨🇳";
         case "HongKong":
@@ -2629,6 +2644,10 @@ fuwafuwanyanko`,
       exposes a <a href="https://www.sanrio.co.jp/special/characterranking/2024/en/result/world/">per country / region
         ranking</a>
       of each. Some countries have radically different preferences than others.
+    </p>
+
+    <p>
+      <i>Note that the Japan column is an approximation, as the site does not provide a per-country ranking for Japan.</i>
     </p>
 
     <script id="width" type="module">
