@@ -12,6 +12,16 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
+        <title>Sanrio character per country rankings</title>
+        <link href="https://maxbo.me/sanrio-character-rankings"/>
+        <id>https://maxbo.me/sanrio-character-rankings</id>
+        <updated>2025-01-24T00:00:00Z</updated>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
+
+    <entry>
         <title>Is sending Factorio to your competitors' engineers a cost-effective means of sabotage?</title>
         <link href="https://maxbo.me/factorio"/>
         <id>https://maxbo.me/factorio</id>
