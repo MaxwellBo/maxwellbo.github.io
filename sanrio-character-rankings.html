@@ -9,12 +9,13 @@
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.8.0';
     import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
     import * as htl from 'https://esm.run/htl@0.3.1';
+    import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
     window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
     window.library = celine.library; /* @observablehq/stdlib */
     window.Inputs = Inputs;
     window.htl = htl;
-
+    window.Plot = Plot;
     registerScriptReevaluationOnBlur(document, /*class=*/'echo');
   </script>
   <script>
@@ -2383,6 +2384,7 @@ fuwafuwanyanko`,
       window.rankings.flatMap(char => {
         const countryVotes = voteKeys.map(voteKey => ({
           country: voteKey.replace('vote_', ''),
+          flag: countryToFlag(voteKey.replace('vote_', '')),
           character: char.name_en,
           url: "https://www.sanrio.co.jp/characters/" + char.id,
           img: "https://www.sanrio.co.jp/special/characterranking/2024/assets/img/common/characters/" + char.id + ".png",
@@ -2392,6 +2394,7 @@ fuwafuwanyanko`,
 
         return countryVotes.concat({
           country: 'all',
+          flag: '🌍',
           character: char.name_en,
           url: "https://www.sanrio.co.jp/characters/" + char.id,
           img: "https://www.sanrio.co.jp/special/characterranking/2024/assets/img/common/characters/" + char.id + ".png",
@@ -2400,9 +2403,45 @@ fuwafuwanyanko`,
         });
       });
 
+      function countryToFlag(country) {
+          switch (country) {
+            case "China":
+              return "🇨🇳";
+            case "HongKong":
+              return "🇭🇰";
+            case "Taiwan":
+              return "🇹🇼";
+            case "Korea":
+              return "🇰🇷";
+            case "USA":
+              return "🇺🇸";
+            case "Brazil":
+              return "🇧🇷";
+            case "UK":
+              return "🇬🇧";
+            case "Italy":
+              return "🇮🇹";
+            case "Germany":
+              return "🇩🇪";
+            case "France":
+              return "🇫🇷";
+            case "Australia":
+              return "🇦🇺";
+            case "Singapore":
+              return "🇸🇬";
+            case "Thailand":
+              return "🇹🇭";
+            case "Spain":
+              return "🇪🇸";
+            default:
+              // world
+              return "🌍";
+        }
+      }
+
     // yDomain should be the list of characters sorted by their
     // global rank
-    window.yDomain = window.tidy
+    window.characterDomain = window.tidy
       .filter(d => d.country === 'all')
       .sort((a, b) => a.rank - b.rank)
       .map(d => d.character);
@@ -2410,7 +2449,7 @@ fuwafuwanyanko`,
     // xDomain should be the list of countries sorted by their total votes
     // across ALL characters.
     // We want to maintain a count per country and just sum up the votes.
-    window.xDomain = Object.entries(window.tidy
+    window.countryDomain = Object.entries(window.tidy
       .reduce((acc, d) => {
         if (!acc[d.country]) {
           acc[d.country] = 0;
@@ -2583,7 +2622,6 @@ fuwafuwanyanko`,
     </script>
 
     <script id="grid" type="module">
-      import * as Plot from 'https://esm.run/@observablehq/plot@0.6.16';
 
       celine.cell("grid", ["width"], async (width) => {
         return Plot.plot({
@@ -2592,15 +2630,15 @@ fuwafuwanyanko`,
           width,
           height: 4000,
           x: {
-            axis: "both",
-            domain: ["image", ...window.xDomain]
+            axis: width > 800 ? "both" : undefined,
+            domain: ["image", ...window.countryDomain],
           },
           y: {
-            axis: "both",
-            domain: window.yDomain
+            axis: width > 800 ? "both" : undefined,
+            domain: ["flag", ...window.characterDomain],
           },
           marginLeft: 150,
-          marginRight: 150,
+          marginRight: width > 800 ? 150 : 0,
           color: {
             type: "linear",
             // scheme: "YlOrRd",
@@ -2615,6 +2653,16 @@ fuwafuwanyanko`,
               href: "url",
               inset: 0.5,
               tip: true,
+              channels: {
+                flag: "flag",
+              }
+            }),
+            // add flag
+            Plot.text(window.tidy, {
+              x: "country",
+              y: d => "flag",
+              text: "flag",
+              fontSize: 25
             }),
             Plot.text(window.tidy, {
               x: "country",
@@ -2631,6 +2679,69 @@ fuwafuwanyanko`,
               src: "img",
               width: 75,
               href: "url"
+            })
+          ]
+        })
+      });
+    </script>
+
+    <script id="line" type="module">
+
+      celine.cell("line", ["width"], async (width) => {
+        return Plot.plot({
+          grid: true,
+          width,
+          height: 3000,
+          y: {
+            axis: width > 800 ? "both" : undefined,
+            domain: window.characterDomain,
+          },
+          x: {
+            axis: width > 800 ? "both" : undefined,
+          },
+          marginLeft: 150,
+          marginRight: width > 800 ? 150 : 0,
+          color: {
+            type: "linear",
+            // scheme: "YlOrRd",
+            reverse: true,
+            legend: true
+          },
+          marks: [
+            Plot.line(window.tidy, {
+              y: "character",
+              x: "rank",
+              z: "country",
+              tip: true,
+              stroke: "rank",
+              filter: d => d.country === "all",
+              href: "url",
+              // tip: true,
+              channels: {
+                country: "country"
+              }
+            }),
+            Plot.text(window.tidy, {
+              y: "character",
+              x: "rank",
+              tip: true,
+              fill: "rank",
+              text: d => countryToFlag(d.country),
+              filter: d => d.country !== "all",
+              href: "url",
+              fontSize: 25,
+              tip: true,
+              channels: {
+                country: "country"
+              }
+            }),
+            Plot.image(window.tidy, {
+              y: "character",
+              x: d => 0,
+              src: "img",
+              width: 50,
+              href: "url",
+              filter: d => d.country === "all",
             })
           ]
         })
