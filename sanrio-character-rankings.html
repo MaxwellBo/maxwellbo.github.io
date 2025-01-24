@@ -2522,8 +2522,8 @@ fuwafuwanyanko`,
     }
 
     main {
-      max-width: 1200px;
       margin: 0 auto;
+      max-width: 1400px;
       padding: 24px;
       background-color: #f0f6ff;
       border: 4px solid #ffd6e6;
@@ -2682,7 +2682,7 @@ fuwafuwanyanko`,
           grid: true,
           // width should be screen width,
           width,
-          height: 4000,
+          height: 5000,
           x: {
             axis: width > 800 ? "both" : undefined,
             domain: ["image", ...countryDomain],
@@ -2735,7 +2735,7 @@ fuwafuwanyanko`,
               x: d => "image",
               y: "character",
               src: "img",
-              width: 75,
+              height: 100,
               href: "url"
             })
           ]
@@ -2801,7 +2801,7 @@ fuwafuwanyanko`,
               y: "character",
               x: d => 0,
               src: "img",
-              width: 75,
+              height: 75,
               href: "url",
               filter: d => d.country === "all",
             })
