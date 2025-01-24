@@ -2474,19 +2474,19 @@ fuwafuwanyanko`,
       }
     }
 
-
-    // xDomain should be the list of countries sorted by their total votes
-    // across ALL characters.
-    // We want to maintain a count per country and just sum up the votes.
-    window.countryDomain = Object.entries(window.tidy
+    window.countryVoteTallies = window.tidy
       .reduce((acc, d) => {
         if (!acc[d.country]) {
           acc[d.country] = 0;
         }
         acc[d.country] += d.votes;
         return acc;
-      }, {})
-    )
+      }, {});
+
+    // xDomain should be the list of countries sorted by their total votes
+    // across ALL characters.
+    // We want to maintain a count per country and just sum up the votes.
+    window.countryDomain = Object.entries(countryVoteTallies)
       .sort((a, b) => b[1] - a[1])
       .map(d => d[0]);
 
@@ -2647,7 +2647,8 @@ fuwafuwanyanko`,
     </p>
 
     <p>
-      <i>Note that the Japan column is an approximation, as the site does not provide a per-country ranking for Japan.</i>
+      <i>Note that the Japan column is an approximation, as the site does not provide a per-country ranking for
+        Japan.</i>
     </p>
 
     <script id="width" type="module">
@@ -2671,7 +2672,7 @@ fuwafuwanyanko`,
         return window.tidy
           .filter(d => d.country === sort)
           .sort((a, b) => a.rank - b.rank)
-          .map(d => d.character); 
+          .map(d => d.character);
       })
     </script>
 
@@ -2716,7 +2717,7 @@ fuwafuwanyanko`,
               y: d => "flag",
               text: "flag",
               fontSize: 25,
-              href: d => 
+              href: d =>
                 d.country === "all"
                   ? 'https://www.sanrio.co.jp/special/characterranking/2024/en/result/'
                   : "https://www.sanrio.co.jp/special/characterranking/2024/en/result/world/#" + d.country.toLowerCase(),
@@ -2744,9 +2745,9 @@ fuwafuwanyanko`,
 
     <script id="line" type="module">
       const characterDomain = window.tidy
-          .filter(d => d.country === 'all')
-          .sort((a, b) => a.rank - b.rank)
-          .map(d => d.character); 
+        .filter(d => d.country === 'all')
+        .sort((a, b) => a.rank - b.rank)
+        .map(d => d.character);
 
       celine.cell("line", ["width"], async (width) => {
         return Plot.plot({
@@ -2806,6 +2807,33 @@ fuwafuwanyanko`,
             })
           ]
         })
+      });
+    </script>
+
+    <script id="bars" type="module">
+      const frame = Object.entries(countryVoteTallies)
+        .map(([country, votes]) => ({ country, votes }))
+        .filter(d => d.country !== "all");
+
+      celine.cell("bars", () => {
+        return Plot.plot({
+          x: {
+            domain: countryDomain.filter(d => d !== "all"),
+          },
+          width: 800,
+          marginLeft: 100,
+          marks: [
+            Plot.barY(frame, {
+              x: "country",
+              y: "votes",
+              href: d =>
+                d.country === "all" || d.country === "Japan"
+                  ? 'https://www.sanrio.co.jp/special/characterranking/2024/en/result/'
+                  : "https://www.sanrio.co.jp/special/characterranking/2024/en/result/world/#" + d.country.toLowerCase(),
+            })
+          ]
+        })
+
       });
     </script>
 
