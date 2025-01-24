@@ -2459,12 +2459,6 @@ fuwafuwanyanko`,
       }
     }
 
-    // yDomain should be the list of characters sorted by their
-    // global rank
-    window.characterDomain = window.tidy
-      .filter(d => d.country === 'all')
-      .sort((a, b) => a.rank - b.rank)
-      .map(d => d.character);
 
     // xDomain should be the list of countries sorted by their total votes
     // across ALL characters.
@@ -2644,9 +2638,26 @@ fuwafuwanyanko`,
 
     </script>
 
-    <script id="grid" type="module">
+    <script id="viewof sort" type="module">
+      celine.viewof("sort", () => {
+        return Inputs.select(window.countryDomain, {
+          label: "Sort by: ",
+          value: "all"
+        })
+      });
+    </script>
 
-      celine.cell("grid", ["width"], async (width) => {
+    <script id="characterDomain" type="module">
+      celine.silentCell("characterDomain", ["sort"], (sort) => {
+        return window.tidy
+          .filter(d => d.country === sort)
+          .sort((a, b) => a.rank - b.rank)
+          .map(d => d.character); 
+      })
+    </script>
+
+    <script id="grid" type="module">
+      celine.cell("grid", ["width", "characterDomain"], async (width, characterDomain) => {
         return Plot.plot({
           grid: true,
           // width should be screen width,
@@ -2654,11 +2665,11 @@ fuwafuwanyanko`,
           height: 4000,
           x: {
             axis: width > 800 ? "both" : undefined,
-            domain: ["image", ...window.countryDomain],
+            domain: ["image", ...countryDomain],
           },
           y: {
             axis: width > 800 ? "both" : undefined,
-            domain: ["flag", ...window.characterDomain],
+            domain: ["flag", ...characterDomain],
           },
           marginLeft: 150,
           marginRight: width > 800 ? 150 : 0,
@@ -2709,6 +2720,10 @@ fuwafuwanyanko`,
     </script>
 
     <script id="line" type="module">
+      const characterDomain = window.tidy
+          .filter(d => d.country === 'all')
+          .sort((a, b) => a.rank - b.rank)
+          .map(d => d.character); 
 
       celine.cell("line", ["width"], async (width) => {
         return Plot.plot({
@@ -2717,7 +2732,7 @@ fuwafuwanyanko`,
           height: 3000,
           y: {
             axis: width > 800 ? "both" : undefined,
-            domain: window.characterDomain,
+            domain: characterDomain,
           },
           x: {
             axis: width > 800 ? "both" : undefined,
