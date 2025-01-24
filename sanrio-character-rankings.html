@@ -2696,7 +2696,11 @@ fuwafuwanyanko`,
               x: "country",
               y: d => "flag",
               text: "flag",
-              fontSize: 25
+              fontSize: 25,
+              href: d => 
+                d.country === "all"
+                  ? 'https://www.sanrio.co.jp/special/characterranking/2024/en/result/'
+                  : "https://www.sanrio.co.jp/special/characterranking/2024/en/result/world/#" + d.country.toLowerCase(),
             }),
             Plot.text(window.tidy, {
               x: "country",
