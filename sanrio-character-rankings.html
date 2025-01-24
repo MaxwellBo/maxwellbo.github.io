@@ -5,6 +5,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sanrio character per country rankings</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <meta name="description" content="Interactive visualization of Sanrio character rankings across different countries. Compare how Hello Kitty, Cinnamoroll, Kuromi and others rank globally."> -->
+  <meta name="author" content="Max Bo">
+  <meta name="keywords" content="Sanrio, Hello Kitty, Cinnamoroll, character rankings, data visualization, kawaii">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://maxbo.me/sanrio-character-rankings">
+  <meta property="og:title" content="Sanrio character per country rankings">
+  <!-- <meta property="og:description" content="Interactive visualization showing how Sanrio characters like Hello Kitty and Cinnamoroll rank differently across the world."> -->
+  <meta property="og:image" content="https://maxbo.me/sanrio-character-rankings/og-image.png">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:creator" content="@_max_bo_">
+  <meta name="twitter:url" content="https://maxbo.me/sanrio-character-rankings">
+  <meta name="twitter:title" content="Sanrio character per country rankings">
+  <!-- <meta name="twitter:description" content="Interactive visualization showing how Sanrio characters like Hello Kitty and Cinnamoroll rank differently across the world."> -->
+  <!-- <meta name="twitter:image" content="https://maxbo.me/sanrio-og."> -->
   <script type="module">
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.8.0';
     import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
@@ -2403,41 +2423,41 @@ fuwafuwanyanko`,
         });
       });
 
-      function countryToFlag(country) {
-          switch (country) {
-            case "China":
-              return "🇨🇳";
-            case "HongKong":
-              return "🇭🇰";
-            case "Taiwan":
-              return "🇹🇼";
-            case "Korea":
-              return "🇰🇷";
-            case "USA":
-              return "🇺🇸";
-            case "Brazil":
-              return "🇧🇷";
-            case "UK":
-              return "🇬🇧";
-            case "Italy":
-              return "🇮🇹";
-            case "Germany":
-              return "🇩🇪";
-            case "France":
-              return "🇫🇷";
-            case "Australia":
-              return "🇦🇺";
-            case "Singapore":
-              return "🇸🇬";
-            case "Thailand":
-              return "🇹🇭";
-            case "Spain":
-              return "🇪🇸";
-            default:
-              // world
-              return "🌍";
-        }
+    function countryToFlag(country) {
+      switch (country) {
+        case "China":
+          return "🇨🇳";
+        case "HongKong":
+          return "🇭🇰";
+        case "Taiwan":
+          return "🇹🇼";
+        case "Korea":
+          return "🇰🇷";
+        case "USA":
+          return "🇺🇸";
+        case "Brazil":
+          return "🇧🇷";
+        case "UK":
+          return "🇬🇧";
+        case "Italy":
+          return "🇮🇹";
+        case "Germany":
+          return "🇩🇪";
+        case "France":
+          return "🇫🇷";
+        case "Australia":
+          return "🇦🇺";
+        case "Singapore":
+          return "🇸🇬";
+        case "Thailand":
+          return "🇹🇭";
+        case "Spain":
+          return "🇪🇸";
+        default:
+          // world
+          return "🌍";
       }
+    }
 
     // yDomain should be the list of characters sorted by their
     // global rank
