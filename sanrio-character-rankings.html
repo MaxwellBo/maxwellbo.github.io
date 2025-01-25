@@ -2531,6 +2531,13 @@ fuwafuwanyanko`,
       box-shadow: 0 4px 15px rgba(193, 164, 255, 0.15);
     }
 
+    /* set padding to 8px when mobile width */
+    @media (max-width: 600px) {
+      main {
+        padding: 8px;
+      }
+    }
+
     /* Typography */
     h1,
     h2,
@@ -2691,7 +2698,7 @@ fuwafuwanyanko`,
             axis: width > 800 ? "both" : undefined,
             domain: ["flag", ...characterDomain],
           },
-          marginLeft: 150,
+          marginLeft: 100,
           marginRight: width > 800 ? 150 : 0,
           color: {
             type: "linear",
@@ -2761,7 +2768,7 @@ fuwafuwanyanko`,
           x: {
             axis: width > 800 ? "both" : undefined,
           },
-          marginLeft: 150,
+          marginLeft: 100,
           marginRight: width > 800 ? 150 : 0,
           color: {
             type: "linear",
