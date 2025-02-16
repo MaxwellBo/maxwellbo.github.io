@@ -2410,20 +2410,32 @@ fuwafuwanyanko`,
       }
     }
 
+    // map from country to their total votes
+    const countryTotals = voteKeys.reduce((acc, voteKey) => {
+      acc[voteKey] = window.rankings.reduce((acc, char) => acc + char[voteKey], 0);
+      return acc;
+    }, {});
+    
     // unpack every single entry into a 
     // { country: string, character: string, rank: number, votes: number }
     // also unpack a global rank and vote where `country: 'all'`
     window.tidy =
       window.rankings.flatMap(char => {
-        const countryVotes = voteKeys.map(voteKey => ({
-          country: voteKey.replace('vote_', ''),
-          flag: countryToFlag(voteKey.replace('vote_', '')),
-          character: char.name_en,
-          url: "https://www.sanrio.co.jp/characters/" + char.id,
-          img: "https://www.sanrio.co.jp/special/characterranking/2024/assets/img/common/characters/" + char.id + ".png",
-          rank: char[voteKey.replace('vote_', 'rank_')],
-          votes: char[voteKey]
-        }));
+        const countryVotes = voteKeys.map(voteKey => {
+          const country = voteKey.replace('vote_', '');
+          const votes = char[voteKey];
+          const rank = char[voteKey.replace('vote_', 'rank_')];
+          return {
+            country,
+            flag: countryToFlag(country),
+            character: char.name_en,
+            url: "https://www.sanrio.co.jp/characters/" + char.id,
+            img: "https://www.sanrio.co.jp/special/characterranking/2024/assets/img/common/characters/" + char.id + ".png",
+            rank,
+            votes,
+            percentageVotes: votes / countryTotals[voteKey]
+          }
+        });
 
         return countryVotes.concat({
           country: 'all',
@@ -2435,6 +2447,8 @@ fuwafuwanyanko`,
           votes: char.vote_all,
         });
       });
+
+      console.log(tidy)
 
     function countryToFlag(country) {
       switch (country) {
@@ -2654,7 +2668,7 @@ fuwafuwanyanko`,
     </p>
 
     <p>
-      <i>Note that the Japan column is an approximation, as the site does not provide a per-country ranking for
+      <i>Note that the Japan rank is an approximation, as the site does not provide a per-country ranking for
         Japan.</i>
     </p>
 
@@ -2664,6 +2678,141 @@ fuwafuwanyanko`,
       });
 
     </script>
+
+    <script id="line" type="module">
+      const characterDomain = window.tidy
+        .filter(d => d.country === 'all')
+        .sort((a, b) => a.rank - b.rank)
+        .map(d => d.character);
+
+      celine.cell("line", ["width"], async (width) => {
+        return Plot.plot({
+          grid: true,
+          width,
+          height: 4000,
+          y: {
+            axis: width > 800 ? "both" : undefined,
+            domain: characterDomain,
+          },
+          x: {
+            axis: width > 800 ? "both" : undefined,
+          },
+          marginLeft: 100,
+          marginRight: width > 800 ? 150 : 0,
+          color: {
+            type: "linear",
+            // scheme: "YlOrRd",
+            reverse: true,
+            legend: true
+          },
+          marks: [
+            Plot.line(window.tidy, {
+              y: "character",
+              x: "rank",
+              z: "country",
+              tip: true,
+              stroke: "rank",
+              filter: d => d.country === "all",
+              href: "url",
+              // tip: true,
+              channels: {
+                country: "country"
+              }
+            }),
+            Plot.text(window.tidy, {
+              y: "character",
+              x: "rank",
+              tip: true,
+              fill: "rank",
+              text: d => countryToFlag(d.country),
+              filter: d => d.country !== "all",
+              href: "url",
+              fontSize: 25,
+              tip: true,
+              channels: {
+                country: "country"
+              }
+            }),
+            Plot.image(window.tidy, {
+              y: "character",
+              x: d => 0,
+              src: "img",
+              height: 75,
+              href: "url",
+              filter: d => d.country === "all",
+            })
+          ]
+        })
+      });
+    </script>
+
+    <!-- <script id="line2" type="module">
+      const characterDomain = window.tidy
+        .filter(d => d.country === 'all')
+        .sort((a, b) => a.rank - b.rank)
+        .map(d => d.character);
+
+      celine.cell("line2", ["width"], async (width) => {
+        return Plot.plot({
+          grid: true,
+          width,
+          height: 4000,
+          y: {
+            axis: width > 800 ? "both" : undefined,
+            domain: characterDomain,
+          },
+          x: {
+            axis: width > 800 ? "both" : undefined,
+            type: "log"
+          },
+          marginLeft: 100,
+          marginRight: width > 800 ? 150 : 0,
+          color: {
+            type: "linear",
+            // scheme: "YlOrRd",
+            reverse: true,
+            legend: true
+          },
+          marks: [
+            // Plot.line(window.tidy, {
+            //   y: "character",
+            //   x: "rank",
+            //   z: "country",
+            //   tip: true,
+            //   stroke: "rank",
+            //   filter: d => d.country === "all",
+            //   href: "url",
+            //   // tip: true,
+            //   channels: {
+            //     country: "country"
+            //   }
+            // }),
+            Plot.text(window.tidy, {
+              y: "character",
+              x: "percentageVotes",
+              tip: true,
+              fill: "rank",
+              text: d => countryToFlag(d.country),
+              filter: d => d.country !== "all",
+              href: "url",
+              fontSize: 25,
+              tip: true,
+              channels: {
+                country: "country"
+              }
+            }),
+            Plot.image(window.tidy, {
+              y: "character",
+              x: d => 0,
+              src: "img",
+              height: 75,
+              href: "url",
+              filter: d => d.country === "all",
+            })
+          ]
+        })
+      });
+    </script> -->
 
     <script id="viewof sort" type="module">
       celine.viewof("sort", () => {
@@ -2750,79 +2899,13 @@ fuwafuwanyanko`,
       });
     </script>
 
-    <script id="line" type="module">
-      const characterDomain = window.tidy
-        .filter(d => d.country === 'all')
-        .sort((a, b) => a.rank - b.rank)
-        .map(d => d.character);
 
-      celine.cell("line", ["width"], async (width) => {
-        return Plot.plot({
-          grid: true,
-          width,
-          height: 4000,
-          y: {
-            axis: width > 800 ? "both" : undefined,
-            domain: characterDomain,
-          },
-          x: {
-            axis: width > 800 ? "both" : undefined,
-          },
-          marginLeft: 100,
-          marginRight: width > 800 ? 150 : 0,
-          color: {
-            type: "linear",
-            // scheme: "YlOrRd",
-            reverse: true,
-            legend: true
-          },
-          marks: [
-            Plot.line(window.tidy, {
-              y: "character",
-              x: "rank",
-              z: "country",
-              tip: true,
-              stroke: "rank",
-              filter: d => d.country === "all",
-              href: "url",
-              // tip: true,
-              channels: {
-                country: "country"
-              }
-            }),
-            Plot.text(window.tidy, {
-              y: "character",
-              x: "rank",
-              tip: true,
-              fill: "rank",
-              text: d => countryToFlag(d.country),
-              filter: d => d.country !== "all",
-              href: "url",
-              fontSize: 25,
-              tip: true,
-              channels: {
-                country: "country"
-              }
-            }),
-            Plot.image(window.tidy, {
-              y: "character",
-              x: d => 0,
-              src: "img",
-              height: 75,
-              href: "url",
-              filter: d => d.country === "all",
-            })
-          ]
-        })
-      });
-    </script>
-
-    <script id="bars" type="module">
+    <script id="byCountry" type="module">
       const frame = Object.entries(countryVoteTallies)
         .map(([country, votes]) => ({ country, votes }))
         .filter(d => d.country !== "all");
 
-      celine.cell("bars", () => {
+      celine.cell("byCountry", () => {
         return Plot.plot({
           x: {
             domain: countryDomain.filter(d => d !== "all"),
@@ -2830,9 +2913,11 @@ fuwafuwanyanko`,
           width: 800,
           marginLeft: 100,
           marks: [
-            Plot.barY(frame, {
+            Plot.barY(window.tidy, {
               x: "country",
               y: "votes",
+              fill: "character",
+              tip: true,
               href: d =>
                 d.country === "all" || d.country === "Japan"
                   ? 'https://www.sanrio.co.jp/special/characterranking/2024/en/result/'
@@ -2840,9 +2925,35 @@ fuwafuwanyanko`,
             })
           ]
         })
-
       });
     </script>
+
+    <!-- <script id="byCharacter" type="module">
+      celine.cell("byCharacter", ['characterDomain'], (characterDomain) => {
+        return Plot.plot({
+          y: {
+            domain: characterDomain
+          },
+          // x: {
+          //   type: "log"
+          // },
+          width: 800,
+          marginLeft: 100,
+          marks: [
+            Plot.dotY(window.tidy, {
+              x: "percentageVotes",
+              y: "character",
+              fill: "country",
+              tip: true,
+              href: d =>
+                d.country === "all" || d.country === "Japan"
+                  ? 'https://www.sanrio.co.jp/special/characterranking/2024/en/result/'
+                  : "https://www.sanrio.co.jp/special/characterranking/2024/en/result/world/#" + d.country.toLowerCase(),
+            })
+          ]
+        })
+      });
+    </script> -->
 
   </main>
 </body>
