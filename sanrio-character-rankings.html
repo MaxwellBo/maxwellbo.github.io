@@ -2448,7 +2448,24 @@ fuwafuwanyanko`,
         });
       });
 
-      console.log(tidy)
+
+    window.tidy.find(d => d.character === "Cinnamoroll" && d.country === "Japan").note 
+      = "Cinnamoroll: the undisputed GOAT"
+
+    window.tidy.find(d => d.character === "Chococat" && d.country === "Australia").note 
+      = "Chococat is significantly more popular in the West"
+
+    window.tidy.find(d => d.character === "MINNANOTĀBŌ" && d.country === "Thailand").note 
+      = "Thailand and Hong Kong go crazy for MINNANOTĀBŌ"
+
+    window.tidy.find(d => d.character === "MINNANOTĀBŌ" && d.country === "USA").note 
+      = "The West HATES MINNANOTĀBŌ"
+
+    window.tidy.find(d => d.character === "AHIRUNOPEKKLE" && d.country === "Italy").note 
+      = "AHIRUNOPEKKLE is divisive"
+
+    window.tidy.find(d => d.character === "GUDETAMA" && d.country === "Australia").note 
+      = "Big ups to GUDETAMA from Australia"
 
     function countryToFlag(country) {
       switch (country) {
@@ -2679,17 +2696,31 @@ fuwafuwanyanko`,
 
     </script>
 
-    <script id="line" type="module">
-      const characterDomain = window.tidy
-        .filter(d => d.country === 'all')
-        .sort((a, b) => a.rank - b.rank)
-        .map(d => d.character);
+    <script id="viewof sort2" type="module">
+      celine.viewof("sort2", () => {
+        return Inputs.select(window.countryDomain, {
+          label: "Rank by: ",
+          value: "all"
+        })
+      });
+    </script>
 
-      celine.cell("line", ["width"], async (width) => {
+    <script id="characterDomain2" type="module">
+      celine.silentCell("characterDomain2", ["sort2"], (sort) => {
+        return window.tidy
+          .filter(d => d.country === sort)
+          .sort((a, b) => a.rank - b.rank)
+          .map(d => d.character);
+      })
+    </script>
+
+    <script id="line" type="module">
+      celine.cell("line", ["width", "characterDomain2", "sort2"], async (width, characterDomain, sort) => {
         return Plot.plot({
           grid: true,
           width,
-          height: 4000,
+          height: 6000,
+          insetLeft: 100,
           y: {
             axis: width > 800 ? "both" : undefined,
             domain: characterDomain,
@@ -2712,12 +2743,22 @@ fuwafuwanyanko`,
               z: "country",
               tip: true,
               stroke: "rank",
-              filter: d => d.country === "all",
+              filter: d => d.country === sort,
               href: "url",
               // tip: true,
               channels: {
-                country: "country"
+                country: "country",
+                votes: "votes"
               }
+            }),
+            Plot.image(window.tidy, {
+              y: "character",
+              x: d => 0,
+              dx: -50,
+              src: "img",
+              height: 100,
+              href: "url",
+              filter: d => d.country === "all",
             }),
             Plot.text(window.tidy, {
               y: "character",
@@ -2730,17 +2771,14 @@ fuwafuwanyanko`,
               fontSize: 25,
               tip: true,
               channels: {
-                country: "country"
+                country: "country",
+                votes: "votes"
               }
             }),
-            Plot.image(window.tidy, {
-              y: "character",
-              x: d => 0,
-              src: "img",
-              height: 75,
-              href: "url",
-              filter: d => d.country === "all",
-            })
+            Plot.tip(
+              tidy,
+              { x: "rank", y: "character", title: "note", filter: "note", anchor: "top-left", dy: 8 }
+            ),
           ]
         })
       });
@@ -2838,10 +2876,11 @@ fuwafuwanyanko`,
           grid: true,
           // width should be screen width,
           width,
+          insetLeft: 100,
           height: 5000,
           x: {
             axis: width > 800 ? "both" : undefined,
-            domain: ["image", ...countryDomain],
+            domain: [...countryDomain],
           },
           y: {
             axis: width > 800 ? "both" : undefined,
@@ -2865,6 +2904,7 @@ fuwafuwanyanko`,
               tip: true,
               channels: {
                 flag: "flag",
+                votes: "votes"
               }
             }),
             // add flag
@@ -2887,8 +2927,13 @@ fuwafuwanyanko`,
               text: "rank",
               fill: "black"
             }),
+            Plot.tip(
+              tidy,
+              { x: "country", y: "character", title: "note", filter: "note", anchor: "top-left", dy: 8 }
+            ),
             Plot.image(window.tidy, {
-              x: d => "image",
+              x: d => "all",
+              dx: -60,
               y: "character",
               src: "img",
               height: 100,
