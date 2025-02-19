@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Virtual Goshuin (御朱印)</title>
+  <style>
+    .goshuin-book {
+      display: flex;
+      perspective: 1000px;
+      transform-style: preserve-3d;
+    }
+
+    .goshuin-page {
+      height: 300px;
+      background: white;
+      border: 1px solid #ddd;
+      transform-origin: left center;
+      transform-style: preserve-3d;
+      max-width: 200px;
+    }
+
+    .goshuin-page img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="goshuin-book">
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+1" alt="Goshuin page 1">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+2" alt="Goshuin page 2">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+3" alt="Goshuin page 3">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+4" alt="Goshuin page 4">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+5" alt="Goshuin page 5">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+6" alt="Goshuin page 6">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+7" alt="Goshuin page 7">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+8" alt="Goshuin page 8">
+    </div>
+    <div class="goshuin-page">
+      <img src="https://placehold.co/200x300/e4e4e4/666666?text=Goshuin+9" alt="Goshuin page 9">
+    </div>
+  </div>
+
+  <script>
+    const maxWidth = 200; // Maximum width of a single page
+    const minAngle = 2; // Minimum rotation when fully expanded
+    const maxAngle = 45; // Maximum rotation when fully compressed
+
+    function updateRotations() {
+      const pages = document.querySelectorAll('.goshuin-page');
+      const firstPage = pages[0];
+      const currentWidth = firstPage.offsetWidth;
+
+      // Calculate rotation angle based on current width
+      // As width decreases from maxWidth to smaller values, angle increases
+      const ratio = Math.min(Math.max(currentWidth / maxWidth, 0.2), 1);
+      const baseAngle = (1 - ratio) * (maxAngle - minAngle) + minAngle;
+
+      pages.forEach((page, index) => {
+        // Alternate between positive and negative angles
+        const direction = index % 2 === 0 ? 1 : -1;
+        page.style.transform = `rotateY(${baseAngle * direction}deg)`;
+      });
+    }
+
+    // Update rotations on load and resize
+    window.addEventListener('load', updateRotations);
+    window.addEventListener('resize', updateRotations);
+
+    // Create a ResizeObserver to watch for container width changes
+    const observer = new ResizeObserver(updateRotations);
+    observer.observe(document.querySelector('.goshuin-book'));
+  </script>
+</body>
+
+</html>
