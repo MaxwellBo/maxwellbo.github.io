@@ -333,13 +333,15 @@ article.art {
 
   #model {
     width: 100%;
-    height: 50ch;
+    height: 43ch;
   }
 }
 
-#model {
-  width: 100%;
-  height: 15ch;
+@media (max-width: 639px) {
+  #model {
+    width: 100%;
+    height: 15ch;
+  }
 }
 
 article.art.wide {
