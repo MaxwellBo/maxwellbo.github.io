@@ -330,6 +330,16 @@ article.art {
     grid-column: span 2;
     grid-row: span 2;
   }
+
+  #model {
+    width: 100%;
+    height: 50ch;
+  }
+}
+
+#model {
+  width: 100%;
+  height: 15ch;
 }
 
 article.art.wide {
