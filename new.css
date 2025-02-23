@@ -308,6 +308,14 @@ ul {
   }
 }
 
+.spin {
+  transition: transform 2s ease-in-out;
+}
+
+.spin:hover {
+  transform: rotate(720deg);
+}
+
 div.cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
