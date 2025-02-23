@@ -325,6 +325,11 @@ article.art {
   border: 0.5px solid black;
 }
 
+article.listing.big {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+
 article.art.wide {
   grid-column: span 2;
 }
