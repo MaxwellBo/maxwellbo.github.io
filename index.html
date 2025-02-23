@@ -150,11 +150,60 @@
 </head>
 
 <body>
+  <img id="draggable-postit" src="me.webp"
+    style="position: absolute; top: 5px; right: 20px; width: 100px; cursor: grab; z-index: 1000;" />
+  <script>
+   const postit = document.getElementById('draggable-postit');
+    let isDragging = false;
+    let currentX;
+    let currentY;
+    let initialX;
+    let initialY;
+    let xOffset = 0;
+    let yOffset = 0;
+
+    // Prevent default drag behavior
+    postit.addEventListener('dragstart', (e) => {
+      e.preventDefault();
+    });
+
+    postit.addEventListener('mousedown', dragStart);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', dragEnd);
+
+    function dragStart(e) {
+      initialX = e.clientX - xOffset;
+      initialY = e.clientY - yOffset;
+
+      if (e.target === postit) {
+        isDragging = true;
+      }
+      postit.style.cursor = 'grabbing';
+    }
+
+    function drag(e) {
+      if (isDragging) {
+        e.preventDefault();
+        currentX = e.clientX - initialX;
+        currentY = e.clientY - initialY;
+        xOffset = currentX;
+        yOffset = currentY;
+        postit.style.transform = `translate(${currentX}px, ${currentY}px)`;
+      }
+    }
+
+    function dragEnd(e) {
+      initialX = currentX;
+      initialY = currentY;
+      isDragging = false;
+      postit.style.cursor = 'grab';
+    }
+  </script>
   <p id="watermark">Max Bo</p>
   <header>
     <marquee>
       <h1 id="wordmark" style="display: inline-block;">
-          ← Max Bo
+        ← Max Bo
       </h1>
       <!-- <p style="display: inline-block;">
         ~~~ JOB: SWE ~~~
@@ -998,13 +1047,13 @@
         </article>
         <article class="art" style="padding: 2px">
           <center>My food intolerances</center>
-            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 10px;">
-              <img src="img/banana.PNG" alt="Banana" style="width: 48px; display: block;" />
-              <img src="img/soy.PNG" alt="Soy" style="width: 48px; display: block;" />
-              <img src="img/fullcream.PNG" alt="Full Cream" style="width: 48px; display: block;" />
-              <img src="img/chilli.PNG" alt="Chilli" style="width: 48px; display: block;" />
-              <img src="img/greentea.WEBP" alt="Green Tea" style="width: 48px; display: block;" />
-            </div>
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(48px, 1fr)); gap: 10px;">
+            <img src="img/banana.PNG" alt="Banana" style="width: 48px; display: block;" />
+            <img src="img/soy.PNG" alt="Soy" style="width: 48px; display: block;" />
+            <img src="img/fullcream.PNG" alt="Full Cream" style="width: 48px; display: block;" />
+            <img src="img/chilli.PNG" alt="Chilli" style="width: 48px; display: block;" />
+            <img src="img/greentea.WEBP" alt="Green Tea" style="width: 48px; display: block;" />
+          </div>
         </article>
         </article>
         <article class="listing">
@@ -1144,7 +1193,7 @@
           <li><a href="https://mjbo.notion.site/Building-a-decent-tech-talk-9e045364c3a5444ca705221adda7b68b">Building
               a decent tech talk</a></li>
           <li><a href="https://gist.github.com/MaxwellBo/9ef5704b325e09afaffee050a91d9c91">Haskell operators</a>
-          <!-- <li><a
+            <!-- <li><a
                         href="https://mjbo.notion.site/Non-Overwhelming-Guide-to-Frontend-2ef469c093574e57876237a8453ea7f5">Non-overwhelming
                         guide to frontend</a></li> -->
           <li><a href="https://mjbo.notion.site/The-Story-of-Muncoordinated-f1dc0a187dc444f895f1f2700659c845">The
@@ -1446,6 +1495,11 @@
     })
 
     document.querySelectorAll('img').forEach(img => {
+      // ignore the draggable-postit
+      if (img.id === 'draggable-postit') {
+        return;
+      }
+
       img.addEventListener('mouseover', (e) => {
         const img = document.createElement('img');
         img.src = e.target.src;
