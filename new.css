@@ -325,9 +325,11 @@ article.art {
   border: 0.5px solid black;
 }
 
-article.listing.big {
-  grid-column: span 2;
-  grid-row: span 2;
+@media (min-width: 640px) {
+  article.listing.big {
+    grid-column: span 2;
+    grid-row: span 2;
+  }
 }
 
 article.art.wide {
