@@ -230,6 +230,7 @@ header {
   font-family: 'DINdong', sans-serif;
 
   #wordmark {
+    padding-top: 10px;
     font-family: 'DINdong', sans-serif;
     text-transform: uppercase;
     font-size: 3rem;
