@@ -151,7 +151,7 @@
 
 <body>
   <img id="draggable-postit" src="me.webp"
-    style="position: absolute; top: 5px; right: 20px; width: 100px; cursor: grab; z-index: 1000;" />
+    style="position: absolute; top: 5px; left: 20px; width: 80px; cursor: grab; z-index: 1000;" />
   <script>
    const postit = document.getElementById('draggable-postit');
     let isDragging = false;
@@ -200,18 +200,15 @@
     }
   </script>
   <p id="watermark">Max Bo</p>
+  <p style="position: absolute; font-family: 'Fake Receipt', sans-serif; padding-left: 120px;">
+    ... JOB: SWE ... AGE: 28 ... LOC: SYD ... LANG: EN-AU ... BLOOD: O+ ...</p>
+
+  </p>
   <header>
     <marquee>
       <h1 id="wordmark" style="display: inline-block;">
         ← Max Bo
       </h1>
-      <!-- <p style="display: inline-block;">
-        ~~~ JOB: SWE ~~~
-        AGE: 28 ~~~
-        LOC: SYD ~~~ 
-        LANG: EN-AU ~~~
-
-      </p> -->
     </marquee>
     <marquee id="ticker" class="dindong">
       <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
@@ -708,6 +705,13 @@
           </a>
         </article>
         <article class="listing">
+          <a href="https://favicon.garden">
+            <img src="img/fg.jpg" />
+            <p class="title">favicon.garden</p>
+          </a>
+          <p class="description">Favicon API and cache</p>
+        </article>
+        <article class="listing">
           <a href="https://observablehq.com/@mjbo/royal-game-of-ur-calculator">
             <img
               src="https://static.observableusercontent.com/thumbnail/e1b12e8630324b70e4c30301d54be5cdfe33273413ce056bfadfed034c57641e.jpg" />
@@ -1087,13 +1091,6 @@
           <img src="img/pollock.png" />
           <p class="title"><s>pollock.ai</s></p>
           <p class="description">AI t-shirt generator</p>
-        </article>
-        <article class="listing">
-          <a href="https://favicon.garden">
-            <img src="img/fg.jpg" />
-            <p class="title">favicon.garden</p>
-          </a>
-          <p class="description">Favicon API and cache</p>
         </article>
         <article class="listing">
           <a href="https://observablehq.com/@mjbo/2022-australian-federal-election-booth-maps">
