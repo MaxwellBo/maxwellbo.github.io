@@ -153,7 +153,7 @@
   <img id="draggable-postit" src="me.webp"
     style="position: absolute; top: 5px; left: 20px; width: 80px; cursor: grab; z-index: 1000;" />
   <script>
-   const postit = document.getElementById('draggable-postit');
+    const postit = document.getElementById('draggable-postit');
     let isDragging = false;
     let currentX;
     let currentY;
@@ -679,8 +679,8 @@
           <p class="description">Model UN committee management service</p>
         </article>
         <article class="listing big">
-          <model-viewer id='model' alt="Roman" src="dolls/Roman.glb" interaction-prompt=""
-            progress-bar="" loading="auto" auto-rotate-delay="0" rotation-per-second="20deg" camera-controls auto-rotate
+          <model-viewer id='model' alt="Roman" src="dolls/Roman.glb" interaction-prompt="" progress-bar=""
+            loading="auto" auto-rotate-delay="0" rotation-per-second="20deg" camera-controls auto-rotate
             touch-action="pan-y"></model-viewer>
 
           <a href="https://poppenhu.is">
@@ -861,8 +861,7 @@
         </article>
         <article class="listing">
           <a href="https://mbo-neocities_hit_counter.web.val.run/">
-            <img
-              src="https://mbo-neocities_hit_counter.web.val.run/maxbo.me" />
+            <img src="https://mbo-neocities_hit_counter.web.val.run/maxbo.me" />
             <p class="title">mbo-neocities_hit_counter</p>
           </a>
         </article>
@@ -1519,6 +1518,25 @@
       });
     });
   </script>
+
+  <link rel="stylesheet" href="scrollbuddy/style.css">
+  <div id="scrollBuddy" style="top: 0px;">
+    <div class="head"></div>
+    <div class="body"></div>
+    <div class="left-arm" style="transform: rotate(90deg);"></div>
+    <div class="left-arm-lower" style="transform: translate(6.12323e-16px, 10px) rotate(92.8284deg);"></div>
+    <div class="right-arm" style="transform: rotate(90deg);"></div>
+    <div class="right-arm-lower" style="transform: translate(6.12323e-16px, 10px) rotate(87.1716deg);"></div>
+    <div class="left-leg-upper" style="transform: rotate(90deg);"></div>
+    <div class="left-leg-lower" style="transform: translate(7.34788e-16px, 12px) rotate(75.8579deg);"></div>
+    <div class="left-foot" style="transform: translate(2.44328px, 21.6969px) rotate(180deg);"></div>
+    <div class="right-leg-upper" style="transform: rotate(90deg);"></div>
+    <div class="right-leg-lower" style="transform: translate(7.34788e-16px, 12px) rotate(104.142deg);"></div>
+    <div class="right-foot" style="transform: translate(-2.44328px, 21.6969px) rotate(180deg);"></div>
+  </div>
+  <script src="scrollbuddy/script.js"></script>
+
+
 </body>
 
 </html>
