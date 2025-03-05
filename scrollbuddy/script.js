@@ -3,6 +3,9 @@ let lastScroll = 0;
 let walkPhase = 0;
 const walkSpeed = 0.0314;
 
+// Get the main element as the scroll container
+const scrollContainer = document.querySelector('main');
+
 // Check for reduced motion preferences
 const prefersReducedMotionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
 const prefersReducedMotion = prefersReducedMotionQuery.matches || 
@@ -88,11 +91,11 @@ function updateLegMovement(phase) {
 }
 
 function updateBuddyVerticalPosition(scrollPosition) {
-    const windowHeight = window.innerHeight;
-    const documentHeight = document.documentElement.scrollHeight;
-    const scrollPercent = scrollPosition / (documentHeight - windowHeight);
+    const containerHeight = scrollContainer.clientHeight;
+    const contentHeight = scrollContainer.scrollHeight;
+    const scrollPercent = scrollPosition / (contentHeight - containerHeight);
     const buddyHeight = buddy.offsetHeight;
-    const maxTop = windowHeight - buddyHeight;
+    const maxTop = containerHeight - buddyHeight;
     const newTop = scrollPercent * maxTop;
 
     // Use requestAnimationFrame for smooth updates
@@ -102,7 +105,7 @@ function updateBuddyVerticalPosition(scrollPosition) {
 }
 
 function updateBuddyPosition() {
-    const scrollPosition = window.scrollY;
+    const scrollPosition = scrollContainer.scrollTop;
     const scrollDelta = scrollPosition - lastScroll;
 
     // Only update walk phase if animations are enabled
@@ -127,8 +130,8 @@ window.matchMedia('(-apple-reduce-motion: reduce)').addEventListener('change', (
     location.reload();
 });
 
-// Event listeners
-window.addEventListener('scroll', updateBuddyPosition);
+// Event listeners - change from window to scrollContainer
+scrollContainer.addEventListener('scroll', updateBuddyPosition);
 window.addEventListener('resize', updateBuddyPosition);
 
 // Set initial position
