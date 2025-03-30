@@ -66,6 +66,13 @@ html {
   cursor: url('img/kirbywand.cur'), auto;
 }
 
+.favicon {
+  display: inline;
+  vertical-align: middle;
+  width: 1.7ch;
+  height: 1.7ch;
+}
+
 #watermark {
   display: none;
 }
