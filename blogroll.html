@@ -26,6 +26,42 @@
         max-width: 100ch;
       }
     </style>
+
+    <script>
+      class RssFeedList extends HTMLElement {
+        async connectedCallback() {
+          const feedUrl = this.getAttribute('feed-url');
+          if (!feedUrl) return;
+
+          try {
+            const response = await fetch(feedUrl);
+            const text = await response.text();
+            const parser = new DOMParser();
+            const xml = parser.parseFromString(text, 'text/xml');
+            
+            const items = xml.querySelectorAll('item, entry');
+            const ul = document.createElement('ul');
+            
+            items.forEach(item => {
+              const title = item.querySelector('title').textContent;
+              const link = item.querySelector('link').textContent;
+              const li = document.createElement('li');
+              const a = document.createElement('a');
+              a.href = link;
+              a.textContent = title;
+              li.appendChild(a);
+              ul.appendChild(li);
+            });
+
+            this.appendChild(ul);
+          } catch (e) {
+            console.error('Failed to load RSS feed:', e);
+          }
+        }
+      }
+
+      customElements.define('rss-feed-list', RssFeedList);
+    </script>
 </head>
 <body>
     <main>
@@ -56,12 +92,29 @@
         <em><a href="https://simonwillison.net/">Simon Willison's Weblog</a></em>
         <p>Simon Willison's blog on web development, data journalism, and more.</p>
         <p><a href="https://twitter.com/simonw">Twitter</a>, <a href="https://simonwillison.net/atom/everything/">Atom</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://simonwillison.net/atom/everything/"></rss-feed-list>
+        </details>
+      </section>
+
+      <section>
+        <em><a href="https://tigerbeetle.com/blog/">TigerBeetle</a></em>
+        <p><a href="https://tigerbeetle.com/blog/atom.xml">Atom</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://tigerbeetle.com/blog/atom.xml"></rss-feed-list>
+        </details>
       </section>
 
       <section>
         <em><a href="https://apenwarr.ca/log/">apenwarr</a></em>
         <p>Avery Pennarun's blog on various tech topics.</p>
         <p><a href="https://twitter.com/apenwarr">Twitter</a>, <a href="https://apenwarr.ca/log/rss.php">RSS</a></p>
+
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://apenwarr.ca/log/rss.php"></rss-feed-list>
       </section>
 
       <section>
@@ -80,24 +133,40 @@
         <em><a href="https://www.hillelwayne.com/about/">Hillel Wayne</a></em>
         <p>Blog on formal methods and programming topics.</p>
         <p><a href="https://twitter.com/hillelogram">Twitter</a>, <a href="https://buttondown.com/hillelwayne/rss">RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://buttondown.com/hillelwayne/rss"></rss-feed-list>
+        </details>
       </section>
 
       <section>
         <em><a href="https://julian.digital/">julian.digital</a></em>
         <p>Julian Lehr's blog on tech, economics, and more.</p>
         <p><a href="https://twitter.com/lehrjulian">Twitter</a>, <a href="https://julian.digital/feed/">RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://julian.digital/feed/"></rss-feed-list>
+        </details>
       </section>
 
       <section>
         <em><a href="https://overreacted.io/">Overreacted</a></em>
         <p>Dan Abramov's personal blog on React and web development.</p>
         <p><a href="https://mobile.twitter.com/dan_abramov">Twitter</a>, <a href="https://overreacted.io/rss.xml">RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://overreacted.io/rss.xml"></rss-feed-list>
+        </details>
       </section>
 
       <section>
         <em><a href="https://www.gwern.net/Changelog">Gwern</a></em>
         <p>Gwern Branwen's website on various topics including statistics, psychology, and more.</p>
         <p><a href="https://twitter.com/gwern">Twitter</a>, <a href="https://gwern.substack.com/feed">RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://gwern.substack.com/feed"></rss-feed-list>
+        </details>
       </section>
 
       <section>
@@ -110,11 +179,19 @@
         <em><a href="https://thehtml.review/about">the html review</a></em>
         <p>An annual journal of literature made to exist on the web.</p>
         <p><a href="https://thehtml.review/rss.xml">RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://thehtml.review/rss.xml"></rss-feed-list>
+        </details>
       </section>
 
       <section>
         <em><a href="https://juw.ee/">juwee</a></em>
         <p><a href="https://juw.ee/rss.xml">RSS</a>, <a href="https://digest.juw.ee/">digest</a>, <a href="https://digest.juw.ee/rss.xml">digest RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://juw.ee/rss.xml"></rss-feed-list>
+        </details>
       </section>
       
       <section>
@@ -128,13 +205,20 @@
       <section>
         <em><a href="https://100r.co/site/home.html">100R</a></em>
         <p><a href="https://100r.co/links/rss.xml">RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://100r.co/links/rss.xml"></rss-feed-list>
+        </details>
       </section>
 
       <section>
         <em><a href="https://spencer.place/">Spencer Chang</a></em>
         <p><a href="https://spencer.place/rss.xml">RSS</a></p>
+        <details>
+          <summary>View feed</summary>
+          <rss-feed-list feed-url="https://spencer.place/rss.xml"></rss-feed-list>
+        </details>
       </section>
-
     </main>
 </body>
 </html>
