@@ -1360,7 +1360,21 @@
         for (const item of items) {
           const title = item.getElementsByTagName("title")[0].textContent;
           const link = item.getElementsByTagName("link")[0].textContent;
-            const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+          // // Extract block ID from link
+          // const blockId = link.split('/').pop();
+
+          // try {
+          //   const blockResponse = await fetch(`https://api.are.na/v2/blocks/${blockId}`);
+          //   const blockData = await blockResponse.json();
+            
+          //   if (blockData.image?.thumb?.url) {
+          //     feed.append(htl.html`<img src="${blockData.image.thumb.url}" style="height: 4em; display: inline-block;">`);
+          //   }
+          // } catch (e) {
+          //   console.error('Could not fetch block image:', e);
+          // }
 
           feed.append(htl.html`<a href=${link} class="item-title">${title || "Untitled"}</a> <small>${date}</small>`);
           feed.append(document.createTextNode(' ■ '));
