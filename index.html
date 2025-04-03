@@ -1340,6 +1340,33 @@
         }
       </script>
     </section>
+
+    <section style="border-top: 1px solid black">
+      <marquee id="arenaFeed">
+        <a href="https://www.are.na/max-bo/feed/rss">⚛</a> <a href="https://www.are.na/max-bo">are.na/max-bo</a>
+        ඞ
+      </marquee>
+      <script type="module">
+        import * as htl from 'https://esm.run/htl@0.3.1';
+
+        const response = await fetch('https://mbo-arenarss.web.val.run');
+        const text = await response.text();
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(text, 'application/xml');
+
+        const items = Array.from(xmlDoc.getElementsByTagName("item"));
+        const feed = document.getElementById('arenaFeed');
+
+        for (const item of items) {
+          const title = item.getElementsByTagName("title")[0].textContent;
+          const link = item.getElementsByTagName("link")[0].textContent;
+          const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toDateString();
+
+          feed.append(htl.html`<a href=${link} class="item-title">${title || "Untitled"}</a> <small>${date}</small>`);
+          feed.append(document.createTextNode(' ■ '));
+        }
+      </script>
+    </section>
   </main>
   <footer>
     <a href="old.html">← old site</a> © 2024
