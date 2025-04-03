@@ -1332,7 +1332,7 @@
           title = stars + " - " + name;
 
           const link = item.getElementsByTagName("link")[0].textContent;
-          const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toDateString();
+          const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
           const description = item.getElementsByTagName("description")[0].textContent;
 
           feed.append(htl.html`<a href=${link} class="item-title">${title}</a> <small>${date}</small>`);
@@ -1360,7 +1360,7 @@
         for (const item of items) {
           const title = item.getElementsByTagName("title")[0].textContent;
           const link = item.getElementsByTagName("link")[0].textContent;
-          const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toDateString();
+            const date = new Date(item.getElementsByTagName("pubDate")[0].textContent).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
           feed.append(htl.html`<a href=${link} class="item-title">${title || "Untitled"}</a> <small>${date}</small>`);
           feed.append(document.createTextNode(' ■ '));
