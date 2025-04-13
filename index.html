@@ -260,12 +260,12 @@
               ticker.appendChild(a);
               ticker.appendChild(document.createTextNode(' ⚛ '));
             });
-        });
+          });
       }
 
       window.renderAtom = renderAtom;
     </script>
-    <marquee id="ticker" class="dindong">
+    <marquee id="ticker" class="dindong" scrollamount="7">
       <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
       <a href="atom.xml">⚛ atom.xml</a>
       󱠡
@@ -1348,14 +1348,14 @@
         </dl>
       </section>
     </div>
-    <p style="padding: 2px">
+    <!-- <p style="padding: 2px">
       Fonts from <a href="https://typotheque.genderfluid.space/">Typothèque Bye Bye Binary</a>. Inspiration from <a
         href="https://s-i-l-o.fr/">SILO</a> & <a href="https://solar.lowtechmagazine.com/">LOW←TECH MAGAZINE</a>. Some
       graphics are <a href="https://observablehq.com/plot/">Observable Plot</a>. Weather data from <a
         href="https://open-meteo.com/">Open-Meteo</a>.
-    </p>
-    <section style="border-top: 1px solid black">
-      <marquee id="feed">
+    </p> -->
+    <section>
+      <marquee id="feed" scrollamount="9">
         <a href="https://letterboxd.com/mbo_/rss/">⚛</a> <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
         ඞ
       </marquee>
@@ -1368,8 +1368,8 @@
       </script>
     </section>
 
-    <section style="border-top: 1px solid black">
-      <marquee id="arenaFeed">
+    <section>
+      <marquee id="arenaFeed" scrollamount="7">
         <a href="https://www.are.na/max-bo/feed/rss">⚛</a> <a href="https://www.are.na/max-bo">are.na/max-bo</a>
         ඞ
       </marquee>
@@ -1380,9 +1380,10 @@
       </script>
     </section>
 
-    <section style="border-top: 1px solid black">
-      <marquee id="rymFeed">
-        <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a> <a href="https://rateyourmusic.com/~mbo">rateyourmusic.com/~mbo</a>
+    <section>
+      <marquee id="rymFeed" scrollamount="8">
+        <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a> <a
+          href="https://rateyourmusic.com/~mbo">rateyourmusic.com/~mbo</a>
         ඞ
       </marquee>
       <script type="module">
