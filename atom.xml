@@ -12,6 +12,16 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
+        <title>I am load shedding</title>
+        <link href="https://maxbo.me/i-am-load-shedding.html"/>
+        <id>https://maxbo.me/i-am-load-shedding.html</id>
+        <updated>2025-04-15T00:00:00Z</updated>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
+
+    <entry>
         <title>Sanrio character per country rankings</title>
         <link href="https://maxbo.me/sanrio-character-rankings"/>
         <id>https://maxbo.me/sanrio-character-rankings</id>
