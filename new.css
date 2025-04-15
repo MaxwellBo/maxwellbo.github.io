@@ -145,7 +145,7 @@ dt {
   font-size: 1.3rem;
 }
 
-dd.time {
+.time {
   font-size: 0.9rem;
   color: #777;
 }
@@ -378,6 +378,13 @@ article.listing {
   }
 
   p.description {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  small {
+    position: relative;
+    bottom: 0;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
