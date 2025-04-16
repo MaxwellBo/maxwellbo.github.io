@@ -43,6 +43,10 @@
             font-style: italic;
             margin-left: 1rem;
           }
+
+          header {
+            border-bottom: none !important;
+          }
           
           .entry p {
             margin: 0.5rem 0;
