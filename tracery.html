@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="tracery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+</head>
+<body>
+
+  <output></output>
+  
+</body>
+
+<script>
+  const grammarSource = {
+    "origin":["#line.comma# <br /> #line.comma# <br />  #line.comma# <br /> #line.comma# <br /> #line.comma# <br /> #line.ALLCAPS#!!!!"],
+    "line": ["you #kiki_verb# the #kiki_noun#", "it #observes# you", "<q>was it the #bouba#???</q>", "#sup# tears #fall# eveywhere", "#ruby_4#"],
+    "kiki_verb": ["stab ", "punch", "split"],
+    "kiki_adjective": ["funky"],
+    "observes": ["sees", "knows", "watches", "integrates", "discovers"],
+    "kiki_noun": ["urchin", "porcupine"],
+    "fall": ["drop", "fall", "land", "leak", "defeat", "end"],
+    "bouba": ["swan"],
+    "sup": ["<sup>#length#</sup>", "<sup>#length##sup#</sup>"],
+    "length": ["tall", "looming", "lifting", "imposing"],
+    "thing_4": ["beam", "blok", "brik"],
+    // "ruby_4": [
+    //   "<h1><ruby> #thing_4# <rp>(</rp><rt>#thing_4# #ruby_4#   #thing_4# </rt><rp>)</rp> </ruby></h1>",
+    //   "#thing_4#"
+    // ],
+    "ruby_4": [
+      "<h1><ruby> #thing_4# <rp>(</rp><rt>#ruby_4# #ruby_4#  #thing_4# </rt><rp>)</rp> </ruby></h1>",
+      "#thing_4#"
+    ],
+    "ruby":  ["<sup>#length#</sup>", "<sup>#length##sup#</sup>"],
+  }
+
+  const grammar = tracery.createGrammar(grammarSource);
+  const output = grammar.flatten("#origin#");
+
+  // append output
+  document.querySelector('output').innerHTML = `<p>${output}</p>`;
+
+  function r(xs) {
+    const index = Math.floor(Math.random() * xs.length);
+    return xs[index];
+  }
+</script>
+</html>
