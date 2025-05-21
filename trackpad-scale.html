@@ -1,0 +1,91 @@
+<html>
+
+<head>
+  <meta charSet="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trackpad Scale</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      color: #666;
+      margin-bottom: 5px;
+    }
+
+    p {
+      color: #999;
+      margin-bottom: 20px;
+    }
+
+    #touchArea {
+      width: 300px;
+      height: 200px;
+      background-color: #4CAF50;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #touchArea:active {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Trackpad Scale</h1>
+    <h2>OPEN IN SAFARI</h2>
+    <h3>Weigh things on your trackpad</h3>
+    <p>(This mostly works to see how hard you are pressing your trackpad. Once you click, you will see a weight in
+      grams. Then you can try placing something on the trackpad)</p>
+    <div id="touchArea">Place object here</div>
+  </div>
+  <script>
+    const touchArea = document.getElementById('touchArea');
+    const maxForce = 3.0;
+    const gramsPerForceUnit = 1000 / maxForce;
+
+    function handleForce(event) {
+      if (typeof event.webkitForce !== 'undefined') {
+        const force = event.webkitForce;
+        const grams = Math.round(force * gramsPerForceUnit);
+        touchArea.textContent = `Weight: ${grams}g`;
+      } else {
+        touchArea.textContent = 'Force Touch not supported';
+      }
+    }
+
+    touchArea.addEventListener('mousedown', handleForce);
+    touchArea.addEventListener('mousemove', handleForce);
+    touchArea.addEventListener('mouseup', () => {
+      touchArea.textContent = 'Place object here';
+    });
+  </script>
+</body>
+
+</html>
