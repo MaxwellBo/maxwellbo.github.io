@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>partitionguessr</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      width: 100%;
+      height: 600px;
+    }
+  </style>
+</head>
+<body>
+  <h1>partitionguessr</h1>
+
+  <a href="https://honisoit.com/2017/09/food-fault-lines-mapping-class-division-through-food-chains/">https://honisoit.com/2017/09/food-fault-lines-mapping-class-division-through-food-chains/</a>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7.0.0/turf.min.js"></script>
+
+  <div>
+    <form id="overpass-form">
+      <textarea id="overpass-query" rows="10" cols="60" placeholder="Enter your Overpass Turbo query here...">[out:json][timeout:25];
+
+(
+  node["name"~"Red Rooster", i]({{bbox}});
+  way["name"~"Red Rooster", i]({{bbox}});
+  relation["name"~"Red Rooster", i]({{bbox}});
+);
+
+out geom;</textarea>
+      <br>
+      <button type="submit">Run query</button>
+    </form>
+    <div id="query-status"></div>
+  </div>
+
+  <div id="map"></div>
+
+  <pre id="geojson-out"></pre>
+
+  <script type="module">
+    const BBOX = [-34.02136404964111, 150.77362060546875, -33.67978264318627, 151.5220642089844];
+
+    const osmtogeojson = await import('https://cdn.skypack.dev/osmtogeojson@3.0.0-beta.5?min')
+
+    const map = L.map('map').setView([-33.8688, 151.2093], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+    }).addTo(map);
+
+    document.getElementById('overpass-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      let query = document.getElementById('overpass-query').value;
+      const statusElement = document.getElementById('query-status');
+      const geoJSONOutElement = document.getElementById('geojson-out');
+      
+      statusElement.textContent = 'Running query...';
+
+      // replace the {{bbox}} placeholder with the actual bounding box coordinates
+      query = query.replace(/{{bbox}}/g, BBOX.join(','));
+
+      console.log(turf)
+      
+      try {
+        // Clear existing GeoJSON layers and add the new data
+        map.eachLayer(layer => {
+          if (layer instanceof L.GeoJSON) {
+            map.removeLayer(layer);
+          }
+        });
+
+        const response = await fetch('https://overpass-api.de/api/interpreter', {
+          method: 'POST',
+          body: 'data=' + encodeURIComponent(query),
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        });
+        
+        const data = await response.json();
+        const geojson = osmtogeojson.default(data);
+
+        // Create a new GeoJSON collection for the lines
+        const lineCollection = {
+          type: "FeatureCollection",
+          features: []
+        };
+
+        // Extract all nodes for line creation
+        const points = [];
+        geojson.features.forEach(feature => {
+          if (feature.geometry && (feature.geometry.type === "Point" || feature.geometry.type === "MultiPoint")) {
+            if (feature.geometry.type === "Point") {
+              points.push(feature.geometry.coordinates);
+            } else if (feature.geometry.type === "MultiPoint") {
+              points.push(...feature.geometry.coordinates);
+            }
+          }
+        });
+
+        // Create lines between consecutive points if there are at least 2 points
+        if (points.length >= 2) {
+          for (let i = 0; i < points.length - 1; i++) {
+            const line = turf.lineString([points[i], points[i + 1]], {
+              name: `Line ${i + 1}`,
+              source: 'Generated line'
+            });
+            lineCollection.features.push(line);
+          }
+          
+          // Add the line collection to the map
+          L.geoJSON(lineCollection, {
+            style: {
+              color: '#ff7800',
+              weight: 3,
+              opacity: 0.65
+            }
+          }).addTo(map);
+        }
+
+
+
+        statusElement.textContent = 'Query completed successfully!';
+        geoJSONOutElement.textContent = JSON.stringify(geojson, null, 2);
+        
+        
+        L.geoJSON(geojson, {
+          onEachFeature: function (feature, layer) {
+            if (feature.properties) {
+              layer.bindPopup(`<strong>${feature.properties.name || 'Unnamed'}</strong><br>ID: ${feature.properties.id || 'N/A'}`);
+            }
+          }
+        }).addTo(map);
+      } catch (error) {
+        statusElement.textContent = 'Error running query: ' + error.message;
+      }
+    });
+  </script>
+
+
+  </script>
+</body>
+</html>
