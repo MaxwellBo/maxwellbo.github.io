@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Block Pattern Generator</title>
+    <style>
+        body {
+            font-family: monospace;
+            font-size: 16px;
+            background-color: #f0f0f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #output {
+            white-space: pre;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            line-height: 1;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Block Pattern Generator</h1>
+    <div id="output"></div>
+
+    <script>
+        // JavaScript translation of the C++ code
+        function generatePattern() {
+            // Define the block characters
+            const A = "▀";
+            const B = "▄";
+            const C = "─";
+            
+            // Define the blocks array similar to the C++ code
+            const blocks = [A + B + C, B + A + C, A + C + B, B + C + A];
+            
+            let result = "";
+            
+            // Generate the pattern
+            for (let y = 0, p = 0; y !== 8; ++y, p = ((p + 1) % 4)) {
+                for (let x = 0; x !== 29; ++x) {
+                    result += blocks[p];
+                }
+                result += "\n";
+            }
+            
+            return result;
+        }
+        
+        // Display the pattern
+        document.getElementById("output").textContent = generatePattern();
+    </script>
+</body>
+</html>
