@@ -588,18 +588,11 @@ select {
   }
 }
 
-#internet-phonebook {
+#internet-phone-book {
   padding: 1rem;
   text-align: center;
   background-color: #FFFDCC;
   font-family: 'Times New Roman', Times, serif;
-
-  .buttons {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
 
   a {
     color: black !important;

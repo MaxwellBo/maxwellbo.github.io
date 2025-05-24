@@ -12,6 +12,18 @@
     <id>https://maxbo.me/atom.xml</id>
 
     <entry>
+        <title>maxbo.me is in the Internet Phone Book</title>
+        <link href="https://maxbo.me/is-in-the-internet-phone-book.html"/>
+        <id>https://maxbo.me/is-in-the-internet-phone-book.html</id>
+        <updated>2025-05-25T00:00:00Z</updated>
+        <summary></summary>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
+
+
+    <entry>
         <title>I am load shedding</title>
         <link href="https://maxbo.me/i-am-load-shedding.html"/>
         <id>https://maxbo.me/i-am-load-shedding.html</id>
