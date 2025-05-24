@@ -219,8 +219,6 @@
       </h1>
     </marquee>
     <script type="module">
-      import * as htl from 'https://esm.run/htl@0.3.1';
-
       async function renderRss(feedUrl, elementId, transformTitle = (title) => title) {
         const response = await fetch(feedUrl);
         const text = await response.text();
@@ -236,7 +234,17 @@
           const date = new Date(item.getElementsByTagName("pubDate")[0].textContent)
             .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-          feed.append(htl.html`<a href=${link} class="item-title">${title}</a> <date>${date}</date>`);
+            const a = document.createElement('a');
+            a.href = link;
+            a.className = 'item-title';
+            a.textContent = title;
+            
+            const dateEl = document.createElement('date');
+            dateEl.textContent = date;
+            
+            feed.append(a);
+            feed.append(document.createTextNode(' '));
+            feed.append(dateEl);
           feed.append(document.createTextNode(' ■ '));
         }
       }
