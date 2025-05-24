@@ -587,3 +587,42 @@ select {
     grid-template-columns: repeat(4, 1fr);
   }
 }
+
+#internet-phonebook {
+  padding: 1rem;
+  text-align: center;
+  background-color: #FFFDCC;
+  font-family: 'Times New Roman', Times, serif;
+
+  .buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-decoration-style: dotted !important; 
+    text-underline-offset: 3px !important;
+  }
+
+  a:hover {
+    color: white !important;
+    text-decoration-color: white !important;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 13px;
+    border: none;
+    color: #000;
+    border: 1px solid black;
+    border-radius: 40px;
+    background: transparent;
+    cursor: pointer;
+    font-weight: normal;
+  }
+}
