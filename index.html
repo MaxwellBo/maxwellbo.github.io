@@ -233,7 +233,18 @@
 
         for (const item of items) {
           const title = transformTitle(item.getElementsByTagName("title")[0].textContent);
-          const link = item.getElementsByTagName("link")[0].textContent;
+          
+          let link = item.getElementsByTagName("link")[0]
+
+          if (!link) {
+            continue
+          }
+
+          link = link.textContent || link.getAttribute('href');
+          if (!link) {
+            continue;
+          }
+
           const date = new Date(item.getElementsByTagName("pubDate")[0].textContent)
             .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
