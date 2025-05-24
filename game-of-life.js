@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', function() {
   let grid = new Uint8Array(width * height);
   let nextGrid = new Uint8Array(width * height);
   
+  // Control animation speed (in milliseconds between updates)
+  const updateInterval = 100; // ms
+  let lastUpdateTime = 0;
+  
   // Initialize with a glider gun pattern (Gosper's glider gun)
   function initializeGrid() {
     // Clear the grid
@@ -104,9 +108,14 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   // Animation loop
-  function animate() {
-    updateGrid();
-    renderGrid();
+  function animate(timestamp) {
+    // Only update if enough time has passed
+    if (!lastUpdateTime || timestamp - lastUpdateTime >= updateInterval) {
+      updateGrid();
+      renderGrid();
+      lastUpdateTime = timestamp;
+    }
+    
     requestAnimationFrame(animate);
   }
   
@@ -134,4 +143,4 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
   });
-}); 
+});
