@@ -145,11 +145,6 @@ dt {
   font-size: 1.3rem;
 }
 
-.time {
-  font-size: 0.9rem;
-  color: #777;
-}
-
 a {
   color: color(display-p3 0 0 1);
   text-decoration: none;
@@ -260,6 +255,10 @@ script {
   display: none;
 }
 
+date {
+  font-size: 0.9rem;
+  color: #777;
+}
 
 ol, ul {
   padding-left: 1.2rem;
@@ -388,7 +387,14 @@ article.listing {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
   }
+
+  date {
+    display: block;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+  }
 }
+
 
 @media (min-width: 640px) {
   #watermark {
