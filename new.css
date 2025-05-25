@@ -256,7 +256,7 @@ script {
   display: none;
 }
 
-date {
+time {
   font-size: 0.9rem;
   color: #777;
 }
@@ -388,7 +388,7 @@ article.listing {
     padding-right: 0.5rem;
   }
 
-  date {
+  time {
     display: block;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
@@ -403,7 +403,7 @@ article.listing.dark {
     color: color(display-p3 0.7 0.7 1);
   }
 
-  date {
+  time {
     color: #d4d4d4;
   }
 }

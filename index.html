@@ -271,12 +271,12 @@
             a.className = 'item-title';
             a.textContent = title;
             
-            const dateEl = document.createElement('date');
-            dateEl.textContent = date;
+            const time = document.createElement('time');
+            time.textContent = date;
             
             feed.append(a);
             feed.append(document.createTextNode(' '));
-            feed.append(dateEl);
+            feed.append(time);
           feed.append(document.createTextNode(' ■ '));
         }
       }
@@ -440,7 +440,7 @@
             Read more 
           </a>
           <br />
-          <date>May 2025</date>
+          <time>May 2025</time>
 
         </article>
         <!-- <article class="listing"> -->
@@ -452,28 +452,28 @@
         <!--     </div> -->
         <!--     <p class="title">I am load shedding</p> -->
         <!--   </a> -->
-        <!--   <date>April 2025</small> -->
+        <!--   <time>April 2025</time> -->
         <!-- </article> -->
         <article class="listing celine">
           <a href="factorio.html">
             <img src="factorio/og.png" />
             <p class="title">Is sending Factorio to your competitors' engineers a cost-effective means of sabotage?</p>
           </a>
-          <date>January 2025</date>
+          <time>January 2025</time>
         </article>
         <article class="listing" id="reactive-html-notebooks">
           <a href="a-html-file-is-all-you-need.html">
             <img src="img/document.webp" />
             <p class="title">Reactive HTML notebooks</p>
           </a>
-          <date>September 2024</date>
+          <time>September 2024</time>
         </article>
         <article class="listing">
           <a href="https://hello-notebook-http-mode.fly.dev/">
             <img src="img/hnhm.png" />
             <p class="title">Hello, <code>notebook-http</code> mode</p>
           </a>
-          <date>September 2024</date>
+          <time>September 2024</time>
         </article>
         <article class="listing" style="font-family: 'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', serif;">
           <a href="subordinate-latin.html">
@@ -481,7 +481,7 @@
             <p class="title">Subordinate Latin</p>
           </a>
           <p class="description">+ a typeface inspector</p>
-          <date>September 2024</date>
+          <time>September 2024</time>
         </article>
         <article class="listing observable">
           <a href="https://observablehq.com/@mjbo/determining-the-accuracy-of-mystical-rodent-prophecies">
@@ -489,7 +489,7 @@
               src="https://static.observableusercontent.com/thumbnail/391c3d4a714a1bdac74b2af8d64add0d88094a167008558f0f50cea870894b1f.jpg" />
             <p class="title">Which groundhog is the best prognosticator?</p>
           </a>
-          <date>March 2023</date>
+          <time>March 2023</time>
         </article>
         <article class="listing observable">
           <a href="https://observablehq.com/@mjbo/how-to-tell-someones-age-when-all-you-know-is-her-name">
@@ -497,7 +497,7 @@
               src="https://static.observableusercontent.com/thumbnail/401632affbbe6b54179ead19ee53dcb78f643a45f66287914b638a7d26aa0e93.jpg" />
             <p class="title">How to tell someone's age when all you know is their name</p>
           </a>
-            <date>March 2023</date>
+            <time>March 2023</time>
         </article>
         <article class="listing observable dark">
           <a href="https://observablehq.com/@mjbo/plotting-a-black-hole">
@@ -505,7 +505,7 @@
               src="https://static.observableusercontent.com/thumbnail/edf7022d90f454c779da55f3f4a6e6bd178614ae88033b2b585c5b2b77033091.jpg" />
             <p class="title">Plotting a black hole</p>
           </a>
-          <date>February 2023</date>
+          <time>February 2023</time>
         </article>
         <article class="listing observable">
           <a href="https://observablehq.com/@mjbo/sydney-qms-panel-public-telephone-pairings">
@@ -513,7 +513,7 @@
               src="https://static.observableusercontent.com/thumbnail/87edbb3b0bdba52d702d742dbf078f571acd6c6eb9f84edc542c5cdc53024842.jpg" />
             <p class="title">How many QMS advertising panels in Sydney are near a Telstra public telephone?</p>
           </a>
-          <date>December 2022</date>
+          <time>December 2022</time>
         </article>
         <article class="listing observable">
           <a href="https://observablehq.com/@mjbo/perceptually-uniform-color-models">
@@ -521,7 +521,7 @@
               src="https://static.observableusercontent.com/thumbnail/2ab66fe81ddedbee178a96a4568fcadc03bc600eccba5991a3e8bbbf5c19e043.jpg" />
             <p class="title">Perceptually uniform color models</p>
           </a>
-          <date>December 2021</date>
+          <time>December 2021</time>
         </article>
         <article id="weather" class="art">
           <p>I am currently living in Sydney, Australia.</p>
@@ -811,7 +811,7 @@
             <p class="title">@celine/celine</p>
           </a>
           <p class="title">A library for building reactive HTML notebooks</p>
-          <date>September 2024 - Present</date>
+          <time>September 2024 - Present</time>
         </article>
         <article class="listing celine">
           <a href="https://maxbo.me/celine/bibhtml">
@@ -826,7 +826,7 @@
             <p class="title">Muncoordinated</p>
           </a>
           <p class="description">Model UN committee management service</p>
-          <date>October 2017 - Present</date>
+          <time>October 2017 - Present</time>
         </article>
         <article class="listing big"  id="poppenhuis">
           <model-viewer id='model' alt="Roman" src="dolls/Roman.glb" interaction-prompt="" progress-bar=""
@@ -845,10 +845,10 @@
             <p class="title">HTML in Hyde</p>
           </a>
           <p class="description">Meetup</p>
-          <date>
+          <time>
             Next: <a href="https://maxbo.me/html-in-hyde/1/invitation.html">2 August 2025</a> <br/>
             Prev: <a href="https://maxbo.me/html-in-hyde/0/invitation.html">21 July 2024</a>
-          </date>
+          </time>
         </article>
         <article class="listing observable">
           <a href="https://observablehq.com/@mjbo/genre-map-explorer-for-spotify">
@@ -1154,14 +1154,14 @@
             <img src="img/reactive.webp" />
             <p class="title">Reactive HTML notebooks</p>
           </a>
-          <date>October 2024</date>
+          <time>October 2024</time>
         </article>
         <article class="listing">
           <a href="https://www.youtube.com/watch?v=bvjBgAGq3E8">
             <img src="img/itpc.png" />
             <p class="title">Intro to Parser Combinators</p>
           </a>
-          <date>May 2020</date>
+          <time>May 2020</time>
         </article>
         <article class="listing">
           <a href="https://www.youtube.com/watch?v=2xgTu4lsbMo">
@@ -1169,14 +1169,14 @@
             <p class="title">Intermediate Data Visualisation</p>
           </a>
           <p class="description">Talk &amp; interactive notebooks</p>
-          <date>October 2023</date>
+          <time>October 2023</time>
         </article>
         <article class="listing">
           <a href="https://www.youtube.com/watch?v=MKLLOxb2nmI">
             <img src="img/itpbt.png" />
             <p class="title">Intro to Property Based Testing</p>
           </a>
-          <date>October 2019</date>
+          <time>October 2019</time>
         </article>
         <article id="cycle" class="art">
 
@@ -1187,7 +1187,7 @@
             <p class="title">A tour of Scala</p>
           </a>
           <p class="description">Lecture series &amp; teaching aide</p>
-          <date>September 2019 - December 2019</date>
+          <time>September 2019 - December 2019</time>
         </article>
         <article class="listing observable">
           <a href="https://observablehq.com/@mjbo/some-js-features">
@@ -1403,27 +1403,27 @@
             <a href="https://www.canva.com/about/">Canva</a>
           </dt>
           <dd class="title">Senior Software Engineer</dd>
-          <dd class="time"><date>March 2024 - Present</date></dd>
+          <dd class="time"><time>March 2024 - Present</time></dd>
           <dd class="title">Software Engineer</dd>
-          <dd class="time"><date>March 2022 - February 2024</date></dd>
+          <dd class="time"><time>March 2022 - February 2024</time></dd>
           <dt>
             <img class="favicon" src="img/google.ico" />
             <a href="https://about.google/">Google</a>
           </dt>
           <dd class="title">Software Engineer</dd>
-          <dd class="time"><date>January 2020 - February 2022</date></dd>
+          <dd class="time"><time>January 2020 - February 2022</time></dd>
           <dt>
             <img class="favicon" src="img/atlassian.ico" />
             <a href="https://www.atlassian.com/company">Atlassian</a>
           </dt>
           <dd class="title">Intern Software Engineer</dd>
-          <dd class="time"><date>November 2018 - December 2019</date></dd>
+          <dd class="time"><time>November 2018 - December 2019</time></dd>
           <dt>
             <img class="favicon" src="img/skedulo.ico" />
             <a href="https://www.skedulo.com/about-us/">Skedulo</a>
           </dt>
           <dd class="title">Intern Software Engineer</dd>
-          <dd class="time"><date>January 2017 - November 2018</date></dd>
+          <dd class="time"><time>January 2017 - November 2018</time></dd>
         </dl>
       </section>
       <section>
@@ -1436,7 +1436,7 @@
             <a href="https://about.uq.edu.au/university-profile">University of Queensland</a>
           </dt>
           <dd class="title">BSc Computer Science Extended Major</dd>
-          <dd class="time"><date>July 2015 - July 2019</date></dd>
+          <dd class="time"><time>July 2015 - July 2019</time></dd>
         </dl>
       </section>
     </div>
