@@ -123,6 +123,7 @@ html {
 }
 
 #weather {
+  min-height: 15rem;
   padding: 0.3rem;
 }
 
