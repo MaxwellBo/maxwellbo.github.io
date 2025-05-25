@@ -8,10 +8,20 @@
   <link rel="preconnect" href="https://t0.gstatic.com" crossorigin>
   
   <link rel="preload" href="new.css" as="style">
+  <link rel="stylesheet" href="celine/fonts/Libertinus/documentation/libertinus.css">
+  <style>
+    .celine {
+      font-family: 'Libertinus Serif', 'Times New Roman', serif"
+    }
+  </style>
   <link rel="preload" href="fonts/DINdong/DINdong.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="fonts/FakeReceipt.otf" as="font" type="font/otf" crossorigin>
   <link rel="preload" href="fonts/hersheytimes.otf" as="font" type="font/otf" crossorigin>
   <link rel="preload" href="fonts/crozet/webfonts/Crozet-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Google fonts-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Quicksand:wght@300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
   
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135030873-1"></script>
@@ -438,14 +448,14 @@
         <!--   </a> -->
         <!--   <date>April 2025</small> -->
         <!-- </article> -->
-        <article class="listing">
+        <article class="listing celine">
           <a href="factorio.html">
             <img src="factorio/og.png" />
             <p class="title">Is sending Factorio to your competitors' engineers a cost-effective means of sabotage?</p>
           </a>
           <date>January 2025</date>
         </article>
-        <article class="listing">
+        <article class="listing" id="reactive-html-notebooks">
           <a href="a-html-file-is-all-you-need.html">
             <img src="img/document.webp" />
             <p class="title">Reactive HTML notebooks</p>
@@ -789,22 +799,22 @@
         <a id="projects" href="#projects">#</a>Projects
       </h2>
       <div class="cards">
-        <article class="listing">
-          <a href="https://maxbo.me/celine">
+        <article class="listing celine">
+          <a href="https://maxbo.me/celine"></a>
             <img src="https://maxbo.me/celine/static/og.png" />
             <p class="title">@celine/celine</p>
           </a>
           <p class="title">A library for building reactive HTML notebooks</p>
           <date>September 2024 - Present</date>
         </article>
-        <article class="listing">
+        <article class="listing celine">
           <a href="https://maxbo.me/celine/bibhtml">
             <img src="https://maxbo.me/celine/bibhtml/static/og.png" />
             <p class="title">@celine/bibhtml</p>
           </a>
           <p class="title">A Web Components-based referencing system for HTML documents</p>
         </article>
-        <article class="listing">
+        <article class="listing" id="muncoordinated">
           <a href="https://muncoordinated.io">
             <img src="img/muncoordinated.webp" />
             <p class="title">Muncoordinated</p>
@@ -812,7 +822,7 @@
           <p class="description">Model UN committee management service</p>
           <date>October 2017 - Present</date>
         </article>
-        <article class="listing big">
+        <article class="listing big"  id="poppenhuis">
           <model-viewer id='model' alt="Roman" src="dolls/Roman.glb" interaction-prompt="" progress-bar=""
             loading="auto" auto-rotate-delay="0" rotation-per-second="20deg" camera-controls auto-rotate
             touch-action="pan-y"></model-viewer>
@@ -926,7 +936,7 @@
           </a>
         </article>
         <article class="listing" style="position: relative;">
-          <a href="sanrio-character-rankings.html">
+          <a href="sanrio-character-rankings.html" id="sanrio">
             <img class="spin" src="new.svg" style="position: absolute; width: 100px; top: -20px; left: -20px;" />
             <img src="sanrio-character-rankings/og.png" />
             <p class="title">Sanrio character rankings</p>

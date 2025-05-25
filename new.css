@@ -588,6 +588,39 @@ select {
   }
 }
 
+#reactive-html-notebooks {
+  font-family: "Playfair Display SC", serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #e4e4e4;
+}
+
+.observable {
+  font-family: "Source Serif 4", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#muncoordinated {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#sanrio {
+  background-color: #f0f6ff;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#poppenhuis {
+  font-family: Georgia, serif;
+  background-color: #fdf5e6
+}
+
 #internet-phone-book {
   padding: 1rem;
   text-align: center;
