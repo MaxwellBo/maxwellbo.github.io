@@ -701,4 +701,13 @@ select {
     cursor: pointer;
     font-weight: normal;
   }
+
+  /* cloned in is-in-the-internet-phone-book.html */
+  button:hover {
+    transform: scale(0.95);
+  }
+
+  button:active {
+    transform: scale(0.9);
+  }
 }

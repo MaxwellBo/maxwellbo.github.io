@@ -53,11 +53,5 @@ document.querySelectorAll('.has-tone').forEach(button => {
   button.addEventListener('click', () => {
     const digit = button.textContent;
     playDTMF(digit);
-    
-    // Visual feedback
-    button.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      button.style.transform = 'scale(1)';
-    }, 100);
   });
 });
