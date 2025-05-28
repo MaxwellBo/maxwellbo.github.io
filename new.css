@@ -715,3 +715,23 @@ select {
     transform: scale(0.9);
   }
 }
+
+#velocity-design-comfort-scene {
+  overflow: hidden;
+  perspective: 50px; /* Distance of the viewer from the object */
+  position: absolute; /* relative to #root */
+  z-index: -1;
+  bottom: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+}
+
+#plane {
+  background-color: white;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transform: rotateX(50deg);
+  transform-origin: center center;
+}
