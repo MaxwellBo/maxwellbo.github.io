@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display+SC:wght@400;700&display=swap');
 
 html {
-  cursor: url('img/cursor-dino.png'), auto;
+  cursor: url('../img/cursor-dino.png'), auto;
 }
 
 body {

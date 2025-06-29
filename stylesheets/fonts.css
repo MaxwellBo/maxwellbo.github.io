@@ -1,0 +1,49 @@
+@font-face {
+  font-family: 'DINdong';
+  src:
+    url('../fonts/DINdong/DINdong.woff2') format('woff2'),
+    url('../fonts/DINdong/DINdong.woff') format('woff'),
+    url('../fonts/DINdong/DINdong.ttf') format('truetype'),
+    url('../fonts/DINdong/DINdong.otf') format('opentype');
+}
+
+@font-face {
+  font-family: 'HerscheyTimes';
+  src: url("../fonts/hersheytimes.otf");
+}
+
+/* @font-face {
+  font-family: 'Ductus Geometric';
+  src:
+    url('fonts/ductus/webfonts/DuctusCalligraphic.woff2') format('woff2'),
+    url('fonts/ductus/webfonts/DuctusGeometric.woff') format('woff'),
+    url('fonts/ductus/ttf//DuctusGeometric.ttf') format('truetype'),
+    url('fonts/ductus/otf/DuctusGeometric.otf') format('opentype');
+} */
+
+/* @font-face {
+  font-family: 'Homoneta';
+  src:
+    url('fonts/homoneta/woff/Homoneta-Regular.woff2') format('woff2'),
+    url('fonts/homoneta/woff/Homoneta-Regular.woff') format('woff'),
+    url('fonts/homoneta/otf/Homoneta-Regular.otf') format('opentype');
+} */
+
+@font-face {
+  font-family: 'Crozet';
+  src:
+    url('../fonts/crozet/webfonts/Crozet-Regular.woff2') format('woff2'),
+    url('../fonts/crozet/webfonts/Crozet-Regular.woff') format('woff'),
+    url('../fonts/crozet/otf/Crozet-Regular.otf') format('opentype'),
+    url('../fonts/crozet/ttf/Crozet-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: "Fake Receipt";
+  src:
+    url('../fonts/FakeReceipt.otf') format('opentype');
+}
+
+.fake-receipt {
+  font-family: "Fake Receipt";
+}

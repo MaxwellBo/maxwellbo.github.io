@@ -1,0 +1,157 @@
+
+
+.brat {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #8ace00;
+  font-stretch: ultra-condensed;
+  letter-spacing: -1px;
+  text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.5);
+}
+
+.yimby-melbourne {
+  background-color: rgb(253, 255, 238)
+}
+
+#sanrio {
+  background-color: #f0f6ff;
+  font-family: "Quicksand", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#poppenhuis {
+  font-family: Georgia, serif;
+  background-color: #fdf5e6
+}
+
+#muncoordinated {
+  font-family: "Lato", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+#html-in-hyde {
+  font-family: serif !important;
+  color: rgb(0, 100, 0)
+}
+
+#reactive-html-notebooks {
+  font-family: "Playfair Display SC", serif;
+  font-weight: 400;
+  font-style: normal;
+  background-color: #e4e4e4;
+}
+
+.observable {
+  /* font-family: "Source Serif 4", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal; */
+}
+
+#favicon-garden {
+  font-family: serif;
+  background-color: #484440;
+  color: #ebcb58;
+  font-family: serif;
+
+  a {
+    color: #ebcb58;
+    text-decoration: underline
+  }
+  a:link {
+    color: #ebcb58;
+  }
+
+  a:visited {
+    color: #d4a017;
+  }
+
+  a:hover {
+    color: #f5e050;
+  }
+}
+
+#internet-phone-book {
+  padding: 1rem;
+  text-align: center;
+  background-color: #FFFDCC;
+  font-family: 'Times New Roman', Times, serif;
+
+  a {
+    color: black !important;
+    text-decoration: underline !important;
+    text-decoration-thickness: 2px !important;
+    text-decoration-style: dotted !important; 
+    text-underline-offset: 3px !important;
+  }
+
+  a:hover {
+    color: white !important;
+    text-decoration-color: white !important;
+  }
+
+  button {
+    padding: 10px;
+    font-size: 13px;
+    border: none;
+    color: #000;
+    border: 1px solid black;
+    border-radius: 40px;
+    background: transparent;
+    cursor: pointer;
+    font-weight: normal;
+  }
+
+  /* cloned in is-in-the-internet-phone-book.html */
+  button:hover {
+    transform: scale(0.95);
+  }
+
+  button:active {
+    transform: scale(0.9);
+  }
+}
+
+.alert {
+  background: #fff5b1;
+  padding: 4px 12px;
+  margin-bottom: 2rem;
+}
+
+#clouds {
+  background-image: url('../img/clouds.webp');
+}
+
+
+#cycle {
+  animation: cycle 30s linear infinite;
+}
+
+@keyframes cycle {
+  0% {
+    background-color: yellow;
+  }
+
+  20% {
+    background-color: lightsalmon;
+  }
+
+  40% {
+    background-color: mediumslateblue;
+  }
+
+  60% {
+    background-color: mistyrose;
+  }
+
+  80% {
+    background-color: mediumturquoise;
+  }
+
+  100% {
+    background-color: yellow;
+  }
+}
+

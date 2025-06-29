@@ -1,0 +1,111 @@
+html {
+  /* cursor: url('kirby.png') 11 13, auto; */
+  cursor: url('../img/kirbywand.cur'), auto;
+}
+
+body {
+  background: transparent url("../img/grid.svg") repeat 0 0;
+  font-family: 'DINdong', sans-serif;
+  background-repeat: repeat;
+}
+
+/* h1 {
+  font-family: 'Ductus Geometric', sans-serif;
+} */
+
+
+time {
+  font-size: 0.9rem;
+  color: #777;
+}
+
+ol, ul {
+  padding-left: 1.2rem;
+}
+
+ul {
+  list-style-type: 'ᐷ';
+  li {
+    padding-left: 0.3rem;
+  }
+}
+
+dl {
+  padding-left: 0.6rem;
+}
+
+dt {
+  padding-top: 0.3rem;
+  font-size: 1.3rem;
+}
+
+h1 {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+script {
+  display: none;
+}
+
+a {
+  color: color(display-p3 0 0 1);
+  text-decoration: none;
+}
+
+a:active {
+  color: orange;
+}
+
+a:visited {
+  color: color(display-p3 1 0 1);
+}
+
+a:hover, a:hover * {
+  cursor: url('../img/kirbywandpuff.cur'), auto;
+  background-color: color(display-p3 1 0 1);
+  color: white;
+}
+
+a:hover:visited, a:hover:visited * {
+  background-color: color(display-p3 1 0 1);
+  color: white;
+}
+
+a:hover:active:visited, a:hover:active:visited * {
+  background-color: color(display-p3 1 1 0);
+  color: black;
+}
+
+h2, h3, h4, h5, h6 {
+  font-weight: normal;
+  font-family: 'HerscheyTimes', sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 20px;
+  background: #d6ecf3;
+}
+
+::-webkit-scrollbar-track {
+  background: -webkit-linear-gradient(top, #ffb5cd 2%, #ffcca8 17%, #fff6b7 35%, #daffb7 55%, #aadeff 76%, #cebafc 97%);
+  border-radius: 0px;
+  width: 0px;
+  border: 1px dotted #8f38ff;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d6ecf3;
+  border: 1px dotted fuchsia;
+  border-radius: 0px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: fuchsia;
+}
+
+blink, .blink { animation: blink 1s step-end infinite; }
+
+@keyframes blink {
+  67% { opacity: 0 }
+}

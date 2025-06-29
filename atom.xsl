@@ -11,24 +11,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
         <title><xsl:value-of select="atom:feed/atom:title"/></title>
-        <link rel="stylesheet" href="/new.css"/>
+        <link href="stylesheets/reset.css" rel="stylesheet"/>
+        <link href="stylesheets/fonts.css" rel="stylesheet"/>
+        <link href="stylesheets/base.css" rel="stylesheet"/>
+        <link href="stylesheets/utils.css" rel="stylesheet"/>
+        <link href="stylesheets/page.css" rel="stylesheet"/>
         <style type="text/css">
-          body {
-            max-width: 768px;
-            margin: 0 auto;
-            padding: 0 1rem;
-          }
-          
-          h1 {
-            margin-bottom: 1rem;
-          }
-          
-          .alert {
-            background:#fff5b1;
-            padding:4px 12px;
-            margin-bottom: 2rem;
-          }
-          
           .entry {
             margin-bottom: 2rem;
           }
