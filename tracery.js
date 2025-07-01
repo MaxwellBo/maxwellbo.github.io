@@ -389,7 +389,13 @@ var tracery = {
     };
 
     RuleSet.prototype.getRandomIndex = function() {
-        return Math.floor(this.uses.length * Math.random());
+        if (typeof tracery._randomSeed === "undefined") {
+            tracery._randomSeed = 5;
+        }
+        // Simple LCG for deterministic random numbers
+        tracery._randomSeed = (tracery._randomSeed * 9301 + 49297) % 233280;
+        var rnd = tracery._randomSeed / 233280;
+        return Math.floor(this.uses.length * rnd);
     };
 
     RuleSet.prototype.getIndex = function() {

@@ -8,9 +8,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
 </head>
 <body>
-
+  <input type="range" id="seedRange" min="0" max="50" value="15">
+  <label for="seedRange">Random Seed: <span id="seedValue">15</span></label>
   <output></output>
-  
 </body>
 
 <script>
@@ -37,15 +37,19 @@
     "ruby":  ["<sup>#length#</sup>", "<sup>#length##sup#</sup>"],
   }
 
+  const seedRange = document.getElementById('seedRange');
+  const seedValue = document.getElementById('seedValue');
+
   const grammar = tracery.createGrammar(grammarSource);
-  const output = grammar.flatten("#origin#");
 
-  // append output
-  document.querySelector('output').innerHTML = `<p>${output}</p>`;
+  seedRange.addEventListener('input', function() {
+    seedValue.textContent = this.value;
+    tracery._randomSeed = parseInt(this.value, 10);
 
-  function r(xs) {
-    const index = Math.floor(Math.random() * xs.length);
-    return xs[index];
-  }
+    const output = grammar.flatten("#origin#");
+    document.querySelector('output').innerHTML = `<p>${output}</p>`;
+  });
+
+  seedRange.dispatchEvent(new Event('input'));
 </script>
 </html>
