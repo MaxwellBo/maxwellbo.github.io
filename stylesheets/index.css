@@ -157,6 +157,8 @@ div.cards {
 
 article.art {
   border: 0.5px solid black;
+  box-shadow: 0 0 0 2px black;
+  clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 20px, 100% 100%, 0% 100%);
 }
 
 article.art.wide {
@@ -231,6 +233,8 @@ article.listing {
 }
 
 article.listing.dark {
+  box-shadow: 0 0 0 2px black;
+  clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 20px, 100% 100%, 0% 100%);
   background-color: black;
   color: white;
 
@@ -327,6 +331,7 @@ article.listing.dark {
 }
 
 .vectorheart {
+  background-color: green;
   display: inline-block;
   padding: 10px 20px;
   text-decoration: none;
