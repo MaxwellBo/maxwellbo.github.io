@@ -157,8 +157,6 @@ div.cards {
 
 article.art {
   border: 0.5px solid black;
-  box-shadow: 0 0 0 2px black;
-  clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 20px, 100% 100%, 0% 100%);
 }
 
 article.art.wide {
