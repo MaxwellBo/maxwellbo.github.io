@@ -58,8 +58,8 @@ nav {
     padding-inline-start: 0px;
 
     li {
-      border-bottom: 1px black solid;
-      border-right: 1px black solid;
+      border: 1px grey dotted;
+      margin: 5px;
       padding: 0.5rem;
 
       /* :hover {
@@ -71,7 +71,7 @@ nav {
 }
 
 header {
-  border-bottom: 1px solid black;
+  border-bottom: 1px dotted grey;
   font-family: 'DINdong', sans-serif;
 
   #wordmark {
@@ -91,7 +91,7 @@ footer {
   width: 100%;
   white-space: nowrap;
   gap: 1rem;
-  border: 1px solid black;
+  border: 1px dotted grey;
 }
 
 .ticker-outer {
@@ -138,10 +138,6 @@ footer {
   }
 }
 
-main {
-  border-left: 1px solid black;
-}
-
 .spin {
   transition: transform 2s ease-in-out;
 }
@@ -150,13 +146,18 @@ main {
   transform: rotate(720deg);
 }
 
+div.cards, .annex {
+  gap: 4px;
+  padding: 4px;
+}
+
 div.cards {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
 }
 
-article.art {
-  border: 0.5px solid black;
+article {
+  border: 1px dotted grey;
 }
 
 article.art.wide {
@@ -187,14 +188,13 @@ article.art.wide {
   }
 }
 
-.bottom-align {
+.bottom-align {   
   display: flex;
   justify-content: flex-end;
   align-items: flex-end;
 }
 
 article.listing {
-  border: 0.5px solid black;
   display: flex;
   flex-direction: column;
   padding-bottom: 0.5ch;
@@ -280,7 +280,7 @@ article.listing.dark {
     display: initial;
     position: absolute;
     width: 400px;
-    border: 1px solid black;
+    border: 1px dotted grey;
     bottom: 0;
     right: 0;
     transform-origin: bottom right;
@@ -309,10 +309,6 @@ article.listing.dark {
 
     ul {
       columns: 1;
-
-      li {
-        border-right: none;
-      }
     }
   }
 
@@ -347,7 +343,7 @@ article.listing.dark {
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 16px;
-  border: 0.5px solid black;
+  border: 1px dotted grey;
 }
 
 @media (min-width: 600px) {
