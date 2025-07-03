@@ -109,3 +109,19 @@ blink, .blink { animation: blink 1s step-end infinite; }
 @keyframes blink {
   67% { opacity: 0 }
 }
+
+:focus,
+input:focus + label {
+    animation: flicker 50ms 2;
+}
+
+@keyframes flicker {
+    0%,
+    49% {
+        opacity: 0;
+    }
+    50%,
+    100% {
+        opacity: 1;
+    }
+}
