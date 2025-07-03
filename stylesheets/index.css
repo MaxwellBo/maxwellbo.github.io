@@ -51,22 +51,19 @@ body {
 
 nav {
   ul {
-    columns: 2;
-    column-gap: 0px;
-    max-width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 5px;
+    gap: 5px;
     list-style-type: none;
-    padding-inline-start: 0px;
 
     li {
       border: 1px grey dotted;
-      margin: 5px;
-      padding: 0.5rem;
-
+      padding: 1ch;
       /* :hover {
         background-color: linear-gradient(to right, yellow, lightsalmon, mediumslateblue, mistyrose, mediumturquoise);
       } */
     }
-
   }
 }
 
@@ -308,7 +305,7 @@ article.listing.dark {
     overflow-y: auto;
 
     ul {
-      columns: 1;
+      grid-template-columns: 1fr;
     }
   }
 
