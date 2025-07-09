@@ -553,14 +553,14 @@
         </article>
         <article class="art" id="webring">
           <center>
-            <img src="matcha.webp" alt="matcha" style="width: 64px; margin-bottom: 8px" />
+            <img src="https://www.matchamonday.net/matcha.webp" alt="matcha" style="width: 64px; margin-bottom: 8px" />
           </center>
           <p style="margin-bottom: 0.5ch"><strong>maxbo.me</strong> is part of the <strong><a href="https://www.matchamonday.net/">Matcha Monday Webring</a></strong></p>
           <div id="webring-links">
             <p>Loading links...</p>
           </div>
           <script type="module">
-            import { getRingNeighbors } from './webring.mjs';
+            import { getRingNeighbors } from 'https://matchamonday.net/webring.mjs';
             const neighbors = getRingNeighbors("https://maxbo.me");
             const container = document.getElementById('webring-links');
             container.innerHTML = `
