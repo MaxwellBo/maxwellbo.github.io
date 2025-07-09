@@ -49,6 +49,29 @@ body {
   display: none;
 }
 
+#webring {
+  padding: 1em;
+  text-align: center;
+  background-color: #d9e5c9;
+  font-family: 'Chicago', 'Courier New', Courier, monospace;
+  font-size: smaller;
+  color: #2f4f2f;
+
+  a {
+    color: #006400;
+    text-decoration: underline;
+  }
+
+  #webring-links {
+    div {
+      display: block;
+      margin-top: 16px;
+      margin-bottom: 16px;
+    }
+  }
+}
+
+
 nav {
   ul {
     display: grid;

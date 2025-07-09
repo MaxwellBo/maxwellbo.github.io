@@ -551,6 +551,28 @@
           </a>
           <time>December 2021</time>
         </article>
+        <article class="art" id="webring">
+          <center>
+            <img src="matcha.webp" alt="matcha" style="width: 64px; margin-bottom: 8px" />
+          </center>
+          <p><strong>maxbo.me</strong> is part of the <strong><a href="https://www.matchamonday.net/">Matcha Monday Webring</a></strong></p>
+          <div id="webring-links">
+            <p>Loading links...</p>
+          </div>
+          <script type="module">
+            import { getRingNeighbors } from './webring.mjs';
+            const neighbors = getRingNeighbors("https://maxbo.me");
+            const container = document.getElementById('webring-links');
+            container.innerHTML = `
+              <div>
+                <a href="${neighbors.previous.url}" >← ${neighbors.previous.name}</a>
+              </div>
+              <div>
+                <a href="${neighbors.next.url}" >${neighbors.next.name} → </a>
+              </div
+            `;
+          </script>
+        </article>
         <article id="weather" class="art">
           <p>I am currently living in Sydney, Australia.</p>
           <p>It is:</p>
