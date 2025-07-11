@@ -47,3 +47,23 @@
 .fake-receipt {
   font-family: "Fake Receipt";
 }
+
+
+@font-face {
+  font-family: 'Redaction 35';
+  src: url('../fonts/Redaction_35-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Redaction 35';
+  src: url('../fonts/Redaction_35-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+}
+@font-face {
+  font-family: 'Redaction 35';
+  src: url('../fonts/Redaction_35-Bold.woff2') format('woff2');
+  font-weight: bold;
+  font-style: normal;
+}
