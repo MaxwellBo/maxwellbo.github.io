@@ -1143,7 +1143,9 @@
           </a>
         </article>
         <style>
-          #come-and-take-it {
+            #come-and-take-it {
+            border-left: 8px solid #666;
+            padding-top: 1.5ch;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1151,7 +1153,19 @@
             margin: 0;
             background-color: white;
             font-family: Arial, sans-serif;
-          }
+            transform-origin: left center;
+            animation: wave 0.75s ease-in-out infinite;
+            transform-origin: bottom left;
+            }
+
+            @keyframes wave {
+              0%, 100% {
+                  transform: skewY(-0.5deg) rotateX(-2.5deg);
+              }
+              50% {
+                  transform: skewY(0.5deg) rotateX(2.5deg);
+              }
+            }
 
           .flag {
             background-color: white;
