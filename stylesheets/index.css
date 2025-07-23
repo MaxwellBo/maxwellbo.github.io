@@ -41,6 +41,10 @@ body {
   overflow-x: hidden;
 }
 
+body.ruined * {
+  border-radius: 24px;
+}
+
 #hover-img {
   display: none;
 }

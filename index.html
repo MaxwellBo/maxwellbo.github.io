@@ -245,6 +245,21 @@
     }
   </script>
   <p id="watermark">Max Bo</p>
+  <div style="position: absolute; top: 10px; right: 20px; z-index: 1001;">
+    <label style="cursor: pointer; font-size: 14px;">
+      <input type="checkbox" id="ruin-toggle" style="margin-right: 5px;">
+      ruin site?
+    </label>
+  </div>
+  <script>
+    document.getElementById('ruin-toggle').addEventListener('change', function(e) {
+      if (e.target.checked) {
+        document.body.classList.add('ruined');
+      } else {
+        document.body.classList.remove('ruined');
+      }
+    });
+  </script>
   <header>
     <p style="position: absolute; font-family: 'Fake Receipt', sans-serif; padding-left: 120px; font-size: smaller;">
       ... JOB: SWE ... AGE: 28 ... LOC: SYD ... LANG: EN-AU ... BLOOD: O+ ...</p>
