@@ -6,7 +6,7 @@
   <link rel="preconnect" href="https://static.observableusercontent.com" crossorigin>
   <link rel="preconnect" href="https://api.open-meteo.com" crossorigin>
   <link rel="preconnect" href="https://t0.gstatic.com" crossorigin>
-  
+
   <link rel="preload" href="stylesheets/reset.css" as="style">
   <link rel="preload" href="stylesheets/fonts.css" as="style">
   <link rel="preload" href="stylesheets/base.css" as="style">
@@ -16,9 +16,11 @@
   <style>
     .celine {
       font-family: 'Libertinus Serif', 'Times New Roman', serif;
+
       a {
         font-family: 'Libertinus Sans', 'Times New Roman', serif;
       }
+
       time {
         font-variant: small-caps;
       }
@@ -26,9 +28,9 @@
   </style>
 
   <style>
-   #flood-menu {
-    color: color(display-p3 0 1 1) !important;
-   }
+    #flood-menu {
+      color: color(display-p3 0 1 1) !important;
+    }
   </style>
   <!-- <link href="stylesheets/flood.css" rel="stylesheet" type="text/css" media="all" />
   <script src="flood.js"></script> -->
@@ -39,8 +41,10 @@
   <!-- Google fonts-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Quicksand:wght@300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap" rel="stylesheet">
-  
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Playfair+Display+SC:ital,wght@0,400;0,700;0,900;1,400;1,700;1,900&family=Quicksand:wght@300..700&family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&display=swap"
+    rel="stylesheet">
+
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135030873-1"></script>
   <script async type="module"
@@ -252,7 +256,7 @@
     </label>
   </div>
   <script>
-    document.getElementById('ruin-toggle').addEventListener('change', function(e) {
+    document.getElementById('ruin-toggle').addEventListener('change', function (e) {
       if (e.target.checked) {
         document.body.classList.add('ruined');
       } else {
@@ -282,7 +286,7 @@
 
         for (const item of items) {
           const title = transformTitle(item.getElementsByTagName("title")[0].textContent);
-          
+
           let link = item.getElementsByTagName("link")[0]
 
           if (!link) {
@@ -297,17 +301,17 @@
           const date = new Date(item.getElementsByTagName("pubDate")[0].textContent)
             .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
-            const a = document.createElement('a');
-            a.href = link;
-            a.className = 'item-title';
-            a.textContent = title;
-            
-            const time = document.createElement('time');
-            time.textContent = date;
-            
-            feed.append(a);
-            feed.append(document.createTextNode(' '));
-            feed.append(time);
+          const a = document.createElement('a');
+          a.href = link;
+          a.className = 'item-title';
+          a.textContent = title;
+
+          const time = document.createElement('time');
+          time.textContent = date;
+
+          feed.append(a);
+          feed.append(document.createTextNode(' '));
+          feed.append(time);
           feed.append(document.createTextNode(' ■ '));
         }
       }
@@ -458,7 +462,7 @@
           <p style="margin-bottom: 1ch">
             This website is listed in the <a href="https://internetphonebook.net/"><b>Internet Phone Book</b></a>
           </p>
-          <p style="margin-bottom: 1ch"> 
+          <p style="margin-bottom: 1ch">
             You can <a href="https://internetphonebook.net/#dial-a-site"><i>dial-this-site</i></a> at:
           </p>
           <div style="margin-bottom: 1ch">
@@ -468,7 +472,7 @@
           </div>
 
           <a href="is-in-the-internet-phone-book.html">
-            Read more 
+            Read more
           </a>
           <br />
           <time>May 2025</time>
@@ -523,7 +527,7 @@
           <time>March 2023</time>
         </article>
         <article id="clouds" class="art">
-            <a href="https://www.are.na/polina-lobanova/cloudy-web-0v48ssrwhwc" style="display: block; height: 100%;"></a>
+          <a href="https://www.are.na/polina-lobanova/cloudy-web-0v48ssrwhwc" style="display: block; height: 100%;"></a>
           </a>
         </article>
         <article class="listing observable">
@@ -532,7 +536,7 @@
               src="https://static.observableusercontent.com/thumbnail/401632affbbe6b54179ead19ee53dcb78f643a45f66287914b638a7d26aa0e93.jpg" />
             <p class="title">How to tell someone's age when all you know is their name</p>
           </a>
-            <time>March 2023</time>
+          <time>March 2023</time>
         </article>
         <article class="listing observable dark">
           <a href="https://observablehq.com/@mjbo/plotting-a-black-hole">
@@ -570,7 +574,8 @@
           <center>
             <img src="https://www.matchamonday.net/matcha.webp" alt="matcha" style="width: 64px; margin-bottom: 8px" />
           </center>
-          <p style="margin-bottom: 0.5ch"><strong>maxbo.me</strong> is part of the <strong><a href="https://www.matchamonday.net/#webring">Matcha Monday Webring</a></strong></p>
+          <p style="margin-bottom: 0.5ch"><strong>maxbo.me</strong> is part of the <strong><a
+                href="https://www.matchamonday.net/#webring">Matcha Monday Webring</a></strong></p>
           <div id="webring-links">
             <p>Loading links...</p>
           </div>
@@ -893,7 +898,7 @@
           <p class="description">Model UN committee management service</p>
           <time>October 2017 - Present</time>
         </article>
-        <article class="listing big"  id="poppenhuis">
+        <article class="listing big" id="poppenhuis">
           <model-viewer id='model' alt="Roman" src="dolls/Roman.glb" interaction-prompt="" progress-bar=""
             loading="auto" auto-rotate-delay="0" rotation-per-second="20deg" camera-controls auto-rotate
             touch-action="pan-y"></model-viewer>
@@ -911,7 +916,7 @@
           </a>
           <p class="description">Meetup</p>
           <time>
-            Next: <a href="https://maxbo.me/html-in-hyde/1/invitation.html">2 August 2025</a> <br/>
+            Next: <a href="https://maxbo.me/html-in-hyde/1/invitation.html">2 August 2025</a> <br />
             Prev: <a href="https://maxbo.me/html-in-hyde/0/invitation.html">21 July 2024</a>
           </time>
         </article>
@@ -944,7 +949,7 @@
             <p class="title">Informal voting in the 2019/2022 federal elections</p>
           </a>
         </article>
-        <article class="art" style="background-color: #171717; border-radius: 8px;"> 
+        <article class="art" style="background-color: #171717; border-radius: 8px;">
           <!-- https://x.com/natalie_thenerd/status/1831035235926155384?s=46&t=EdAVFnBtXHgoommIJOTYjw -->
           <img src="img/gc.png" />
         </article>
@@ -1136,6 +1141,48 @@
               src="https://static.observableusercontent.com/thumbnail/dd7f314aba0b35fccc0c74d0cee9fdadb2d374d280341cca90b5e1cd4286dd5b.jpg" />
             <p class="title">Regional NSW station patronage</p>
           </a>
+        </article>
+        <style>
+          #come-and-take-it {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.25ch;
+            margin: 0;
+            background-color: white;
+            font-family: Arial, sans-serif;
+          }
+
+          .flag {
+            background-color: white;
+            border: 2px solid #333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+          }
+
+          .star {
+            font-size: 40px;
+            line-height: 1;
+          }
+
+          .marquee-container {
+            background-color: black;
+            font-family: monospace;
+            width: 80%;
+            overflow: hidden;
+            padding: 10px 0;
+            color:  white;
+          }
+        </style>
+        <article id="come-and-take-it" class="listing art">
+          <div class="star">★</div>
+          <marquee class="marquee-container">
+            &lt;marquee&gt; &lt;/marquee&gt; &lt;center&gt; &lt;/center&gt;
+          </marquee>
+          <div>COME AND TAKE IT</div>
         </article>
       </div>
     </section>
