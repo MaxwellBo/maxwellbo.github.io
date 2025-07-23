@@ -11,6 +11,41 @@
   <input type="range" id="seedRange" min="0" max="50" value="15">
   <label for="seedRange">Random Seed: <span id="seedValue">15</span></label>
   <output></output>
+
+  <h2>Ruby Text Demonstration</h2>
+  
+  <p>Ruby text is used to show pronunciation or meaning above base text, commonly used in East Asian typography:</p>
+  
+  <pre><code>&lt;ruby&gt; 明日 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;Ashita&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt; &lt;/ruby&gt;</code></pre>
+  
+  <p>This renders as:</p>
+  <ruby> 明日 <rp>(</rp><rt>Ashita</rt><rp>)</rp> </ruby>
+  
+  <h3>Stacking Ruby Elements</h3>
+  
+  <p>You can nest ruby elements to create multiple layers:</p>
+  
+  <pre><code>&lt;ruby&gt;
+  &lt;ruby&gt; 明日 &lt;rt&gt;Ashita&lt;/rt&gt; &lt;/ruby&gt;
+  &lt;rt&gt;Tomorrow&lt;/rt&gt;
+&lt;/ruby&gt;</code></pre>
+  
+  <p>This creates a stack:</p>
+  <ruby>
+    <ruby> 明日 <rt>Ashita</rt> </ruby>
+    <rt>Tomorrow</rt>
+  </ruby>
+  
+  <p>Another stacking example:</p>
+  <ruby>
+    <ruby>
+      <ruby> 東京 <rt>とうきょう</rt> </ruby>
+      <rt>Tōkyō</rt>
+    </ruby>
+    <rt>Tokyo</rt>
+  </ruby>
+
+
 </body>
 
 <script>
