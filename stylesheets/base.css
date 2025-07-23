@@ -13,6 +13,13 @@ body {
   font-family: 'Ductus Geometric', sans-serif;
 } */
 
+a[href^="#"]:target::before {
+  content: '→ ';
+}
+
+:target {
+  background-color: color(display-p3 1 1 0);
+}
 
 time {
   font-size: 0.9rem;
