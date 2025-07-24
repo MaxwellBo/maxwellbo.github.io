@@ -206,6 +206,10 @@ article.art.wide {
 }
 
 @media (max-width: 639px) {
+  .only-show-on-desktop {
+    display: none;
+  }
+
   #model {
     width: 100%;
     height: 15ch;
