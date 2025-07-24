@@ -13,6 +13,11 @@
     }
 
 
+    body {
+      -webkit-filter: url("#distort");
+      filter: url("#distort");
+    }
+
     #receipt {
       font-family: "Fake Receipt";
       color: #333;
@@ -307,6 +312,18 @@
     }
     
   </script>
+  <svg version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="0" height="0">
+<defs>
+  <filter id="distort">
+    <feTurbulence baseFrequency="1 1" numOctaves="1" />
+    <feDisplacementMap in="SourceGraphic" scale="2" />
+  </filter>
+  <filter id="distort-mobile">
+    <feTurbulence baseFrequency="1 1" numOctaves="1" />
+    <feDisplacementMap in="SourceGraphic" scale="1.5" />
+  </filter>
+</defs>
+</svg>
 </body>
 
 </html>
