@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ruby</title>
+  <script src="tracery.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <style>
+    pre {
+      background-color: #f5f5f5;
+      padding-top: 1em;
+      padding-left: 1em;
+      padding-right: 1em;
+      border-radius: 4px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>
+    ruby
+  </h1>
+
+  <blockquote>
+    The <code>&lt;ruby&gt;</code> HTML element represents small annotations that are rendered above, below, or next to
+    base text, usually used for showing the pronunciation of East Asian characters. It can also be used for annotating
+    other kinds of text, but this usage is less common.
+  </blockquote>
+
+  from <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/ruby">MDN</a>
+
+  <p>For example:</p>
+
+  <pre>
+    <code>
+&lt;ruby&gt;
+  明日 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;Ashita&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;
+&lt;/ruby&gt;
+    </code>
+  </pre>
+
+  <p>renders as</p>
+
+  <ruby>明日 <rp>(</rp>
+    <rt>Ashita</rt>
+    <rp>)</rp>
+  </ruby>
+
+  <p>and</p>
+
+  <pre>
+    <code>
+&lt;ruby&gt;
+漢 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;Kan&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt; 字 &lt;rp&gt;(&lt;/rp&gt;&lt;rt&gt;ji&lt;/rt&gt;&lt;rp&gt;)&lt;/rp&gt;
+&lt;/ruby&gt;
+    </code>
+  </pre>
+
+  <p>renders as</p>
+
+  <ruby>
+    漢 <rp>(</rp>
+    <rt>Kan</rt>
+    <rp>)</rp> 字 <rp>(</rp>
+    <rt>ji</rt>
+    <rp>)</rp>
+  </ruby>
+
+
+  <p>Now I was curious as to whether you could nest <code>&lt;ruby&gt;</code> elements!</p>
+
+  <p>You can!</p>
+  <div id="exampletree">
+<ruby>
+  A
+  <rt>
+    <ruby>
+      B1
+      <rt>
+        <ruby>
+          C1
+          <rt>D1</rt>
+        </ruby>
+        <ruby>
+          C2
+          <rt>D2</rt>
+        </ruby>
+      </rt>
+    </ruby>
+    <ruby>
+      C1
+      <rt>
+        <ruby>
+          D1
+          <rt>
+            <ruby>
+              E1
+            </ruby>
+            <ruby>
+              E2
+            </ruby>
+          </rt>
+        </ruby>
+      </rt>
+    </ruby>
+  </rt>
+</ruby>
+  </div>
+
+  <p>This small tree is produced by the following HTML:</p>
+
+  <pre>
+    <code id="preview">
+
+    </code>
+  </pre>
+
+  <script>
+    document.getElementById('preview').textContent = document.getElementById('exampletree').innerHTML;
+  </script>
+
+
+  <input type="range" id="seedRange" min="0" max="50" value="17">
+  <label for="seedRange">Random Seed: <span id="seedValue">17</span></label>
+  <output></output>
+
+
+
+</body>
+
+<script>
+  const grammarSource = {
+    "origin": ["#line.comma# <br /> #line.comma# <br />  #line.comma# <br /> #line.comma# <br /> #line.comma# <br /> #line.ALLCAPS#!!!!"],
+    "line": ["you #kiki_verb# the #kiki_noun#", "it #observes# you", "<q>was it the #bouba#???</q>", "#sup# tears #fall# eveywhere", "#ruby_4#"],
+    "kiki_verb": ["stab ", "punch", "split"],
+    "kiki_adjective": ["funky"],
+    "observes": ["sees", "knows", "watches", "integrates", "discovers"],
+    "kiki_noun": ["urchin", "porcupine"],
+    "fall": ["drop", "fall", "land", "leak", "defeat", "end"],
+    "bouba": ["swan"],
+    "sup": ["<sup>#length#</sup>", "<sup>#length##sup#</sup>"],
+    "length": ["tall", "looming", "lifting", "imposing"],
+    // "thing_4": ["beam", "blok", "brik"],
+    "thing_4": ["a"],
+    // "ruby_4": [
+    //   "<h1><ruby> #thing_4# <rp>(</rp><rt>#thing_4# #ruby_4#   #thing_4# </rt><rp>)</rp> </ruby></h1>",
+    //   "#thing_4#"
+    // ],
+    "ruby_4": [
+      // "<h1><ruby> #thing_4# <rp>(</rp><rt>#ruby_4# #ruby_4#  #thing_4# </rt><rp>)</rp> </ruby></h1>"
+      "<ruby> #thing_4# <rt>#ruby_4# #ruby_4#  #thing_4# </rt></ruby>",
+      "#thing_4#"
+    ],
+    "ruby": ["<sup>#length#</sup>", "<sup>#length##sup#</sup>"],
+  }
+
+  const seedRange = document.getElementById('seedRange');
+  const seedValue = document.getElementById('seedValue');
+
+  const grammar = tracery.createGrammar(grammarSource);
+
+  seedRange.addEventListener('input', function () {
+    seedValue.textContent = this.value;
+    tracery._randomSeed = parseInt(this.value, 10);
+
+    const output = grammar.flatten("#origin#");
+    document.querySelector('output').innerHTML = `<p>${output}</p>`;
+  });
+
+  seedRange.dispatchEvent(new Event('input'));
+</script>
+
+</html>
