@@ -8,6 +8,23 @@
   <script src="tracery.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+  <script type="module">
+  import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.8.0';
+  import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+  import * as htl from 'https://esm.run/htl@0.3.1';
+
+  window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+  window.library = celine.library; /* @observablehq/stdlib */
+  window.Inputs = Inputs;
+  window.htl = htl;
+
+  registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+  </script>
+
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/celine@4.8.0/cell.css" />
+
   <style>
     pre {
       background-color: #f5f5f5;
@@ -124,54 +141,32 @@
   </script>
 
 
-  <input type="range" id="seedRange" min="0" max="50" value="17">
-  <label for="seedRange">Random Seed: <span id="seedValue">17</span></label>
-  <output></output>
-
-
-
 </body>
 
-<script>
+<script id="viewof seed" type="module">
+  celine.viewof('seed', () => {
+    return Inputs.range([0, 100], {label: "seed", step: 1, value: 26 });
+  });
+</script>
+
+<script class="echo" id="first" type="module" contenteditable="true">
   const grammarSource = {
-    "origin": ["#line.comma# <br /> #line.comma# <br />  #line.comma# <br /> #line.comma# <br /> #line.comma# <br /> #line.ALLCAPS#!!!!"],
-    "line": ["you #kiki_verb# the #kiki_noun#", "it #observes# you", "<q>was it the #bouba#???</q>", "#sup# tears #fall# eveywhere", "#ruby_4#"],
-    "kiki_verb": ["stab ", "punch", "split"],
-    "kiki_adjective": ["funky"],
-    "observes": ["sees", "knows", "watches", "integrates", "discovers"],
-    "kiki_noun": ["urchin", "porcupine"],
-    "fall": ["drop", "fall", "land", "leak", "defeat", "end"],
-    "bouba": ["swan"],
-    "sup": ["<sup>#length#</sup>", "<sup>#length##sup#</sup>"],
-    "length": ["tall", "looming", "lifting", "imposing"],
-    // "thing_4": ["beam", "blok", "brik"],
-    // "ruby_4": [
-    //   "<h1><ruby> #thing_4# <rp>(</rp><rt>#thing_4# #ruby_4#   #thing_4# </rt><rp>)</rp> </ruby></h1>",
-    //   "#thing_4#"
-    // ],
-    "ruby_4": [
-      // "<h1><ruby> #thing_4# <rp>(</rp><rt>#ruby_4# #ruby_4#  #thing_4# </rt><rp>)</rp> </ruby></h1>"
-      "<ruby> #thing_4# <rt>#ruby_4# #ruby_4#  #thing_4# </rt></ruby>",
-      "#thing_4#"
+    "nonterminal": [
+      "<ruby> #terminal# <rt>#nonterminal# #nonterminal#  #terminal# </rt></ruby>",
+      "#terminal#"
     ],
-    "thing_4": ["a"],
-    "ruby": ["<sup>#length#</sup>", "<sup>#length##sup#</sup>"],
+    "terminal": ["a"],
   }
 
-  const seedRange = document.getElementById('seedRange');
-  const seedValue = document.getElementById('seedValue');
+  celine.cell('first', ['seed'], (seed) => {
+    const grammar = tracery.createGrammar(grammarSource);
+    tracery._randomSeed = seed;
 
-  const grammar = tracery.createGrammar(grammarSource);
-
-  seedRange.addEventListener('input', function () {
-    seedValue.textContent = this.value;
-    tracery._randomSeed = parseInt(this.value, 10);
-
-    const output = grammar.flatten("#origin#");
-    document.querySelector('output').innerHTML = `<p>${output}</p>`;
-  });
-
-  seedRange.dispatchEvent(new Event('input'));
+    const output = grammar.flatten("#nonterminal#");
+    const outputElement = document.createElement('div');
+    outputElement.innerHTML = output;
+    return outputElement;
+  })
 </script>
 
 </html>
