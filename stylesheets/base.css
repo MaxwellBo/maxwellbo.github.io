@@ -132,3 +132,10 @@ input:focus + label {
         opacity: 1;
     }
 }
+
+
+.pixelated {
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}

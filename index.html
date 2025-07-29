@@ -1323,7 +1323,7 @@
     </section>
     <section>
       <h2>
-        <a id="art" href="#art">#</a>Art
+        <a id="art" href="#art">#</a>Art &amp; assets
       </h2>
       <div class="cards">
         <article class="listing observable dark">
@@ -1342,17 +1342,33 @@
             <p class="title">whale choir</p>
           </a>
         </article>
+        <article class="listing observable">
+          <a href="https://observablehq.com/@mjbo/chocolate-matter">
+            <img
+              src="https://static.observableusercontent.com/thumbnail/d6014a8bb32ce4d35c559a946855a191e341ea54ab4c604dbc20273d02921513.jpg" />
+            <p class="title">chocolate matter</p>
+          </a>
+        </article>
         <article class="listing">
           <a href="https://maxbo.me/cursors">
             <img src="img/cursors.webp" />
             <p class="title">cursors</p>
           </a>
         </article>
-        <article class="listing observable">
-          <a href="https://observablehq.com/@mjbo/chocolate-matter">
-            <img
-              src="https://static.observableusercontent.com/thumbnail/d6014a8bb32ce4d35c559a946855a191e341ea54ab4c604dbc20273d02921513.jpg" />
-            <p class="title">chocolate matter</p>
+        <article class="listing" style="background-color: #F7CECD;">
+          <a href="https://maxbo.me/docomo">
+            <div class="preview">
+              <!-- <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0033.GIF" />
+              <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0245.GIF" />
+              <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0169.GIF" />
+              <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0344.GIF" />
+              <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0350.GIF" />
+              <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0223.GIF" />
+              <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0135.GIF" />
+              <img class="emoji pixelated" src="https://maxbo.me/docomo/Decomail-Pictograph/DIMG0124.GIF" /> -->
+              <img class="notpreview pixelated" src="iloveyou.gif" />
+            </div>
+            <p class="title">DoCoMo P903iTV visual assets</p>
           </a>
         </article>
       </div>
@@ -1798,6 +1814,7 @@
         const img = document.createElement('img');
         img.src = e.target.src;
         img.id = 'hover-img';
+        img.style.imageRendering = 'pixelated';
         document.body.appendChild(img);
       });
 

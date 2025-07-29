@@ -228,9 +228,15 @@ article.listing {
   padding-bottom: 0.5ch;
   /* backdrop-filter: blur(1px); */
 
-  img {
+  img:not(.notpreview), .preview {
     aspect-ratio: 4/3;
     object-fit: cover;
+  }
+
+  img.emoji {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
   }
 
   p.title {
