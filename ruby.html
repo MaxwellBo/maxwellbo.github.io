@@ -9,7 +9,7 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
   <script type="module">
-  import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@4.8.0';
+  import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@6.0.0';
   import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
   import * as htl from 'https://esm.run/htl@0.3.1';
 
@@ -23,7 +23,7 @@
 
   <link 
     rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@4.8.0/cell.css" />
+    href="https://esm.sh/jsr/@celine/celine@6.0.0/cell.css" />
 
   <link 
     rel="stylesheet" 
@@ -122,24 +122,30 @@
     document.getElementById('preview').textContent = document.getElementById('exampletree').innerHTML.trim();
   </script>
 
+  <p>
+    We can use <a href="https://github.com/galaxykate/tracery">tracery</a>, which does a random expansion
+    expansion of <a href="https://en.wikipedia.org/wiki/Formal_grammar">formal grammars</a>.
+  </p>
 
 
-<script id="viewof seed" type="module">
+<script data-display="viewof seed" type="module">
   celine.viewof('seed', () => {
     return Inputs.range([0, 100], {label: "seed", step: 1, value: 26 });
   });
 </script>
 
-<script class="echo" id="first" type="module" contenteditable="true">const grammarSource = {
-  "nonterminal": [
-    "<ruby> #terminal# <rt>#nonterminal# #nonterminal#  #terminal# </rt></ruby>",
-    "#terminal#"
-  ],
-  "terminal": ["a"],
-}
-
+<script class="echo" data-display="first" type="module" contenteditable="true">
 celine.cell('first', ['seed'], (seed) => {
-  const grammar = tracery.createGrammar(grammarSource);
+
+  const rules = {
+    "nonterminal": [
+      "<ruby> #terminal# <rt>#nonterminal# #nonterminal#  #terminal# </rt></ruby>",
+      "#terminal#"
+    ],
+    "terminal": ["a"],
+  }
+
+  const grammar = tracery.createGrammar(rules);
   tracery._randomSeed = seed;
 
   const output = grammar.flatten("#nonterminal#");
@@ -148,6 +154,121 @@ celine.cell('first', ['seed'], (seed) => {
   return outputElement;
 })
 </script>
+
+
+<script data-display="viewof seed2" type="module">
+  celine.viewof('seed2', () => {
+    return Inputs.range([0, 100], {label: "seed", step: 1, value: 18 });
+  });
+</script>
+
+<script class="echo" data-display="second" type="module" contenteditable="true">
+celine.cell('second', ['seed2'], (seed) => {
+  const rules = {
+    "nonterminal": [
+      "<ruby> #terminal# <rt>#nonterminal# #nonterminal#</rt></ruby>",
+      "<ruby> #terminal# <rt>#nonterminal#</rt></ruby>",
+      "#terminal#"
+    ],
+    "terminal": ["a"],
+  }
+  const grammar = tracery.createGrammar(rules);
+  tracery._randomSeed = seed + 10; // offset to get different results
+
+  const output = grammar.flatten("#nonterminal#");
+  const outputElement = document.createElement('div');
+  outputElement.innerHTML = output;
+  return outputElement;
+})
+</script>
+
+<script data-display="viewof seed3" type="module">
+  celine.viewof('seed3', () => {
+    return Inputs.range([0, 100], {label: "seed", step: 1, value: 51 });
+  });
+</script>
+
+<script class="echo" data-display="third" type="module" contenteditable="true">
+celine.cell('third', ['seed3'], (seed) => {
+  const rules = {
+    "root": [
+      "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
+      "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
+      "#leaf#"
+    ],
+    "nonterminal": [
+      "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
+      "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
+      "#leaf#"
+    ],
+    "branch": ["枝"],
+    "leaf": ["葉"],
+  }
+  
+  const grammar = tracery.createGrammar(rules);
+  tracery._randomSeed = seed + 20;
+
+  const output = grammar.flatten("#root#");
+  const outputElement = document.createElement('div');
+  outputElement.innerHTML = output;
+  return outputElement;
+})
+</script>
+
+<script data-display="viewof seed4" type="module">
+  celine.viewof('seed4', () => {
+    return Inputs.range([0, 100], {label: "seed", step: 1, value: 51 });
+  });
+</script>
+
+<script class="echo" data-display="fourth" type="module" contenteditable="true">
+celine.cell('fourth', ['seed4'], (seed) => {
+  const rules = {
+    "nonterminal": ["#left#", "#right#"],
+    "left": [
+      "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
+      "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
+      "#leaf#"
+    ],
+    "right": [
+      "<ruby>#branch# <rt>#nonterminal# #nonterminal#</rt></ruby>",
+      "<ruby>#branch# <rt>#nonterminal#</rt></ruby>",
+      "#leaf#"
+    ],
+    "branch": ["枝"],
+    "leaf": ["葉"],
+  }
+  
+  const grammar = tracery.createGrammar(rules);
+  tracery._randomSeed = seed + 20;
+
+  const output = grammar.flatten("#nonterminal#");
+  const outputElement = document.createElement('div');
+  outputElement.innerHTML = output;
+  return outputElement;
+})
+</script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const links = document.querySelectorAll('a[href]');
+    
+    links.forEach(link => {
+      const url = link.href;
+      const faviconUrl = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=64&url=${encodeURIComponent(url)}`;
+      
+      const img = document.createElement('img');
+      img.src = faviconUrl;
+      img.className = 'favicon';
+
+      link.insertBefore(img, link.firstChild);
+      link.insertBefore(document.createTextNode(' '), link.firstChild.nextSibling);
+    });
+  });
+</script>
+
+
+
 
 </main>
 </body>
