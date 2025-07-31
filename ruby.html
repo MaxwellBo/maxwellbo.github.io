@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ruby</title>
+  <title>&lt;ruby&gt; explorations</title>
   <script src="tracery.js"></script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
@@ -44,8 +44,14 @@
 <body>
   <main>
   <h1>
-    ruby
+    &lt;ruby&gt; explorations
   </h1>
+
+  <div class="authors">
+    <div class="author">
+      <span class="author-name"><a href="https://maxbo.me">Max Bo</a></span>
+    </div>
+  </div>
 
   <blockquote>
     The <code>&lt;ruby&gt;</code> HTML element represents small annotations that are rendered above, below, or next to
@@ -134,7 +140,7 @@
   });
 </script>
 
-<script class="echo" data-display="first" type="module" contenteditable="true">
+<script class="echo reflect" data-display="first" type="module" contenteditable="true">
 celine.cell('first', ['seed'], (seed) => {
 
   const rules = {
@@ -162,7 +168,7 @@ celine.cell('first', ['seed'], (seed) => {
   });
 </script>
 
-<script class="echo" data-display="second" type="module" contenteditable="true">
+<script class="echo reflect" data-display="second" type="module" contenteditable="true">
 celine.cell('second', ['seed2'], (seed) => {
   const rules = {
     "nonterminal": [
@@ -188,7 +194,7 @@ celine.cell('second', ['seed2'], (seed) => {
   });
 </script>
 
-<script class="echo" data-display="third" type="module" contenteditable="true">
+<script class="echo reflect" data-display="third" type="module" contenteditable="true">
 celine.cell('third', ['seed3'], (seed) => {
   const rules = {
     "root": [
@@ -221,7 +227,7 @@ celine.cell('third', ['seed3'], (seed) => {
   });
 </script>
 
-<script class="echo" data-display="fourth" type="module" contenteditable="true">
+<script class="echo reflect" data-display="fourth" type="module" contenteditable="true">
 celine.cell('fourth', ['seed4'], (seed) => {
   const rules = {
     "nonterminal": ["#left#", "#right#"],
@@ -267,7 +273,9 @@ celine.cell('fourth', ['seed4'], (seed) => {
   });
 </script>
 
-
+<p>
+  Built with <a href="https://maxbo.me/celine">@celine/celine</a>
+</p>
 
 
 </main>
