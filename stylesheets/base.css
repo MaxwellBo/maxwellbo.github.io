@@ -14,7 +14,7 @@ body {
 } */
 
 a[href^="#"]:target::before {
-  content: '→ ';
+  content: '☞ ';
 }
 
 :target {
