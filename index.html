@@ -66,6 +66,7 @@
   <link href="stylesheets/base.css" rel="stylesheet">
   <link href="stylesheets/utils.css" rel="stylesheet">
   <link href="stylesheets/index.css" rel="stylesheet">
+  <link href="stylesheets/weather.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="favicon.ico">
   <link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide Atom feed" />
 
@@ -198,6 +199,27 @@
 </head>
 
 <body>
+  <div id="rain">
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+    <div class="drop"></div>
+  </div>
   <img id="draggable-postit" src="me.webp"
     style="position: absolute; top: 5px; left: 20px; width: 80px; cursor: grab; z-index: 1000;" />
   <script>
@@ -803,6 +825,15 @@
                     me.style.background = 'linear-gradient(90deg, #696969, #8B8B8B)';
                     conditionsEmoji.textContent = '❔';
                     break;
+                }
+
+                if (
+                  [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(data.current.weather_code)
+                ) {
+                  const rainDiv = document.getElementById('rain');
+                  if (rainDiv) {
+                    rainDiv.style.display = 'block';
+                  }
                 }
 
 
