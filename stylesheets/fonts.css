@@ -67,3 +67,12 @@
   font-weight: bold;
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'basiic';
+  src: url('../fonts/basiic.ttf') format('truetype');
+}
+
+.basiic {
+  font-family: 'basiic', sans-serif;
+}
