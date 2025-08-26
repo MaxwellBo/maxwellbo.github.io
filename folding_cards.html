@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Folding Cards</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .foldingCardGroup {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 400px;
+      perspective-origin: center;
+      width: var(--reqWidth);
+    }
+
+    .foldingCard1,
+    .foldingCard2 {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 200px;
+      width: 200px;
+      background-color: rgba(255, 254, 125, 0.5);
+      border: 1px solid rgba(255, 254, 125, 0.5);
+      min-width: 200px;
+    }
+
+    .foldingCard1 {
+      transform: rotateY(var(--negrotation));
+      transform-origin: right;
+    }
+
+    .foldingCard2 {
+      transform: rotateY(var(--rotation));
+      transform-origin: left;
+    }
+
+    .simple-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+  <script type="module">
+    import { h, render } from 'https://cdn.skypack.dev/preact';
+    import { useState, useEffect, useRef } from 'https://cdn.skypack.dev/preact/hooks';
+    import htm from 'https://cdn.skypack.dev/htm';
+
+    const html = htm.bind(h);
+
+    const FoldingCards = ({ dimensions = { width: window.innerWidth, height: window.innerHeight } }) => {
+      const [rotation, setRotation] = useState(0);
+      const card1Ref = useRef(null);
+      const requiredWidthOfCard = dimensions.width / 8;
+
+      useEffect(() => {
+        if (card1Ref.current) {
+          const width = card1Ref.current.getBoundingClientRect().width;
+          if (width - requiredWidthOfCard > 2) {
+            setRotation(rotation + 0.1);
+          } else if (width - requiredWidthOfCard < -2) {
+            setRotation(Math.max(rotation - 0.1, 0));
+          }
+        }
+      }, [card1Ref.current, requiredWidthOfCard, rotation]);
+
+      const cardWidth = card1Ref.current?.getBoundingClientRect().width || 140;
+
+      return html`
+        <div class="p-4">
+          <div class="flex items-center justify-center" 
+               style=${{
+          '--reqWidth': `${cardWidth * 2}px`,
+          '--rotation': `${rotation}deg`,
+          '--negrotation': `${-1 * rotation}deg`,
+          width: dimensions.width,
+          height: dimensions.height,
+          backgroundColor: 'rgba(0,0,0,0.5)'
+        }}>
+            ${Array.from({ length: 3 }).map((_, index) => html`
+              <div key=${index} class="foldingCardGroup">
+                <div ref=${index === 0 ? card1Ref : null} class="foldingCard1">
+                  <div class="simple-card">Card ${5 + index * 2}</div>
+                </div>
+                <div class="foldingCard2">
+                  <div class="simple-card">Card ${1 + index * 2 + 1}</div>
+                </div>
+              </div>
+            `)}
+          </div>
+        </div>
+      `;
+    };
+
+    // Render the app
+    render(html`<${FoldingCards} />`, document.getElementById('app'));
+  </script>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+
+</html>

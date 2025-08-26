@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>I do not like Web Components</title>
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/celine@4.8.0/cell.css" />
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/libertine@10.0.0/libertine.css" />
+</head>
+<body>
+  <main>
+    <h1>I do not like Web Components</h1>
+
+    <p>
+      I have recently had the displeasure of using Web Components
+    </p>
+
+
+    <h2>The shadow DOM always encapsulates CSS</h2>
+
+    <p>
+    </p>
+
+    <h2>The lifecycle is inscrutable</h2>
+
+<script class="echo">class MyComponent extends HTMLElement {
+  constructor() {
+    super();
+    const shadow = this.attachShadow({mode: 'open'});
+    shadow.innerHTML = `
+      <style>
+        p {
+          color: red;
+        }
+      </style>
+      <p>Hello, world!</p>
+    `;
+  }
+
+  connectedCallback() {
+    console.log('connected');
+  }
+
+  get foo() {
+    return 'foo';
+  }
+}
+
+const el = document.createElement('my-component');
+
+console.log("foo", el.foo);
+console.log(el instanceof MyComponent);
+
+customElements.define('my-component', MyComponent);
+
+console.log("foo", el.foo);
+console.log(el instanceof MyComponent);
+
+
+
+customElements.whenDefined('my-component').then(() => {
+  console.log('defined');
+console.log("foo", el.foo);
+  console.log(el instanceof MyComponent);
+});
+
+// document.getElementsByTagName('main')[0].appendChild(el);
+// console.log("foo", el.foo);
+// console.log(el instanceof MyComponent);
+
+</script>
+
+
+  </main>
+</body>
+</html>
