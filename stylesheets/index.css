@@ -180,7 +180,11 @@ div.cards {
   grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
 }
 
-article {
+article.listing {
+  border: 1px dotted grey;
+}
+
+article.art {
   border: 1px dotted grey;
 }
 
