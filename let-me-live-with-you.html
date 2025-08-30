@@ -32,6 +32,33 @@
   #about-me > h2 {
     margin: 1px;
   }
+
+  .intro-section {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 2ch;
+    margin-bottom: 2ch;
+  }
+
+  .intro-text {
+    flex: 1 1 0;
+  }
+
+  .intro-img {
+    flex: 0 0 auto;
+  }
+
+  @media (max-width: 700px) {
+    .intro-section {
+      flex-direction: column;
+      gap: 1ch;
+    }
+    .intro-img img {
+      width: 100%;
+      max-width: 100vw;
+    }
+  }
 </style>
 <body>
   <main>
@@ -40,29 +67,35 @@
     </div>
     <h1>max's <i>let me live with you</i> site</h1>
     <i>31st August 2025</i>
-    <p>
-      my name is Max. i'm 28. i just moved from Sydney to New York City. i was previously working as a software engineer at Canva but i'm about to start work at Meta.
-    </p>
-    <p>
-      i have lived with housemates for the past 6 years and they are now some of my closest friends. i'm looking for new housemates to live with (either renting with, or subletting from).
-    </p>
-    <img src="https://maxbo.me/html-in-hyde/0/photos/b.JPG" style="width: 60ch"/>
+    <div class="intro-section">
+      <div class="intro-text">
+      <p>
+        my name is Max. i'm 28. i just moved from Sydney to New York City. i was previously working as a software engineer at Canva but i'm about to start work at Meta.
+      </p>
+      <p>
+        i have lived with housemates for the past 6 years and they are now some of my closest friends. i'm looking for new housemates to live with (either renting with, or subletting from).
+      </p>
+      </div>
+      <div class="intro-img">
+      <img src="https://maxbo.me/html-in-hyde/0/photos/b.JPG" style="width: 60ch" alt="Max in NYC"/>
+      </div>
+    </div>
     <section id="about-me">
     <h2>
       about me
     </h2>
     <p>
-      i play badminton a lot --- pool and mahjong <img class="tiny-img" src="img/mahjong.JPG" /> sometimes
+      i play badminton a lot --- pool and <a href="img/mahjong.JPG">mahjong</a> <img class="tiny-img" src="img/mahjong.JPG" /> sometimes
     </p>
     <p>
-      i play the classical guitar <img class="tiny-img" src="img/classical.jpg" />. i love live music, particularly jazz, sludge metal and IDM.
+      i play the <a href="img/classical.jpg">classical guitar</a> <img class="tiny-img" src="img/classical.jpg" />. i love live music, particularly jazz, sludge metal and IDM.
       i <a href="https://rateyourmusic.com/~mbo">rate every album</a> i ever listen to.
     </p>
     <p>
-      i love da computer. i make <a href="index.html">silly websites and graphs</a>. i frequently tend to my <a href="https://www.are.na/max-bo">are.na</a>. i run <a href="https://maxbo.me/html-in-hyde">HTML picnics</a> <img class="tiny-img" src="img/ifb.JPG" /> attend <a href="https://www.matchamonday.net">matcha meetups</a>. i print papers off arxiv to take to the cafe.
+      i love <a href="img/computer.JPG"></a>da computer</a> <img class="tiny-img" src="img/computer.JPG" />. i make <a href="index.html">silly websites and graphs</a>. i frequently tend to my <a href="https://www.are.na/max-bo">are.na</a>. i run <a href="https://maxbo.me/html-in-hyde">HTML picnics</a> <img class="tiny-img" src="img/ifb.JPG" /> attend <a href="https://www.matchamonday.net">matcha meetups</a>. i print papers off arxiv to take to the cafe.
     </p>
     <p>
-      i am a chronic extrovert; i rarely tire of people. i almost always eat dinner out, as i cannot (and do not attempt to) cook. i enjoy winning at pub trivia with teammates with "special interests".
+      i am a chronic extrovert; i rarely tire of people. i almost always eat dinner out, as i cannot (and do not attempt to) cook. i enjoy <a href="img/trivia.JPG">winning at pub trivia</a> <img class="tiny-img" src="img/trivia.JPG" /> with teammates with "special interests".
     </p>
     <p>
       i am just starting to pick up pottery. i intend to start dinghy sailing again. i dream of learning to use a loom.
