@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- <link href="stylesheets/reset.css" rel="stylesheet"/>
-  <link href="stylesheets/fonts.css" rel="stylesheet"/>
-  <link href="stylesheets/base.css" rel="stylesheet"/>
-  <link href="stylesheets/utils.css" rel="stylesheet"/>
-  <link href="stylesheets/page.css" rel="stylesheet"/> -->
   <title>max's "let me live with you" site</title>
 </head>
 <style>
   body {
     background-color: rgb(231, 231, 231);
+  }
+
+  .tiny-img {
+    height: 3ch;
+    cursor: pointer;
   }
 
   main {
@@ -36,7 +36,7 @@
 <body>
   <main>
     <div>
-      <a href="/index.html">← max bo</a>
+      <a href="index.html">← max bo</a>
     </div>
     <h1>max's <i>let me live with you</i> site</h1>
     <i>31st August 2025</i>
@@ -46,20 +46,20 @@
     <p>
       i have lived with housemates for the past 6 years and they are now some of my closest friends. i'm looking for new housemates to live with (either renting with, or subletting from).
     </p>
-    <!-- <img src="me.webp" style="width: 20ch; text-align: right;"/> -->
+    <img src="https://maxbo.me/html-in-hyde/0/photos/b.JPG" style="width: 60ch"/>
     <section id="about-me">
     <h2>
       about me
     </h2>
     <p>
-      i play badminton a lot --- pool and mahjong sometimes
+      i play badminton a lot --- pool and mahjong <img class="tiny-img" src="img/mahjong.JPG" /> sometimes
     </p>
     <p>
-      i play the classical guitar. i love live music, particularly jazz, sludge metal and IDM.
+      i play the classical guitar <img class="tiny-img" src="img/classical.jpg" />. i love live music, particularly jazz, sludge metal and IDM.
       i <a href="https://rateyourmusic.com/~mbo">rate every album</a> i ever listen to.
     </p>
     <p>
-      i love da computer. i make <a href="index.html">silly websites and graphs</a>. i frequently tend to my <a href="https://www.are.na/max-bo">are.na</a>. i run <a href="https://maxbo.me/html-in-hyde">HTML picnics</a> and attend <a href="https://www.matchamonday.net">matcha meetups</a>. i print papers off arxiv to take to the cafe.
+      i love da computer. i make <a href="index.html">silly websites and graphs</a>. i frequently tend to my <a href="https://www.are.na/max-bo">are.na</a>. i run <a href="https://maxbo.me/html-in-hyde">HTML picnics</a> <img class="tiny-img" src="img/ifb.JPG" /> attend <a href="https://www.matchamonday.net">matcha meetups</a>. i print papers off arxiv to take to the cafe.
     </p>
     <p>
       i am a chronic extrovert; i rarely tire of people. i almost always eat dinner out, as i cannot (and do not attempt to) cook. i enjoy winning at pub trivia with teammates with "special interests".
@@ -77,4 +77,32 @@
     </p>
   </main>
 </body>
+
+<script>
+document.querySelectorAll('.tiny-img').forEach(img => {
+  img.addEventListener('mouseenter', function() {
+    const floatingImg = document.createElement('img');
+    floatingImg.src = img.src;
+    floatingImg.style.position = 'fixed';
+    floatingImg.style.bottom = '20px';
+    floatingImg.style.right = '20px';
+    floatingImg.style.maxWidth = '50vw';
+    floatingImg.style.maxHeight = '80vh';
+    floatingImg.style.width = 'auto';
+    floatingImg.style.height = 'auto';
+    floatingImg.style.zIndex = '9999';
+    floatingImg.className = 'floating-tiny-img';
+    document.body.appendChild(floatingImg);
+
+    img._floatingImg = floatingImg;
+  });
+
+  img.addEventListener('mouseleave', function() {
+    if (img._floatingImg) {
+      img._floatingImg.remove();
+      img._floatingImg = null;
+    }
+  });
+});
+</script>
 </html>
