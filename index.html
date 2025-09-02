@@ -221,7 +221,7 @@
     <div class="drop"></div>
   </div>
   <img id="draggable-postit" src="me.webp"
-    style="position: absolute; top: 5px; left: 20px; width: 80px; cursor: grab; z-index: 1000;" />
+    style="position: absolute; top: 5px; left: 20px; width: 120px; cursor: grab; z-index: 1000;" />
   <script>
     const postit = document.getElementById('draggable-postit');
     let isDragging = false;
@@ -285,16 +285,144 @@
       }
     });
   </script>
-  <header>
-    <p style="position: absolute; font-family: 'Fake Receipt', sans-serif; padding-left: 120px; font-size: smaller;">
-      ... JOB: SWE ... AGE: 28 ... LOC: SYD ... LANG: EN-AU ... BLOOD: O+ ...</p>
 
-    </p>
-    <marquee>
-      <h1 id="wordmark" style="display: inline-block;">
-        ← Max Bo
-      </h1>
-    </marquee>
+  <header>
+
+    <div id="receipt" style="overflow-y: hidden">
+      <div class="jolty-marquee-vertical">
+        <div id="inner-receipt" style="text-align: center;">
+          <h1>Max Bo</h1>
+          <br />
+
+          <table style="width: 100%; font-size: 1em;">
+            <tbody>
+              <tr>
+                <td style="text-align: left;">JOB:</td>
+                <td style="text-align: right;">SWE</td>
+              </tr>
+              <tr>
+                <td style="text-align: left;">AGE:</td>
+                <td style="text-align: right;">28</td>
+              </tr>
+              <tr>
+                <td style="text-align: left;">LOC:</td>
+                <td style="text-align: right;">SYD</td>
+              </tr>
+              <tr>
+                <td style="text-align: left;">LANG:</td>
+                <td style="text-align: right;">EN-AU</td>
+              </tr>
+              <tr>
+                <td style="text-align: left;">BLOOD:</td>
+                <td style="text-align: right;">O+</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <center>
+           -----------------
+          </center>
+
+          <div>
+            <table>
+              <tbody>
+                <tr>
+                  <td><span class="center" id="receipt-date"></span>&nbsp;&nbsp;&nbsp;<span class="center"
+                      id="receipt-time"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+
+          <!-- <a href="old.html">← old site</a> -->
+          <center>
+           -----------------
+          </center>
+          <p>
+          DO NOT EXPOSE TO WATER
+          </p>
+          <center>
+           -----------------
+          </center>
+
+         
+          <!-- <img src="img/ati.png" style="max-height: 32px;" /> -->
+          <!-- <span id="userAgent"></span> -->
+
+          <!-- <div class="ticker-outer">
+          <div class="ticker-inner">
+            <span>PLEASE</span>
+            <span>PLEASE</span>
+          </div>
+        </div> -->
+
+
+          <div><span id="size"></span>  transferred</div>
+
+          <center>
+           -----------------
+          </center>
+
+
+          <span>thanks for visiting</span>
+
+          <center>
+            <img src="img/qr.png" style="width: 64px; image-rendering: pixelated; margin-top: 4px;" />
+          </center>
+
+
+          <p>
+            <img src="img/graphic-recycle.svg" style="display: inline-block"/>
+            <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2025
+          </p>
+
+          <script>
+            window.addEventListener('load', () => {
+              // const resources = performance.getEntriesByType('resource');
+              const resources = performance.getEntries();
+              let totalSize = 0;
+
+              resources.forEach(resource => {
+                totalSize += resource.transferSize || 0;
+              });
+
+              const size = document.getElementById('size');
+              size.innerText = `${formatBytes(totalSize)}`;
+            });
+
+            function formatBytes(bytes, decimals = 2) {
+              if (bytes === 0) return '0 Bytes';
+              const k = 1024;
+              const dm = decimals < 0 ? 0 : decimals;
+              const sizes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
+              const i = Math.floor(Math.log(bytes) / Math.log(k));
+              return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i];
+            }
+
+          </script>
+
+        </div>
+        </div>
+      </div>
+    </div>
+    <script type="module">
+      const date = new Date();
+      document.getElementById('receipt-date').innerText = date.toLocaleDateString();
+      document.getElementById('receipt-time').innerText = date.toLocaleTimeString();
+    </script>
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="0" height="0">
+      <defs>
+        <filter id="distort">
+          <feTurbulence baseFrequency="1 1" numOctaves="1"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" scale="2"></feDisplacementMap>
+        </filter>
+        <filter id="distort-mobile">
+          <feTurbulence baseFrequency="1 1" numOctaves="1"></feTurbulence>
+          <feDisplacementMap in="SourceGraphic" scale="1.5"></feDisplacementMap>
+        </filter>
+      </defs>
+    </svg>
     <script type="module">
       async function renderRss(feedUrl, elementId, transformTitle = (title) => title) {
         const response = await fetch(feedUrl);
@@ -368,14 +496,6 @@
       }
 
       window.renderAtom = renderAtom;
-    </script>
-    <marquee id="ticker" class="dindong" scrollamount="7">
-      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
-      <a href="atom.xml">⚛ atom.xml</a>
-      󱠡
-    </marquee>
-    <script type="module">
-      renderAtom('atom.xml', 'ticker');
     </script>
   </header>
   <nav>
@@ -474,6 +594,14 @@
     </ul>
   </nav>
   <main>
+    <marquee id="ticker" class="dindong" scrollamount="7">
+      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+      <a href="atom.xml">⚛ atom.xml</a>
+      󱠡
+    </marquee>
+    <script type="module">
+      renderAtom('atom.xml', 'ticker');
+    </script>
     <section>
       <h2>
         <a id="articles" href="#articles">#</a>Articles
@@ -1004,7 +1132,7 @@
         </article>
         <article>
           <img src="vectors/unfenced_road.svg" />
-            <svg width="16" height="40" style="display: block; margin: 0 auto;">
+          <svg width="16" height="40" style="display: block; margin: 0 auto;">
             <rect x="6" y="0" width="3" height="40" fill="#999" />
             <rect x="9" y="0" width="3" height="40" fill="#666" />
           </svg>
@@ -1029,10 +1157,6 @@
               src="https://static.observableusercontent.com/thumbnail/abb98ad26880210a2a2a89811d0c14237daea59eebee3debcd783bc8883c4696.jpg" />
             <p class="title">Foundation shades</p>
           </a>
-        </article>
-        <article class="art">
-          <img style="width:100%; image-rendering: pixelated;"
-            src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://maxbo.me" />
         </article>
         <article class="listing observable">
           <a href="https://observablehq.com/@55th/every-fragrance-at-once">
@@ -1181,7 +1305,7 @@
           </a>
         </article>
         <style>
-            #come-and-take-it {
+          #come-and-take-it {
             border-left: 8px solid #C0C0C0;
             border-left-style: ridge;
             padding-top: 1.25ch;
@@ -1200,16 +1324,19 @@
             transform-origin: left center;
             animation: wave 0.75s ease-in-out infinite;
             transform-origin: bottom left;
+          }
+
+          @keyframes wave {
+
+            0%,
+            100% {
+              transform: skewY(-0.5deg) rotateX(-2.5deg);
             }
 
-            @keyframes wave {
-              0%, 100% {
-                  transform: skewY(-0.5deg) rotateX(-2.5deg);
-              }
-              50% {
-                  transform: skewY(0.5deg) rotateX(2.5deg);
-              }
+            50% {
+              transform: skewY(0.5deg) rotateX(2.5deg);
             }
+          }
 
           .flag {
             background-color: white;
@@ -1232,7 +1359,7 @@
             width: 80%;
             overflow: hidden;
             padding: 10px 0;
-            color:  white;
+            color: white;
           }
         </style>
         <article id="come-and-take-it" class="listing art">
@@ -1489,6 +1616,101 @@
           </a>
           <p class="description">UQ-exclusive schedule sharing app</p>
         </article>
+        <article class="art">
+          <div id="battery" style="min-width: 50px;"></div>
+          <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
+            <circle id="cursor" cx="50" cy="50" r="4" fill="#FF00FF" />
+          </svg>
+
+          <span id="language"></span>
+          <!-- <div>
+      <p><span id="mousex"></span></p>
+      <p><span id="mousey"></span></p>
+    </div> -->
+          <script>
+            function updateWidget() {
+              const svg = document.getElementById('mouseWidget');
+              const rect = document.getElementById('screen');
+              const aspectRatio = window.innerWidth / window.innerHeight;
+              svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
+            }
+
+            function updateDotPosition(event) {
+              const dot = document.getElementById('cursor');
+              const x = (event.clientX / window.innerWidth) * 100;
+              const y = (event.clientY / window.innerHeight) * 100;
+              dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
+              dot.setAttribute('cy', y);
+            }
+
+            function updateMousePosition(event) {
+              document.getElementById('mousex').textContent = "x: " + event.clientX;
+              document.getElementById('mousey').textContent = "y:" + event.clientY;
+            }
+
+            window.addEventListener('resize', updateWidget);
+            document.addEventListener('mousemove', updateDotPosition);
+            // document.addEventListener('mousemove', updateMousePosition);
+
+            updateWidget();
+          </script>
+
+
+          <script type="module">
+            import * as Plot from 'https://esm.run/@observablehq/plot'
+
+            navigator.getBattery().then((battery) => {
+              function updateBatteryInfo() {
+                const level = battery.level;
+                const charging = battery.charging;
+
+                const plot = Plot.plot({
+                  marks: [
+                    Plot.frame(),
+                    Plot.barX([{ level }], {
+                      fill: (d) => (d.level < 0.2 ? "red" : charging ? "green" : "black"),
+                      x: "level"
+                    }),
+                    Plot.text([{ text: charging ? "→" : "←", level }], {
+                      text: "text",
+                      x: "level",
+                      dx: -6,
+                      fontSize: 10,
+                      fill: "white"
+                    }),
+                    Plot.text([{ text: `${Math.round(level * 100)}` }], {
+                      text: "text",
+                      x: 0,
+                      dx: 8,
+                      fontSize: 10,
+                      fill: "white"
+                    }),
+                  ],
+                  width: 75,
+                  height: 25,
+
+                  x: {
+                    axis: null,
+                    domain: [0, 1]
+                  },
+                  y: {
+                    axis: null
+                  }
+                })
+
+                document.getElementById('battery').replaceChildren(plot);
+              }
+
+              battery.addEventListener('chargingchange', updateBatteryInfo);
+              battery.addEventListener('levelchange', updateBatteryInfo);
+              // battery.addEventListener('chargingtimechange', updateBatteryInfo);
+              // battery.addEventListener('dischargingtimechange', updateBatteryInfo);
+
+              updateBatteryInfo();
+            });
+          </script>
+
+        </article>
         <article class="listing">
           <a href="RECEIPT_PARTY.html">
             <img src="img/receipt-party.png" />
@@ -1680,140 +1902,6 @@
     </section>
   </main>
   <footer>
-    <a href="old.html">← old site</a> © 2024
-
-    <div id="battery" style="min-width: 50px;"></div>
-    <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
-      <circle id="cursor" cx="50" cy="50" r="4" fill="#FF00FF" />
-    </svg>
-    <img src="img/graphic-recycle.svg" />
-    <img src="img/graphic-checker.svg" />
-    <img src="img/ati.png" style="max-height: 32px;" />
-    <!-- <span id="userAgent"></span> -->
-    DO NOT EXPOSE TO WATER
-
-    <div class="ticker-outer">
-      <div class="ticker-inner">
-        <span>PLEASE</span>
-        <span>PLEASE</span>
-      </div>
-    </div>
-
-    <div><span id="size"></span> transferred</div>
-
-
-    <script>
-      window.addEventListener('load', () => {
-        // const resources = performance.getEntriesByType('resource');
-        const resources = performance.getEntries();
-        let totalSize = 0;
-
-        resources.forEach(resource => {
-          totalSize += resource.transferSize || 0;
-        });
-
-        const size = document.getElementById('size');
-        size.innerText = `${formatBytes(totalSize)}`;
-      });
-
-      function formatBytes(bytes, decimals = 2) {
-        if (bytes === 0) return '0 Bytes';
-        const k = 1024;
-        const dm = decimals < 0 ? 0 : decimals;
-        const sizes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
-        const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + sizes[i];
-      }
-
-    </script>
-
-    <span id="language"></span>
-    <!-- <div>
-      <p><span id="mousex"></span></p>
-      <p><span id="mousey"></span></p>
-    </div> -->
-    <script>
-      function updateWidget() {
-        const svg = document.getElementById('mouseWidget');
-        const rect = document.getElementById('screen');
-        const aspectRatio = window.innerWidth / window.innerHeight;
-        svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
-      }
-
-      function updateDotPosition(event) {
-        const dot = document.getElementById('cursor');
-        const x = (event.clientX / window.innerWidth) * 100;
-        const y = (event.clientY / window.innerHeight) * 100;
-        dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
-        dot.setAttribute('cy', y);
-      }
-
-      function updateMousePosition(event) {
-        document.getElementById('mousex').textContent = "x: " + event.clientX;
-        document.getElementById('mousey').textContent = "y:" + event.clientY;
-      }
-
-      window.addEventListener('resize', updateWidget);
-      document.addEventListener('mousemove', updateDotPosition);
-      // document.addEventListener('mousemove', updateMousePosition);
-
-      updateWidget();
-    </script>
-
-
-    <script type="module">
-      import * as Plot from 'https://esm.run/@observablehq/plot'
-
-      navigator.getBattery().then((battery) => {
-        function updateBatteryInfo() {
-          const level = battery.level;
-          const charging = battery.charging;
-
-          const plot = Plot.plot({
-            marks: [
-              Plot.frame(),
-              Plot.barX([{ level }], {
-                fill: (d) => (d.level < 0.2 ? "red" : charging ? "green" : "black"),
-                x: "level"
-              }),
-              Plot.text([{ text: charging ? "→" : "←", level }], {
-                text: "text",
-                x: "level",
-                dx: -6,
-                fontSize: 10,
-                fill: "white"
-              }),
-              Plot.text([{ text: `${Math.round(level * 100)}` }], {
-                text: "text",
-                x: 0,
-                dx: 8,
-                fontSize: 10,
-                fill: "white"
-              }),
-            ],
-            width: 75,
-            height: 25,
-
-            x: {
-              axis: null,
-              domain: [0, 1]
-            },
-            y: {
-              axis: null
-            }
-          })
-
-          document.getElementById('battery').replaceChildren(plot);
-        }
-
-        battery.addEventListener('chargingchange', updateBatteryInfo);
-        battery.addEventListener('levelchange', updateBatteryInfo);
-        // battery.addEventListener('chargingtimechange', updateBatteryInfo);
-        // battery.addEventListener('dischargingtimechange', updateBatteryInfo);
-
-        updateBatteryInfo();
-      });
-    </script>
 
     <script>
       // document.getElementById('userAgent').textContent = navigator.userAgent;

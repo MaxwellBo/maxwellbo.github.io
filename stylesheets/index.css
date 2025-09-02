@@ -95,27 +95,11 @@ nav {
 }
 
 header {
-  border-bottom: 1px dotted grey;
-  font-family: 'DINdong', sans-serif;
-
-  #wordmark {
-    padding-top: 10px;
-    font-family: 'DINdong', sans-serif;
-    text-transform: uppercase;
-    font-size: 3rem;
-  }
+  overflow-y: auto;
 }
 
-footer {
-  font-family: 'Fake Receipt', sans-serif;
-  overflow-y: auto;
-  display: inline-flex;
-  align-items: center;
-  flex-direction: row;
-  width: 100%;
-  white-space: nowrap;
-  gap: 1rem;
-  border: 1px dotted grey;
+#inner-receipt {
+  margin: 0 auto;
 }
 
 .ticker-outer {
@@ -168,6 +152,36 @@ footer {
 
 .spin:hover {
   transform: rotate(720deg);
+}
+
+
+#inner-receipt {
+      -webkit-filter: url("#distort");
+      filter: url("#distort");
+      font-family: "Fake Receipt";
+      color: #333;
+      /* transform: rotate(-2deg); */
+      background-color: #f0f0f0;
+      max-width: 300px;
+      mask: repeating-conic-gradient(from 135deg at 50% 0.3ch,#0000 0,#000 1deg 89deg,#0000 90deg 180deg) 50% -0.3ch/0.6ch;
+      /* box-shadow: inset 0px 0px 2px 1px rgb(255 255 255),
+  inset 0px 0px 20px 3px rgba(0, 0, 0, 0.2),
+  1px 1px 5px 1px rgb(255, 255, 255, 0.3),
+  0px 0px 100px 6px rgba(0, 0, 0, 1); */
+      margin-bottom: auto;
+      margin-top: 30px;
+      padding: 40px;
+      /* add the slightest amount of shadow, on the bottom left */
+      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.jolty-marquee-vertical {
+  /* animation: joltmarquee 5s 1 steps(30); */
+}
+
+@keyframes joltmarquee {
+  0% { transform: translateY(100%); }
+  100% { transform: translateY(0%); }
 }
 
 div.cards, .annex {
@@ -281,6 +295,10 @@ article.listing.dark {
 
 
 @media (min-width: 640px) {
+  #receipt {
+    padding-top: 70px;
+  }
+
   #watermark {
     display: initial;
     font-family: 'Crozet';
@@ -326,15 +344,19 @@ article.listing.dark {
   body {
     display: grid;
     grid-template-rows: auto 1fr;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: auto auto 1fr;
     grid-template-areas:
-      "header header"
-      "nav main"
-      "footer footer";
+      "header nav main"
+      "header nav main"
+      "footer nav main";
   }
 
   header {
     grid-area: header;
+  }
+
+  #receipt {
+    grid-area: receipt;
   }
 
   nav {
@@ -380,19 +402,19 @@ article.listing.dark {
   border: 1px dotted grey;
 }
 
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .annex {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (min-width: 900px) {
+@media (min-width: 1200px) {
   .annex {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (min-width: 1200px) {
+@media (min-width: 1600px) {
   .annex {
     grid-template-columns: repeat(4, 1fr);
   }
