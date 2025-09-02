@@ -293,6 +293,17 @@ article.listing.dark {
   }
 }
 
+footer {
+  padding: 2px;
+  overflow-y: auto;
+  display: inline-flex;
+  align-items: center;
+  flex-direction: row;
+  width: 100%;
+  white-space: nowrap;
+  gap: 1rem;
+  border: 1px dotted grey;
+}
 
 @media (min-width: 640px) {
   #receipt {
@@ -348,7 +359,7 @@ article.listing.dark {
     grid-template-areas:
       "header nav main"
       "header nav main"
-      "footer nav main";
+      "footer footer footer";
   }
 
   header {

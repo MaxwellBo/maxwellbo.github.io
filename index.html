@@ -594,14 +594,6 @@
     </ul>
   </nav>
   <main>
-    <marquee id="ticker" class="dindong" scrollamount="7">
-      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
-      <a href="atom.xml">⚛ atom.xml</a>
-      󱠡
-    </marquee>
-    <script type="module">
-      renderAtom('atom.xml', 'ticker');
-    </script>
     <section>
       <h2>
         <a id="articles" href="#articles">#</a>Articles
@@ -1616,101 +1608,6 @@
           </a>
           <p class="description">UQ-exclusive schedule sharing app</p>
         </article>
-        <article class="art">
-          <div id="battery" style="min-width: 50px;"></div>
-          <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
-            <circle id="cursor" cx="50" cy="50" r="4" fill="#FF00FF" />
-          </svg>
-
-          <span id="language"></span>
-          <!-- <div>
-      <p><span id="mousex"></span></p>
-      <p><span id="mousey"></span></p>
-    </div> -->
-          <script>
-            function updateWidget() {
-              const svg = document.getElementById('mouseWidget');
-              const rect = document.getElementById('screen');
-              const aspectRatio = window.innerWidth / window.innerHeight;
-              svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
-            }
-
-            function updateDotPosition(event) {
-              const dot = document.getElementById('cursor');
-              const x = (event.clientX / window.innerWidth) * 100;
-              const y = (event.clientY / window.innerHeight) * 100;
-              dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
-              dot.setAttribute('cy', y);
-            }
-
-            function updateMousePosition(event) {
-              document.getElementById('mousex').textContent = "x: " + event.clientX;
-              document.getElementById('mousey').textContent = "y:" + event.clientY;
-            }
-
-            window.addEventListener('resize', updateWidget);
-            document.addEventListener('mousemove', updateDotPosition);
-            // document.addEventListener('mousemove', updateMousePosition);
-
-            updateWidget();
-          </script>
-
-
-          <script type="module">
-            import * as Plot from 'https://esm.run/@observablehq/plot'
-
-            navigator.getBattery().then((battery) => {
-              function updateBatteryInfo() {
-                const level = battery.level;
-                const charging = battery.charging;
-
-                const plot = Plot.plot({
-                  marks: [
-                    Plot.frame(),
-                    Plot.barX([{ level }], {
-                      fill: (d) => (d.level < 0.2 ? "red" : charging ? "green" : "black"),
-                      x: "level"
-                    }),
-                    Plot.text([{ text: charging ? "→" : "←", level }], {
-                      text: "text",
-                      x: "level",
-                      dx: -6,
-                      fontSize: 10,
-                      fill: "white"
-                    }),
-                    Plot.text([{ text: `${Math.round(level * 100)}` }], {
-                      text: "text",
-                      x: 0,
-                      dx: 8,
-                      fontSize: 10,
-                      fill: "white"
-                    }),
-                  ],
-                  width: 75,
-                  height: 25,
-
-                  x: {
-                    axis: null,
-                    domain: [0, 1]
-                  },
-                  y: {
-                    axis: null
-                  }
-                })
-
-                document.getElementById('battery').replaceChildren(plot);
-              }
-
-              battery.addEventListener('chargingchange', updateBatteryInfo);
-              battery.addEventListener('levelchange', updateBatteryInfo);
-              // battery.addEventListener('chargingtimechange', updateBatteryInfo);
-              // battery.addEventListener('dischargingtimechange', updateBatteryInfo);
-
-              updateBatteryInfo();
-            });
-          </script>
-
-        </article>
         <article class="listing">
           <a href="RECEIPT_PARTY.html">
             <img src="img/receipt-party.png" />
@@ -1902,6 +1799,109 @@
     </section>
   </main>
   <footer>
+
+          <div id="battery" style="min-width: 50px;"></div>
+          <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
+            <circle id="cursor" cx="50" cy="50" r="4" fill="#FF00FF" />
+          </svg>
+
+          <marquee id="ticker" class="dindong" scrollamount="7">
+            <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+            <a href="atom.xml">⚛ atom.xml</a>
+            󱠡
+          </marquee>
+          <script type="module">
+            renderAtom('atom.xml', 'ticker');
+          </script>
+
+          <span id="language"></span>
+          <!-- <div>
+      <p><span id="mousex"></span></p>
+      <p><span id="mousey"></span></p>
+    </div> -->
+          <script>
+            function updateWidget() {
+              const svg = document.getElementById('mouseWidget');
+              const rect = document.getElementById('screen');
+              const aspectRatio = window.innerWidth / window.innerHeight;
+              svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
+            }
+
+            function updateDotPosition(event) {
+              const dot = document.getElementById('cursor');
+              const x = (event.clientX / window.innerWidth) * 100;
+              const y = (event.clientY / window.innerHeight) * 100;
+              dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
+              dot.setAttribute('cy', y);
+            }
+
+            function updateMousePosition(event) {
+              document.getElementById('mousex').textContent = "x: " + event.clientX;
+              document.getElementById('mousey').textContent = "y:" + event.clientY;
+            }
+
+            window.addEventListener('resize', updateWidget);
+            document.addEventListener('mousemove', updateDotPosition);
+            // document.addEventListener('mousemove', updateMousePosition);
+
+            updateWidget();
+          </script>
+
+
+          <script type="module">
+            import * as Plot from 'https://esm.run/@observablehq/plot'
+
+            navigator.getBattery().then((battery) => {
+              function updateBatteryInfo() {
+                const level = battery.level;
+                const charging = battery.charging;
+
+                const plot = Plot.plot({
+                  marks: [
+                    Plot.frame(),
+                    Plot.barX([{ level }], {
+                      fill: (d) => (d.level < 0.2 ? "red" : charging ? "green" : "black"),
+                      x: "level"
+                    }),
+                    Plot.text([{ text: charging ? "→" : "←", level }], {
+                      text: "text",
+                      x: "level",
+                      dx: -6,
+                      fontSize: 10,
+                      fill: "white"
+                    }),
+                    Plot.text([{ text: `${Math.round(level * 100)}` }], {
+                      text: "text",
+                      x: 0,
+                      dx: 8,
+                      fontSize: 10,
+                      fill: "white"
+                    }),
+                  ],
+                  width: 75,
+                  height: 25,
+
+                  x: {
+                    axis: null,
+                    domain: [0, 1]
+                  },
+                  y: {
+                    axis: null
+                  }
+                })
+
+                document.getElementById('battery').replaceChildren(plot);
+              }
+
+              battery.addEventListener('chargingchange', updateBatteryInfo);
+              battery.addEventListener('levelchange', updateBatteryInfo);
+              // battery.addEventListener('chargingtimechange', updateBatteryInfo);
+              // battery.addEventListener('dischargingtimechange', updateBatteryInfo);
+
+              updateBatteryInfo();
+            });
+          </script>
+
 
     <script>
       // document.getElementById('userAgent').textContent = navigator.userAgent;
