@@ -221,7 +221,7 @@
     <div class="drop"></div>
   </div>
   <img id="draggable-postit" src="me.webp"
-    style="position: absolute; top: 5px; left: 20px; width: 120px; cursor: grab; z-index: 1000;" />
+    style="position: absolute; top: 20px; right: 40px; width: 120px; cursor: grab; z-index: 1000;" />
   <script>
     const postit = document.getElementById('draggable-postit');
     let isDragging = false;
@@ -291,8 +291,10 @@
     <div id="receipt" style="overflow-y: hidden">
       <div class="jolty-marquee-vertical">
         <div id="inner-receipt" style="text-align: center;">
-          <h1>Max Bo</h1>
-          <!-- <pre>
+          <div class="distort">
+
+            <h1>Max Bo</h1>
+            <!-- <pre>
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀
 ⠀⠀⠀⠀⢀⡴⣆⠀⠀⠀⠀⠀⣠⡀⠀⠀⠀⠀⠀⠀⣼⣿⡗⠀⠀⠀⠀
 ⠀⠀⠀⣠⠟⠀⠘⠷⠶⠶⠶⠾⠉⢳⡄⠀⠀⠀⠀⠀⣧⣿⠀⠀⠀⠀⠀
@@ -303,80 +305,93 @@
 ⠛⠒⠛⠉⠉⠀⠀⠀⣴⠟⢃⡴⠛⠋⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
 ⠀⠀⠀⠀⠀⠀⠀⠀⠛⠛⠋⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
           </pre> -->
-          <br />
-          <table style="width: 100%; font-size: 1em;">
-            <tbody>
-              <tr>
-                <td style="text-align: left;">JOB:</td>
-                <td style="text-align: right;">SWE</td>
-              </tr>
-              <tr>
-                <td style="text-align: left;">AGE:</td>
-                <td style="text-align: right;">28</td>
-              </tr>
-              <tr>
-                <td style="text-align: left;">LOC:</td>
-                <td style="text-align: right;">NYC</td>
-              </tr>
-              <tr>
-                <td style="text-align: left;">LANG:</td>
-                <td style="text-align: right;">EN-AU</td>
-              </tr>
-              <tr>
-                <td style="text-align: left;">BLOOD:</td>
-                <td style="text-align: right;">O+</td>
-              </tr>
-            </tbody>
-          </table>
-
-          <center>
-          ---
-          </center>
-
-          <div>
-            <table>
+            <br />
+            <table style="width: 100%; font-size: 1em;">
               <tbody>
                 <tr>
-                  <td><span class="center" id="receipt-date"></span>&nbsp;&nbsp;&nbsp;<span class="center"
-                      id="receipt-time"></span></td>
+                  <td style="text-align: left;">JOB:</td>
+                  <td style="text-align: right;">SWE</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">AGE:</td>
+                  <td style="text-align: right;">28</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">LOC:</td>
+                  <td style="text-align: right;">NYC</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">LANG:</td>
+                  <td style="text-align: right;">EN-AU</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">BLOOD:</td>
+                  <td style="text-align: right;">O+</td>
                 </tr>
               </tbody>
             </table>
+
+            <center>
+              ---
+            </center>
+
+            <div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td><span class="center" id="receipt-date"></span>&nbsp;&nbsp;&nbsp;<span class="center"
+                        id="receipt-time"></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            <!-- <a href="old.html">← old site</a> -->
+            <center>
+              ---
+            </center>
+
+
+
+
+            <div><span id="size"></span> transferred</div>
+
+            <center>
+              ---
+            </center>
+
+            <span>thanks for visiting</span>
+
+            <center>
+              ---
+            </center>
+
+
+            <center>
+              <img src="img/medither.png" style="width: 160px; image-rendering: pixelated" />
+            </center>
+
+
+
+            <center>
+              ---
+            </center>
+
+
+            <center>
+              <img src="img/qr.png" style="width: 96px; image-rendering: pixelated; margin-top: 4px;" />
+            </center>
+
+            <p>
+              <img src="img/graphic-recycle.svg" style="display: inline-block" />
+              <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2025
+            </p>
+
+
           </div>
 
 
-          <!-- <a href="old.html">← old site</a> -->
-          <center>
-          ---
-          </center>
-          <p>
-          DO NOT EXPOSE TO WATER
-          </p>
-          <center>
-          ---
-          </center>
-
-         
-
-
-          <div><span id="size"></span>  transferred</div>
-
-          <center>
-          ---
-          </center>
-
-
-          <span>thanks for visiting</span>
-
-          <center>
-            <img src="img/qr.png" style="width: 96px; image-rendering: pixelated; margin-top: 4px;" />
-          </center>
-
-
-          <p>
-            <img src="img/graphic-recycle.svg" style="display: inline-block"/>
-            <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2025
-          </p>
 
           <script>
             window.addEventListener('load', () => {
@@ -404,8 +419,8 @@
           </script>
 
         </div>
-        </div>
       </div>
+    </div>
     </div>
     <script type="module">
       const date = new Date();
@@ -1801,117 +1816,117 @@
   </main>
   <footer>
 
-          <div id="battery" style="min-width: 50px;"></div>
-          <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
-            <circle id="cursor" cx="50" cy="50" r="4" fill="#FF00FF" />
-          </svg>
+    <div id="battery" style="min-width: 50px;"></div>
+    <svg id="mouseWidget" viewBox="0 0 100 100" style="max-height: 50px; border: 1px solid black;">
+      <circle id="cursor" cx="50" cy="50" r="4" fill="#FF00FF" />
+    </svg>
 
-          <img src="img/ati.png" style="max-height: 32px;" />
-          <!-- <span id="userAgent"></span> -->
+    <img src="img/ati.png" style="max-height: 32px;" />
+    <!-- <span id="userAgent"></span> -->
 
-          <div class="ticker-outer">
-          <div class="ticker-inner">
-            <span>PLEASE</span>
-            <span>PLEASE</span>
-          </div>
-        </div>
+    <div class="ticker-outer">
+      <div class="ticker-inner">
+        <span>PLEASE</span>
+        <span>PLEASE</span>
+      </div>
+    </div>
 
-          <marquee id="ticker" class="dindong" scrollamount="7">
-            <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
-            <a href="atom.xml">⚛ atom.xml</a>
-            󱠡
-          </marquee>
-          <script type="module">
-            renderAtom('atom.xml', 'ticker');
-          </script>
+    <marquee id="ticker" class="dindong" scrollamount="7">
+      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+      <a href="atom.xml">⚛ atom.xml</a>
+      󱠡
+    </marquee>
+    <script type="module">
+      renderAtom('atom.xml', 'ticker');
+    </script>
 
-          <span id="language"></span>
-          <!-- <div>
+    <span id="language"></span>
+    <!-- <div>
       <p><span id="mousex"></span></p>
       <p><span id="mousey"></span></p>
     </div> -->
-          <script>
-            function updateWidget() {
-              const svg = document.getElementById('mouseWidget');
-              const rect = document.getElementById('screen');
-              const aspectRatio = window.innerWidth / window.innerHeight;
-              svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
+    <script>
+      function updateWidget() {
+        const svg = document.getElementById('mouseWidget');
+        const rect = document.getElementById('screen');
+        const aspectRatio = window.innerWidth / window.innerHeight;
+        svg.setAttribute('viewBox', `0 0 ${100 * aspectRatio} 100`);
+      }
+
+      function updateDotPosition(event) {
+        const dot = document.getElementById('cursor');
+        const x = (event.clientX / window.innerWidth) * 100;
+        const y = (event.clientY / window.innerHeight) * 100;
+        dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
+        dot.setAttribute('cy', y);
+      }
+
+      function updateMousePosition(event) {
+        document.getElementById('mousex').textContent = "x: " + event.clientX;
+        document.getElementById('mousey').textContent = "y:" + event.clientY;
+      }
+
+      window.addEventListener('resize', updateWidget);
+      document.addEventListener('mousemove', updateDotPosition);
+      // document.addEventListener('mousemove', updateMousePosition);
+
+      updateWidget();
+    </script>
+
+
+    <script type="module">
+      import * as Plot from 'https://esm.run/@observablehq/plot'
+
+      navigator.getBattery().then((battery) => {
+        function updateBatteryInfo() {
+          const level = battery.level;
+          const charging = battery.charging;
+
+          const plot = Plot.plot({
+            marks: [
+              Plot.frame(),
+              Plot.barX([{ level }], {
+                fill: (d) => (d.level < 0.2 ? "red" : charging ? "green" : "black"),
+                x: "level"
+              }),
+              Plot.text([{ text: charging ? "→" : "←", level }], {
+                text: "text",
+                x: "level",
+                dx: -6,
+                fontSize: 10,
+                fill: "white"
+              }),
+              Plot.text([{ text: `${Math.round(level * 100)}` }], {
+                text: "text",
+                x: 0,
+                dx: 8,
+                fontSize: 10,
+                fill: "white"
+              }),
+            ],
+            width: 75,
+            height: 25,
+
+            x: {
+              axis: null,
+              domain: [0, 1]
+            },
+            y: {
+              axis: null
             }
+          })
 
-            function updateDotPosition(event) {
-              const dot = document.getElementById('cursor');
-              const x = (event.clientX / window.innerWidth) * 100;
-              const y = (event.clientY / window.innerHeight) * 100;
-              dot.setAttribute('cx', x * window.innerWidth / window.innerHeight);
-              dot.setAttribute('cy', y);
-            }
+          document.getElementById('battery').replaceChildren(plot);
+        }
 
-            function updateMousePosition(event) {
-              document.getElementById('mousex').textContent = "x: " + event.clientX;
-              document.getElementById('mousey').textContent = "y:" + event.clientY;
-            }
+        battery.addEventListener('chargingchange', updateBatteryInfo);
+        battery.addEventListener('levelchange', updateBatteryInfo);
+        // battery.addEventListener('chargingtimechange', updateBatteryInfo);
+        // battery.addEventListener('dischargingtimechange', updateBatteryInfo);
 
-            window.addEventListener('resize', updateWidget);
-            document.addEventListener('mousemove', updateDotPosition);
-            // document.addEventListener('mousemove', updateMousePosition);
-
-            updateWidget();
-          </script>
-
-
-          <script type="module">
-            import * as Plot from 'https://esm.run/@observablehq/plot'
-
-            navigator.getBattery().then((battery) => {
-              function updateBatteryInfo() {
-                const level = battery.level;
-                const charging = battery.charging;
-
-                const plot = Plot.plot({
-                  marks: [
-                    Plot.frame(),
-                    Plot.barX([{ level }], {
-                      fill: (d) => (d.level < 0.2 ? "red" : charging ? "green" : "black"),
-                      x: "level"
-                    }),
-                    Plot.text([{ text: charging ? "→" : "←", level }], {
-                      text: "text",
-                      x: "level",
-                      dx: -6,
-                      fontSize: 10,
-                      fill: "white"
-                    }),
-                    Plot.text([{ text: `${Math.round(level * 100)}` }], {
-                      text: "text",
-                      x: 0,
-                      dx: 8,
-                      fontSize: 10,
-                      fill: "white"
-                    }),
-                  ],
-                  width: 75,
-                  height: 25,
-
-                  x: {
-                    axis: null,
-                    domain: [0, 1]
-                  },
-                  y: {
-                    axis: null
-                  }
-                })
-
-                document.getElementById('battery').replaceChildren(plot);
-              }
-
-              battery.addEventListener('chargingchange', updateBatteryInfo);
-              battery.addEventListener('levelchange', updateBatteryInfo);
-              // battery.addEventListener('chargingtimechange', updateBatteryInfo);
-              // battery.addEventListener('dischargingtimechange', updateBatteryInfo);
-
-              updateBatteryInfo();
-            });
-          </script>
+        updateBatteryInfo();
+      });
+    </script>
 
 
     <script>

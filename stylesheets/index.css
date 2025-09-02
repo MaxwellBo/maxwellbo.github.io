@@ -155,9 +155,13 @@ header {
 }
 
 
-#inner-receipt {
+.distort {
   -webkit-filter: url("#distort");
   filter: url("#distort");
+}
+
+#inner-receipt {
+  font-size: smaller;
   font-family: "Fake Receipt";
   color: #333;
   /* transform: rotate(-2deg); */
@@ -316,10 +320,6 @@ footer {
 }
 
 @media (min-width: 640px) {
-  #receipt {
-    padding-top: 70px;
-  }
-
   #watermark {
     display: initial;
     font-family: 'Crozet';
