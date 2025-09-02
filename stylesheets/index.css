@@ -310,6 +310,11 @@ footer {
   border: 1px dotted grey;
 }
 
+#receipt {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
 @media (min-width: 640px) {
   #receipt {
     padding-top: 70px;
