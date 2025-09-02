@@ -105,7 +105,7 @@ header {
 .ticker-outer {
   overflow: hidden;
   white-space: nowrap;
-  width: 97px;
+  width: 74px;
   border: 1px solid black;
   border-radius: 5px;
 }
