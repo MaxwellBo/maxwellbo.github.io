@@ -611,6 +611,42 @@
   </nav>
   <main>
     <section>
+      <marquee id="feed" scrollamount="9">
+        <a href="https://letterboxd.com/mbo_/rss/">⚛</a> <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
+        ඞ
+      </marquee>
+      <script type="module">
+        renderRss('https://mbo-letterboxdrss.web.val.run', 'feed', (title) => {
+          const [name, stars] = title.split(" - ");
+          return stars + " - " + name;
+        });
+
+      </script>
+    </section>
+
+    <section>
+      <marquee id="arenaFeed" scrollamount="7">
+        <a href="https://www.are.na/max-bo/feed/rss">⚛</a> <a href="https://www.are.na/max-bo">are.na/max-bo</a>
+        ඞ
+      </marquee>
+      <script type="module">
+        renderRss('https://mbo-arenarss.web.val.run', 'arenaFeed',
+          (title) => title || "Untitled"
+        );
+      </script>
+    </section>
+
+    <section>
+      <marquee id="rymFeed" scrollamount="8">
+        <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a> <a
+          href="https://rateyourmusic.com/~mbo">rateyourmusic.com/~mbo</a>
+        ඞ
+      </marquee>
+      <script type="module">
+        renderRss('rym.xml', 'rymFeed');
+      </script>
+    </section>
+    <section>
       <h2>
         <a id="articles" href="#articles">#</a>Articles
       </h2>
@@ -1777,42 +1813,7 @@
       graphics are <a href="https://observablehq.com/plot/">Observable Plot</a>. Weather data from <a
         href="https://open-meteo.com/">Open-Meteo</a>.
     </p> -->
-    <section>
-      <marquee id="feed" scrollamount="9">
-        <a href="https://letterboxd.com/mbo_/rss/">⚛</a> <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
-        ඞ
-      </marquee>
-      <script type="module">
-        renderRss('https://mbo-letterboxdrss.web.val.run', 'feed', (title) => {
-          const [name, stars] = title.split(" - ");
-          return stars + " - " + name;
-        });
 
-      </script>
-    </section>
-
-    <section>
-      <marquee id="arenaFeed" scrollamount="7">
-        <a href="https://www.are.na/max-bo/feed/rss">⚛</a> <a href="https://www.are.na/max-bo">are.na/max-bo</a>
-        ඞ
-      </marquee>
-      <script type="module">
-        renderRss('https://mbo-arenarss.web.val.run', 'arenaFeed',
-          (title) => title || "Untitled"
-        );
-      </script>
-    </section>
-
-    <section>
-      <marquee id="rymFeed" scrollamount="8">
-        <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a> <a
-          href="https://rateyourmusic.com/~mbo">rateyourmusic.com/~mbo</a>
-        ඞ
-      </marquee>
-      <script type="module">
-        renderRss('rym.xml', 'rymFeed');
-      </script>
-    </section>
   </main>
   <footer>
 
