@@ -105,7 +105,7 @@ header {
 .ticker-outer {
   overflow: hidden;
   white-space: nowrap;
-  width: 73px;
+  width: 97px;
   border: 1px solid black;
   border-radius: 5px;
 }
@@ -156,23 +156,23 @@ header {
 
 
 #inner-receipt {
-      -webkit-filter: url("#distort");
-      filter: url("#distort");
-      font-family: "Fake Receipt";
-      color: #333;
-      /* transform: rotate(-2deg); */
-      background-color: #f0f0f0;
-      max-width: 300px;
-      mask: repeating-conic-gradient(from 135deg at 50% 0.3ch,#0000 0,#000 1deg 89deg,#0000 90deg 180deg) 50% -0.3ch/0.6ch;
-      /* box-shadow: inset 0px 0px 2px 1px rgb(255 255 255),
-  inset 0px 0px 20px 3px rgba(0, 0, 0, 0.2),
-  1px 1px 5px 1px rgb(255, 255, 255, 0.3),
-  0px 0px 100px 6px rgba(0, 0, 0, 1); */
-      margin-bottom: auto;
-      margin-top: 30px;
-      padding: 40px;
-      /* add the slightest amount of shadow, on the bottom left */
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+  -webkit-filter: url("#distort");
+  filter: url("#distort");
+  font-family: "Fake Receipt";
+  color: #333;
+  /* transform: rotate(-2deg); */
+  background-color: #f0f0f0;
+  max-width: 300px;
+  mask: repeating-conic-gradient(from 135deg at 50% 0.3ch,#0000 0,#000 1deg 89deg,#0000 90deg 180deg) 50% -0.3ch/0.6ch;
+  /* box-shadow: inset 0px 0px 2px 1px rgb(255 255 255),
+inset 0px 0px 20px 3px rgba(0, 0, 0, 0.2),
+1px 1px 5px 1px rgb(255, 255, 255, 0.3),
+0px 0px 100px 6px rgba(0, 0, 0, 1); */
+  margin-bottom: auto;
+  margin-top: 30px;
+  padding: 20px;
+  /* add the slightest amount of shadow, on the bottom left */
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
 .jolty-marquee-vertical {
@@ -293,8 +293,13 @@ article.listing.dark {
   }
 }
 
+nav {
+  font-size: smaller;
+}
+
 footer {
-  padding: 2px;
+  font-family: 'Fake Receipt', sans-serif;
+  padding: 1px;
   overflow-y: auto;
   display: inline-flex;
   align-items: center;
