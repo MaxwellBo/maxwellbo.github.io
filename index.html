@@ -787,7 +787,7 @@
           </script>
         </article>
         <article id="weather" class="art">
-          <p>I am currently living in Sydney, Australia.</p>
+          <p>I am currently living in New York City, USA.</p>
           <p>It is:</p>
           <p id="time"></p>
           <p><span id="conditionsEmoji"></span> <span id="conditions"></span></p>
@@ -808,7 +808,7 @@
 
             const setTime = () => {
               const time = new Date().toLocaleTimeString('en-AU', {
-                timeZone: 'Australia/Sydney',
+                timeZone: 'America/New_York',
                 hour: 'numeric',
                 minute: 'numeric',
                 second: 'numeric',
@@ -828,7 +828,7 @@
               + `latitude=${lat}&longitude=${lon}`
               + '&daily=temperature_2m_max,temperature_2m_min'
               + '&current=temperature_2m,is_day,weather_code'
-              + '&timezone=Australia%2FSydney';
+              + '&timezone=America%2FNew_York';
 
             fetch(url)
               .then(response => response.json())
