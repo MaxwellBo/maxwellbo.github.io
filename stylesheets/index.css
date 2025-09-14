@@ -386,6 +386,11 @@ footer {
 
     ul {
       grid-template-columns: 1fr;
+
+      li {
+        transform: rotate(-30deg);
+        transform-origin: center;
+      }
     }
   }
 
