@@ -418,97 +418,97 @@
 
         </div>
       </div>
-    <script type="module">
-      const date = new Date();
-      document.getElementById('receipt-date').innerText = date.toLocaleDateString();
-      document.getElementById('receipt-time').innerText = date.toLocaleTimeString();
-    </script>
-    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="0" height="0">
-      <defs>
-        <filter id="distort">
-          <feTurbulence baseFrequency="1 1" numOctaves="1"></feTurbulence>
-          <feDisplacementMap in="SourceGraphic" scale="2"></feDisplacementMap>
-        </filter>
-        <filter id="distort-mobile">
-          <feTurbulence baseFrequency="1 1" numOctaves="1"></feTurbulence>
-          <feDisplacementMap in="SourceGraphic" scale="1.5"></feDisplacementMap>
-        </filter>
-      </defs>
-    </svg>
-    <script type="module">
-      async function renderRss(feedUrl, elementId, transformTitle = (title) => title) {
-        const response = await fetch(feedUrl);
-        const text = await response.text();
-        const parser = new DOMParser();
-        const xmlDoc = parser.parseFromString(text, 'application/xml');
+      <script type="module">
+        const date = new Date();
+        document.getElementById('receipt-date').innerText = date.toLocaleDateString();
+        document.getElementById('receipt-time').innerText = date.toLocaleTimeString();
+      </script>
+      <svg version="1.1" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" width="0" height="0">
+        <defs>
+          <filter id="distort">
+            <feTurbulence baseFrequency="1 1" numOctaves="1"></feTurbulence>
+            <feDisplacementMap in="SourceGraphic" scale="2"></feDisplacementMap>
+          </filter>
+          <filter id="distort-mobile">
+            <feTurbulence baseFrequency="1 1" numOctaves="1"></feTurbulence>
+            <feDisplacementMap in="SourceGraphic" scale="1.5"></feDisplacementMap>
+          </filter>
+        </defs>
+      </svg>
+      <script type="module">
+        async function renderRss(feedUrl, elementId, transformTitle = (title) => title) {
+          const response = await fetch(feedUrl);
+          const text = await response.text();
+          const parser = new DOMParser();
+          const xmlDoc = parser.parseFromString(text, 'application/xml');
 
-        const items = Array.from(xmlDoc.getElementsByTagName("item"));
-        const feed = document.getElementById(elementId);
+          const items = Array.from(xmlDoc.getElementsByTagName("item"));
+          const feed = document.getElementById(elementId);
 
-        for (const item of items) {
-          const title = transformTitle(item.getElementsByTagName("title")[0].textContent);
+          for (const item of items) {
+            const title = transformTitle(item.getElementsByTagName("title")[0].textContent);
 
-          let link = item.getElementsByTagName("link")[0]
+            let link = item.getElementsByTagName("link")[0]
 
-          if (!link) {
-            continue
+            if (!link) {
+              continue
+            }
+
+            link = link.textContent || link.getAttribute('href');
+            if (!link) {
+              continue;
+            }
+
+            const date = new Date(item.getElementsByTagName("pubDate")[0].textContent)
+              .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+            const a = document.createElement('a');
+            a.href = link;
+            a.className = 'item-title';
+            a.textContent = title;
+
+            const time = document.createElement('time');
+            time.textContent = date;
+
+            feed.append(a);
+            feed.append(document.createTextNode(' '));
+            feed.append(time);
+            feed.append(document.createTextNode(' ■ '));
           }
-
-          link = link.textContent || link.getAttribute('href');
-          if (!link) {
-            continue;
-          }
-
-          const date = new Date(item.getElementsByTagName("pubDate")[0].textContent)
-            .toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-
-          const a = document.createElement('a');
-          a.href = link;
-          a.className = 'item-title';
-          a.textContent = title;
-
-          const time = document.createElement('time');
-          time.textContent = date;
-
-          feed.append(a);
-          feed.append(document.createTextNode(' '));
-          feed.append(time);
-          feed.append(document.createTextNode(' ■ '));
         }
-      }
 
-      window.renderRss = renderRss;
+        window.renderRss = renderRss;
 
-      async function renderAtom(feedUrl, elementId) {
-        fetch(feedUrl)
-          .then(response => response.text())
-          .then(data => {
-            const parser = new DOMParser();
-            const xmlDoc = parser.parseFromString(data, 'text/xml');
-            const items = xmlDoc.getElementsByTagName('entry');
+        async function renderAtom(feedUrl, elementId) {
+          fetch(feedUrl)
+            .then(response => response.text())
+            .then(data => {
+              const parser = new DOMParser();
+              const xmlDoc = parser.parseFromString(data, 'text/xml');
+              const items = xmlDoc.getElementsByTagName('entry');
 
-            const ticker = document.getElementById(elementId);
-            Array.from(items).forEach(item => {
-              const title = item.getElementsByTagName('title')[0].textContent;
-              const link = item.getElementsByTagName('link')[0].getAttribute('href');
-              const updated = new Date(item.getElementsByTagName('updated')[0].textContent);
-              const summary = item.getElementsByTagName('summary')[0].textContent;
-              const shortDate = updated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+              const ticker = document.getElementById(elementId);
+              Array.from(items).forEach(item => {
+                const title = item.getElementsByTagName('title')[0].textContent;
+                const link = item.getElementsByTagName('link')[0].getAttribute('href');
+                const updated = new Date(item.getElementsByTagName('updated')[0].textContent);
+                const summary = item.getElementsByTagName('summary')[0].textContent;
+                const shortDate = updated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
-              const a = document.createElement('a');
-              a.href = link;
-              a.textContent = `[${shortDate}] ${title}`;;
-              const small = document.createElement('small');
-              small.textContent = ` ${summary}`;
-              a.appendChild(small);
-              ticker.appendChild(a);
-              ticker.appendChild(document.createTextNode(' ⚛ '));
+                const a = document.createElement('a');
+                a.href = link;
+                a.textContent = `[${shortDate}] ${title}`;;
+                const small = document.createElement('small');
+                small.textContent = ` ${summary}`;
+                a.appendChild(small);
+                ticker.appendChild(a);
+                ticker.appendChild(document.createTextNode(' ⚛ '));
+              });
             });
-          });
-      }
+        }
 
-      window.renderAtom = renderAtom;
-    </script>
+        window.renderAtom = renderAtom;
+      </script>
   </header>
   <nav>
     <ul>
@@ -878,12 +878,12 @@
                     break;
                   case 45: // Fog
                     conditions.textContent = 'Fog';
-                    me.style.background = 'linear-gradient(90deg, #696969, #C0C0C0)';
+                    me.style.background = 'linear-gradient(90deg, #E6E6FA, #D3D3D3)';
                     conditionsEmoji.textContent = '🌫️';
                     break;
                   case 48: // Depositing rime fog
                     conditions.textContent = 'Depositing rime fog';
-                    me.style.background = 'linear-gradient(90deg, #A8A8A8, #D3D3D3)';
+                    me.style.background = 'linear-gradient(90deg, #E6E6FA, #D3D3D3)';
                     conditionsEmoji.textContent = '🌫️❄️';
                     break;
                   case 51: // Light drizzle
@@ -923,7 +923,7 @@
                     break;
                   case 65: // Heavy rain
                     conditions.textContent = 'Heavy rain';
-                    me.style.background = 'linear-gradient(90deg, #0000FF, #1E90FF)';
+                    me.style.background = 'linear-gradient(90deg, #2F4F4F, #708090)';
                     conditionsEmoji.textContent = '🌧️🌧️🌧️';
                     break;
                   case 66: // Light freezing rain
@@ -948,7 +948,7 @@
                     break;
                   case 75: // Heavy snowfall
                     conditions.textContent = 'Heavy snowfall';
-                    me.style.background = 'linear-gradient(90deg, #F0FFF0, #AFEEEE)';
+                    me.style.background = 'linear-gradient(90deg, #4682B4, #E0FFFF)';
                     conditionsEmoji.textContent = '❄️❄️❄️';
                     break;
                   case 77: // Snow grains
@@ -983,17 +983,17 @@
                     break;
                   case 95: // Thunderstorm: Slight or moderate
                     conditions.textContent = 'Thunderstorm: Slight or moderate';
-                    me.style.background = 'linear-gradient(90deg, #FFD700, #FFA500)';
+                    me.style.background = 'linear-gradient(90deg, #2F4F4F, #800080)';
                     conditionsEmoji.textContent = '🌩️';
                     break;
                   case 96: // Thunderstorm with slight hail
                     conditions.textContent = 'Thunderstorm with slight hail';
-                    me.style.background = 'linear-gradient(90deg, #FFA500, #FF4500)';
+                    me.style.background = 'linear-gradient(90deg, #2F4F4F, #800080)';
                     conditionsEmoji.textContent = '⛈️🌨️';
                     break;
                   case 99: // Thunderstorm with heavy hail
                     conditions.textContent = 'Thunderstorm with heavy hail';
-                    me.style.background = 'linear-gradient(90deg, #FF4500, #B22222)';
+                    me.style.background = 'linear-gradient(90deg, #2F4F4F, #800080)';
                     conditionsEmoji.textContent = '⛈️❄️❄️';
                     break;
                   default: // Unknown weather code
