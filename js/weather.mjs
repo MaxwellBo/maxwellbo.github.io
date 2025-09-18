@@ -1,13 +1,15 @@
 
 import * as Plot from 'https://esm.run/@observablehq/plot'
+import { renderSkyAtLocation } from './sky.mjs';
 
-const me = document.getElementById('weather');
+const element = document.getElementById('weather');
 const time = document.getElementById('time');
 const conditions = document.getElementById('conditions');
 const conditionsEmoji = document.getElementById('conditionsEmoji');
 const currentTemp = document.getElementById('currentTemp');
 const low = document.getElementById('low');
 const high = document.getElementById('high');
+
 
 const setTime = () => {
   const time = new Date().toLocaleTimeString('en-AU', {
@@ -23,9 +25,39 @@ const setTime = () => {
 setTime();
 setInterval(setTime, 1000);
 
-const lat = -33.8688;
-const lon = 151.2093;
+// NYC lat lon
+const lat = 40.7128;
+const lon = -74.0060;
 
+const { gradient, top, bottom } = renderSkyAtLocation(lat, lon);
+
+function isColorTooDark(rgbString) {
+  // Expecting format: "rgb(r, g, b)"
+  const match = rgbString.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+  if (!match) return false; // Invalid format
+  const r = parseInt(match[1], 10);
+  const g = parseInt(match[2], 10);
+  const b = parseInt(match[3], 10);
+  // Calculate luminance
+  const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+  return luminance < 0.5;
+}
+
+const topTooDark = isColorTooDark(top);
+const bottomTooDark = isColorTooDark(bottom);
+
+const consideredDark = topTooDark || bottomTooDark;
+
+let darkMode = false;
+
+function useSkyGradient() {
+  element.style.background = gradient;
+
+  if (consideredDark) {
+    darkMode = true;
+    element.style.color = 'white';
+  }
+}
 
 const url = 'https://api.open-meteo.com/v1/forecast?'
   + `latitude=${lat}&longitude=${lon}`
@@ -57,149 +89,156 @@ fetch(url)
     switch (data.current.weather_code) {
       case 0: // Clear sky
         conditions.textContent = 'Clear sky';
-        me.style.background = 'linear-gradient(90deg, #87CEEB, #FFD700)';
+        element.style.background = 'linear-gradient(0deg, #87CEEB, #FFD700)';
+        useSkyGradient();
         conditionsEmoji.textContent = '☀️';
         break;
       case 1: // Mainly clear
         conditions.textContent = 'Mainly clear';
-        me.style.background = 'linear-gradient(90deg, #B0E2FF, #FFFACD)';
+        element.style.background = 'linear-gradient(0deg, #B0E2FF, #FFFACD)';
+        useSkyGradient();
         conditionsEmoji.textContent = '🌤️';
         break;
       case 2: // Partly cloudy
         conditions.textContent = 'Partly cloudy';
-        me.style.background = 'linear-gradient(90deg, #CCCCFF, #F0E68C)';
+        element.style.background = 'linear-gradient(0deg, #CCCCFF, #F0E68C)';
+        useSkyGradient();
         conditionsEmoji.textContent = '⛅';
         break;
       case 3: // Overcast
         conditions.textContent = 'Overcast';
-        me.style.background = 'linear-gradient(90deg, #A9A9A9, #778899)';
+        element.style.background = 'linear-gradient(0deg, #A9A9A9, #778899)';
         conditionsEmoji.textContent = '☁️';
         break;
       case 45: // Fog
         conditions.textContent = 'Fog';
-        me.style.background = 'linear-gradient(90deg, #E6E6FA, #D3D3D3)';
+        element.style.background = 'linear-gradient(0deg, #E6E6FA, #D3D3D3)';
         conditionsEmoji.textContent = '🌫️';
         break;
       case 48: // Depositing rime fog
         conditions.textContent = 'Depositing rime fog';
-        me.style.background = 'linear-gradient(90deg, #E6E6FA, #D3D3D3)';
+        element.style.background = 'linear-gradient(0deg, #E6E6FA, #D3D3D3)';
         conditionsEmoji.textContent = '🌫️❄️';
         break;
       case 51: // Light drizzle
         conditions.textContent = 'Light drizzle';
-        me.style.background = 'linear-gradient(90deg, #B0E0E6, #778899)';
+        element.style.background = 'linear-gradient(0deg, #B0E0E6, #778899)';
         conditionsEmoji.textContent = '🌦️';
         break;
       case 53: // Moderate drizzle
         conditions.textContent = 'Moderate drizzle';
-        me.style.background = 'linear-gradient(90deg, #ADD8E6, #708090)';
+        element.style.background = 'linear-gradient(0deg, #ADD8E6, #708090)';
         conditionsEmoji.textContent = '🌦️';
         break;
       case 55: // Dense drizzle
         conditions.textContent = 'Dense drizzle';
-        me.style.background = 'linear-gradient(90deg, #87CEFA, #4682B4)';
+        element.style.background = 'linear-gradient(0deg, #87CEFA, #4682B4)';
         conditionsEmoji.textContent = '🌧️';
         break;
       case 56: // Light freezing drizzle
         conditions.textContent = 'Light freezing drizzle';
-        me.style.background = 'linear-gradient(90deg, #E0FFFF, #5F9EA0)';
+        element.style.background = 'linear-gradient(0deg, #E0FFFF, #5F9EA0)';
         conditionsEmoji.textContent = '🌨️';
         break;
       case 57: // Dense freezing drizzle
         conditions.textContent = 'Dense freezing drizzle';
-        me.style.background = 'linear-gradient(90deg, #AFEEEE, #5F9EA0)';
+        element.style.background = 'linear-gradient(0deg, #AFEEEE, #5F9EA0)';
         conditionsEmoji.textContent = '🌨️';
         break;
       case 61: // Slight rain
         conditions.textContent = 'Slight rain';
-        me.style.background = 'linear-gradient(90deg, #4682B4, #B0C4DE)';
+        element.style.background = 'linear-gradient(0deg, #4682B4, #B0C4DE)';
         conditionsEmoji.textContent = '🌧️';
         break;
       case 63: // Moderate rain
         conditions.textContent = 'Moderate rain';
-        me.style.background = 'linear-gradient(90deg, #4169E1, #B0C4DE)';
+        element.style.background = 'linear-gradient(0deg, #4169E1, #B0C4DE)';
         conditionsEmoji.textContent = '🌧️🌧️';
         break;
       case 65: // Heavy rain
         conditions.textContent = 'Heavy rain';
-        me.style.background = 'linear-gradient(90deg, #2F4F4F, #708090)';
+        element.style.background = 'linear-gradient(0deg, #2F4F4F, #708090)';
         conditionsEmoji.textContent = '🌧️🌧️🌧️';
         break;
       case 66: // Light freezing rain
         conditions.textContent = 'Light freezing rain';
-        me.style.background = 'linear-gradient(90deg, #6495ED, #4682B4)';
+        element.style.background = 'linear-gradient(0deg, #6495ED, #4682B4)';
         conditionsEmoji.textContent = '🌧️❄️';
         break;
       case 67: // Heavy freezing rain
         conditions.textContent = 'Heavy freezing rain';
-        me.style.background = 'linear-gradient(90deg, #5F9EA0, #4682B4)';
+        element.style.background = 'linear-gradient(0deg, #5F9EA0, #4682B4)';
         conditionsEmoji.textContent = '🌧️❄️❄️';
         break;
       case 71: // Slight snowfall
         conditions.textContent = 'Slight snowfall';
-        me.style.background = 'linear-gradient(90deg, #FFFAFA, #B0E0E6)';
+        element.style.background = 'linear-gradient(0deg, #FFFAFA, #B0E0E6)';
         conditionsEmoji.textContent = '❄️';
         break;
       case 73: // Moderate snowfall
         conditions.textContent = 'Moderate snowfall';
-        me.style.background = 'linear-gradient(90deg, #E0FFFF, #AFEEEE)';
+        element.style.background = 'linear-gradient(0deg, #E0FFFF, #AFEEEE)';
         conditionsEmoji.textContent = '❄️❄️';
         break;
       case 75: // Heavy snowfall
         conditions.textContent = 'Heavy snowfall';
-        me.style.background = 'linear-gradient(90deg, #4682B4, #E0FFFF)';
+        element.style.background = 'linear-gradient(0deg, #4682B4, #E0FFFF)';
         conditionsEmoji.textContent = '❄️❄️❄️';
         break;
       case 77: // Snow grains
         conditions.textContent = 'Snow grains';
-        me.style.background = 'linear-gradient(90deg, #B0E0E6, #AFEEEE)';
+        element.style.background = 'linear-gradient(0deg, #B0E0E6, #AFEEEE)';
         conditionsEmoji.textContent = '🌨️';
         break;
       case 80: // Slight rain showers
         conditions.textContent = 'Slight rain showers';
-        me.style.background = 'linear-gradient(90deg, #B0E0E6, #87CEFA)';
+        element.style.background = 'linear-gradient(0deg, #B0E0E6, #87CEFA)';
         conditionsEmoji.textContent = '🌦️';
         break;
       case 81: // Moderate rain showers
         conditions.textContent = 'Moderate rain showers';
-        me.style.background = 'linear-gradient(90deg, #87CEFA, #4682B4)';
+        element.style.background = 'linear-gradient(0deg, #87CEFA, #4682B4)';
         conditionsEmoji.textContent = '🌦️🌦️';
         break;
       case 82: // Violent rain showers
         conditions.textContent = 'Violent rain showers';
-        me.style.background = 'linear-gradient(90deg, #4682B4, #0000FF)';
+        element.style.background = 'linear-gradient(0deg, #4682B4, #0000FF)';
         conditionsEmoji.textContent = '⛈️';
         break;
       case 85: // Slight snow showers
         conditions.textContent = 'Slight snow showers';
-        me.style.background = 'linear-gradient(90deg, #F0FFFF, #B0E0E6)';
+        element.style.background = 'linear-gradient(0deg, #F0FFFF, #B0E0E6)';
         conditionsEmoji.textContent = '🌨️';
         break;
       case 86: // Heavy snow showers
         conditions.textContent = 'Heavy snow showers';
-        me.style.background = 'linear-gradient(90deg, #E0FFFF, #AFEEEE)';
+        element.style.background = 'linear-gradient(0deg, #E0FFFF, #AFEEEE)';
         conditionsEmoji.textContent = '🌨️🌨️';
         break;
       case 95: // Thunderstorm: Slight or moderate
         conditions.textContent = 'Thunderstorm: Slight or moderate';
-        me.style.background = 'linear-gradient(90deg, #2F4F4F, #800080)';
+        element.style.background = 'linear-gradient(0deg, #2F4F4F, #800080)';
         conditionsEmoji.textContent = '🌩️';
         break;
       case 96: // Thunderstorm with slight hail
         conditions.textContent = 'Thunderstorm with slight hail';
-        me.style.background = 'linear-gradient(90deg, #2F4F4F, #800080)';
+        element.style.background = 'linear-gradient(0deg, #2F4F4F, #800080)';
         conditionsEmoji.textContent = '⛈️🌨️';
         break;
       case 99: // Thunderstorm with heavy hail
         conditions.textContent = 'Thunderstorm with heavy hail';
-        me.style.background = 'linear-gradient(90deg, #2F4F4F, #800080)';
+        element.style.background = 'linear-gradient(0deg, #2F4F4F, #800080)';
         conditionsEmoji.textContent = '⛈️❄️❄️';
         break;
       default: // Unknown weather code
         conditions.textContent = 'Unknown weather code';
-        me.style.background = 'linear-gradient(90deg, #696969, #8B8B8B)';
+        element.style.background = 'linear-gradient(0deg, #696969, #8B8B8B)';
         conditionsEmoji.textContent = '❔';
         break;
+    }
+
+    if (consideredDark) {
+      useSkyGradient();
     }
 
     if (
@@ -230,7 +269,7 @@ fetch(url)
         Plot.dot([data.current], {
           x: "temperature_2m",
           y: (d) => daily[0].time,
-          fill: "white",
+          fill: darkMode ? "black" : "white",
           title: (d) => `Current Temp: ${d.temperature_2m}°C`
         }),
         Plot.text(daily, {
@@ -238,7 +277,7 @@ fetch(url)
           y: "time",
           text: d => `${d.max.toFixed(0)}`,
           dx: -6, // Position adjustment on x-axis
-          fill: "white",
+          fill: darkMode ? "black" : "white"
         }),
         // Text for min temperatures
         Plot.text(daily, {
@@ -246,7 +285,7 @@ fetch(url)
           y: "time",
           text: d => `${d.min.toFixed(0)}`,
           dx: 6, // Position adjustment on x-axis
-          fill: "white"
+          fill: darkMode ? "black" : "white"
         })
       ],
       y: {
