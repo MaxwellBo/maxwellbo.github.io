@@ -60,6 +60,10 @@ a {
   text-decoration: none;
 }
 
+.dark a {
+  color: color(display-p3 0.7 0.7 1);
+}
+
 a:active {
   color: orange;
 }

@@ -49,12 +49,15 @@ const bottomTooDark = isColorTooDark(bottom);
 const consideredDark = topTooDark || bottomTooDark;
 
 let darkMode = false;
+let usedGradient = false;
 
 function useSkyGradient() {
   element.style.background = gradient;
+  usedGradient = true;
 
   if (consideredDark) {
     darkMode = true;
+    element.classList.add('dark');
     element.style.color = 'white';
   }
 }
@@ -307,6 +310,9 @@ fetch(url)
       marginBottom: 20,
     });
 
-    // Render the plot
-    document.getElementById('weather').appendChild(plot);
+    document.getElementById('plot-container').appendChild(plot);
+
+    if (usedGradient) {
+      document.getElementById('attribution').style.display = 'block';
+    }
   });
