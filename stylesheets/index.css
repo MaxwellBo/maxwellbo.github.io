@@ -72,24 +72,6 @@ body.ruined * {
 }
 
 
-nav {
-  ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 5px;
-    gap: 5px;
-    list-style-type: none;
-
-    li {
-      border: 1px grey dotted;
-      padding: 1ch;
-      /* :hover {
-        background-color: linear-gradient(to right, yellow, lightsalmon, mediumslateblue, mistyrose, mediumturquoise);
-      } */
-    }
-  }
-}
-
 header {
   overflow-y: auto;
 }
@@ -358,11 +340,11 @@ footer {
   body {
     display: grid;
     grid-template-rows: auto 1fr;
-    grid-template-columns: auto auto 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      "header nav main"
-      "header nav main"
-      "footer footer footer";
+      "header main"
+      "header main"
+      "footer footer";
   }
 
   header {
@@ -371,20 +353,6 @@ footer {
 
   #receipt {
     grid-area: receipt;
-  }
-
-  nav {
-    grid-area: nav;
-    overflow-y: auto;
-
-    ul {
-      grid-template-columns: 1fr;
-
-      li {
-        transform: rotate(-30deg);
-        transform-origin: center;
-      }
-    }
   }
 
   main {
