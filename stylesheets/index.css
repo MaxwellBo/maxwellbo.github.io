@@ -2,10 +2,6 @@
  * This website is licensed under CC 4.0 Attribution
  * so you're welcome to strip-mine this stylesheet.
  */
-#watermark {
-  display: none;
-}
-
 #ticker {
   font-family: 'DINdong', sans-serif;
 }
@@ -315,22 +311,23 @@ footer {
   margin-right: 2px;
 }
 
+#watermark {
+  display: initial;
+  font-family: 'Crozet';
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20vw;
+  color: rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+  /* Make sure it doesn't interfere with other elements */
+  z-index: -1;
+  /* Push it to the back */
+}
+
 @media (min-width: 640px) {
-  #watermark {
-    display: initial;
-    font-family: 'Crozet';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 20vw;
-    color: rgba(0, 0, 0, 0.15);
-    white-space: nowrap;
-    pointer-events: none;
-    /* Make sure it doesn't interfere with other elements */
-    z-index: -1;
-    /* Push it to the back */
-  }
 
   #hover-a {
     font-size: 5rem;

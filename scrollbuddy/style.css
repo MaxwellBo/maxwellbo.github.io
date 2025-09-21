@@ -108,3 +108,9 @@
       display: none;
   }
 }
+
+@media (max-width: 600px), (max-height: 600px) {
+  #scrollBuddy {
+    display: none;
+  }
+}

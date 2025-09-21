@@ -1,10 +1,12 @@
 html {
   /* cursor: url('kirby.png') 11 13, auto; */
   cursor: url('../img/kirbywand.cur'), auto;
+  background: transparent url("../img/grid.svg") repeat 0 0;
+  background-attachment: fixed
+
 }
 
 body {
-  background: transparent url("../img/grid.svg") repeat 0 0;
   font-family: 'DINdong', sans-serif;
   background-repeat: repeat;
 }
