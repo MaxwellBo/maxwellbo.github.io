@@ -295,6 +295,8 @@
               <h1>Max Bo</h1>
 
             </center>
+
+            <hr />
             <!-- <pre>
             ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⡀⠀⠀⠀⠀
 ⠀⠀⠀⠀⢀⡴⣆⠀⠀⠀⠀⠀⣠⡀⠀⠀⠀⠀⠀⠀⣼⣿⡗⠀⠀⠀⠀
@@ -333,62 +335,34 @@
             </table>
 
             <center>
-              ---
-            </center>
-
-            <div>
-              <table>
-                <tbody>
-                  <tr>
-                    <td><span class="center" id="receipt-date"></span>&nbsp;&nbsp;&nbsp;<span class="center"
-                        id="receipt-time"></span></td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-
-            <!-- <a href="old.html">← old site</a> -->
-            <center>
-              ---
-            </center>
-
-
-
-            <center>
-            <div><span id="size"></span> TRANSFERRED</div>
-            </center>
-
-
-            <center>
-              ---
-            </center>
-
-
-            <center>
-              <img src="img/medither.png" style="width: 160px; image-rendering: pixelated" />
-            </center>
-
-            <center>
-              ---
+              <img src="img/medither.png" style="width: 160px; image-rendering: pixelated; margin-bottom: 4px; margin-top: 4px" />
             </center>
 
             <style>
             nav .favicon {
               filter: grayscale(100%);
-              margin: auto 8px auto auto;
-              vertical-align: middle;
             }
 
             nav li {
               list-style: none;
             }
 
-
             nav a {
               color: black !important;
             }
 
+            nav a:hover, nav a:hover:visited {
+              background-color: black;
+              color: white !important;
+            }
+
+            nav ul {
+              padding-left: 0;
+            }
+
+            nav li {
+              padding-left: 0;
+            }
             </style>
             <nav>
               <ul>
@@ -486,24 +460,45 @@
               </ul>
             </nav>
 
-
-            <center>
-              ---
-            </center>
-
-
             <center>
               <img src="img/qr.png" style="width: 96px; image-rendering: pixelated; margin-top: 4px;" />
             </center>
 
+            <div>
+              <table>
+                <tbody>
+                  <tr>
+                    <td></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <table style="width: 100%; font-size: 1em;">
+              <tbody>
+                <tr>
+                  <td style="text-align: left;">DATE:</td>
+                  <td style="text-align: right;"><span id="receipt-date"></span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">TIME:</td>
+                  <td style="text-align: right;"><span id="receipt-time"></span></td>
+                </tr>
+                <tr>
+                  <td style="text-align: left;">TRANFERRED:</td>
+                  <td style="text-align: right;"><span id="size"></span></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <center>
             <p>
               <img src="img/graphic-recycle.svg" style="display: inline-block" />
               <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2025
             </p>
 
-
+            </center>
           </div>
-
 
 
           <script>

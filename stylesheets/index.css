@@ -157,6 +157,20 @@ inset 0px 0px 20px 3px rgba(0, 0, 0, 0.2),
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
+header {
+  direction: rtl;
+}
+
+header * {
+  direction: ltr;
+}
+
+#inner-receipt hr {
+  border: none;
+  border-top: 2px dashed black;
+  margin: 8px 0;
+}
+
 .jolty-marquee-vertical {
   /* animation: joltmarquee 5s 1 steps(30); */
 }
