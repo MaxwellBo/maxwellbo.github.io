@@ -74,6 +74,10 @@ a:visited {
   color: color(display-p3 1 0 1);
 }
 
+.dark a:visited {
+  color: color(display-p3 1 0.6 1);
+}
+
 a:hover, a:hover * {
   cursor: url('../img/kirbywandpuff.cur'), auto;
   background-color: color(display-p3 1 0 1);
