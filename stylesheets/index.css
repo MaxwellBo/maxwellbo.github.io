@@ -76,10 +76,6 @@ header {
   overflow-y: auto;
 }
 
-#inner-receipt {
-  margin: 0 auto;
-}
-
 .ticker-outer {
   overflow: hidden;
   white-space: nowrap;
@@ -141,18 +137,18 @@ header {
 #inner-receipt {
   font-size: smaller;
   font-family: "Fake Receipt";
-  color: #333;
+  color: black;
   /* transform: rotate(-2deg); */
   background-color: #f0f0f0;
   max-width: 260px;
-  mask: repeating-conic-gradient(from 135deg at 50% 0.3ch,#0000 0,#000 1deg 89deg,#0000 90deg 180deg) 50% -0.3ch/0.6ch;
+  /* mask: repeating-conic-gradient(from 135deg at 50% 0.3ch,#0000 0,#000 1deg 89deg,#0000 90deg 180deg) 50% -0.3ch/0.6ch; */
+  mask: repeating-conic-gradient(from 135deg at 50% 0.6ch,#0000 0,#000 1deg 89deg,#0000 90deg 180deg) 50% -0.6ch/1.2ch;
   /* box-shadow: inset 0px 0px 2px 1px rgb(255 255 255),
 inset 0px 0px 20px 3px rgba(0, 0, 0, 0.2),
 1px 1px 5px 1px rgb(255, 255, 255, 0.3),
 0px 0px 100px 6px rgba(0, 0, 0, 1); */
-  margin-bottom: auto;
-  margin-top: 30px;
-  padding: 20px;
+  padding: 24px;
+  margin: 4px auto;
   /* add the slightest amount of shadow, on the bottom left */
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
 }
@@ -299,8 +295,7 @@ footer {
 }
 
 #receipt {
-  margin-left: 2px;
-  margin-right: 2px;
+  margin: 4px;
 }
 
 #watermark {
