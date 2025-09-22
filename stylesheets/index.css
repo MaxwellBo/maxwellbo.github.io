@@ -72,24 +72,6 @@ body.ruined * {
 }
 
 
-nav {
-  ul {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 5px;
-    gap: 5px;
-    list-style-type: none;
-
-    li {
-      border: 1px grey dotted;
-      padding: 1ch;
-      /* :hover {
-        background-color: linear-gradient(to right, yellow, lightsalmon, mediumslateblue, mistyrose, mediumturquoise);
-      } */
-    }
-  }
-}
-
 header {
   overflow-y: auto;
 }
@@ -173,6 +155,20 @@ inset 0px 0px 20px 3px rgba(0, 0, 0, 0.2),
   padding: 20px;
   /* add the slightest amount of shadow, on the bottom left */
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+header {
+  direction: rtl;
+}
+
+header * {
+  direction: ltr;
+}
+
+#inner-receipt hr {
+  border: none;
+  border-top: 2px dashed black;
+  margin: 8px 0;
 }
 
 .jolty-marquee-vertical {
@@ -358,11 +354,11 @@ footer {
   body {
     display: grid;
     grid-template-rows: auto 1fr;
-    grid-template-columns: auto auto 1fr;
+    grid-template-columns: auto 1fr;
     grid-template-areas:
-      "header nav main"
-      "header nav main"
-      "footer footer footer";
+      "header main"
+      "header main"
+      "footer footer";
   }
 
   header {
@@ -371,20 +367,6 @@ footer {
 
   #receipt {
     grid-area: receipt;
-  }
-
-  nav {
-    grid-area: nav;
-    overflow-y: auto;
-
-    ul {
-      grid-template-columns: 1fr;
-
-      li {
-        transform: rotate(-30deg);
-        transform-origin: center;
-      }
-    }
   }
 
   main {
