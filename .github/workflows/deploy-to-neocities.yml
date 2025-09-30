@@ -25,7 +25,7 @@ jobs:
       with:
         api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
         cleanup: true
-        dist_dir: public
+        dist_dir: .
         protected_files: 'dropbox/*'
         neocities_supporter: true
         preview_before_deploy: true
