@@ -228,6 +228,19 @@ article.art.wide {
   align-items: flex-end;
 }
 
+
+@keyframes tumble {
+  0% {
+    transform: translateZ(0) rotateY(0deg) 
+  }
+  50% {
+    transform: translateZ(-30px) rotateY(180deg) rotateX(-18deg);
+  }
+  100% {
+    transform: translateZ(-60px) rotateY(360deg) rotateX(-30deg);
+  }
+}
+
 article.listing {
   display: flex;
   flex-direction: column;
@@ -237,6 +250,13 @@ article.listing {
   img:not(.notpreview), .preview {
     aspect-ratio: 4/3;
     object-fit: cover;
+    z-index: 100;
+  }
+
+  :hover {
+    img {
+      /* animation: tumble 20s 1s infinite linear; */
+    }
   }
 
   img.emoji {

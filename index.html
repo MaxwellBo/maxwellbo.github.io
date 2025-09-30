@@ -333,34 +333,36 @@
             </table>
 
             <center>
-              <img src="img/medither.png" style="width: 160px; image-rendering: pixelated; margin-bottom: 4px; margin-top: 4px" />
+              <img src="img/medither.png"
+                style="width: 160px; image-rendering: pixelated; margin-bottom: 4px; margin-top: 4px" />
             </center>
 
             <style>
-            nav .favicon {
-              filter: grayscale(100%);
-            }
+              nav .favicon {
+                filter: grayscale(100%);
+              }
 
-            nav li {
-              list-style: none;
-            }
+              nav li {
+                list-style: none;
+              }
 
-            nav a {
-              color: black !important;
-            }
+              nav a {
+                color: black !important;
+              }
 
-            nav a:hover, nav a:hover:visited {
-              background-color: black;
-              color: white !important;
-            }
+              nav a:hover,
+              nav a:hover:visited {
+                background-color: black;
+                color: white !important;
+              }
 
-            nav ul {
-              padding-left: 0;
-            }
+              nav ul {
+                padding-left: 0;
+              }
 
-            nav li {
-              padding-left: 0;
-            }
+              nav li {
+                padding-left: 0;
+              }
             </style>
             <nav>
               <table style="width: 100%">
@@ -620,10 +622,10 @@
             </table>
 
             <center>
-            <p>
-              <img src="img/graphic-recycle.svg" style="display: inline-block" />
-              <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2025
-            </p>
+              <p>
+                <img src="img/graphic-recycle.svg" style="display: inline-block" />
+                <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2025
+              </p>
 
             </center>
           </div>
@@ -1419,11 +1421,51 @@
       <h2>
         <a id="art" href="#art">#</a>Art &amp; assets
       </h2>
+      <style>
+        #cccbd-preview {
+          font-family: monospace;
+        }
+      </style>
       <div class="cards">
+        <script type="module">
+          import { run, pick, red, white, normalize } from "./js/play/frontend.mjs"
+          import * as sort from "./js/play/sort.mjs"
+
+          const result = run({
+            program: {
+              boot(context, buffer, data) {
+                data.charset = sort.sort(
+                  "○◌◍◎●◐◑◒◓◔◕◖◗◘◙◚◛◜◝◞◟◠◡◴◵◶◷◯◦",
+                  context.metrics.fontFamily,
+        /*ascending=*/ true
+                );
+              },
+              main(coord, context, cursor, buffer, data) {
+                const { x, y } = coord;
+                const { t, i, ...n } = normalize({ coord, context });
+
+                const value = (1 / 32) * Math.tan((t / 64) * x * Math.tan(i - x));
+                const char = pick({ value, from: data.charset });
+                return value > 0 ? red(char) : white(char);
+              }
+            },
+            settings: {
+              fps: 60,
+              once: false,
+              rows: 6,
+              cols: 12,
+              fontSize: "16px",
+              backgroundColor: "black"
+            }
+          })
+
+          document.getElementById("cccbd-preview").appendChild(result);
+
+        </script>
         <article class="listing observable dark">
           <a href="https://observablehq.com/@mjbo/cccbd">
-            <img
-              src="https://static.observableusercontent.com/thumbnail/4afd658cfa055177db6663eb11b4600e1903715c8586f30c2e61f202d80ff1e6.jpg" />
+            <div id="cccbd-preview" >
+            </div>
             <p class="title">cccbd</p>
           </a>
         </article>
