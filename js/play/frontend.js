@@ -1,4 +1,4 @@
-import * as play from "./run.mjs";
+import * as play from "./run.js";
 
 export function red(char) {
   return { char, color: "red" }

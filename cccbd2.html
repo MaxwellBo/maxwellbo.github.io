@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+          <script type="module">
+          import { run, pick, red, white, normalize } from "./js/play/frontend.mjs"
+          import * as sort from "./js/play/sort.mjs"
+
+          const result = run({
+            program: {
+              boot(context, buffer, data) {
+                data.charset = sort.sort(
+                  "○◌◍◎●◐◑◒◓◔◕◖◗◘◙◚◛◜◝◞◟◠◡◴◵◶◷◯◦",
+                  context.metrics.fontFamily,
+        /*ascending=*/ true
+                );
+              },
+              main(coord, context, cursor, buffer, data) {
+                const { x, y } = coord;
+                const { t, i, ...n } = normalize({ coord, context });
+
+                const value = (1 / 32) * Math.tan((t / 64) * x * Math.tan(i - x));
+                const char = pick({ value, from: data.charset });
+                return value > 0 ? red(char) : white(char);
+              }
+            },
+            settings: {
+              fps: 60,
+              once: false,
+              rows: 16,
+              fontSize: "16px",
+              backgroundColor: "black"
+            }
+          })
+
+          document.getElementById("cccbd-preview").appendChild(result);
+
+        </script>
+
+        <div id="cccbd-preview" >
+        </div>
+  
+</body>
+
+</html>

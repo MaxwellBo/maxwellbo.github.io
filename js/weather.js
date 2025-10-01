@@ -1,6 +1,6 @@
 
 import * as Plot from 'https://esm.run/@observablehq/plot'
-import { renderSkyAtLocation } from './sky.mjs';
+import { renderSkyAtLocation } from './sky.js';
 
 const element = document.getElementById('weather');
 const time = document.getElementById('time');
