@@ -195,6 +195,10 @@ article.art.wide {
 }
 
 @media (min-width: 640px) {
+  .only-show-on-mobile {
+    display: none !important;
+  }
+
   article.listing.big {
     grid-column: span 2;
     grid-row: span 2;

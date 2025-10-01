@@ -752,6 +752,17 @@
       </script>
   </header>
   <main>
+    <section style="display: flex; align-items: center; gap: 0.5ch;" class="only-show-on-mobile">
+        <a href="atom.xml">⚛&nbsp;&nbsp;atom.xml</a>
+        󱠡
+
+    <marquee id="ticker" class="dindong" scrollamount="7" style="flex: 1">
+      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+    </marquee>
+    <script type="module">
+      renderAtom('atom.xml', 'ticker');
+    </script>
+    </section>
     <section style="display: flex; align-items: center; gap: 0.5ch;">
         <a href="https://letterboxd.com/mbo_/rss/">⚛</a>
         <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
@@ -1763,10 +1774,14 @@
       </div>
     </div>
 
-    <marquee id="ticker" class="dindong" scrollamount="7">
-      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+
+    <div style="font-family: 'DINDong';">
       <a href="atom.xml">⚛ atom.xml</a>
       󱠡
+    </div>
+
+    <marquee id="ticker" class="dindong" scrollamount="7">
+      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
     </marquee>
     <script type="module">
       renderAtom('atom.xml', 'ticker');
