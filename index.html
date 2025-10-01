@@ -545,6 +545,17 @@
                   -->
                   <tr>
                     <td style="text-align: left;">
+                      <a href="https://neocities.org/site/maxbo">Neocities</a>
+                    </td>
+                    <td style="text-align: right;">
+                      <a href="https://neocities.org/site/maxbo">
+                        <img class="favicon"
+                          src="https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://neocities.org&size=64" />
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td style="text-align: left;">
                       <a href="https://boardgamegeek.com/collection/user/mbo_">BGG</a>
                     </td>
                     <td style="text-align: right;">
@@ -554,17 +565,17 @@
                       </a>
                     </td>
                   </tr>
-                    <tr>
+                  <tr>
                     <td style="text-align: left;">
-                      <a href="https://neocities.org/site/maxbo">Neocities</a>
+                      <a href="http://steamcommunity.com/id/0x426F">Steam</a>
                     </td>
                     <td style="text-align: right;">
-                      <a href="https://neocities.org/site/maxbo">
-                      <img class="favicon"
-                        src="https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://neocities.org&size=64" />
+                      <a href="http://steamcommunity.com/id/0x426F">
+                        <img class="favicon"
+                          src="https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://store.steampowered.com&size=64" />
                       </a>
                     </td>
-                    </tr>
+                  </tr>
                   <!--
                   <tr>
                     <td style="text-align: left;">
@@ -733,15 +744,17 @@
                 const title = item.getElementsByTagName('title')[0].textContent;
                 const link = item.getElementsByTagName('link')[0].getAttribute('href');
                 const updated = new Date(item.getElementsByTagName('updated')[0].textContent);
-                const summary = item.getElementsByTagName('summary')[0].textContent;
+                const summary = item.getElementsByTagName('summary')[0];
                 const shortDate = updated.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 
                 const a = document.createElement('a');
                 a.href = link;
-                a.textContent = `[${shortDate}] ${title}`;;
-                const small = document.createElement('small');
-                small.textContent = ` ${summary}`;
-                a.appendChild(small);
+                a.textContent = `[${shortDate}] ${title}`;
+                if (summary) {
+                  const small = document.createElement('small');
+                  small.textContent = ` ${summary.textContent}`;
+                  a.appendChild(small);
+                }
                 ticker.appendChild(a);
                 ticker.appendChild(document.createTextNode(' ⚛ '));
               });
@@ -753,23 +766,23 @@
   </header>
   <main>
     <section style="display: flex; align-items: center; gap: 0.5ch;" class="only-show-on-mobile">
-        <a href="atom.xml">⚛&nbsp;&nbsp;atom.xml</a>
-        󱠡
+      <a href="atom.xml">⚛&nbsp;&nbsp;atom.xml</a>
+      󱠡
 
-    <marquee id="ticker" class="dindong" scrollamount="7" style="flex: 1">
-      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
-    </marquee>
-    <script type="module">
-      renderAtom('atom.xml', 'ticker');
-    </script>
+      <marquee id="ticker2" class="dindong" scrollamount="7" style="flex: 1">
+        <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+      </marquee>
+      <script type="module">
+        renderAtom('atom.xml', 'ticker2');
+      </script>
     </section>
     <section style="display: flex; align-items: center; gap: 0.5ch;">
-        <a href="https://letterboxd.com/mbo_/rss/">⚛</a>
-        <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
-        <span>⤞</span>
-        <marquee id="feed" scrollamount="9" style="flex: 1;">
-          ඞ
-        </marquee>
+      <a href="https://letterboxd.com/mbo_/rss/">⚛</a>
+      <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
+      <span>⤞</span>
+      <marquee id="feed" scrollamount="9" style="flex: 1;">
+        ඞ
+      </marquee>
       <script type="module">
         renderRss('https://mbo-letterboxdrss.web.val.run', 'feed', (title) => {
           const [name, stars] = title.split(" - ");
@@ -779,12 +792,12 @@
     </section>
 
     <section style="display: flex; align-items: center; gap: 0.5ch;">
-        <a href="https://www.are.na/max-bo/feed/rss">⚛</a>
-        <a href="https://www.are.na/max-bo">are.na/max-bo</a>
-        <span>⤞</span>
-        <marquee id="arenaFeed" scrollamount="7" style="flex: 1;">
-          ඞ
-        </marquee>
+      <a href="https://www.are.na/max-bo/feed/rss">⚛</a>
+      <a href="https://www.are.na/max-bo">are.na/max-bo</a>
+      <span>⤞</span>
+      <marquee id="arenaFeed" scrollamount="7" style="flex: 1;">
+        ඞ
+      </marquee>
       <script type="module">
         renderRss('https://mbo-arenarss.web.val.run', 'arenaFeed',
           (title) => title || "Untitled"
@@ -793,17 +806,17 @@
     </section>
 
     <section style="display: flex; align-items: center; gap: 0.5ch;">
-        <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a>
-        <a href="https://rateyourmusic.com/~mbo">rateyourmusic.com/&tilde;mbo</a>
-        <span>⤞</span>
-        <marquee id="rymFeed" scrollamount="8" style="flex: 1;">
-          ඞ
-        </marquee>
+      <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a>
+      <a href="https://rateyourmusic.com/~mbo">rateyourmusic.com/&tilde;mbo</a>
+      <span>⤞</span>
+      <marquee id="rymFeed" scrollamount="8" style="flex: 1;">
+        ඞ
+      </marquee>
       <script type="module">
         renderRss('rym.xml', 'rymFeed');
       </script>
     </section>
-    <section >
+    <section>
       <h2>
         <a id="articles" href="#articles">#</a>Articles & posts
       </h2>
@@ -1755,6 +1768,22 @@
       graphics are <a href="https://observablehq.com/plot/">Observable Plot</a>. Weather data from <a
         href="https://open-meteo.com/">Open-Meteo</a>.
     </p> -->
+
+    <section style="border: 1px dotted grey; margin: 4px; padding: 2px">
+      <div style="display: flex; flex-wrap: wrap; gap: 4px; align-items: center;">
+        <img src="88x31/best_chrome.gif" alt="Best Chrome" />
+        <a href="https://github.com/MaxwellBo"><img src="88x31/github.gif" alt="GitHub" /></a>
+        <a href="https://www.matchamonday.net/#webring"><img src="88x31/matchamonday.gif" alt="Matcha Monday" /></a>
+        <a href="https://neocities.org/site/maxbo"><img src="88x31/neocities.png" alt="Neocities" /></a>
+        <a href="https://github.com/MaxwellBo/maxwellbo.github.io"><img src="88x31/pages.png" height="31" width="88"
+            alt="Pages" /></a>
+        <a href="atom.xml"><img src="88x31/rss-button.gif" alt="RSS Button" /></a>
+        <a href="https://open.spotify.com/user/aquahair_"><img src="88x31/spotify.gif" alt="Spotify" /></a>
+        <img src="88x31/vscbutton.gif" alt="VSCode Button" />
+        <a href="http://steamcommunity.com/id/0x426F"><img src="88x31/steam.gif" alt="Steam" /></a>
+        <img src="88x31/hello_kitty.gif" alt="Hello Kitty" />
+      </div>
+    </section>
 
   </main>
   <footer>
