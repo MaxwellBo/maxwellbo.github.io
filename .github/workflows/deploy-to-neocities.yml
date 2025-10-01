@@ -1,0 +1,31 @@
+name: Deploy to neocities
+
+# only run on changes to master
+on:
+  push:
+    branches:
+      - master
+
+env:
+  FORCE_COLOR: 1
+  node_version: lts/*
+
+concurrency: # prevent concurrent deploys doing strange things
+  group: deploy-to-neocities
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v5
+    - name: Deploy to neocities
+      uses: bcomnes/deploy-to-neocities@master # dont use master in production
+      with:
+        api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
+        cleanup: true
+        dist_dir: .
+        protected_files: 'dropbox/*'
+        neocities_supporter: true
+        preview_before_deploy: true
