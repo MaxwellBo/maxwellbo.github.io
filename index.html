@@ -792,20 +792,6 @@
     </section>
 
     <section style="display: flex; align-items: center; gap: 0.5ch; margin-left: 4px;">
-      <a href="https://www.are.na/max-bo/feed/rss">⚛</a>
-      <a href="https://www.are.na/max-bo">are.na/max-bo</a>
-      <span>⤞</span>
-      <marquee id="arenaFeed" scrollamount="7" style="flex: 1;">
-        ඞ
-      </marquee>
-      <script type="module">
-        renderRss('https://mbo-arenarss.web.val.run', 'arenaFeed',
-          (title) => title || "Untitled"
-        );
-      </script>
-    </section>
-
-    <section style="display: flex; align-items: center; gap: 0.5ch; margin-left: 4px;">
       <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a>
       <a href="https://rateyourmusic.com/~mbo">rateyourmusic.com/&tilde;mbo</a>
       <span>⤞</span>
@@ -828,6 +814,21 @@
         });
       </script>
     </section>
+
+    <section style="display: flex; align-items: center; gap: 0.5ch; margin-left: 4px;">
+      <a href="https://www.are.na/max-bo/feed/rss">⚛</a>
+      <a href="https://www.are.na/max-bo">are.na/max-bo</a>
+      <span>⤞</span>
+      <marquee id="arenaFeed" scrollamount="7" style="flex: 1;">
+        ඞ
+      </marquee>
+      <script type="module">
+        renderRss('https://mbo-arenarss.web.val.run', 'arenaFeed',
+          (title) => title || "Untitled"
+        );
+      </script>
+    </section>
+
     <section>
       <h2>
         <a id="articles" href="#articles">#</a>Articles & posts
