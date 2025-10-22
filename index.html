@@ -813,7 +813,19 @@
         ඞ
       </marquee>
       <script type="module">
-        renderRss('rym.xml', 'rymFeed');
+        renderRss('rym.xml', 'rymFeed', (title) => {
+          if (!title) return title;
+          const m = title.match(/^Rated\s+(.*?)\s+([\d.]+)\s*stars?$/i);
+          if (!m) return title;
+          const name = m[1].trim();
+          const rating = parseFloat(m[2]);
+          const full = Math.floor(rating);
+          const half = (rating - full) >= 0.5;
+          let stars = '★'.repeat(full);
+          if (half) stars += '½';
+          if (!stars) stars = '☆';
+          return `${stars} - ${name}`;
+        });
       </script>
     </section>
     <section>
