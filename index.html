@@ -222,7 +222,7 @@
     <div class="drop"></div>
   </div>
   <img id="draggable-postit" src="me.webp"
-    style="position: absolute; top: 20px; right: 40px; width: 90px; cursor: grab; z-index: 1000;" />
+    style="position: absolute; bottom: 20px; right: 40px; width: 90px; cursor: grab; z-index: 1000;" />
   <script>
     const postit = document.getElementById('draggable-postit');
     let isDragging = false;
@@ -2037,6 +2037,21 @@
     <div class="right-foot" style="transform: translate(-2.44328px, 21.6969px) rotate(180deg);"></div>
   </div>
   <script src="scrollbuddy/script.js"></script>
+
+  <svg height="0">
+    <defs>
+        <filter id="n1">
+            <feTurbulence id="reseedable" type="fractalNoise" baseFrequency="0.001 0.001" numOctaves="10" result="NOISE" seed="300"></feTurbulence>
+            <feGaussianBlur in="SourceGraphic" result="BLURRED" stdDeviation="0"></feGaussianBlur>
+            <feDisplacementMap id="displacer" in2="NOISE" in="BLURRED" scale="25" xChannelSelector="A" yChannelSelector="R" result="DISPLACED"></feDisplacementMap>
+        </filter>
+    </defs>
+  </svg>
+  <style>
+    /* main {
+       filter: url(#n1);
+    } */
+  </style>
 
 
   <!-- <div id="velocity-design-comfort-scene">
