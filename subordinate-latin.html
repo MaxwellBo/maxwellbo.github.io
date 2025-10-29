@@ -352,6 +352,42 @@
         href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
         Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
 
+
+        <div id="source-han-hwid-preview" style="margin:16px 0;">
+          <div class="hwid-state" style="font-family:monospace; margin-bottom:8px;">
+            <code id="hwid-line">font-feature-settings: <span style="color:green">'hwid'</span></code>
+          </div>
+
+          <div id="source-han-sample" class="preview"
+               style="font-family: source-han-serif-japanese">Sphinx of black quartz, judge my vow.
+          </div>
+        </div>
+
+        <script>
+          (function () {
+            const sample = document.getElementById('source-han-sample');
+            const line = document.getElementById('hwid-line');
+            let hwidOn = true;
+
+            function setHwid(on) {
+              if (on) {
+                sample.style.fontFeatureSettings = "'hwid'";
+                line.innerHTML = "font-feature-settings: <code>'<span style=\"color:green\">hwid</span>'</code>";
+              } else {
+                sample.style.fontFeatureSettings = "normal";
+                line.innerHTML = "font-feature-settings: <code>'<span style=\"color:red\">normal</span>'</code>";
+              }
+            }
+
+            setHwid(hwidOn);
+            setInterval(() => {
+              hwidOn = !hwidOn;
+              setHwid(hwidOn);
+            }, 1000);
+          })();
+        </script>
+
+
     <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle-2" checked> Show 'Hello, world!'</label>
   </div>
 
