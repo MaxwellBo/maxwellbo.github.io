@@ -87,6 +87,14 @@
       white-space: pre-wrap;
     }
 
+    .japanese-text {
+      display: inline;
+    }
+
+    .hide-japanese .japanese-text {
+      display: none;
+    }
+
     body {
       padding-left: 16px;
       padding-right: 16px;
@@ -318,7 +326,7 @@
         href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
       doesn't guarantee that all characters in the text will have the same width.</p>
 
-    <button class="strip" onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
+    <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle" checked> Show 'Hello, world!'</label>
   </div>
 
   <table>
@@ -344,7 +352,7 @@
         href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
         Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
 
-    <button class="strip" onclick="stripHelloWorld()">Hide 'Hello, world!'</button>
+    <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle-2" checked> Show 'Hello, world!'</label>
   </div>
 
   <table>
@@ -475,6 +483,7 @@
 
 
   const HELLO_WORLD_IN_JAPANESE = 'ハローワールド';
+  let helloWorldVisible = true;
 
   function makeTesterRow(font, variant) {
     const row = document.createElement('tr');
@@ -490,7 +499,12 @@
     }
 
     testCell.style.fontFamily = `${font.fontFamily}, 'Hello Kitty', Webdings`;
-    testCell.textContent = 'Sphinx of black quartz, judge my vow.' + (variant ? '\n' + HELLO_WORLD_IN_JAPANESE : '');
+    const baseText = 'Sphinx of black quartz, judge my vow.';
+    if (variant) {
+      testCell.innerHTML = baseText + '\n<span class="japanese-text">' + HELLO_WORLD_IN_JAPANESE + '</span>';
+    } else {
+      testCell.textContent = baseText;
+    }
     testCell.className = 'preview' + (variant ? ' ' + variant : '');
     testCell.fontVariantEastAsian = variant;
 
@@ -588,16 +602,24 @@
     window.history.replaceState({}, '', url);
   }
 
-  function stripHelloWorld() {
-    const previews = document.querySelectorAll('.preview');
-    const buttons = document.querySelectorAll('.strip');
-    previews.forEach(element => {
-      element.textContent = element.textContent.replace(HELLO_WORLD_IN_JAPANESE, '').trim();
+  function toggleHelloWorld() {
+    const checkboxes = document.querySelectorAll('#hello-world-toggle, #hello-world-toggle-2');
+    
+    // Get the state from the checkbox that triggered the event
+    const triggeredCheckbox = event.target;
+    helloWorldVisible = triggeredCheckbox.checked;
+    
+    // Sync all checkboxes to the same state
+    checkboxes.forEach(checkbox => {
+      checkbox.checked = helloWorldVisible;
     });
-
-    buttons.forEach(button => {
-      button.disabled = true;
-    });
+    
+    // Toggle the hide-japanese class on the body to show/hide all Japanese text
+    if (helloWorldVisible) {
+      document.body.classList.remove('hide-japanese');
+    } else {
+      document.body.classList.add('hide-japanese');
+    }
   }
 </script>
 </body>
