@@ -116,6 +116,10 @@
       font-feature-settings: 'hwid';
     }
 
+    .disable-hwid .half-width {
+      font-feature-settings: normal;
+    }
+
     blockquote {
       border-left: 1px dotted #000;
       padding-left: 15px;
@@ -387,8 +391,10 @@
           })();
         </script>
 
-
-    <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle-2" checked> Show 'Hello, world!'</label>
+    <div>
+        <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle-2" checked> Show 'Hello, world!'</label>
+        <label style="margin-left: 20px;"><input type="checkbox" onchange="toggleHwid()" id="hwid-toggle" checked> <code>font-feature-settings: 'hwid'</code></label>
+    </div>
   </div>
 
   <table>
@@ -655,6 +661,18 @@
       document.body.classList.remove('hide-japanese');
     } else {
       document.body.classList.add('hide-japanese');
+    }
+  }
+
+  function toggleHwid() {
+    const checkbox = document.getElementById('hwid-toggle');
+    const hwidEnabled = checkbox.checked;
+    
+    // Toggle the disable-hwid class on the body to enable/disable hwid
+    if (hwidEnabled) {
+      document.body.classList.remove('disable-hwid');
+    } else {
+      document.body.classList.add('disable-hwid');
     }
   }
 </script>
