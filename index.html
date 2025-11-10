@@ -58,6 +58,23 @@
     gtag('config', 'UA-135030873-1');
   </script>
   <title>Max Bo</title>
+  <script>
+    (() => {
+      const text = 'Max Bo';
+      const width = 30;
+      const buffer = '.'.repeat(width) + text + '.'.repeat(width);
+      const frames = [];
+      for (let i = 0; i <= buffer.length - width; i++) frames.push(buffer.slice(i, i + width));
+      let idx = 0;
+      document.title = text;
+      setTimeout(() => {
+        setInterval(() => {
+          document.title = frames[idx];
+          idx = (idx + 1) % frames.length;
+        }, 150);
+      }, 1000);
+    })();
+  </script>
   <meta name="author" content="Max Bo, max@maxbo.me">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="The personal website and portfolio of Max Bo" />
