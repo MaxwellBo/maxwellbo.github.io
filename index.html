@@ -58,20 +58,47 @@
     gtag('config', 'UA-135030873-1');
   </script>
   <title>Max Bo</title>
+  <!--
+    <script>
+      (() => {
+        const text = 'Max Bo';
+        const width = 30;
+        const buffer = '.'.repeat(width) + text + '.'.repeat(width);
+        const frames = [];
+        for (let i = 0; i <= buffer.length - width; i++) frames.push(buffer.slice(i, i + width));
+        let idx = 0;
+        document.title = text;
+        setTimeout(() => {
+          setInterval(() => {
+            document.title = frames[idx];
+            idx = (idx + 1) % frames.length;
+          }, 150);
+        }, 1000);
+      })();
+    </script>
+  -->
+
   <script>
     (() => {
-      const text = 'Max Bo';
-      const width = 30;
-      const buffer = '.'.repeat(width) + text + '.'.repeat(width);
-      const frames = [];
-      for (let i = 0; i <= buffer.length - width; i++) frames.push(buffer.slice(i, i + width));
-      let idx = 0;
-      document.title = text;
+      const base = 'Max Bo';
+      let chars = base.split('');
+      document.title = base;
+
+      function toggleRandomChar() {
+        let i;
+        // avoid toggling spaces
+        do {
+          i = Math.floor(Math.random() * chars.length);
+        } while (chars[i] === ' ');
+
+        const c = chars[i];
+        chars[i] = c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase();
+        document.title = chars.join('');
+      }
+
+      // run repeatedly
       setTimeout(() => {
-        setInterval(() => {
-          document.title = frames[idx];
-          idx = (idx + 1) % frames.length;
-        }, 150);
+        setInterval(toggleRandomChar, 1000);
       }, 1000);
     })();
   </script>
