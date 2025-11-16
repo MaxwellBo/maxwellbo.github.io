@@ -114,6 +114,35 @@
   </script>
   <script>
     // TODO: butterfly implementation
+    function openButterflyWindow() {
+      // Get the current window dimensions
+      const screenWidth = window.screen.width;
+      const screenHeight = window.screen.height;
+      
+      // Position the popup in the bottom right corner
+      const popupWidth = 32;
+      const popupHeight = 32;
+      const left = screenWidth - popupWidth - 50; // 50px margin from edge
+      const top = screenHeight - popupHeight - 100; // 100px margin from edge
+      
+      // Open the butterfly popup window
+      const butterflyWindow = window.open(
+        'butterfly.html',
+        'butterfly',
+        `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no`
+      );
+      
+      // Ensure the window stays on top (if possible)
+      if (butterflyWindow) {
+        butterflyWindow.focus();
+      }
+    }
+    
+    // Open butterfly window when the page loads
+    window.addEventListener('load', () => {
+      // Small delay to ensure page is fully loaded
+      setTimeout(openButterflyWindow, 500);
+    });
 
   </script>
   <meta name="author" content="Max Bo, max@maxbo.me">

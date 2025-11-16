@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>butterfly</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: transparent;
+            overflow: hidden;
+        }
+        
+        #butterfly {
+            width: 32px;
+            height: 32px;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <img id="butterfly" src="img/butterfly/0.gif" alt="Butterfly">
+    
+    <script>
+        const butterfly = document.getElementById('butterfly');
+        let currentFrame = 0;
+        const totalFrames = 6; // 0.gif to 5.gif
+        
+        // Animation variables
+        let time = 0;
+        let startX = window.screenX || 0;
+        let startY = window.screenY || 0;
+        
+        // Initialize starting position at middle right if not already positioned
+        if (startX === 0 && startY === 0) {
+            startX = window.screen.width - 82; // 32px width + 50px margin
+            startY = (window.screen.height / 2) - 16; // Middle of screen minus half butterfly height
+            window.moveTo(startX, startY);
+        } else {
+            startX = window.screenX;
+            startY = window.screenY;
+        }
+        
+        // Function to update the butterfly frame and move the window
+        function animate() {
+            // Update the image source
+            butterfly.src = `img/butterfly/${currentFrame}.gif`;
+            
+            if (window.moveTo) {
+                // Sine wave motion parameters
+                const amplitude = 50; // Height of the sine wave
+                const frequency = 0.02; // How tight the wave is
+                const leftwardSpeed = 2.5; // How fast it moves left
+                const upwardSpeed = 0.3; // How fast it moves up overall
+                
+                // Calculate new position
+                const newX = startX - (time * leftwardSpeed);
+                const sineOffset = Math.sin(time * frequency - Math.PI/2) * amplitude; // -π/2 offset to start moving up
+                const newY = startY - (time * upwardSpeed) + sineOffset;
+                
+                // Check if butterfly has reached the left edge of the screen
+                if (newX <= 0) {
+                    window.close();
+                    return;
+                }
+                
+                // Move the window to the new position
+                window.moveTo(Math.round(newX), Math.round(newY));
+                
+                // Update time for next frame
+                time += 1;
+            }
+            
+            // Increment frame counter
+            currentFrame = (currentFrame + 1) % totalFrames;
+        }
+        
+        // Start animation after a brief delay
+        setTimeout(() => {
+            setInterval(animate, 100); // 100ms = 10 FPS for smooth motion
+        }, 100);
+    </script>
+</body>
+</html>
