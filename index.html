@@ -115,6 +115,11 @@
   <script>
     // TODO: butterfly implementation
     function openButterflyWindow() {
+      // Don't open butterfly popup on mobile devices (same breakpoint as CSS)
+      if (window.innerWidth < 640) {
+        return;
+      }
+      
       // Get the current window dimensions
       const screenWidth = window.screen.width;
       const screenHeight = window.screen.height;
