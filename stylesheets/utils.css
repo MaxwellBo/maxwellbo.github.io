@@ -12,6 +12,10 @@
   background-color: rgb(253, 255, 238)
 }
 
+.subordinate-latin {
+  font-family: 'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', serif;
+}
+
 #sanrio {
   background-color: #f0f6ff;
   font-family: "Quicksand", sans-serif;

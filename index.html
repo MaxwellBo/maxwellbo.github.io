@@ -27,6 +27,16 @@
       }
     }
   </style>
+  <!-- <script>
+    (function (d) {
+      var config = {
+        kitId: 'eun4uzv',
+        scriptTimeout: 3000,
+        async: true
+      },
+        h = d.documentElement, t = setTimeout(function () { h.className = h.className.replace(/\bwf-loading\b/g, "") + " wf-inactive"; }, config.scriptTimeout), tk = d.createElement("script"), f = false, s = d.getElementsByTagName("script")[0], a; h.className += " wf-loading"; tk.src = 'https://use.typekit.net/' + config.kitId + '.js'; tk.async = true; tk.onload = tk.onreadystatechange = function () { a = this.readyState; if (f || a && a != "complete" && a != "loaded") return; f = true; clearTimeout(t); try { Typekit.load(config) } catch (e) { } }; s.parentNode.insertBefore(tk, s)
+    })(document);
+  </script> -->
 
   <style>
     #flood-menu {
@@ -101,6 +111,10 @@
         setInterval(toggleRandomChar, 1000);
       }, 1000);
     })();
+  </script>
+  <script>
+    // TODO: butterfly implementation
+
   </script>
   <meta name="author" content="Max Bo, max@maxbo.me">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -938,7 +952,7 @@
           </a>
           <time>September 2024</time>
         </article>
-        <article class="listing" style="font-family: 'SimSun', 'MS Mincho', 'Hiragino Mincho ProN', serif;">
+        <article class="listing subordinate-latin">
           <a href="subordinate-latin.html">
             <img src="img/sub.png" />
             <p class="title">Subordinate Latin</p>
@@ -1848,11 +1862,13 @@
         Sans</a>,
       <a href="https://www.redaction.us/" style="font-family: 'Redaction 35', serif;">Redaction 35</a>,
       <a href="https://cinni.net/font" style="font-family: 'basiic', monospace;">basiic</a>,
-      &amp; a corrupted form of <a href="http://hershey-noailles.luuse.io/www/#Hershey-Noailles-Times-Triplex-Light" style="font-family: 'herscheytimes', serif; font-size: 0.5em;">
+      &amp; a corrupted form of <a href="http://hershey-noailles.luuse.io/www/#Hershey-Noailles-Times-Triplex-Light"
+        style="font-family: 'herscheytimes', serif; font-size: 0.5em;">
         Hershey Times Triplex Light
       </a> that I have been unable to recover the source of (???).
 
-      Weather data from <a href="https://open-meteo.com/">Open-Meteo</a>. Dataviz with <a href="https://observablehq.com/plot/">Observable Plot</a>.
+      Weather data from <a href="https://open-meteo.com/">Open-Meteo</a>. Dataviz with <a
+        href="https://observablehq.com/plot/">Observable Plot</a>.
       Atmospheric rendering by <a href="https://github.com/dnlzro/horizon">Horizon</a>.
       </h2>
     </section>
@@ -1874,7 +1890,8 @@
         <a href="mailto:maxwell.j.bo+website@gmail.com"><img src="88x31/email-icon.gif" alt="Email" /></a>
         <img src="88x31/html_learn_it_today.gif" alt="HTML Learn It Today" />
         <img src="88x31/mac.gif" alt="Mac" />
-        <a href="https://walky.space/mb-guestbook"><img height="31" width="88" src="88x31/guestbook.gif" alt="Guestbook" /></a>
+        <a href="https://walky.space/mb-guestbook"><img height="31" width="88" src="88x31/guestbook.gif"
+            alt="Guestbook" /></a>
       </div>
     </section>
 
@@ -2084,11 +2101,13 @@
 
   <svg height="0">
     <defs>
-        <filter id="n1">
-            <feTurbulence id="reseedable" type="fractalNoise" baseFrequency="0.001 0.001" numOctaves="10" result="NOISE" seed="300"></feTurbulence>
-            <feGaussianBlur in="SourceGraphic" result="BLURRED" stdDeviation="0"></feGaussianBlur>
-            <feDisplacementMap id="displacer" in2="NOISE" in="BLURRED" scale="25" xChannelSelector="A" yChannelSelector="R" result="DISPLACED"></feDisplacementMap>
-        </filter>
+      <filter id="n1">
+        <feTurbulence id="reseedable" type="fractalNoise" baseFrequency="0.001 0.001" numOctaves="10" result="NOISE"
+          seed="300"></feTurbulence>
+        <feGaussianBlur in="SourceGraphic" result="BLURRED" stdDeviation="0"></feGaussianBlur>
+        <feDisplacementMap id="displacer" in2="NOISE" in="BLURRED" scale="25" xChannelSelector="A" yChannelSelector="R"
+          result="DISPLACED"></feDisplacementMap>
+      </filter>
     </defs>
   </svg>
   <style>
