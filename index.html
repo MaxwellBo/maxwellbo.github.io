@@ -113,10 +113,14 @@
     })();
   </script>
   <script>
-    // TODO: butterfly implementation
     function openButterflyWindow() {
       // Don't open butterfly popup on mobile devices (same breakpoint as CSS)
       if (window.innerWidth < 640) {
+        return;
+      }
+
+      // Don't open when page is loaded from the local filesystem (file:///...)
+      if (window.location.protocol === 'file:') {
         return;
       }
       
@@ -125,8 +129,8 @@
       const screenHeight = window.screen.height;
       
       // Position the popup in the bottom right corner
-      const popupWidth = 32;
-      const popupHeight = 32;
+      const popupWidth = 1;
+      const popupHeight = 1;
       const left = screenWidth - popupWidth - 50; // 50px margin from edge
       const top = screenHeight - popupHeight - 100; // 100px margin from edge
       
@@ -1190,7 +1194,9 @@
           </a>
         </article>
         <article>
-          <img src="vectors/unfenced_road.svg" />
+          <a href="https://en.wikipedia.org/wiki/Road_signs_in_Australia">
+            <img src="vectors/fire_danger.svg" />
+          </a>
           <svg width="16" height="40" style="display: block; margin: 0 auto;">
             <rect x="6" y="0" width="3" height="40" fill="#999" />
             <rect x="9" y="0" width="3" height="40" fill="#666" />
