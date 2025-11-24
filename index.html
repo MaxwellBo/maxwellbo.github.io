@@ -67,7 +67,7 @@
 
     gtag('config', 'UA-135030873-1');
   </script>
-  <title>Max Bo</title>
+  <title>✶ Max Bo ✶</title>
   <!--
     <script>
       (() => {
@@ -91,26 +91,31 @@
   <script>
     (() => {
       const base = 'Max Bo';
-      let chars = base.split('');
-      document.title = base;
+      const decorators = ['✶', '✷', '✸', '✹', '✺'];
+      const flowerDecorators = ['❀', '❁', '❂', '❃', '❄', '❅', '❆', '❇', '❈', '❉', '❊', '❋', '✤', '✥', '✦', '✧', '✨', '✩', '✪', '✫', '✬', '✭', '✮', '✯', '✰', '✱', '✲', '✳', '✴', '✵', '✶', '✷', '✸', '✹', '✺', '✻', '✼', '✽', '✾', '✿', '❀'];
+      let decoratorIndex = 0;
+      let direction = 1; // 1 for forward, -1 for backward
 
-      function toggleRandomChar() {
-        let i;
-        // avoid toggling spaces
-        do {
-          i = Math.floor(Math.random() * chars.length);
-        } while (chars[i] === ' ');
-
-        const c = chars[i];
-        chars[i] = c === c.toUpperCase() ? c.toLowerCase() : c.toUpperCase();
-        document.title = chars.join('');
+      function updateDecorator() {
+        const decorator = decorators[decoratorIndex];
+        document.title = `${decorator} ${base} ${decorator}`;
+        
+        // Update decorator index
+        decoratorIndex += direction;
+        
+        // Change direction when we hit the ends
+        if (decoratorIndex >= decorators.length - 1) {
+          direction = -1;
+        } else if (decoratorIndex <= 0) {
+          direction = 1;
+        }
       }
 
       // run repeatedly
       setTimeout(() => {
-        setInterval(toggleRandomChar, 1000);
+        setInterval(updateDecorator, 1000);
       }, 1000);
-    })();
+        })();
   </script>
   <script>
     function openButterflyWindow() {
