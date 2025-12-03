@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>modulo</title>
+  
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      padding: 20px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .controls {
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f5f5f5;
+      border-radius: 5px;
+    }
+    .control-group {
+      margin-bottom: 10px;
+    }
+    label {
+      display: inline-block;
+      width: 100px;
+      font-weight: bold;
+    }
+    input[type="range"] {
+      width: 300px;
+    }
+    .value-display {
+      display: inline-block;
+      width: 50px;
+      text-align: right;
+      font-family: monospace;
+    }
+    .result-item {
+      padding: 15px;
+      background: #f9f9f9;
+      border-radius: 5px;
+      border-left: 4px solid transparent;
+      margin-bottom: 10px;
+    }
+    .result-item.truncated { border-left-color: #e41a1c; }
+    .result-item.floored { border-left-color: #377eb8; }
+    .result-item.euclidean { border-left-color: #4daf4a; }
+    .result-item.rounded { border-left-color: #984ea3; }
+    .result-item.ceiling { border-left-color: #ff7f00; }
+    .result-item h4 {
+      margin: 0 0 8px 0;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .result-value {
+      font-size: 32px;
+      font-weight: bold;
+      font-family: monospace;
+    }
+    .result-details {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #666;
+      font-family: monospace;
+    }
+    .code-section {
+      margin: 20px 0;
+      padding: 15px;
+      background: #f8f8f8;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+    }
+    .code-section h3 {
+      margin-top: 0;
+      color: #333;
+    }
+    .code-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 15px;
+    }
+    .code-item {
+      background: white;
+      padding: 10px;
+      border-radius: 5px;
+      border-left: 3px solid #666;
+    }
+    .code-item h4 {
+      margin: 0 0 8px 0;
+      font-size: 14px;
+    }
+    .code-item code {
+      display: block;
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: #272822;
+      color: #f8f8f2;
+      padding: 10px;
+      border-radius: 3px;
+      overflow-x: auto;
+    }
+    #plots {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .plot-wrapper {
+      display: flex;
+      flex-direction: column;
+      border: 1px solid #ddd;
+      padding: 15px;
+      border-radius: 5px;
+    }
+    .plot-wrapper h3 {
+      margin: 0 0 10px 0;
+    }
+  </style>
+
+  <script>
+    // Truncated division modulo (same sign as dividend)
+    // r = a - n * trunc(a/n)
+    function modTruncated(a, n) {
+      const q = Math.trunc(a / n);
+      return a - n * q;
+    }
+
+    // Floored division modulo (same sign as divisor)
+    // r = a - n * floor(a/n)
+    function modFloored(a, n) {
+      const q = Math.floor(a / n);
+      return a - n * q;
+    }
+
+    // Euclidean division modulo (always non-negative)
+    // r = a - |n| * floor(a/|n|)
+    function modEuclidean(a, n) {
+      const q = Math.sign(n) * Math.floor(a / Math.abs(n));
+      return a - n * q;
+    }
+
+    // Rounded division modulo (quotient rounded to nearest)
+    // r = a - n * round(a/n)
+    function modRounded(a, n) {
+      const q = Math.round(a / n);
+      return a - n * q;
+    }
+
+    // Ceiling division modulo (opposite sign of divisor)
+    // r = a - n * ceil(a/n)
+    function modCeiling(a, n) {
+      const q = Math.ceil(a / n);
+      return a - n * q;
+    }
+
+    // Test function to demonstrate all variants
+    function testModulo(a, n) {
+      console.log(`\nTesting ${a} mod ${n}:`);
+      console.log(`Truncated:  ${modTruncated(a, n)}`);
+      console.log(`Floored:    ${modFloored(a, n)}`);
+      console.log(`Euclidean:  ${modEuclidean(a, n)}`);
+      console.log(`Rounded:    ${modRounded(a, n)}`);
+      console.log(`Ceiling:    ${modCeiling(a, n)}`);
+    }
+
+    // Run tests with different sign combinations
+    window.addEventListener('DOMContentLoaded', () => {
+      testModulo(7, 3);    // both positive
+      testModulo(-7, 3);   // negative dividend, positive divisor
+      testModulo(7, -3);   // positive dividend, negative divisor
+      testModulo(-7, -3);  // both negative
+    });
+  </script>
+</head>
+<body>
+  <h1>Modulo Variants</h1>
+  
+  <div class="controls">
+    <div class="control-group">
+      <label for="aRange">a (dividend):</label>
+      <input type="range" id="aRange" min="-50" max="50" value="7" step="1">
+      <span class="value-display" id="aValue">7</span>
+    </div>
+    <div class="control-group">
+      <label for="nRange">n (divisor):</label>
+      <input type="range" id="nRange" min="-50" max="50" value="3" step="1">
+      <span class="value-display" id="nValue">3</span>
+    </div>
+    <p style="margin-top: 10px; color: #666;">Current: <strong><span id="currentCalc">7 mod 3</span></strong></p>
+  </div>
+
+  <div class="code-section">
+    <h3>Implementation</h3>
+    <div class="code-grid">
+      <div class="code-item">
+        <h4>Truncated (same sign as dividend)</h4>
+        <code>r = a - n × trunc(a/n)</code>
+      </div>
+      <div class="code-item">
+        <h4>Floored (same sign as divisor)</h4>
+        <code>r = a - n × floor(a/n)</code>
+      </div>
+      <div class="code-item">
+        <h4>Euclidean (always non-negative)</h4>
+        <code>r = a - |n| × floor(a/|n|)</code>
+      </div>
+      <div class="code-item">
+        <h4>Rounded (quotient rounded)</h4>
+        <code>r = a - n × round(a/n)</code>
+      </div>
+      <div class="code-item">
+        <h4>Ceiling (opposite sign of divisor)</h4>
+        <code>r = a - n × ceil(a/n)</code>
+      </div>
+    </div>
+  </div>
+  
+  <div id="plots"></div>
+
+  <script type="module">
+    import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
+
+    const aRange = document.getElementById('aRange');
+    const nRange = document.getElementById('nRange');
+    const aValue = document.getElementById('aValue');
+    const nValue = document.getElementById('nValue');
+    const plotsContainer = document.getElementById('plots');
+    const currentCalc = document.getElementById('currentCalc');
+
+    function updatePlots() {
+      const currentA = parseFloat(aRange.value);
+      const currentN = parseFloat(nRange.value);
+      
+      aValue.textContent = currentA;
+      nValue.textContent = currentN;
+      currentCalc.textContent = `${currentA} mod ${currentN}`;
+
+      // Skip if n is 0
+      if (currentN === 0) {
+        plotsContainer.innerHTML = '<p>n cannot be 0</p>';
+        return;
+      }
+
+      // Method definitions
+      const methods = [
+        { name: 'Truncated', key: 'truncated', color: '#e41a1c', formula: 'r = a - n × trunc(a/n)', desc: 'Same sign as dividend' },
+        { name: 'Floored', key: 'floored', color: '#377eb8', formula: 'r = a - n × floor(a/n)', desc: 'Same sign as divisor' },
+        { name: 'Euclidean', key: 'euclidean', color: '#4daf4a', formula: 'r = a - |n| × floor(a/|n|)', desc: 'Always non-negative' },
+        { name: 'Rounded', key: 'rounded', color: '#984ea3', formula: 'r = a - n × round(a/n)', desc: 'Quotient rounded' },
+        { name: 'Ceiling', key: 'ceiling', color: '#ff7f00', formula: 'r = a - n × ceil(a/n)', desc: 'Opposite sign of divisor' }
+      ];
+
+      // Generate data points for a range around current value
+      const aMin = currentA - 25;
+      const aMax = currentA + 25;
+      const points = 200;
+      const step = (aMax - aMin) / points;
+
+      const data = [];
+      for (let i = 0; i <= points; i++) {
+        const a = aMin + i * step;
+        data.push({
+          a: a,
+          truncated: modTruncated(a, currentN),
+          floored: modFloored(a, currentN),
+          euclidean: modEuclidean(a, currentN),
+          rounded: modRounded(a, currentN),
+          ceiling: modCeiling(a, currentN)
+        });
+      }
+
+      // Clear and create plots
+      plotsContainer.innerHTML = '';
+
+      methods.forEach(method => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'plot-wrapper';
+        
+        const title = document.createElement('h3');
+        title.textContent = method.name;
+        wrapper.appendChild(title);
+
+        // Calculate current result
+        const currentResult = data.find(d => Math.abs(d.a - currentA) < step)?.[method.key] || 0;
+        const quotient = method.key === 'truncated' ? Math.trunc(currentA / currentN) :
+                        method.key === 'floored' ? Math.floor(currentA / currentN) :
+                        method.key === 'euclidean' ? Math.sign(currentN) * Math.floor(currentA / Math.abs(currentN)) :
+                        method.key === 'rounded' ? Math.round(currentA / currentN) :
+                        Math.ceil(currentA / currentN);
+
+        // Add result display
+        const resultDiv = document.createElement('div');
+        resultDiv.className = `result-item ${method.key}`;
+        resultDiv.innerHTML = `
+          <h4>${method.desc}</h4>
+          <div class="result-value" style="color: ${method.color}">${currentResult.toFixed(2)}</div>
+          <div class="result-details">
+            q = ${quotient}, r = ${currentResult.toFixed(2)}<br>
+            ${method.formula}
+          </div>
+        `;
+        wrapper.appendChild(resultDiv);
+
+        const plot = Plot.plot({
+          width: 500,
+          height: 300,
+          x: {
+            label: "a (dividend)",
+            grid: true
+          },
+          y: {
+            label: "r (remainder)",
+            grid: true,
+            domain: [-Math.abs(currentN), Math.abs(currentN)]
+          },
+          marks: [
+            Plot.ruleY([0]),
+            Plot.ruleX([currentA], { stroke: "red", strokeDasharray: "4 2", strokeWidth: 1 }),
+            Plot.line(data, { x: "a", y: method.key, stroke: method.color, strokeWidth: 2 }),
+            Plot.dot([{ a: currentA, r: currentResult }], 
+              { x: "a", y: "r", fill: method.color, r: 5 })
+          ]
+        });
+
+        wrapper.appendChild(plot);
+        plotsContainer.appendChild(wrapper);
+      });
+    }
+
+    aRange.addEventListener('input', updatePlots);
+    nRange.addEventListener('input', updatePlots);
+
+    // Initial render
+    updatePlots();
+  </script>
+</body>
+</html>
