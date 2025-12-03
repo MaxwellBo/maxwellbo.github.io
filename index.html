@@ -99,10 +99,10 @@
       function updateDecorator() {
         const decorator = decorators[decoratorIndex];
         document.title = `${decorator} ${base} ${decorator}`;
-        
+
         // Update decorator index
         decoratorIndex += direction;
-        
+
         // Change direction when we hit the ends
         if (decoratorIndex >= decorators.length - 1) {
           direction = -1;
@@ -115,7 +115,7 @@
       setTimeout(() => {
         setInterval(updateDecorator, 1000);
       }, 1000);
-        })();
+    })();
   </script>
   <script>
     function openButterflyWindow() {
@@ -128,30 +128,30 @@
       if (window.location.protocol === 'file:') {
         return;
       }
-      
+
       // Get the current window dimensions
       const screenWidth = window.screen.width;
       const screenHeight = window.screen.height;
-      
+
       // Position the popup in the bottom right corner
       const popupWidth = 1;
       const popupHeight = 1;
       const left = screenWidth - popupWidth - 50; // 50px margin from edge
       const top = screenHeight - popupHeight - 100; // 100px margin from edge
-      
+
       // Open the butterfly popup window
       const butterflyWindow = window.open(
         'butterfly.html',
         'butterfly',
         `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no`
       );
-      
+
       // Ensure the window stays on top (if possible)
       if (butterflyWindow) {
         butterflyWindow.focus();
       }
     }
-    
+
     // Open butterfly window when the page loads
     window.addEventListener('load', () => {
       // Small delay to ensure page is fully loaded
@@ -1249,6 +1249,197 @@
               src="https://static.observableusercontent.com/thumbnail/c2b042ca91cc9414fae799a84b7a6bfda999f19b7a0bff5b7d197858c4c86f64.jpg" />
             <p class="title">Named color "wheel"</p>
           </a>
+        </article>
+        <style>
+          /* .flip-container {
+            display: flex;
+            justify-content: center;
+          } */
+
+          .flip-item {
+            margin: 0;
+          }
+
+          .flip {
+            animation: animate 2s linear infinite;
+          }
+
+          .flip2 {
+            animation: animate2 2.1s linear infinite;
+          }
+
+          .flip3 {
+            animation: animate3 2.2s linear infinite;
+          }
+
+          .flip3r {
+            transform: rotateY(180deg);
+            animation: animate3r 2.2s linear infinite;
+          }
+
+          .flip2r {
+            transform: rotateY(180deg);
+            animation: animate2r 2.1s linear infinite;
+          }
+
+          .flipr {
+            transform: rotateY(180deg);
+            animation: animater 2s linear infinite;
+          }
+
+          @keyframes animate {
+            0% {
+              transform:
+                rotateX(0deg) rotateY(0deg);
+            }
+
+            100% {
+              transform:
+                rotateX(0deg) rotateY(360deg);
+            }
+          }
+
+          @keyframes animate2 {
+            0% {
+              transform:
+                rotateX(0deg) rotateY(0deg);
+            }
+
+            100% {
+              transform:
+                rotateX(0deg) rotateY(360deg);
+            }
+          }
+
+          @keyframes animate3 {
+            0% {
+              transform:
+                rotateX(0deg) rotateY(0deg);
+            }
+
+            100% {
+              transform:
+                rotateX(0deg) rotateY(360deg);
+            }
+          }
+
+          @keyframes animate3r {
+            0% {
+              transform:
+                rotateX(0deg) rotateY(180deg);
+            }
+
+            100% {
+              transform:
+                rotateX(0deg) rotateY(-180deg);
+            }
+          }
+
+          @keyframes animate2r {
+            0% {
+              transform:
+                rotateX(0deg) rotateY(180deg);
+            }
+
+            100% {
+              transform:
+                rotateX(0deg) rotateY(-180deg);
+            }
+          }
+
+          @keyframes animater {
+            0% {
+              transform:
+                rotateX(0deg) rotateY(180deg);
+            }
+
+            100% {
+              transform:
+                rotateX(0deg) rotateY(-180deg);
+            }
+          }
+        </style>
+        <article class="art tall">
+          <div class="flip-container">
+            <div class="flip-item">
+              <div class="flip"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3r"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2r"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flipr"><input type="checkbox"></div>
+            </div>
+          </div>
+          <div class="flip-container">
+            <div class="flip-item">
+              <div class="flip"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3r"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2r"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flipr"><input type="checkbox" checked=""></div>
+            </div>
+          </div>
+          <div class="flip-container">
+            <div class="flip-item">
+              <div class="flip"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3r"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2r"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flipr"><input type="checkbox" checked=""></div>
+            </div>
+          </div>
+          <div class="flip-container">
+            <div class="flip-item">
+              <div class="flip"><input type="checkbox" checked=""></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip3r"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flip2r"><input type="checkbox"></div>
+            </div>
+            <div class="flip-item">
+              <div class="flipr"><input type="checkbox" checked=""></div>
+            </div>
+          </div>
         </article>
         <article class="listing" id="sanrio">
           <a href="sanrio-character-rankings.html">

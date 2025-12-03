@@ -194,6 +194,10 @@ article.art.wide {
   grid-column: span 2;
 }
 
+article.art.tall {
+  grid-row: span 2;
+}
+
 @media (min-width: 640px) {
   .only-show-on-mobile {
     display: none !important;
