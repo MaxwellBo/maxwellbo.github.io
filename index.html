@@ -789,6 +789,17 @@
           </filter>
         </defs>
       </svg>
+      <svg height="0">
+        <defs>
+          <filter id="n1">
+            <feTurbulence id="reseedable" type="fractalNoise" baseFrequency="0.001 0.001" numOctaves="10" result="NOISE"
+              seed="300"></feTurbulence>
+            <feGaussianBlur in="SourceGraphic" result="BLURRED" stdDeviation="0"></feGaussianBlur>
+            <feDisplacementMap id="displacer" in2="NOISE" in="BLURRED" scale="25" xChannelSelector="A"
+              yChannelSelector="R" result="DISPLACED"></feDisplacementMap>
+          </filter>
+        </defs>
+      </svg>
       <script type="module">
         async function renderRss(feedUrl, elementId, transformTitle = (title) => title) {
           const response = await fetch(feedUrl);
@@ -2328,17 +2339,6 @@
   </div>
   <script src="scrollbuddy/script.js"></script>
 
-  <svg height="0">
-    <defs>
-      <filter id="n1">
-        <feTurbulence id="reseedable" type="fractalNoise" baseFrequency="0.001 0.001" numOctaves="10" result="NOISE"
-          seed="300"></feTurbulence>
-        <feGaussianBlur in="SourceGraphic" result="BLURRED" stdDeviation="0"></feGaussianBlur>
-        <feDisplacementMap id="displacer" in2="NOISE" in="BLURRED" scale="25" xChannelSelector="A" yChannelSelector="R"
-          result="DISPLACED"></feDisplacementMap>
-      </filter>
-    </defs>
-  </svg>
   <style>
     /* main {
        filter: url(#n1);
