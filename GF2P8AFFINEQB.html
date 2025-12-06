@@ -4,7 +4,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GF2P8AFFINEQB</title>
+  <title>Off-label GF2P8AFFINEQB</title>
+
+  <style>
+    body {
+      max-width: 800px;
+      margin: 0 auto;
+      /* font-family: 'Xanh Mono', serif; */
+      padding: 20px;
+      background-color: rgb(231, 239, 255);
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    table, th, td {
+      border: 1px solid #333;
+    }
+
+    td, th {
+      padding: 8px;
+      text-align: center;
+    }
+
+    th {
+      background-color: #ddd;
+    }
+    
+  </style>
 </head>
 
 <body>
@@ -14,20 +42,65 @@
     <h1>GF2P8AFFINEQB</h1>
 
     <p>
-      Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, and its sister instruction  <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a>, part of the "Galois Field New Instructions" x86 extension, atr actually quite useful.
+      Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, and its sister instruction  <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a>, part of the "Galois Field New Instructions" x86 extension, are actually quite useful.
     </p>
 
-    <h2>what is a galois field</h2>
-
-    <a href="https://builders.intel.com/docs/networkbuilders/galois-field-new-instructions-gfni-technology-guide-1-1639042826.pdf">
-      official intel documentation on galois fields
-    </a>
+    <h2>What is a Galois Field</h2>
 
     <p>
-      TODO
-    </p>
+      Intel's 
+    <a href="https://builders.intel.com/docs/networkbuilders/galois-field-new-instructions-gfni-technology-guide-1-1639042826.pdf">
+      Galois Field New Instructions (GFNI) Technology Guide
+    </a> gives a rather succinct definition:
 
-    <h2>how does GF2P8AFFINEQB work?</h2>
+    </p>
+    <blockquote>
+      A Galois Field is a field containing a finite number of elements. As with other fields, a Galois Field has well defined elements, and
+operations for addition, subtraction, and so on, when applied to those elements generates a result in the same field. The GF(2) field
+is simply a Galois Field with only two elements – 0 and 1. The addition of two values in GF(2) is equivalent to addition-modulo-2, or
+an exclusive-OR. The multiplication of two values in GF(2) is equivalent to multiplication-modulo-2, or the logical AND operation.
+Other operations are similarly defined.
+    </blockquote>
+
+    <div style="display: flex; gap: 20px; justify-content: center;">
+      <table>
+      <tr>
+      <th>+</th>
+      <th>0</th>
+      <th>1</th>
+      </tr>
+      <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>1</td>
+      </tr>
+      <tr>
+      <th>1</th>
+      <td>1</td>
+      <td>0</td>
+      </tr>
+      </table>
+
+      <table>
+      <tr>
+      <th>×</th>
+      <th>0</th>
+      <th>1</th>
+      </tr>
+      <tr>
+      <th>0</th>
+      <td>0</td>
+      <td>0</td>
+      </tr>
+      <tr>
+      <th>1</th>
+      <td>0</td>
+      <td>1</td>
+      </tr>
+      </table>
+    </div>
+
+    <h2>How does GF2P8AFFINEQB work?</h2>
 
     <p>
       &lt;simulator of the matrices&gt;
@@ -90,6 +163,11 @@
     </p>
 
   </main>
+
+
+  https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0 
+
+  https://bitmath.blogspot.com/2023/04/not-transposing-16x16-bitmatrix.html
 
 </body>
 
