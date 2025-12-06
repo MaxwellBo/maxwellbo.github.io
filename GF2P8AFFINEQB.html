@@ -106,38 +106,11 @@ Other operations are similarly defined.
       The GF2P8AFFINEQB instruction performs an affine transformation in GF(2^8). It multiplies an 8x8 bit matrix by an 8-bit input vector, then XORs the result with a constant. Click on the bits below to experiment:
     </p>
 
-    <div id="simulator">
-      <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
-        <div>
-          <h3>Matrix (row-major)</h3>
-          <div style="font-size: 12px; color: #666; margin-bottom: 5px;">MSB ← LSB</div>
-          <div id="matrix-grid" style="display: grid; grid-template-columns: repeat(8, 35px); gap: 2px;"></div>
-          <div style="font-size: 12px; color: #666; margin-top: 5px;">LSB ← MSB</div>
-        </div>
-        
-        <div>
-          <h3>Input vector</h3>
-          <div style="font-size: 12px; color: #666; margin-bottom: 5px;">LSB</div>
-          <div id="input-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
-          <div style="font-size: 12px; color: #666; margin-top: 5px;">MSB</div>
-        </div>
-        
-        <div>
-          <h3>Result</h3>
-          <div style="font-size: 12px; color: #666; margin-bottom: 5px;">LSB</div>
-          <div id="result-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
-          <div style="font-size: 12px; color: #666; margin-top: 5px;">MSB</div>
-        </div>
-      </div>
+    <h3>Interactive example</h3>
+    <div id="simulator-1" class="simulator-container"></div>
 
-      <h3>Generated code</h3>
-      
-      <h4>C++</h4>
-      <pre id="cpp-code" style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"></pre>
-      
-      <h4>Rust</h4>
-      <pre id="rust-code" style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"></pre>
-    </div>
+    <h3>5-bit sign extension</h3>
+    <div id="simulator-2" class="simulator-container"></div>
 
     <style>
       .bit-cell {
@@ -168,131 +141,171 @@ Other operations are similarly defined.
         background-color: #2196F3;
         color: white;
       }
+
+      .bit-cell.readonly {
+        cursor: default;
+      }
     </style>
 
     <script>
-      // State
-      let matrix = Array(8).fill(0).map(() => Array(8).fill(0));
-      let inputVector = Array(8).fill(0);
-      
-      // Initialize with identity matrix
-      for (let i = 0; i < 8; i++) {
-        matrix[i][i] = 1;
-      }
-      inputVector[0] = 1;
-      inputVector[1] = 1;
-
-      function createBitCell(value, onClick) {
-        const cell = document.createElement('div');
-        cell.className = `bit-cell ${value ? 'on' : 'off'}`;
-        cell.textContent = value;
-        if (onClick) {
-          cell.addEventListener('click', onClick);
+      class GF2P8Simulator {
+        constructor(containerId, initialMatrix, initialInput) {
+          this.containerId = containerId;
+          this.matrix = initialMatrix;
+          this.inputVector = initialInput;
+          this.init();
         }
-        return cell;
-      }
 
-      function updateMatrix() {
-        const matrixGrid = document.getElementById('matrix-grid');
-        matrixGrid.innerHTML = '';
-        
-        for (let row = 0; row < 8; row++) {
-          for (let col = 0; col < 8; col++) {
-            const cell = createBitCell(matrix[row][col], () => {
-              matrix[row][col] = 1 - matrix[row][col];
-              updateAll();
-            });
-            matrixGrid.appendChild(cell);
-          }
+        init() {
+          const container = document.getElementById(this.containerId);
+          container.innerHTML = `
+            <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+              <div>
+                <h4>Matrix (row-major)</h4>
+                <div style="position: relative;">
+                  <div style="position: absolute; top: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
+                  <div style="position: absolute; top: -5px; right: -5px; font-size: 12px; color: #666;">LSB</div>
+                  <div class="matrix-grid" style="display: grid; grid-template-columns: repeat(8, 35px); gap: 2px;"></div>
+                  <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">LSB</div>
+                  <div style="position: absolute; bottom: -5px; right: -5px; font-size: 12px; color: #666;">MSB</div>
+                </div>
+              </div>
+              
+              <div>
+                <h4>Input vector</h4>
+                <div style="position: relative;">
+                  <div style="position: absolute; top: -5px; left: -5px; font-size: 12px; color: #666;">LSB</div>
+                  <div class="input-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
+                  <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
+                </div>
+              </div>
+              
+              <div>
+                <h4>Result</h4>
+                <div style="position: relative;">
+                  <div style="position: absolute; top: -5px; left: -5px; font-size: 12px; color: #666;">LSB</div>
+                  <div class="result-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
+                  <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
+                </div>
+              </div>
+            </div>
+
+            <details style="margin-top: 20px;">
+              <summary style="cursor: pointer; font-weight: bold;">C++</summary>
+              <pre class="cpp-code" style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; margin-top: 10px;"></pre>
+            </details>
+            
+            <details style="margin-top: 10px;">
+              <summary style="cursor: pointer; font-weight: bold;">Rust</summary>
+              <pre class="rust-code" style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto; margin-top: 10px;"></pre>
+            </details>
+          `;
+          
+          this.updateAll();
         }
-      }
 
-      function updateInputVector() {
-        const inputGrid = document.getElementById('input-vector');
-        inputGrid.innerHTML = '';
-        
-        for (let i = 0; i < 8; i++) {
-          const cell = createBitCell(inputVector[i], () => {
-            inputVector[i] = 1 - inputVector[i];
-            updateAll();
-          });
-          inputGrid.appendChild(cell);
-        }
-      }
-
-      function calculateResult() {
-        const result = Array(8).fill(0);
-        
-        for (let row = 0; row < 8; row++) {
-          let sum = 0;
-          for (let col = 0; col < 8; col++) {
-            sum ^= (matrix[row][col] & inputVector[col]);
-          }
-          result[row] = sum;
-        }
-        
-        return result;
-      }
-
-      function updateResult() {
-        const result = calculateResult();
-        const resultGrid = document.getElementById('result-vector');
-        resultGrid.innerHTML = '';
-        
-        for (let i = 0; i < 8; i++) {
+        createBitCell(value, onClick) {
           const cell = document.createElement('div');
-          cell.className = `bit-cell result`;
-          cell.textContent = result[i];
-          resultGrid.appendChild(cell);
-        }
-      }
-
-      function matrixToUint64() {
-        // Convert matrix to uint64 where each row is a byte
-        let value = 0n;
-        for (let row = 0; row < 8; row++) {
-          let rowByte = 0;
-          for (let col = 0; col < 8; col++) {
-            rowByte |= (matrix[row][col] << col);
+          cell.className = `bit-cell ${value ? 'on' : 'off'}`;
+          cell.textContent = value;
+          if (onClick) {
+            cell.addEventListener('click', onClick);
           }
-          value |= BigInt(rowByte) << BigInt(row * 8);
+          return cell;
         }
-        return value;
-      }
 
-      function vectorToUint8() {
-        let value = 0;
-        for (let i = 0; i < 8; i++) {
-          value |= (inputVector[i] << i);
-        }
-        return value;
-      }
-
-      function formatBinary8(num) {
-        return '0b' + num.toString(2).padStart(8, '0');
-      }
-
-      function updateCppCode() {
-        const cppCode = document.getElementById('cpp-code');
-        
-        let matrixLines = [];
-        for (let row = 7; row >= 0; row--) {
-          let rowByte = 0;
-          for (let col = 0; col < 8; col++) {
-            rowByte |= (matrix[row][col] << col);
+        updateMatrix() {
+          const container = document.getElementById(this.containerId);
+          const matrixGrid = container.querySelector('.matrix-grid');
+          matrixGrid.innerHTML = '';
+          
+          for (let row = 0; row < 8; row++) {
+            for (let col = 0; col < 8; col++) {
+              const cell = this.createBitCell(this.matrix[row][col], () => {
+                this.matrix[row][col] = 1 - this.matrix[row][col];
+                this.updateAll();
+              });
+              matrixGrid.appendChild(cell);
+            }
           }
-          matrixLines.push(`    ((uint64_t)${formatBinary8(rowByte)} << (8 * ${row}))${row > 0 ? ' |' : '  '}`);
         }
-        
-        const inputByte = vectorToUint8();
-        
-        cppCode.textContent = `#include <immintrin.h>
+
+        updateInputVector() {
+          const container = document.getElementById(this.containerId);
+          const inputGrid = container.querySelector('.input-vector');
+          inputGrid.innerHTML = '';
+          
+          for (let i = 0; i < 8; i++) {
+            const cell = this.createBitCell(this.inputVector[i], () => {
+              this.inputVector[i] = 1 - this.inputVector[i];
+              this.updateAll();
+            });
+            inputGrid.appendChild(cell);
+          }
+        }
+
+        calculateResult() {
+          const result = Array(8).fill(0);
+          
+          for (let row = 0; row < 8; row++) {
+            let sum = 0;
+            for (let col = 0; col < 8; col++) {
+              sum ^= (this.matrix[row][col] & this.inputVector[col]);
+            }
+            result[row] = sum;
+          }
+          
+          return result;
+        }
+
+        updateResult() {
+          const container = document.getElementById(this.containerId);
+          const result = this.calculateResult();
+          const resultGrid = container.querySelector('.result-vector');
+          resultGrid.innerHTML = '';
+          
+          for (let i = 0; i < 8; i++) {
+            const cell = document.createElement('div');
+            cell.className = 'bit-cell result';
+            cell.textContent = result[i];
+            resultGrid.appendChild(cell);
+          }
+        }
+
+        vectorToUint8() {
+          let value = 0;
+          for (let i = 0; i < 8; i++) {
+            value |= (this.inputVector[i] << i);
+          }
+          return value;
+        }
+
+        formatBinary8(num) {
+          return '0b' + num.toString(2).padStart(8, '0');
+        }
+
+        updateCppCode() {
+          const container = document.getElementById(this.containerId);
+          const cppCode = container.querySelector('.cpp-code');
+          
+          let matrixLines = [];
+          for (let row = 0; row < 8; row++) {
+            let rowByte = 0;
+            for (let col = 0; col < 8; col++) {
+              rowByte |= (this.matrix[row][col] << col);
+            }
+            matrixLines.push(`    ((uint64_t)${this.formatBinary8(rowByte)} << (8 * ${row}))${row < 7 ? ' |' : '  '}`);
+          }
+          
+          const inputByte = this.vectorToUint8();
+          
+          cppCode.textContent = `#include <immintrin.h>
 
 const uint64_t matrix = (
 ${matrixLines.join('\n')}
 );
 
-const uint8_t input = ${formatBinary8(inputByte)};
+const uint8_t input = ${this.formatBinary8(inputByte)};
 
 // Perform the affine transformation
 __m128i input_vec = _mm_set1_epi64x(input);
@@ -300,23 +313,24 @@ __m128i result = _mm_gf2p8affine_epi64_epi8(input_vec, _mm_set1_epi64x(matrix), 
 
 // Extract result byte
 uint8_t result_byte = _mm_extract_epi8(result, 0);`;
-      }
-
-      function updateRustCode() {
-        const rustCode = document.getElementById('rust-code');
-        
-        let matrixLines = [];
-        for (let row = 7; row >= 0; row--) {
-          let rowByte = 0;
-          for (let col = 0; col < 8; col++) {
-            rowByte |= (matrix[row][col] << col);
-          }
-          matrixLines.push(`    (${formatBinary8(rowByte)}u64 << (8 * ${row}))${row > 0 ? ' |' : ' '}`);
         }
-        
-        const inputByte = vectorToUint8();
-        
-        rustCode.textContent = `#[cfg(target_arch = "x86_64")]
+
+        updateRustCode() {
+          const container = document.getElementById(this.containerId);
+          const rustCode = container.querySelector('.rust-code');
+          
+          let matrixLines = [];
+          for (let row = 0; row < 8; row++) {
+            let rowByte = 0;
+            for (let col = 0; col < 8; col++) {
+              rowByte |= (this.matrix[row][col] << col);
+            }
+            matrixLines.push(`    (${this.formatBinary8(rowByte)}u64 << (8 * ${row}))${row < 7 ? ' |' : ' '}`);
+          }
+          
+          const inputByte = this.vectorToUint8();
+          
+          rustCode.textContent = `#[cfg(target_arch = "x86_64")]
 use std::arch::x86_64::*;
 
 #[target_feature(enable = "gfni,avx512f")]
@@ -325,7 +339,7 @@ unsafe fn gf2p8_affine_transform() -> u8 {
 ${matrixLines.join('\n')}
     );
     
-    let input: u8 = ${formatBinary8(inputByte)};
+    let input: u8 = ${this.formatBinary8(inputByte)};
     
     // Perform the affine transformation
     let input_vec = _mm_set1_epi64x(input as i64);
@@ -334,19 +348,47 @@ ${matrixLines.join('\n')}
     // Extract result byte
     _mm_extract_epi8(result, 0) as u8
 }`;
+        }
+
+        updateAll() {
+          this.updateMatrix();
+          this.updateInputVector();
+          this.updateResult();
+          this.updateCppCode();
+          this.updateRustCode();
+        }
       }
 
-      function updateAll() {
-        updateMatrix();
-        updateInputVector();
-        updateResult();
-        updateCppCode();
-        updateRustCode();
+      // Initialize simulators
+      // Simulator 1: Interactive with identity matrix
+      const identityMatrix = Array(8).fill(0).map(() => Array(8).fill(0));
+      for (let i = 0; i < 8; i++) {
+        identityMatrix[i][i] = 1;
       }
+      const sim1 = new GF2P8Simulator(
+        'simulator-1',
+        identityMatrix,
+        [1, 1, 0, 0, 0, 0, 0, 0]
+      );
 
-      // Initial render
-      updateAll();
+      // Simulator 2: 5-bit sign extension
+      const signExtendMatrix = [
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0, 0, 0],
+        [0, 0, 0, 0, 1, 0, 0, 0],
+        [0, 0, 0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0, 1, 0],
+        [0, 0, 0, 0, 0, 0, 0, 1],
+      ];
+      const sim2 = new GF2P8Simulator(
+        'simulator-2',
+        signExtendMatrix,
+        [0, 0, 0, 1, 1, 0, 0, 0] // 0b00011000
+      );
     </script>
+
 
     <!-- INSERT SIMULATOR HERE -->
 
