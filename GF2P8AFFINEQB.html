@@ -237,7 +237,7 @@ Other operations are similarly defined.
             for (let col = 0; col < 8; col++) {
               rowByte |= (this.matrix[row][col] << (7 - col));
             }
-            matrixValue |= BigInt(rowByte) << BigInt(8 * row);
+            matrixValue |= BigInt(rowByte) << BigInt(8 * (7 - row));
           }
           const matrixHex = container.querySelector('.matrix-hex');
           matrixHex.textContent = `0x${matrixValue.toString(16).padStart(16, '0')}`;
@@ -308,7 +308,7 @@ Other operations are similarly defined.
               // Reverse bit order: col 0 goes to bit 7, col 7 goes to bit 0
               rowByte |= (this.matrix[row][col] << (7 - col));
             }
-            const shift = row;
+            const shift = 7 - row;
             matrixLines.push(`    ((uint64_t)${this.formatBinary8(rowByte)} << (8 * ${shift}))${row < 7 ? ' |' : '  '}`);
           }
           
@@ -341,7 +341,7 @@ uint8_t result_byte = _mm_extract_epi8(result, 0);`;
               // Reverse bit order: col 0 goes to bit 7, col 7 goes to bit 0
               rowByte |= (this.matrix[row][col] << (7 - col));
             }
-            const shift = row;
+            const shift = 7 - row;
             matrixLines.push(`    (${this.formatBinary8(rowByte)}u64 << (8 * ${shift}))${row < 7 ? ' |' : ' '}`);
           }
           
