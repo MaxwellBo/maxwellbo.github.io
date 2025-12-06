@@ -103,21 +103,31 @@ Other operations are similarly defined.
     <h2>How does GF2P8AFFINEQB work?</h2>
 
     <p>
-      The GF2P8AFFINEQB instruction performs an affine transformation in GF(2^8). It multiplies an 8x8 bit matrix by an 8-bit input vector, then XORs the result with a constant. Click on the bits below to experiment:
+      The GF2P8AFFINEQB instruction performs an affine transformation in GF(2^8). It multiplies an 8x8 bit matrix by an 8-bit input vector, then XORs the result with a constant.
     </p>
 
-    <h3>Interactive example</h3>
-    <div id="simulator-1" class="simulator-container"></div>
+    <h3>Example: Identity transformation</h3>
+    <div id="viz-identity" class="simulator-container"></div>
 
-    <h3>5-bit sign extension</h3>
-    <div id="simulator-2" class="simulator-container"></div>
+    <h3>Example: Bit reversal</h3>
+    <div id="viz-bit-reversal" class="simulator-container"></div>
+
+    <h3>Example: 5-bit sign extension</h3>
+    <div id="viz-sign-extension" class="simulator-container"></div>
 
     <style>
+      .simulator-container {
+        background: white;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        margin: 20px 0;
+      }
+
       .bit-cell {
-        width: 35px;
-        height: 35px;
         border: 2px solid #333;
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
         cursor: pointer;
@@ -148,6 +158,52 @@ Other operations are similarly defined.
     </style>
 
     <script type="module">
+      import { createVisualization, matrixToSrc2 } from './js/gf2p8affineqb-visualizer.js';
+
+      // Identity transformation
+      const identityMatrix = 0x0102040810204080n;
+      const identitySrc1 = new Uint8Array(16);
+      identitySrc1[0] = 0b10110011;
+      const identitySrc2 = matrixToSrc2(identityMatrix);
+      
+      createVisualization(
+        document.getElementById('viz-identity'),
+        identitySrc1,
+        identitySrc2,
+        0x00,
+        'Identity Matrix',
+        'The identity matrix passes bits through unchanged. Each output bit equals its corresponding input bit.'
+      );
+
+      // Bit reversal
+      const reversalMatrix = 0x8040201008040201n;
+      const reversalSrc1 = new Uint8Array(16);
+      reversalSrc1[0] = 0b10101100;
+      const reversalSrc2 = matrixToSrc2(reversalMatrix);
+      
+      createVisualization(
+        document.getElementById('viz-bit-reversal'),
+        reversalSrc1,
+        reversalSrc2,
+        0x00,
+        'Bit Reversal Matrix',
+        'This matrix reverses the order of bits. Bit 0 becomes bit 7, bit 1 becomes bit 6, etc.'
+      );
+
+      // Sign extension
+      const signExtMatrix = 0x0102040810101010n;
+      const signExtSrc1 = new Uint8Array(16);
+      signExtSrc1[0] = 0b11111000; // 5-bit value: top 5 bits set, bottom 3 clear
+      const signExtSrc2 = matrixToSrc2(signExtMatrix);
+      
+      createVisualization(
+        document.getElementById('viz-sign-extension'),
+        signExtSrc1,
+        signExtSrc2,
+        0x00,
+        '5-bit Sign Extension Matrix',
+        'Extends a 5-bit signed value (bits 0-4) by replicating bit 4 to bits 5-7. This preserves the sign when converting from 5-bit to 8-bit representation.'
+      );
     </script>
 
 
