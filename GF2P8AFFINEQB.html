@@ -45,7 +45,7 @@
       Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, and its sister instruction  <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a>, part of the "Galois Field New Instructions" x86 extension, are actually quite useful.
     </p>
 
-    <h2>What is a Galois Field</h2>
+    <h2>What is a Galois field</h2>
 
     <p>
       Intel's 
@@ -103,71 +103,318 @@ Other operations are similarly defined.
     <h2>How does GF2P8AFFINEQB work?</h2>
 
     <p>
-      &lt;simulator of the matrices&gt;
+      The GF2P8AFFINEQB instruction performs an affine transformation in GF(2^8). It multiplies an 8x8 bit matrix by an 8-bit input vector, then XORs the result with a constant. Click on the bits below to experiment:
     </p>
+
+    <div id="simulator">
+      <div style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+        <div>
+          <h3>Matrix (row-major)</h3>
+          <div style="font-size: 12px; color: #666; margin-bottom: 5px;">MSB ← LSB</div>
+          <div id="matrix-grid" style="display: grid; grid-template-columns: repeat(8, 35px); gap: 2px;"></div>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">LSB ← MSB</div>
+        </div>
+        
+        <div>
+          <h3>Input vector</h3>
+          <div style="font-size: 12px; color: #666; margin-bottom: 5px;">LSB</div>
+          <div id="input-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">MSB</div>
+        </div>
+        
+        <div>
+          <h3>Result</h3>
+          <div style="font-size: 12px; color: #666; margin-bottom: 5px;">LSB</div>
+          <div id="result-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
+          <div style="font-size: 12px; color: #666; margin-top: 5px;">MSB</div>
+        </div>
+      </div>
+
+      <h3>Generated code</h3>
+      
+      <h4>C++</h4>
+      <pre id="cpp-code" style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"></pre>
+      
+      <h4>Rust</h4>
+      <pre id="rust-code" style="background: #f5f5f5; padding: 15px; border-radius: 5px; overflow-x: auto;"></pre>
+    </div>
+
+    <style>
+      .bit-cell {
+        width: 35px;
+        height: 35px;
+        border: 2px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: bold;
+        user-select: none;
+        transition: background-color 0.1s;
+      }
+      
+      .bit-cell.on {
+        background-color: #4CAF50;
+        color: white;
+      }
+      
+      .bit-cell.off {
+        background-color: #f0f0f0;
+        color: #666;
+      }
+      
+      .bit-cell.result {
+        cursor: default;
+        background-color: #2196F3;
+        color: white;
+      }
+    </style>
+
+    <script>
+      // State
+      let matrix = Array(8).fill(0).map(() => Array(8).fill(0));
+      let inputVector = Array(8).fill(0);
+      
+      // Initialize with identity matrix
+      for (let i = 0; i < 8; i++) {
+        matrix[i][i] = 1;
+      }
+      inputVector[0] = 1;
+      inputVector[1] = 1;
+
+      function createBitCell(value, onClick) {
+        const cell = document.createElement('div');
+        cell.className = `bit-cell ${value ? 'on' : 'off'}`;
+        cell.textContent = value;
+        if (onClick) {
+          cell.addEventListener('click', onClick);
+        }
+        return cell;
+      }
+
+      function updateMatrix() {
+        const matrixGrid = document.getElementById('matrix-grid');
+        matrixGrid.innerHTML = '';
+        
+        for (let row = 0; row < 8; row++) {
+          for (let col = 0; col < 8; col++) {
+            const cell = createBitCell(matrix[row][col], () => {
+              matrix[row][col] = 1 - matrix[row][col];
+              updateAll();
+            });
+            matrixGrid.appendChild(cell);
+          }
+        }
+      }
+
+      function updateInputVector() {
+        const inputGrid = document.getElementById('input-vector');
+        inputGrid.innerHTML = '';
+        
+        for (let i = 0; i < 8; i++) {
+          const cell = createBitCell(inputVector[i], () => {
+            inputVector[i] = 1 - inputVector[i];
+            updateAll();
+          });
+          inputGrid.appendChild(cell);
+        }
+      }
+
+      function calculateResult() {
+        const result = Array(8).fill(0);
+        
+        for (let row = 0; row < 8; row++) {
+          let sum = 0;
+          for (let col = 0; col < 8; col++) {
+            sum ^= (matrix[row][col] & inputVector[col]);
+          }
+          result[row] = sum;
+        }
+        
+        return result;
+      }
+
+      function updateResult() {
+        const result = calculateResult();
+        const resultGrid = document.getElementById('result-vector');
+        resultGrid.innerHTML = '';
+        
+        for (let i = 0; i < 8; i++) {
+          const cell = document.createElement('div');
+          cell.className = `bit-cell result`;
+          cell.textContent = result[i];
+          resultGrid.appendChild(cell);
+        }
+      }
+
+      function matrixToUint64() {
+        // Convert matrix to uint64 where each row is a byte
+        let value = 0n;
+        for (let row = 0; row < 8; row++) {
+          let rowByte = 0;
+          for (let col = 0; col < 8; col++) {
+            rowByte |= (matrix[row][col] << col);
+          }
+          value |= BigInt(rowByte) << BigInt(row * 8);
+        }
+        return value;
+      }
+
+      function vectorToUint8() {
+        let value = 0;
+        for (let i = 0; i < 8; i++) {
+          value |= (inputVector[i] << i);
+        }
+        return value;
+      }
+
+      function formatBinary8(num) {
+        return '0b' + num.toString(2).padStart(8, '0');
+      }
+
+      function updateCppCode() {
+        const cppCode = document.getElementById('cpp-code');
+        
+        let matrixLines = [];
+        for (let row = 7; row >= 0; row--) {
+          let rowByte = 0;
+          for (let col = 0; col < 8; col++) {
+            rowByte |= (matrix[row][col] << col);
+          }
+          matrixLines.push(`    ((uint64_t)${formatBinary8(rowByte)} << (8 * ${row}))${row > 0 ? ' |' : '  '}`);
+        }
+        
+        const inputByte = vectorToUint8();
+        
+        cppCode.textContent = `#include <immintrin.h>
+
+const uint64_t matrix = (
+${matrixLines.join('\n')}
+);
+
+const uint8_t input = ${formatBinary8(inputByte)};
+
+// Perform the affine transformation
+__m128i input_vec = _mm_set1_epi64x(input);
+__m128i result = _mm_gf2p8affine_epi64_epi8(input_vec, _mm_set1_epi64x(matrix), 0);
+
+// Extract result byte
+uint8_t result_byte = _mm_extract_epi8(result, 0);`;
+      }
+
+      function updateRustCode() {
+        const rustCode = document.getElementById('rust-code');
+        
+        let matrixLines = [];
+        for (let row = 7; row >= 0; row--) {
+          let rowByte = 0;
+          for (let col = 0; col < 8; col++) {
+            rowByte |= (matrix[row][col] << col);
+          }
+          matrixLines.push(`    (${formatBinary8(rowByte)}u64 << (8 * ${row}))${row > 0 ? ' |' : ' '}`);
+        }
+        
+        const inputByte = vectorToUint8();
+        
+        rustCode.textContent = `#[cfg(target_arch = "x86_64")]
+use std::arch::x86_64::*;
+
+#[target_feature(enable = "gfni,avx512f")]
+unsafe fn gf2p8_affine_transform() -> u8 {
+    let matrix: u64 = (
+${matrixLines.join('\n')}
+    );
     
-    <h2>how does GF2P8AFFINEINVQB</h2>
+    let input: u8 = ${formatBinary8(inputByte)};
+    
+    // Perform the affine transformation
+    let input_vec = _mm_set1_epi64x(input as i64);
+    let result = _mm_gf2p8affine_epi64_epi8(input_vec, _mm_set1_epi64x(matrix as i64), 0);
+    
+    // Extract result byte
+    _mm_extract_epi8(result, 0) as u8
+}`;
+      }
 
-    <h2>usage in C++</h2>
+      function updateAll() {
+        updateMatrix();
+        updateInputVector();
+        updateResult();
+        updateCppCode();
+        updateRustCode();
+      }
+
+      // Initial render
+      updateAll();
+    </script>
+
+    <!-- INSERT SIMULATOR HERE -->
+
+    <h2>How does GF2P8AFFINEINVQB work?</h2>
+
+    <h2>Usage in C++</h2>
 
     <p>
       TODO
     </p>
 
-    <h2>usage in Rust</h2>
+    <h2>Usage in Rust</h2>
 
     <p>
       TODO
     </p>
 
-    <h1>applications</h1>
+    <h3>Applications</h3>
 
     <a href="https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0">
-      weird use cases
+      listing of usecases
     </a>
 
     <a href="https://stackoverflow.com/questions/59124720/what-are-the-avx-512-galois-field-related-instructions-for">
       stackoverflow post
     </a>
 
-    <p>
-      reedsoloman error correction 
+    <h3>Reed-Solomon error correction</h3>
 
-      <a href="https://github.com/klauspost/reedsolomon">klauspost/reedsolomon</a>
-    </p>
+    <a href="https://github.com/klauspost/reedsolomon">klauspost/reedsolomon</a>
 
+    <h3>Some shit I don't understand</h3>
     <a href="https://github.com/animetosho/ParPar/blob/master/fast-gf-multiplication.md#affine-transformation--bit-matrix-xor">
       i don't even fucking know man
     </a>
 
+    <h3>PS3 Cell floating point emulation</h3>
+
     <p>
-      PS3 Cell floating point emulation
+      <a href="https://www.youtube.com/watch?v=19ae5Mq2lJE">Here's the video that discusses it</a>
     </p>
 
     <p>
-      <a href="https://www.youtube.com/watch?v=19ae5Mq2lJE">https://www.youtube.com/watch?v=19ae5Mq2lJE</a>
+      <a href="https://github.com/RPCS3/rpcs3/pull/8712/files">PR</a>
     </p>
 
     <p>
-      Go GC
+      <a href="https://github.com/Whatcookie/rpcs3/blob/732fd479121fe09587fb43fce0cebb55f085d5e7/rpcs3/Emu/Cell/SPURecompiler.cpp#L7284-L7340">Updated version</a>
     </p>
+
+    <h2>Go GC</h2>
 
     <p>
       <a href="https://go.dev/blog/greenteagc">https://go.dev/blog/greenteagc</a>
     </p>
 
-    <h2>what can we apply it to?</h2>
+    <h2>What can we apply it to?</h2>
 
     <p>
       &lt;search for an application and get a speedup&gt;
     </p>
 
-  </main>
-
-
   https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0 
 
   https://bitmath.blogspot.com/2023/04/not-transposing-16x16-bitmatrix.html
+
+  </main>
+
 
 </body>
 
