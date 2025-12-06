@@ -174,18 +174,18 @@ Other operations are similarly defined.
               <div>
                 <h4>Input vector</h4>
                 <div style="position: relative;">
-                  <div style="position: absolute; top: -5px; left: -5px; font-size: 12px; color: #666;">LSB</div>
+                  <div style="position: absolute; top: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
                   <div class="input-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
-                  <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
+                  <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">LSB</div>
                 </div>
               </div>
               
               <div>
                 <h4>Result</h4>
                 <div style="position: relative;">
-                  <div style="position: absolute; top: -5px; left: -5px; font-size: 12px; color: #666;">LSB</div>
+                  <div style="position: absolute; top: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
                   <div class="result-vector" style="display: grid; grid-template-columns: 35px; gap: 2px;"></div>
-                  <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
+                  <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">LSB</div>
                 </div>
               </div>
             </div>
@@ -292,9 +292,11 @@ Other operations are similarly defined.
           for (let row = 0; row < 8; row++) {
             let rowByte = 0;
             for (let col = 0; col < 8; col++) {
-              rowByte |= (this.matrix[row][col] << col);
+              // Reverse bit order: col 0 goes to bit 7, col 7 goes to bit 0
+              rowByte |= (this.matrix[row][col] << (7 - col));
             }
-            matrixLines.push(`    ((uint64_t)${this.formatBinary8(rowByte)} << (8 * ${row}))${row < 7 ? ' |' : '  '}`);
+            const shift = 7 - row;
+            matrixLines.push(`    ((uint64_t)${this.formatBinary8(rowByte)} << (8 * ${shift}))${row < 7 ? ' |' : '  '}`);
           }
           
           const inputByte = this.vectorToUint8();
@@ -323,9 +325,11 @@ uint8_t result_byte = _mm_extract_epi8(result, 0);`;
           for (let row = 0; row < 8; row++) {
             let rowByte = 0;
             for (let col = 0; col < 8; col++) {
-              rowByte |= (this.matrix[row][col] << col);
+              // Reverse bit order: col 0 goes to bit 7, col 7 goes to bit 0
+              rowByte |= (this.matrix[row][col] << (7 - col));
             }
-            matrixLines.push(`    (${this.formatBinary8(rowByte)}u64 << (8 * ${row}))${row < 7 ? ' |' : ' '}`);
+            const shift = 7 - row;
+            matrixLines.push(`    (${this.formatBinary8(rowByte)}u64 << (8 * ${shift}))${row < 7 ? ' |' : ' '}`);
           }
           
           const inputByte = this.vectorToUint8();
