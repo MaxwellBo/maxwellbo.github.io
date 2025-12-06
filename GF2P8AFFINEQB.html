@@ -169,6 +169,7 @@ Other operations are similarly defined.
                   <div style="position: absolute; bottom: -5px; left: -5px; font-size: 12px; color: #666;">MSB</div>
                   <div style="position: absolute; bottom: -5px; right: -5px; font-size: 12px; color: #666;">LSB</div>
                 </div>
+                <div class="matrix-hex" style="margin-top: 10px; font-family: monospace; font-size: 14px; text-align: center;"></div>
               </div>
               
               <div>
@@ -228,6 +229,18 @@ Other operations are similarly defined.
               matrixGrid.appendChild(cell);
             }
           }
+          
+          // Calculate and display matrix as hex
+          let matrixValue = 0n;
+          for (let row = 0; row < 8; row++) {
+            let rowByte = 0;
+            for (let col = 0; col < 8; col++) {
+              rowByte |= (this.matrix[row][col] << (7 - col));
+            }
+            matrixValue |= BigInt(rowByte) << BigInt(8 * (7 - row));
+          }
+          const matrixHex = container.querySelector('.matrix-hex');
+          matrixHex.textContent = `0x${matrixValue.toString(16).padStart(16, '0')}`;
         }
 
         updateInputVector() {
