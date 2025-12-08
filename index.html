@@ -154,8 +154,14 @@
 
     // Open butterfly window when the page loads
     window.addEventListener('load', () => {
-      // Small delay to ensure page is fully loaded
-      setTimeout(openButterflyWindow, 500);
+      // Check if butterfly has already been shown this session
+      if (!localStorage.getItem('butterflyShown')) {
+        // Small delay to ensure page is fully loaded
+        setTimeout(() => {
+          openButterflyWindow();
+          localStorage.setItem('butterflyShown', 'true');
+        }, 500);
+      }
     });
 
   </script>
@@ -883,7 +889,7 @@
       󱠡
 
       <marquee id="ticker2" class="dindong" scrollamount="7" style="flex: 1">
-        <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+        <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;" onclick="localStorage.removeItem('butterflyShown'); openButterflyWindow();" />
       </marquee>
       <script type="module">
         renderAtom('atom.xml', 'ticker2');
@@ -2163,7 +2169,7 @@
     </div>
 
     <marquee id="ticker" class="dindong" scrollamount="7">
-      <img src="img/butterfly.gif" style="width: 16px; display: inline-block;" />
+      <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;" onclick="localStorage.removeItem('butterflyShown'); openButterflyWindow();" />
     </marquee>
     <script type="module">
       renderAtom('atom.xml', 'ticker');
