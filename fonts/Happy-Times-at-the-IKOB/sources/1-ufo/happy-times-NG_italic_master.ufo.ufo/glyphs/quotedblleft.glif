@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="quotedblleft" format="1">
+  <advance width="482"/>
+  <unicode hex="201C"/>
+  <outline>
+    <component base="comma" xScale="-1" yScale="-1" xOffset="292.059039319106" yOffset="594"/>
+    <component base="comma" xScale="-1" yScale="-1" xOffset="492.059039319106" yOffset="594"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="asterisk" format="1">
+  <advance width="363"/>
+  <unicode hex="002A"/>
+  <outline>
+    <contour>
+      <point x="141.029519659553" y="540" type="line"/>
+      <point x="157.029519659553" y="510" type="line"/>
+      <point x="256.029519659553" y="570" type="line"/>
+      <point x="266.029519659553" y="560" type="line"/>
+      <point x="266.029519659553" y="448" type="line"/>
+      <point x="300.029519659553" y="448" type="line"/>
+      <point x="300.029519659553" y="560" type="line"/>
+      <point x="310.029519659553" y="570" type="line"/>
+      <point x="408.029519659553" y="509" type="line"/>
+      <point x="424.029519659553" y="539" type="line"/>
+      <point x="331.029519659553" y="598" type="line"/>
+      <point x="331.029519659553" y="610" type="line"/>
+      <point x="424.029519659553" y="669" type="line"/>
+      <point x="408.029519659553" y="699" type="line"/>
+      <point x="310.029519659553" y="638" type="line"/>
+      <point x="300.029519659553" y="648" type="line"/>
+      <point x="300.029519659553" y="760" type="line"/>
+      <point x="266.029519659553" y="760" type="line"/>
+      <point x="266.029519659553" y="648" type="line"/>
+      <point x="256.029519659553" y="638" type="line"/>
+      <point x="157.029519659553" y="698" type="line"/>
+      <point x="141.029519659553" y="668" type="line"/>
+      <point x="236.029519659553" y="610" type="line"/>
+      <point x="236.029519659553" y="598" type="line"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>

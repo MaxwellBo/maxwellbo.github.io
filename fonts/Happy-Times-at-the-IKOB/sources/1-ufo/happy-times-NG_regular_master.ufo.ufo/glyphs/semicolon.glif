@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="semicolon" format="1">
+  <advance width="268"/>
+  <unicode hex="003B"/>
+  <outline>
+    <contour>
+      <point x="74" y="380" type="line"/>
+      <point x="194" y="380" type="line"/>
+      <point x="194" y="500" type="line"/>
+      <point x="74" y="500" type="line"/>
+    </contour>
+    <contour>
+      <point x="194" y="20" type="curve"/>
+      <point x="194" y="120" type="line"/>
+      <point x="74" y="120" type="line"/>
+      <point x="74" y="0" type="line"/>
+      <point x="148" y="0" type="line"/>
+      <point x="158" y="-10" type="line"/>
+      <point x="152" y="-56"/>
+      <point x="126" y="-100"/>
+      <point x="72" y="-142" type="curve"/>
+      <point x="86" y="-166" type="line"/>
+      <point x="154" y="-118"/>
+      <point x="194" y="-54"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>

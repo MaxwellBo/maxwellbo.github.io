@@ -1,0 +1,57 @@
+# LANGUAGE SYSTEMS
+
+languagesystem DFLT dflt;
+languagesystem latn dflt;
+
+# FEATURES CLASSES
+
+@uc = [A B C D E F G H I J K L M N O P Q R S T U V W X Y Z Agrave Aacute Acircumflex Atilde Adieresis Aring AE Ccedilla Egrave Eacute Ecircumflex Edieresis Igrave Iacute Icircumflex Idieresis Ntilde Ograve Oacute Ocircumflex Otilde Odieresis Oslash OE Ugrave Uacute Ucircumflex Udieresis Yacute Ydieresis];
+@uc.punct = [hyphen.cap exclamdown.cap questiondown.cap guilsinglleft.cap guilsinglright.cap guillemotleft.cap guillemotright.cap endash.cap emdash.cap periodcentered.cap parenleft.cap parenright.cap bracketleft.cap bracketright.cap braceleft.cap braceright.cap];
+
+@lc = [a b c d e f g h i j k l m n o p q r s t u v w x y z agrave aacute acircumflex atilde adieresis aring ae ccedilla egrave eacute ecircumflex edieresis igrave iacute icircumflex idieresis ntilde ograve oacute ocircumflex otilde odieresis oslash oe ugrave uacute ucircumflex udieresis yacute ydieresis];
+@lc.all = [@lc dotlessi];
+@lc.punct_uc = [hyphen exclamdown questiondown guilsinglleft guilsinglright guillemotleft guillemotright endash emdash periodcentered parenleft parenright bracketleft bracketright braceleft braceright];
+
+@figs.default = [zero one two three four five six seven eight nine];
+@currency.default = [numbersign Euro dollar cent sterling yen];
+
+#@figs.inferior = [zeroinferior oneinferior twoinferior threeinferior fourinferior fiveinferior sixinferior seveninferior eightinferior nineinferior];
+#@figs.denominator = [zero.dnom one.dnom two.dnom three.dnom four.dnom five.dnom six.dnom seven.dnom eight.dnom nine.dnom];
+#@figs.numerator = [zero.numr one.numr two.numr three.numr four.numr five.numr six.numr seven.numr eight.numr nine.numr];
+
+# FEATURES
+
+feature aalt { # ALL ALTERNATES
+	feature case;
+} aalt;
+
+feature ordn { # ORDINALS
+	lookup ordn_base {
+		sub @figs.default [O o]' by ordmasculine;
+		sub @figs.default [A a]' by ordfeminine;
+	} ordn_base;
+	lookup ordn_numero {
+		sub N [O o degree ordmasculine] by numero;
+		sub n [O o degree ordmasculine] by numero;
+	} ordn_numero;
+} ordn;
+
+feature case { # CASE FORMS
+	lookup case_exceptions {
+ 		sub dotlessi by I;
+ 	} case_exceptions;
+	lookup case_punctuation {
+		sub @lc.punct_uc by @uc.punct;
+	} case_punctuation;
+} case;
+
+feature liga { # LIGATURES
+	lookup liga_all {
+		sub f f by ff;
+		sub f l by fl;
+		sub f i by fi;
+		sub f f l by ffl;
+		sub f f i by ffi;
+		sub T h by Th;
+	} liga_all ;
+} liga;

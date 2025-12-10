@@ -277,7 +277,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   encodingInfo.style.fontFamily = 'monospace';
   encodingInfo.style.padding = '10px';
   encodingInfo.style.backgroundColor = '#f5f5f5';
-  encodingInfo.style.borderRadius = '4px';
   
   let matrixBytes = [];
   for (let row = 7; row >= 0; row--) {
@@ -307,7 +306,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   const cppCode = document.createElement('pre');
   cppCode.style.backgroundColor = '#f5f5f5';
   cppCode.style.padding = '15px';
-  cppCode.style.borderRadius = '4px';
   cppCode.style.overflow = 'auto';
   cppCode.style.marginTop = '10px';
   cppCode.style.fontSize = '13px';

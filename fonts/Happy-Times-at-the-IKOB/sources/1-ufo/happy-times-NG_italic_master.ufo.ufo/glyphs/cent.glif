@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="cent" format="1">
+  <advance width="510"/>
+  <unicode hex="00A2"/>
+  <outline>
+    <contour>
+      <point x="166.029519659553" y="0" type="line"/>
+      <point x="206.029519659553" y="0" type="line"/>
+      <point x="414.029519659553" y="750" type="line"/>
+      <point x="376.029519659553" y="750" type="line"/>
+    </contour>
+    <component base="c" xOffset="36.0" yOffset="125"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.guides</key>
+      <array>
+        <dict>
+          <key>angle</key>
+          <integer>0</integer>
+          <key>isGlobal</key>
+          <false/>
+          <key>magnetic</key>
+          <integer>5</integer>
+          <key>name</key>
+          <string></string>
+          <key>x</key>
+          <integer>532</integer>
+          <key>y</key>
+          <integer>1575</integer>
+        </dict>
+      </array>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="ffi" format="1">
+  <advance width="948.6942290501083"/>
+  <outline>
+    <contour>
+      <point x="347.029519659553" y="460" type="line"/>
+      <point x="707.029519659553" y="460" type="line"/>
+      <point x="718.029519659553" y="500" type="line"/>
+      <point x="358.029519659553" y="500" type="line"/>
+    </contour>
+    <contour>
+      <point x="34.029519659552975" y="460" type="line"/>
+      <point x="394.029519659553" y="460" type="line"/>
+      <point x="405.029519659553" y="500" type="line"/>
+      <point x="45.029519659552975" y="500" type="line"/>
+    </contour>
+    <contour>
+      <point x="173.029519659553" y="70" type="curve" smooth="yes"/>
+      <point x="281.029519659553" y="500" type="line"/>
+      <point x="292.029519659553" y="610" type="line" smooth="yes"/>
+      <point x="296.029519659553" y="654"/>
+      <point x="324.029519659553" y="671"/>
+      <point x="369.029519659553" y="671" type="curve" smooth="yes"/>
+      <point x="467.029519659553" y="671" type="line"/>
+      <point x="490.029519659553" y="750" type="line"/>
+      <point x="483.029519659553" y="760" type="line"/>
+      <point x="437.029519659553" y="758" type="line" smooth="yes"/>
+      <point x="316.029519659553" y="753"/>
+      <point x="249.029519659553" y="640"/>
+      <point x="190.029519659553" y="512" type="curve"/>
+      <point x="173.029519659553" y="500" type="line"/>
+      <point x="179.029519659553" y="486" type="line"/>
+      <point x="60.029519659552975" y="-73" type="line" smooth="yes"/>
+      <point x="46.029519659552975" y="-138"/>
+      <point x="14.029519659552975" y="-161"/>
+      <point x="-40.970480340447025" y="-161" type="curve" smooth="yes"/>
+      <point x="-126.97048034044703" y="-161" type="line"/>
+      <point x="-149.970480340447" y="-240" type="line"/>
+      <point x="-141.970480340447" y="-250" type="line"/>
+      <point x="-114.97048034044703" y="-248" type="line"/>
+      <point x="25.029519659552975" y="-243"/>
+      <point x="137.029519659553" y="-73"/>
+    </contour>
+    <component base="fi" xOffset="313.0"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>

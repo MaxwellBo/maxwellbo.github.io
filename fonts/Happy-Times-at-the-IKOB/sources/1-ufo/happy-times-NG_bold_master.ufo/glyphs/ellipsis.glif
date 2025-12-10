@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="ellipsis" format="1">
+  <advance width="668"/>
+  <unicode hex="2026"/>
+  <outline>
+    <contour>
+      <point x="54" y="0" type="line"/>
+      <point x="194" y="0" type="line"/>
+      <point x="194" y="140" type="line"/>
+      <point x="54" y="140" type="line"/>
+    </contour>
+    <contour>
+      <point x="274" y="0" type="line"/>
+      <point x="414" y="0" type="line"/>
+      <point x="414" y="140" type="line"/>
+      <point x="274" y="140" type="line"/>
+    </contour>
+    <contour>
+      <point x="494" y="0" type="line"/>
+      <point x="634" y="0" type="line"/>
+      <point x="634" y="140" type="line"/>
+      <point x="494" y="140" type="line"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>

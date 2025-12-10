@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="Q" format="1">
+  <advance width="834.0498285581252"/>
+  <unicode hex="0051"/>
+  <outline>
+    <contour>
+      <point x="427.029519659553" y="194" type="line"/>
+      <point x="666.029519659553" y="-44" type="line"/>
+      <point x="700.029519659553" y="-10" type="line"/>
+      <point x="580.029519659553" y="110" type="line"/>
+      <point x="570.029519659553" y="129" type="line"/>
+      <point x="560.029519659553" y="129" type="line"/>
+      <point x="461.029519659553" y="228" type="line"/>
+    </contour>
+    <component base="O"/>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>

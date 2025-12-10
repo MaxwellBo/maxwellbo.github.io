@@ -76,3 +76,34 @@
 .basiic {
   font-family: 'basiic', sans-serif;
 }
+
+@font-face {
+  font-family: 'Happy Times at the IKOB';
+  src: url('../fonts/Happy-Times-at-the-IKOB/fonts/webfonts/happy-times-NG_regular_master_web.woff2') format('woff2'),
+       url('../fonts/Happy-Times-at-the-IKOB/fonts/webfonts/happy-times-NG_regular_master_web.woff') format('woff'),
+       url('../fonts/Happy-Times-at-the-IKOB/fonts/otf/happy-times-NG_regular_master.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Happy Times at the IKOB';
+  src: url('../fonts/Happy-Times-at-the-IKOB/fonts/webfonts/happy-times-NG_italic_master_web.woff2') format('woff2'),
+       url('../fonts/Happy-Times-at-the-IKOB/fonts/webfonts/happy-times-NG_italic_master_web.woff') format('woff'),
+       url('../fonts/Happy-Times-at-the-IKOB/fonts/otf/happy-times-NG_italic_master.otf') format('opentype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Happy Times at the IKOB';
+  src: url('../fonts/Happy-Times-at-the-IKOB/fonts/webfonts/happy-times-NG_bold_master_web.woff2') format('woff2'),
+       url('../fonts/Happy-Times-at-the-IKOB/fonts/webfonts/happy-times-NG_bold_master_web.woff') format('woff'),
+       url('../fonts/Happy-Times-at-the-IKOB/fonts/otf/happy-times-NG_bold_master.otf') format('opentype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+.happy-times {
+  font-family: 'Happy Times at the IKOB', serif;
+}

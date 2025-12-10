@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<glyph name="exclamdown" format="1">
+  <advance width="268"/>
+  <unicode hex="00A1"/>
+  <outline>
+    <contour>
+      <point x="153" y="306" type="line"/>
+      <point x="115" y="306" type="line"/>
+      <point x="59" y="-240" type="line"/>
+      <point x="59" y="-240"/>
+      <point x="209" y="-240"/>
+      <point x="209" y="-240" type="curve"/>
+    </contour>
+    <contour>
+      <point x="64" y="510" type="line"/>
+      <point x="64" y="370" type="line"/>
+      <point x="204" y="370" type="line"/>
+      <point x="204" y="510" type="line"/>
+    </contour>
+  </outline>
+  <lib>
+    <dict>
+      <key>com.typemytype.robofont.mark</key>
+      <array>
+        <real>0.0008</real>
+        <real>0.8221</real>
+        <real>0.2832</real>
+        <real>1.0</real>
+      </array>
+    </dict>
+  </lib>
+</glyph>
