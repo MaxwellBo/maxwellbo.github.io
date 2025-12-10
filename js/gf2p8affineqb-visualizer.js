@@ -327,7 +327,17 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   const inputHex = '0x' + src1[byteIdx].toString(16).padStart(2, '0');
   const expectedResult = '0x' + result[byteIdx].toString(16).padStart(2, '0');
   
-  cppCode.textContent = `const uint64_t k_${varName} = ${matrixHex};
+  // Generate matrix construction with binary literals
+  let matrixConstruction = '';
+  for (let i = 0; i < 8; i++) {
+    const byteIndex = i;
+    const byteVal = src2[byteIndex];
+    const binStr = byteVal.toString(2).padStart(8, '0');
+    const shift = i * 8;
+    matrixConstruction += `  (uint64_t(0b${binStr}) << ${shift})${i < 7 ? ' |' : ''}\n`;
+  }
+
+  cppCode.textContent = `// ${matrixHex}\nconst uint64_t k_${varName} = \n${matrixConstruction};
 const __m128i k_matrix = _mm_set1_epi64x(k_${varName});
 const __m128i dataToTransform = _mm_set_epi8(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ${inputHex});
 const __m128i result = _mm_gf2p8affine_epi64_epi8(dataToTransform, k_matrix, ${constantHex});
