@@ -193,7 +193,7 @@ Other operations are similarly defined.
       // Sign extension
       const signExtMatrix = 0x0102040810101010n;
       const signExtSrc1 = new Uint8Array(16);
-      signExtSrc1[0] = 0b11111000; // 5-bit value: top 5 bits set, bottom 3 clear
+      signExtSrc1[0] = 0b00011010; // 5-bit value: top 5 bits set, bottom 3 clear
       const signExtSrc2 = matrixToSrc2(signExtMatrix);
       
       createVisualization(
@@ -250,6 +250,10 @@ Other operations are similarly defined.
 
     <p>
       <a href="https://github.com/RPCS3/rpcs3/pull/8712/files">PR</a>
+    </p>
+
+    <p>
+      <a href="https://github.com/RPCS3/rpcs3/pull/14669">another PR</a>
     </p>
 
     <p>
