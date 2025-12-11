@@ -69,7 +69,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
       cell.style.alignItems = 'center';
       cell.style.justifyContent = 'center';
       cell.style.border = '1px solid #999';
-      cell.style.fontWeight = 'bold';
       cell.style.fontSize = '14px';
       
       // Color coding based on bit value
@@ -96,11 +95,10 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   matrixContainer.appendChild(matrixGrid);
   vizContainer.appendChild(matrixContainer);
   
-  // X operator
+  // Multiplication operator
   const xLabel = document.createElement('div');
-  xLabel.textContent = 'X';
+  xLabel.textContent = '×';
   xLabel.style.fontSize = '24px';
-  xLabel.style.fontWeight = 'bold';
   vizContainer.appendChild(xLabel);
   
   // Input vector section
@@ -121,7 +119,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     cell.style.alignItems = 'center';
     cell.style.justifyContent = 'center';
     cell.style.border = '1px solid #999';
-    cell.style.fontWeight = 'bold';
     cell.style.fontSize = '14px';
     
     if (bitValue) {
@@ -148,9 +145,8 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   
   // XOR operator
   const xorLabel = document.createElement('div');
-  xorLabel.textContent = 'XOR';
-  xorLabel.style.fontSize = '16px';
-  xorLabel.style.fontWeight = 'bold';
+  xorLabel.textContent = '+';
+  xorLabel.style.fontSize = '24px';
   vizContainer.appendChild(xorLabel);
   
   // Constant vector section
@@ -173,7 +169,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     cell.style.alignItems = 'center';
     cell.style.justifyContent = 'center';
     cell.style.border = '1px solid #999';
-    cell.style.fontWeight = 'bold';
     cell.style.fontSize = '14px';
     
     if (bitValue) {
@@ -202,7 +197,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   const equalsLabel = document.createElement('div');
   equalsLabel.textContent = '=';
   equalsLabel.style.fontSize = '24px';
-  equalsLabel.style.fontWeight = 'bold';
   vizContainer.appendChild(equalsLabel);
   
   // Result vector section with annotations
@@ -226,7 +220,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     cell.style.alignItems = 'center';
     cell.style.justifyContent = 'center';
     cell.style.border = '1px solid #999';
-    cell.style.fontWeight = 'bold';
     cell.style.fontSize = '14px';
     
     if (bitValue) {
@@ -297,7 +290,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   const cppSummary = document.createElement('summary');
   cppSummary.textContent = 'C++ Implementation';
   cppSummary.style.cursor = 'pointer';
-  cppSummary.style.fontWeight = 'bold';
   cppSummary.style.padding = '5px';
   cppSection.appendChild(cppSummary);
   
