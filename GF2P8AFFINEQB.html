@@ -52,10 +52,13 @@
     <h1>Off-label GF2P8AFFINEQB</h1>
 
     <p>
-      Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, and its sister instruction  <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a>, part of the "Galois Field New Instructions" x86 extension, are actually quite useful.
+      Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, part of the "Galois Field New Instructions" x86 extension, is actually quite useful.
+
+      Unlike <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a> and <a href="https://www.felixcloutier.com/x86/gf2p8mulb">GF2P8MULB</a>,
+      which have more obvious relevance for performing the <a href="https://en.wikipedia.org/wiki/Rijndael_S-box">Rijndael S-box</a> and <a href="https://en.wikipedia.org/wiki/Rijndael_MixColumns">Rijndael MixColumns</a> steps of <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> respectively, GF2P8AFFINEQB is a little more general-purpose, finding "off-label" usage outside of cryptography.
     </p>
 
-    <h2>What is a Galois field</h2>
+    <h2>What is a Galois field?</h2>
 
     <p>
       Intel's 
@@ -66,10 +69,9 @@
     </p>
     <blockquote>
       A Galois Field is a field containing a finite number of elements. As with other fields, a Galois Field has well defined elements, and
-operations for addition, subtraction, and so on, when applied to those elements generates a result in the same field. The GF(2) field
-is simply a Galois Field with only two elements – 0 and 1. The addition of two values in GF(2) is equivalent to addition-modulo-2, or
-an exclusive-OR. The multiplication of two values in GF(2) is equivalent to multiplication-modulo-2, or the logical AND operation.
-Other operations are similarly defined.
+    operations for addition, subtraction, and so on, when applied to those elements generates a result in the same field. The <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> field
+    is simply a Galois Field with only two elements – 0 and 1. The addition of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to addition-modulo-2, or
+    an exclusive-OR. The multiplication of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to multiplication-modulo-2, or the logical AND operation.
     </blockquote>
 
     <div style="display: flex; gap: 20px; justify-content: center;">
@@ -110,19 +112,18 @@ Other operations are similarly defined.
       </table>
     </div>
 
-    <h2>How does GF2P8AFFINEQB work?</h2>
+    <h2>What does GF2P8AFFINEQB do?</h2>
 
     <p>
-      The GF2P8AFFINEQB instruction performs an affine transformation in GF(2^8). It multiplies an 8x8 bit matrix by an 8-bit input vector, then XORs the result with a constant.
+      The GF2P8AFFINEQB instruction performs an affine transformation in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><msup><mn>2</mn><mn>8</mn></msup><mo>)</mo></math>. For this instruction, an affine transformation is defined by <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mo>⋅</mo><mi>x</mi><mo>+</mo><mi>b</mi></math> where <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math> is an 8 by 8 bit matrix, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>b</mi></math> are 8-bit vectors.
     </p>
 
-    <h3>Example: Identity transformation</h3>
+    <h3>Identity transformation</h3>
     <div id="viz-identity" class="simulator-container"></div>
 
     <h3>Example: Bit reversal</h3>
     <div id="viz-bit-reversal" class="simulator-container"></div>
 
-    <h3>Example: 5-bit sign extension</h3>
     <div id="viz-sign-extension" class="simulator-container"></div>
 
     <style>
@@ -162,7 +163,6 @@ Other operations are similarly defined.
     <script type="module">
       import { createVisualization, matrixToSrc2 } from './js/gf2p8affineqb-visualizer.js';
 
-      // Identity transformation
       const identityMatrix = 0x0102040810204080n;
       const identitySrc1 = new Uint8Array(16);
       identitySrc1[0] = 0b10110011;
@@ -172,9 +172,7 @@ Other operations are similarly defined.
         document.getElementById('viz-identity'),
         identitySrc1,
         identitySrc2,
-        0x00,
-        'Identity Matrix',
-        'The identity matrix passes bits through unchanged. Each output bit equals its corresponding input bit.'
+        0x00
       );
 
       // Bit reversal
@@ -187,9 +185,7 @@ Other operations are similarly defined.
         document.getElementById('viz-bit-reversal'),
         reversalSrc1,
         reversalSrc2,
-        0x00,
-        'Bit Reversal Matrix',
-        'This matrix reverses the order of bits. Bit 0 becomes bit 7, bit 1 becomes bit 6, etc.'
+        0x00
       );
 
       // Sign extension
@@ -202,9 +198,7 @@ Other operations are similarly defined.
         document.getElementById('viz-sign-extension'),
         signExtSrc1,
         signExtSrc2,
-        0x00,
-        '5-bit Sign Extension Matrix',
-        'Extends a 5-bit signed value (bits 0-4) by replicating bit 4 to bits 5-7. This preserves the sign when converting from 5-bit to 8-bit representation.'
+        0x00
       );
     </script>
 
@@ -274,9 +268,16 @@ Other operations are similarly defined.
       &lt;search for an application and get a speedup&gt;
     </p>
 
+    <p>
+      https://stackoverflow.com/questions/59124720/what-are-the-avx-512-galois-field-related-instructions-for
+    </p>
+
   https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0 
 
   https://bitmath.blogspot.com/2023/04/not-transposing-16x16-bitmatrix.html
+
+
+  https://github.com/riscv/riscv-bitmanip/wiki 
 
   </main>
 

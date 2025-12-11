@@ -6,8 +6,6 @@ import { gf2p8affineqb, affineByte, parity } from './gf2p8affineqb.js';
  * @param {Uint8Array} src1 - First source operand (16 bytes)
  * @param {Uint8Array} src2 - Second source operand (matrix, 16 bytes)
  * @param {number} imm8 - Immediate byte constant
- * @param {string} title - Title for the visualization
- * @param {string} description - Description of what this visualization shows
  * @param {boolean} keepDetailsOpen - Whether to keep the details element open
  */
 export function createVisualization(container, src1, src2, imm8, title, description, keepDetailsOpen = false) {
@@ -311,13 +309,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   cppCode.style.fontSize = '13px';
   cppCode.style.fontFamily = 'monospace';
   
-  // Generate descriptive variable name from title
-  const varName = title.toLowerCase()
-    .replace(/[^a-z0-9\s]/g, '')
-    .split(/\s+/)
-    .map((word, i) => i === 0 ? word : word.charAt(0).toUpperCase() + word.slice(1))
-    .join('');
-  
   const constantHex = '0x' + imm8.toString(16).padStart(2, '0');
   const matrixHex = '0x' + matrixQword.toString(16).padStart(16, '0');
   
@@ -335,8 +326,10 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     matrixConstruction += `  (uint64_t(0b${binStr}) << ${shift})${i < 7 ? ' |' : ''}\n`;
   }
 
-  cppCode.textContent = `// ${matrixHex}\nconst uint64_t k_${varName} = \n${matrixConstruction};
-const __m128i k_matrix = _mm_set1_epi64x(k_${varName});
+  cppCode.textContent = `// ${matrixHex}
+const uint64_t matrix = 
+${matrixConstruction};
+const __m128i k_matrix = _mm_set1_epi64x(matrix);
 const __m128i dataToTransform = _mm_set_epi8(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ${inputHex});
 const __m128i result = _mm_gf2p8affine_epi64_epi8(dataToTransform, k_matrix, ${constantHex});
 
