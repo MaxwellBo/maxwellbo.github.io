@@ -8,6 +8,7 @@
 
   <style>
     @import url('./stylesheets/fonts.css');
+    @import url('./stylesheets/gf2p8affineqb-visualizer.css');
 
     body {
       font-family: 'Happy Times at the IKOB', 'Times New Roman', serif;
@@ -126,6 +127,10 @@
 
     <h3>5-bit sign extension</h3>
     <div id="viz-sign-extension" class="simulator-container"></div>
+
+    <blockquote>
+      In typical matrix fashion, each of the rows of the matrix determines how the resulting bits of the new 8-bit integer is defined. The bytes are defined in reverse order though, as the definition of the function defines its byte-indexing in reverse(7 - i) order. Byte 0 defines how bit-7 is built, byte 1 defines how bit-6 is built, byte 2 defines how bit-5 is built, and so on.
+    </blockquote>
 
     <style>
       .bit-cell {
@@ -263,8 +268,11 @@
 
   https://github.com/riscv/riscv-bitmanip/wiki 
 
+  https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/
+
   </main>
 
+  
 
 </body>
 

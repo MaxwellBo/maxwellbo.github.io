@@ -22,8 +22,7 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   if (description) {
     const descEl = document.createElement('p');
     descEl.textContent = description;
-    descEl.style.fontSize = '0.9em';
-    descEl.style.color = '#555';
+    descEl.classList.add('gf2p8-description');
     container.appendChild(descEl);
   }
   
@@ -41,18 +40,12 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   
   // Main visualization container - horizontal layout like the image
   const vizContainer = document.createElement('div');
-  vizContainer.style.display = 'flex';
-  vizContainer.style.alignItems = 'center';
-  vizContainer.style.gap = '30px';
-  vizContainer.style.marginTop = '20px';
-  vizContainer.style.flexWrap = 'wrap';
+  vizContainer.classList.add('gf2p8-viz-container');
   
   // Matrix section (left side)
   const matrixContainer = document.createElement('div');
   const matrixGrid = document.createElement('div');
-  matrixGrid.style.display = 'grid';
-  matrixGrid.style.gridTemplateColumns = 'repeat(8, 35px)';
-  matrixGrid.style.gap = '1px';
+  matrixGrid.classList.add('gf2p8-matrix-grid');
   
   // Matrix rows (row 7 to row 0, top to bottom - flipped to match visualization)
   for (let row = 7; row >= 0; row--) {
@@ -63,25 +56,14 @@ export function createVisualization(container, src1, src2, imm8, title, descript
       
       const cell = document.createElement('div');
       cell.textContent = bit;
-      cell.style.width = '35px';
-      cell.style.height = '35px';
-      cell.style.display = 'flex';
-      cell.style.alignItems = 'center';
-      cell.style.justifyContent = 'center';
-      cell.style.border = '1px solid #999';
-      cell.style.fontSize = '14px';
+      cell.classList.add('gf2p8-cell', 'interactive');
       
       // Color coding based on bit value
       if (bit) {
-        cell.style.backgroundColor = '#FFE4B5'; // Tan/wheat color for 1s
-        cell.style.color = '#333';
+        cell.classList.add('one');
       } else {
-        cell.style.backgroundColor = '#E8E8E8'; // Light gray for 0s
-        cell.style.color = '#666';
+        cell.classList.add('zero');
       }
-      
-      cell.style.cursor = 'pointer';
-      cell.style.userSelect = 'none';
       
       // Add click handler to toggle bit
       cell.addEventListener('click', () => {
@@ -98,39 +80,26 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   // Multiplication operator
   const xLabel = document.createElement('div');
   xLabel.textContent = '×';
-  xLabel.style.fontSize = '24px';
+  xLabel.classList.add('gf2p8-operator');
   vizContainer.appendChild(xLabel);
   
   // Input vector section
   const inputContainer = document.createElement('div');
   const inputGrid = document.createElement('div');
-  inputGrid.style.display = 'grid';
-  inputGrid.style.gridTemplateRows = 'repeat(8, 35px)';
-  inputGrid.style.gap = '1px';
+  inputGrid.classList.add('gf2p8-vector-grid');
   
   // Display bits from 7 to 0 (top to bottom)
   for (let bit = 7; bit >= 0; bit--) {
     const bitValue = (src1[byteIdx] >> bit) & 1;
     const cell = document.createElement('div');
     cell.textContent = bitValue;
-    cell.style.width = '35px';
-    cell.style.height = '35px';
-    cell.style.display = 'flex';
-    cell.style.alignItems = 'center';
-    cell.style.justifyContent = 'center';
-    cell.style.border = '1px solid #999';
-    cell.style.fontSize = '14px';
+    cell.classList.add('gf2p8-cell', 'interactive');
     
     if (bitValue) {
-      cell.style.backgroundColor = '#FFE4B5'; // Tan/wheat color for 1s
-      cell.style.color = '#333';
+      cell.classList.add('one');
     } else {
-      cell.style.backgroundColor = '#E8E8E8'; // Light gray for 0s
-      cell.style.color = '#666';
+      cell.classList.add('zero');
     }
-    
-    cell.style.cursor = 'pointer';
-    cell.style.userSelect = 'none';
     
     // Add click handler to toggle bit
     cell.addEventListener('click', () => {
@@ -146,15 +115,13 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   // XOR operator
   const xorLabel = document.createElement('div');
   xorLabel.textContent = '+';
-  xorLabel.style.fontSize = '24px';
+  xorLabel.classList.add('gf2p8-operator');
   vizContainer.appendChild(xorLabel);
   
   // Constant vector section
   const constantContainer = document.createElement('div');
   const constantGrid = document.createElement('div');
-  constantGrid.style.display = 'grid';
-  constantGrid.style.gridTemplateRows = 'repeat(8, 35px)';
-  constantGrid.style.gap = '1px';
+  constantGrid.classList.add('gf2p8-vector-grid');
   
   // Create a mutable reference for imm8
   let mutableImm8 = imm8;
@@ -163,24 +130,13 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     const bitValue = (mutableImm8 >> bit) & 1;
     const cell = document.createElement('div');
     cell.textContent = bitValue;
-    cell.style.width = '35px';
-    cell.style.height = '35px';
-    cell.style.display = 'flex';
-    cell.style.alignItems = 'center';
-    cell.style.justifyContent = 'center';
-    cell.style.border = '1px solid #999';
-    cell.style.fontSize = '14px';
+    cell.classList.add('gf2p8-cell', 'interactive');
     
     if (bitValue) {
-      cell.style.backgroundColor = '#FFE4B5'; // Tan/wheat color for 1s
-      cell.style.color = '#333';
+      cell.classList.add('one');
     } else {
-      cell.style.backgroundColor = '#E8E8E8'; // Light gray for 0s
-      cell.style.color = '#666';
+      cell.classList.add('zero');
     }
-    
-    cell.style.cursor = 'pointer';
-    cell.style.userSelect = 'none';
     
     // Add click handler to toggle bit
     cell.addEventListener('click', () => {
@@ -196,16 +152,13 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   // Equals sign
   const equalsLabel = document.createElement('div');
   equalsLabel.textContent = '=';
-  equalsLabel.style.fontSize = '24px';
+  equalsLabel.classList.add('gf2p8-operator');
   vizContainer.appendChild(equalsLabel);
   
   // Result vector section with annotations
   const resultContainer = document.createElement('div');
   const resultGrid = document.createElement('div');
-  resultGrid.style.display = 'grid';
-  resultGrid.style.gridTemplateColumns = '35px auto';
-  resultGrid.style.gap = '1px 10px';
-  resultGrid.style.alignItems = 'center';
+  resultGrid.classList.add('gf2p8-result-grid');
   
   // Display bits from 7 to 0 (top to bottom)
   for (let bit = 7; bit >= 0; bit--) {
@@ -214,28 +167,19 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     // Result bit cell
     const cell = document.createElement('div');
     cell.textContent = bitValue;
-    cell.style.width = '35px';
-    cell.style.height = '35px';
-    cell.style.display = 'flex';
-    cell.style.alignItems = 'center';
-    cell.style.justifyContent = 'center';
-    cell.style.border = '1px solid #999';
-    cell.style.fontSize = '14px';
+    cell.classList.add('gf2p8-cell');
     
     if (bitValue) {
-      cell.style.backgroundColor = '#E8F5E9'; // Light green for 1s
-      cell.style.color = '#333';
+      cell.classList.add('result-one');
     } else {
-      cell.style.backgroundColor = '#E8E8E8'; // Light gray for 0s
-      cell.style.color = '#666';
+      cell.classList.add('zero');
     }
     
     resultGrid.appendChild(cell);
     
     // Annotation
     const annotation = document.createElement('div');
-    annotation.style.fontSize = '12px';
-    annotation.style.color = '#4169E1';
+    annotation.classList.add('gf2p8-annotation');
     
     // Determine which input bit this comes from based on the matrix
     const matrixByte = Number((matrixQword >> BigInt((7 - bit) * 8)) & 0xFFn);
@@ -263,21 +207,15 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   
   // C++ code example
   const cppSection = document.createElement('details');
-  cppSection.style.marginTop = '15px';
+  cppSection.classList.add('gf2p8-cpp-section');
   
   const cppSummary = document.createElement('summary');
-  cppSummary.textContent = 'C++ Implementation';
-  cppSummary.style.cursor = 'pointer';
-  cppSummary.style.padding = '5px';
+  cppSummary.textContent = 'C++ implementation';
+  cppSummary.classList.add('gf2p8-cpp-summary');
   cppSection.appendChild(cppSummary);
   
   const cppCode = document.createElement('pre');
-  cppCode.style.backgroundColor = '#f5f5f5';
-  cppCode.style.padding = '15px';
-  cppCode.style.overflow = 'auto';
-  cppCode.style.marginTop = '10px';
-  cppCode.style.fontSize = '13px';
-  cppCode.style.fontFamily = 'monospace';
+  cppCode.classList.add('gf2p8-cpp-code');
   
   const constantHex = '0x' + imm8.toString(16).padStart(2, '0');
   const matrixHex = '0x' + matrixQword.toString(16).padStart(16, '0');
