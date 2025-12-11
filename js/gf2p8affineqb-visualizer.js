@@ -213,9 +213,12 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   cppSummary.textContent = 'C++ implementation';
   cppSummary.classList.add('gf2p8-cpp-summary');
   cppSection.appendChild(cppSummary);
-  
+    
   const cppCode = document.createElement('pre');
   cppCode.classList.add('gf2p8-cpp-code');
+  
+  const codeElement = document.createElement('code');
+  cppCode.appendChild(codeElement);
   
   const constantHex = '0x' + imm8.toString(16).padStart(2, '0');
   const matrixHex = '0x' + matrixQword.toString(16).padStart(16, '0');
