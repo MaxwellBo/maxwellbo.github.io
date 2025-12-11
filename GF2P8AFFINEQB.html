@@ -80,8 +80,12 @@
     operations for addition, subtraction, and so on, when applied to those elements generates a result in the same field. The <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> field
     is simply a Galois Field with only two elements – 0 and 1. The addition of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to addition-modulo-2, or
     an exclusive-OR. The multiplication of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to multiplication-modulo-2, or the logical AND operation.
+
+      <div style="text-align: right; display: block;">
+        — Wunk, <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/"><cite>gf2p8affineqb: Bit reversal</cite></a>
+      </div>
     </blockquote>
-    https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/
+
 
     <div style="display: flex; gap: 20px; justify-content: center;">
       <table>
@@ -139,40 +143,6 @@
     <blockquote>
       In typical matrix fashion, each of the rows of the matrix determines how the resulting bits of the new 8-bit integer is defined. The bytes are defined in reverse order though, as the definition of the function defines its byte-indexing in reverse(7 - i) order. Byte 0 defines how bit-7 is built, byte 1 defines how bit-6 is built, byte 2 defines how bit-5 is built, and so on.
     </blockquote>
-
-    <style>
-      .bit-cell {
-        border: 2px solid #333;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        font-weight: bold;
-        user-select: none;
-        transition: background-color 0.1s;
-      }
-      
-      .bit-cell.on {
-        background-color: #4CAF50;
-        color: white;
-      }
-      
-      .bit-cell.off {
-        background-color: #f0f0f0;
-        color: #666;
-      }
-      
-      .bit-cell.result {
-        cursor: default;
-        background-color: #2196F3;
-        color: white;
-      }
-
-      .bit-cell.readonly {
-        cursor: default;
-      }
-    </style>
 
     <script type="module">
       import { createVisualization, matrixToSrc2 } from './js/gf2p8affineqb-visualizer.js';
