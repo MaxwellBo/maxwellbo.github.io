@@ -8,7 +8,7 @@ import { gf2p8affineqb, affineByte, parity } from './gf2p8affineqb.js';
  * @param {number} imm8 - Immediate byte constant
  * @param {boolean} keepDetailsOpen - Whether to keep the details element open
  */
-export function createVisualization(container, src1, src2, imm8, title, description, keepDetailsOpen = false) {
+export function createVisualization(container, src1, src2, imm8, title, description) {
   // Check if details was previously open
   const previousDetails = container.querySelector('details');
   const wasOpen = previousDetails ? previousDetails.open : false;
@@ -86,7 +86,7 @@ export function createVisualization(container, src1, src2, imm8, title, descript
       // Add click handler to toggle bit
       cell.addEventListener('click', () => {
         src2[byteIndex] ^= (1 << bitPosition);
-        createVisualization(container, src1, src2, imm8, title, description, true);
+        createVisualization(container, src1, src2, imm8, title, description);
       });
       
       matrixGrid.appendChild(cell);
@@ -135,7 +135,7 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     // Add click handler to toggle bit
     cell.addEventListener('click', () => {
       src1[byteIdx] ^= (1 << bit);
-      createVisualization(container, src1, src2, imm8, title, description, true);
+      createVisualization(container, src1, src2, imm8, title, description);
     });
     
     inputGrid.appendChild(cell);
@@ -185,7 +185,7 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     // Add click handler to toggle bit
     cell.addEventListener('click', () => {
       mutableImm8 ^= (1 << bit);
-      createVisualization(container, src1, src2, mutableImm8, title, description, true);
+      createVisualization(container, src1, src2, mutableImm8, title, description);
     });
     
     constantGrid.appendChild(cell);
@@ -261,28 +261,6 @@ export function createVisualization(container, src1, src2, imm8, title, descript
   
   container.appendChild(vizContainer);
   
-  // Matrix encoding info
-  const encodingInfo = document.createElement('div');
-  encodingInfo.style.marginTop = '20px';
-  encodingInfo.style.fontSize = '14px';
-  encodingInfo.style.fontFamily = 'monospace';
-  encodingInfo.style.padding = '10px';
-  encodingInfo.style.backgroundColor = '#f5f5f5';
-  
-  let matrixBytes = [];
-  for (let row = 7; row >= 0; row--) {
-    const byte = Number((matrixQword >> BigInt((7 - row) * 8)) & 0xFFn);
-    matrixBytes.push('0x' + byte.toString(16).padStart(2, '0'));
-  }
-  
-  encodingInfo.innerHTML = `
-    <strong>Matrix encoding (row 7 to row 0, top to bottom):</strong> ${matrixBytes.join(', ')}<br>
-    <strong>64-bit value:</strong> 0x${matrixQword.toString(16).padStart(16, '0').toUpperCase()}<br>
-    <strong>Constant:</strong> 0x${imm8.toString(16).padStart(2, '0').toUpperCase()}
-  `;
-  
-  container.appendChild(encodingInfo);
-  
   // C++ code example
   const cppSection = document.createElement('details');
   cppSection.style.marginTop = '15px';
@@ -325,14 +303,13 @@ const __m128i k_matrix = _mm_set1_epi64x(matrix);
 const __m128i dataToTransform = _mm_set_epi8(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, ${inputHex});
 const __m128i result = _mm_gf2p8affine_epi64_epi8(dataToTransform, k_matrix, ${constantHex});
 
-// Verify the result
 const uint8_t resultByte = _mm_extract_epi8(result, 0);
 assert(resultByte == ${expectedResult});`;
   
   cppSection.appendChild(cppCode);
   
-  // Set the open state based on previous state or parameter
-  cppSection.open = keepDetailsOpen || wasOpen;
+  // Set the open state based on previous state
+  cppSection.open = wasOpen;
   
   container.appendChild(cppSection);
 }

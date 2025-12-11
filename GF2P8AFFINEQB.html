@@ -121,9 +121,10 @@
     <h3>Identity transformation</h3>
     <div id="viz-identity" class="simulator-container"></div>
 
-    <h3>Example: Bit reversal</h3>
+    <h3>Bit reversal</h3>
     <div id="viz-bit-reversal" class="simulator-container"></div>
 
+    <h3>5-bit sign extension</h3>
     <div id="viz-sign-extension" class="simulator-container"></div>
 
     <style>
@@ -191,7 +192,7 @@
       // Sign extension
       const signExtMatrix = 0x0102040810101010n;
       const signExtSrc1 = new Uint8Array(16);
-      signExtSrc1[0] = 0b00011010; // 5-bit value: top 5 bits set, bottom 3 clear
+      signExtSrc1[0] = 0b00010010;
       const signExtSrc2 = matrixToSrc2(signExtMatrix);
       
       createVisualization(
@@ -201,23 +202,6 @@
         0x00
       );
     </script>
-
-
-    <!-- INSERT SIMULATOR HERE -->
-
-    <h2>How does GF2P8AFFINEINVQB work?</h2>
-
-    <h2>Usage in C++</h2>
-
-    <p>
-      TODO
-    </p>
-
-    <h2>Usage in Rust</h2>
-
-    <p>
-      TODO
-    </p>
 
     <h3>Applications</h3>
 
