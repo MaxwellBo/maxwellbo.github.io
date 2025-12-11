@@ -1,0 +1,61 @@
+.gf2p8-viz-container {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.gf2p8-matrix-grid {
+  display: grid;
+  grid-template-columns: repeat(8, 4ch);
+}
+
+.gf2p8-vector-grid {
+  display: grid;
+  grid-template-rows: repeat(8, 4ch);
+}
+
+.gf2p8-result-grid {
+  display: grid;
+  grid-template-columns: 4ch auto;
+  gap: 0px 10px;
+  align-items: center;
+}
+
+.gf2p8-cell {
+  width: 4ch;
+  height: 4ch;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #999;
+}
+
+.gf2p8-cell.interactive {
+  cursor: pointer;
+}
+
+.gf2p8-cell.one {
+  background-color: #FFE4B5;
+}
+
+.gf2p8-cell.zero {
+  background-color: #E8E8E8;
+}
+
+.gf2p8-cell.result-one {
+  background-color: #FFE4B5;
+}
+
+.gf2p8-operator {
+  font-size: 24px;
+}
+
+.gf2p8-annotation {
+  font-size: 0.8em;
+  color: #4169E1;
+}
+
+.gf2p8-cpp-section {
+  margin-top: 15px;
+}
