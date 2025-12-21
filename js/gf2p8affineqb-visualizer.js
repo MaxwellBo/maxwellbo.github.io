@@ -184,18 +184,18 @@ export function createVisualization(container, src1, src2, imm8, title, descript
     // Determine which input bit this comes from based on the matrix
     const matrixByte = Number((matrixQword >> BigInt((7 - bit) * 8)) & 0xFFn);
     let sourceBits = [];
-    for (let i = 0; i < 8; i++) {
+    for (let i = 7; i >= 0; i--) {
       if ((matrixByte >> i) & 1) {
-        sourceBits.push(i);
+      sourceBits.push(i);
       }
     }
     
     if (sourceBits.length === 1) {
-      annotation.textContent = `Copy bit ${sourceBits[0]}`;
+      annotation.textContent = `input bit ${sourceBits[0]}`;
     } else if (sourceBits.length > 1) {
-      annotation.textContent = `Parity of bits ${sourceBits.join(', ')}`;
+      annotation.textContent = `input bit ${sourceBits.join(' + input bit ')}`;
     } else {
-      annotation.textContent = `Constant`;
+      annotation.textContent = `constant`;
     }
     
     resultGrid.appendChild(annotation);

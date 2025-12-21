@@ -81,9 +81,6 @@
     is simply a Galois Field with only two elements – 0 and 1. The addition of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to addition-modulo-2, or
     an exclusive-OR. The multiplication of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to multiplication-modulo-2, or the logical AND operation.
 
-      <div style="text-align: right; display: block;">
-        — Wunk, <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/"><cite>gf2p8affineqb: Bit reversal</cite></a>
-      </div>
     </blockquote>
 
 
@@ -131,6 +128,22 @@
       The GF2P8AFFINEQB instruction performs an affine transformation in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><msup><mn>2</mn><mn>8</mn></msup><mo>)</mo></math>. For this instruction, an affine transformation is defined by <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mo>⋅</mo><mi>x</mi><mo>+</mo><mi>b</mi></math> where <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math> is an 8 by 8 bit matrix, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>b</mi></math> are 8-bit vectors.
     </p>
 
+    Note that
+
+    <blockquote>
+      [i]n typical matrix fashion, each of the rows of the matrix determines how the resulting bits of the new 8-bit integer is defined. The bytes are defined in reverse order though, as the definition of the function defines its byte-indexing in reverse(7 - i) order. Byte 0 defines how bit-7 is built, byte 1 defines how bit-6 is built, byte 2 defines how bit-5 is built, and so on.
+
+      <div style="text-align: right; display: block;">
+        — Wunk, <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/"><cite>gf2p8affineqb: Bit reversal</cite></a>
+      </div>
+    </blockquote>
+
+    <p>
+      The visualizations' matrices' below are <i>unreversed</i> for clarity,
+      but with the example code bit-shifting configured such that the
+      matrix bitpattern is is in the reserved order that GF2P8AFFINEQB expects.
+    </p>
+
     <h3>Identity transformation</h3>
     <div id="viz-identity" class="simulator-container"></div>
 
@@ -139,10 +152,6 @@
 
     <h3>5-bit sign extension</h3>
     <div id="viz-sign-extension" class="simulator-container"></div>
-
-    <blockquote>
-      In typical matrix fashion, each of the rows of the matrix determines how the resulting bits of the new 8-bit integer is defined. The bytes are defined in reverse order though, as the definition of the function defines its byte-indexing in reverse(7 - i) order. Byte 0 defines how bit-7 is built, byte 1 defines how bit-6 is built, byte 2 defines how bit-5 is built, and so on.
-    </blockquote>
 
     <script type="module">
       import { createVisualization, matrixToSrc2 } from './js/gf2p8affineqb-visualizer.js';
