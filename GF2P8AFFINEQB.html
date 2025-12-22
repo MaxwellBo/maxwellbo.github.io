@@ -60,7 +60,7 @@
     <h1>Off-label GF2P8AFFINEQB</h1>
 
     <p>
-      Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, part of the "Galois Field New Instructions" x86 extension, is actually quite useful.
+      Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, part of the <a href="https://en.wikipedia.org/wiki/AVX-512#GFNI">"Galois Field New Instructions" x86 extension</a>, has intruiged me for a while now.
 
       Unlike <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a> and <a href="https://www.felixcloutier.com/x86/gf2p8mulb">GF2P8MULB</a>,
       which have more obvious relevance for performing the <a href="https://en.wikipedia.org/wiki/Rijndael_S-box">Rijndael S-box</a> and <a href="https://en.wikipedia.org/wiki/Rijndael_MixColumns">Rijndael MixColumns</a> steps of <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> respectively, GF2P8AFFINEQB is a little more general-purpose, finding "off-label" usage outside of cryptography.
@@ -197,6 +197,24 @@
 
     <h2>Usage in the real world</h2>
 
+
+    <p>
+      Through GitHub searches I found that <a href="https://wunkolo.github.io/about/">Wunkolo</a>,
+      author of <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-int8-shifting/">
+        gf2p8affineqb: Int8 shifting
+      </a> and <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/">
+        gf2p8affineqb: Bit reversal
+      </a>, submitted optimizations to Ymir, a Sega Saturn emulator (<a href="https://github.com/StrikerX3/Ymir/pull/183">1</a>),
+      and Xenia, an Xbox 360 emulator (<a href="https://github.com/xenia-project/xenia/pull/1934">1</a>),
+      (<a href="https://github.com/xenia-project/xenia/pull/1963">2</a>), (<a href="https://github.com/xenia-project/xenia/pull/1991">3</a>).
+
+      
+      
+      
+      has contributed to several projects utilizing GF2P8AFFINEQB.
+    </p>
+    
+
     <a href="https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0">
       Unexpected Uses for the Galois Field Affine Transformation Instruction
     </a>
@@ -210,6 +228,9 @@
     <h3>Reed-Solomon error correction</h3>
 
     <a href="https://github.com/klauspost/reedsolomon">klauspost/reedsolomon</a>
+    <a href="https://github.com/search?q=repo%3Aklauspost%2Freedsolomon%20GF2P8AFFINEQB&type=code">
+      https://github.com/search?q=repo%3Aklauspost%2Freedsolomon%20GF2P8AFFINEQB&type=code
+    </a>
 
     <h3>PS3 Cell floating point emulation</h3>
 
