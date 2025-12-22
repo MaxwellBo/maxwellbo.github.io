@@ -199,6 +199,7 @@
       </div>
     </blockquote>
 
+
     <p>
       The visualizations' matrices' below are <i>unreversed</i> for clarity,
       but with the example code bit-shifting configured such that the
@@ -486,11 +487,121 @@ operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1
         <li>An underflow occurs; that is, the result before rounding is different from zero and the result after
           rounding is zero.</li>
       </ul>
-    </blockquote>
+    </blockquote> 
 
     <p>
-
+      RPCS3 has an optimized path for <code>shufb</code>:
     </p>
+
+    <blockquote class="ibm">
+      <h2>Shuffle Bytes</h2>
+      <p style="display: flex; justify-content: space-between; align-items: center;">
+        <span><strong>shufb</strong> &nbsp;&nbsp; rt,ra,rb,rc</span>
+      </p>
+      <table style="width: 100%; table-layout: fixed; font-size: 0.9em;">
+        <tr>
+          <td style="border: none; text-align: center;">1</td>
+          <td style="border: none; text-align: center;">0</td>
+          <td style="border: none; text-align: center;">1</td>
+          <td style="border: none; text-align: center;">1</td>
+          <td colspan="7" style="border: none;"></td>
+          <td colspan="7" style="border: none;"></td>
+          <td colspan="7" style="border: none;"></td>
+          <td colspan="7" style="border: none;"></td>
+        </tr>
+        <tr>
+          <td>0</td>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td colspan="7">RT</td>
+          <td colspan="7">RB</td>
+          <td colspan="7">RA</td>
+          <td colspan="7">RC</td>
+        </tr>
+        <tr>
+          <td style="border: none; text-align: center;">0</td>
+          <td style="border: none; text-align: center;">1</td>
+          <td style="border: none; text-align: center;">2</td>
+          <td style="border: none; text-align: center;">3</td>
+          <td style="border: none; text-align: center;">4</td>
+          <td style="border: none; text-align: center;">5</td>
+          <td style="border: none; text-align: center;">6</td>
+          <td style="border: none; text-align: center;">7</td>
+          <td style="border: none; text-align: center;">8</td>
+          <td style="border: none; text-align: center;">9</td>
+          <td style="border: none; text-align: center;">10</td>
+          <td style="border: none; text-align: center;">11</td>
+          <td style="border: none; text-align: center;">12</td>
+          <td style="border: none; text-align: center;">13</td>
+          <td style="border: none; text-align: center;">14</td>
+          <td style="border: none; text-align: center;">15</td>
+          <td style="border: none; text-align: center;">16</td>
+          <td style="border: none; text-align: center;">17</td>
+          <td style="border: none; text-align: center;">18</td>
+          <td style="border: none; text-align: center;">19</td>
+          <td style="border: none; text-align: center;">20</td>
+          <td style="border: none; text-align: center;">21</td>
+          <td style="border: none; text-align: center;">22</td>
+          <td style="border: none; text-align: center;">23</td>
+          <td style="border: none; text-align: center;">24</td>
+          <td style="border: none; text-align: center;">25</td>
+          <td style="border: none; text-align: center;">26</td>
+          <td style="border: none; text-align: center;">27</td>
+          <td style="border: none; text-align: center;">28</td>
+          <td style="border: none; text-align: center;">29</td>
+          <td style="border: none; text-align: center;">30</td>
+          <td style="border: none; text-align: center;">31</td>
+        </tr>
+      </table>
+      <p>
+        Registers RA and RB are logically concatenated with the least-significant bit of RA adjacent to the most-significant bit of RB. The bytes of the resulting value are considered to be numbered from 0 to 31.
+      </p>
+      <p>
+        For each byte slot in registers RC and RT:
+      </p>
+      <ul>
+        <li>The value in register RC is examined, and a result byte is produced as shown in <i>Table 5-1</i>.</li>
+        <li>The result byte is inserted into register RT.</li>
+      </ul>
+      <p>
+        <i>Table 5-1. Binary Values in Register RC and Byte Results</i>
+      </p>
+      <table style="margin-left: 20px;">
+        <tr>
+          <th>Value in Register RC<br>(Expressed in Binary)</th>
+          <th>Result Byte</th>
+        </tr>
+        <tr>
+          <td>10xxxxxx</td>
+          <td>0x00</td>
+        </tr>
+        <tr>
+          <td>110xxxxx</td>
+          <td>0xFF</td>
+        </tr>
+        <tr>
+          <td>111xxxxx</td>
+          <td>0x80</td>
+        </tr>
+        <tr>
+          <td>Otherwise</td>
+          <td>The byte of the concatenated register addressed by the rightmost 5 bits of register RC</td>
+        </tr>
+      </table>
+      <pre style="margin-left: 20px; margin-top: 10px;">
+Rconcat ← RA || RB
+for j = 0 to 15
+    b ← RCʲ
+    If b₀:₁ = 0b10 then c ← 0x00
+    else If b₀:₂ = 0b110 then c ← 0xFF
+    else If b₀:₂ = 0b111 then c ← 0x80
+    else
+        b ← b & 0x1F;
+        c ← Rconcatᵇ;
+    RTʲ ← c
+end</pre>
+    </blockquote>
 
     <p>
       <a href="https://www.youtube.com/watch?v=19ae5Mq2lJE">Here's the video that discusses it</a>
@@ -529,8 +640,6 @@ operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1
 
 
     https://github.com/riscv/riscv-bitmanip/wiki
-
-    https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/
 
     <a
       href="https://github.com/animetosho/ParPar/blob/master/fast-gf-multiplication.md#affine-transformation--bit-matrix-xor">
