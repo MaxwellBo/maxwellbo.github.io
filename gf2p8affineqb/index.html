@@ -26,7 +26,7 @@
       margin-left: 0;
     }
 
-    
+
     pre {
       background-color: #f4f4f4;
       padding: 10px;
@@ -37,11 +37,14 @@
       border-collapse: collapse;
     }
 
-    table, th, td {
+    table,
+    th,
+    td {
       border: 1px solid rgb(30, 20, 77);
     }
 
-    td, th {
+    td,
+    th {
       padding: 8px;
       text-align: center;
     }
@@ -49,7 +52,6 @@
     th {
       background-color: #ddd;
     }
-    
   </style>
 </head>
 
@@ -58,7 +60,7 @@
   <main>
 
     <p>
-      <a href="../index.html">← Max Bo</a> 
+      <a href="../index.html">← Max Bo</a>
     </p>
 
     <h1>Off-label GF2P8AFFINEQB</h1>
@@ -66,81 +68,134 @@
     <time datetime="2025-12-21"><i>December 21, 2025</i></time>
 
     <p>
-      Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, part of the <a href="https://en.wikipedia.org/wiki/AVX-512#GFNI">"Galois Field New Instructions" x86 extension</a>, has intruiged me for a while now.
+      Often used as a way to take the piss out of CISC ISAs, <a
+        href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine
+      Transformation, part of the <a href="https://en.wikipedia.org/wiki/AVX-512#GFNI">"Galois Field New Instructions"
+        x86 extension</a>, has intruiged me for a while now.
 
-      Unlike <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a> and <a href="https://www.felixcloutier.com/x86/gf2p8mulb">GF2P8MULB</a>,
-      which have more obvious relevance for performing the <a href="https://en.wikipedia.org/wiki/Rijndael_S-box">Rijndael S-box</a> and <a href="https://en.wikipedia.org/wiki/Rijndael_MixColumns">Rijndael MixColumns</a> steps of <a href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> respectively, GF2P8AFFINEQB is a little more general-purpose, finding "off-label" usage outside of cryptography.
+      Unlike <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a> and <a
+        href="https://www.felixcloutier.com/x86/gf2p8mulb">GF2P8MULB</a>,
+      which have more obvious relevance for performing the <a
+        href="https://en.wikipedia.org/wiki/Rijndael_S-box">Rijndael S-box</a> and <a
+        href="https://en.wikipedia.org/wiki/Rijndael_MixColumns">Rijndael MixColumns</a> steps of <a
+        href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> respectively, GF2P8AFFINEQB is a
+      little more general-purpose, finding "off-label" usage outside of cryptography.
     </p>
 
     <h2>What is a Galois field?</h2>
 
     <p>
-      Intel's 
-    <a href="https://builders.intel.com/docs/networkbuilders/galois-field-new-instructions-gfni-technology-guide-1-1639042826.pdf">
-      Galois Field New Instructions (GFNI) Technology Guide
-    </a> gives a rather succinct definition:
+      Intel's
+      <a
+        href="https://builders.intel.com/docs/networkbuilders/galois-field-new-instructions-gfni-technology-guide-1-1639042826.pdf">
+        Galois Field New Instructions (GFNI) Technology Guide
+      </a> gives a rather succinct definition:
 
     </p>
     <blockquote>
-      A Galois Field is a field containing a finite number of elements. As with other fields, a Galois Field has well defined elements, and
-    operations for addition, subtraction, and so on, when applied to those elements generates a result in the same field. The <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> field
-    is simply a Galois Field with only two elements – 0 and 1. The addition of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to addition-modulo-2, or
-    an exclusive-OR. The multiplication of two values in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><mn>2</mn><mo>)</mo></math> is equivalent to multiplication-modulo-2, or the logical AND operation.
+      A Galois Field is a field containing a finite number of elements. As with other fields, a Galois Field has well
+      defined elements, and
+      operations for addition, subtraction, and so on, when applied to those elements generates a result in the same
+      field. The <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>GF</mi>
+        <mo>(</mo>
+        <mn>2</mn>
+        <mo>)</mo>
+      </math> field
+      is simply a Galois Field with only two elements – 0 and 1. The addition of two values in <math
+        xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>GF</mi>
+        <mo>(</mo>
+        <mn>2</mn>
+        <mo>)</mo>
+      </math> is equivalent to addition-modulo-2, or
+      an exclusive-OR. The multiplication of two values in <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>GF</mi>
+        <mo>(</mo>
+        <mn>2</mn>
+        <mo>)</mo>
+      </math> is equivalent to multiplication-modulo-2, or the logical AND operation.
 
     </blockquote>
 
 
     <div style="display: flex; gap: 20px; justify-content: center;">
       <table>
-      <tr>
-      <th>+</th>
-      <th>0</th>
-      <th>1</th>
-      </tr>
-      <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>1</td>
-      </tr>
-      <tr>
-      <th>1</th>
-      <td>1</td>
-      <td>0</td>
-      </tr>
+        <tr>
+          <th>+</th>
+          <th>0</th>
+          <th>1</th>
+        </tr>
+        <tr>
+          <th>0</th>
+          <td>0</td>
+          <td>1</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>1</td>
+          <td>0</td>
+        </tr>
       </table>
 
       <table>
-      <tr>
-      <th>×</th>
-      <th>0</th>
-      <th>1</th>
-      </tr>
-      <tr>
-      <th>0</th>
-      <td>0</td>
-      <td>0</td>
-      </tr>
-      <tr>
-      <th>1</th>
-      <td>0</td>
-      <td>1</td>
-      </tr>
+        <tr>
+          <th>×</th>
+          <th>0</th>
+          <th>1</th>
+        </tr>
+        <tr>
+          <th>0</th>
+          <td>0</td>
+          <td>0</td>
+        </tr>
+        <tr>
+          <th>1</th>
+          <td>0</td>
+          <td>1</td>
+        </tr>
       </table>
     </div>
 
     <h2>What does GF2P8AFFINEQB do?</h2>
 
     <p>
-      The GF2P8AFFINEQB instruction performs an affine transformation in <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>GF</mi><mo>(</mo><msup><mn>2</mn><mn>8</mn></msup><mo>)</mo></math>. For this instruction, an affine transformation is defined by <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi><mo>⋅</mo><mi>x</mi><mo>+</mo><mi>b</mi></math> where <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>A</mi></math> is an 8 by 8 bit matrix, and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math> and <math xmlns="http://www.w3.org/1998/Math/MathML"><mi>b</mi></math> are 8-bit vectors.
+      The GF2P8AFFINEQB instruction performs an affine transformation in <math
+        xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>GF</mi>
+        <mo>(</mo>
+        <msup>
+          <mn>2</mn>
+          <mn>8</mn>
+        </msup>
+        <mo>)</mo>
+      </math>. For this instruction, an affine transformation is defined by <math
+        xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>A</mi>
+        <mo>⋅</mo>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mi>b</mi>
+      </math> where <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>A</mi>
+      </math> is an 8 by 8 bit matrix, and <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>x</mi>
+      </math> and <math xmlns="http://www.w3.org/1998/Math/MathML">
+        <mi>b</mi>
+      </math> are 8-bit vectors.
     </p>
 
     Note that
 
     <blockquote>
-      [i]n typical matrix fashion, each of the rows of the matrix determines how the resulting bits of the new 8-bit integer is defined. The bytes are defined in reverse order though, as the definition of the function defines its byte-indexing in reverse(7 - i) order. Byte 0 defines how bit-7 is built, byte 1 defines how bit-6 is built, byte 2 defines how bit-5 is built, and so on.
+      [i]n typical matrix fashion, each of the rows of the matrix determines how the resulting bits of the new 8-bit
+      integer is defined. The bytes are defined in reverse order though, as the definition of the function defines its
+      byte-indexing in reverse(7 - i) order. Byte 0 defines how bit-7 is built, byte 1 defines how bit-6 is built, byte
+      2 defines how bit-5 is built, and so on.
 
       <div style="text-align: right; display: block;">
-        — Wunk, <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/"><cite>gf2p8affineqb: Bit reversal</cite></a>
+        — Wunk, <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/"><cite>gf2p8affineqb: Bit
+            reversal</cite></a>
       </div>
     </blockquote>
 
@@ -166,7 +221,7 @@
       const identitySrc1 = new Uint8Array(16);
       identitySrc1[0] = 0b10110011;
       const identitySrc2 = matrixToSrc2(identityMatrix);
-      
+
       createVisualization(
         document.getElementById('viz-identity'),
         identitySrc1,
@@ -179,7 +234,7 @@
       const reversalSrc1 = new Uint8Array(16);
       reversalSrc1[0] = 0b10101100;
       const reversalSrc2 = matrixToSrc2(reversalMatrix);
-      
+
       createVisualization(
         document.getElementById('viz-bit-reversal'),
         reversalSrc1,
@@ -192,7 +247,7 @@
       const signExtSrc1 = new Uint8Array(16);
       signExtSrc1[0] = 0b00010010;
       const signExtSrc2 = matrixToSrc2(signExtMatrix);
-      
+
       createVisualization(
         document.getElementById('viz-sign-extension'),
         signExtSrc1,
@@ -210,12 +265,14 @@
         <cite>gf2p8affineqb: Int8 shifting</cite>
       </a> and <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/">
         <cite>gf2p8affineqb: Bit reversal</cite>
-      </a>, submitted optimizations to Ymir, a Sega Saturn emulator (<a href="https://github.com/StrikerX3/Ymir/pull/183">1</a>),
+      </a>, submitted optimizations to Ymir, a Sega Saturn emulator (<a
+        href="https://github.com/StrikerX3/Ymir/pull/183">1</a>),
       and Xenia, an Xbox 360 emulator (<a href="https://github.com/xenia-project/xenia/pull/1934">1</a>),
-      (<a href="https://github.com/xenia-project/xenia/pull/1963">2</a>), (<a href="https://github.com/xenia-project/xenia/pull/1991">3</a>).
+      (<a href="https://github.com/xenia-project/xenia/pull/1963">2</a>), (<a
+        href="https://github.com/xenia-project/xenia/pull/1991">3</a>).
       has contributed to several projects utilizing GF2P8AFFINEQB.
     </p>
-    
+
 
     <a href="https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0">
       Unexpected Uses for the Galois Field Affine Transformation Instruction
@@ -237,8 +294,69 @@
     <h3>PS3 Cell floating point emulation</h3>
 
     <p>
-      The PS3's Cell processor's <a href="https://www.copetti.org/writings/consoles/playstation-3#architecture-of-the-spu">SPU</a> does not use 
+      The PS3's Cell processor's <a
+        href="https://www.copetti.org/writings/consoles/playstation-3#architecture-of-the-spu">SPU</a> does not use
       IEEE 754 floating point: it uses a custom floating point format, nicknamed "Xfloat" by the RPCS3 community.
+    </p>
+
+    <div>
+    <a
+      href="https://archive.fosdem.org/2022/schedule/event/ps3/attachments/slides/5257/export/events/attachments/ps3/slides/5257/slides.pdf">
+      <img src="./Xfloat.png" style="max-width: 100%; height: auto;">
+    </a>
+      <div style="text-align: right; display: block;">
+        – Alexandro Sanchez Bach,
+        <a href="https://archive.fosdem.org/2022/schedule/event/ps3/attachments/slides/5257/export/events/attachments/ps3/slides/5257/slides.pdf">
+          <cite>
+            PlayStation 3 Emulation
+            (Re)implementing the impossible
+          </cite>
+        </a>
+      </div>
+    </div>
+    </p>
+
+
+    <blockquote>
+      For single-precision operations, the range of normalized numbers is extended. However, the full range
+      defined in the standard is not implemented.
+
+        Zero has two representations:
+          <ul>
+        <li>For a positive zero, all bits are zero; that is, the sign, exponent, and fraction are zero.</li>
+        <li>For a negative zero, the sign is one; that is, the exponent and fraction are zero.</li>
+          </ul>
+        As inputs, both kinds of zero are supported; however, a zero result is always a positive zero.
+        <br />
+        Single-precision operations in the SPU have the following characteristics:
+          <ul>
+        <li>Not a Number (NaN) is not supported as an operand and is not produced as a result.</li>
+        <li>Infinity (Inf) is not supported. An operation that produces a magnitude greater than the largest number
+        representable in the target floating-point format instead produces a number with the appropriate sign, the
+        largest biased exponent, and a magnitude of all (binary) ones. It is important to note that the representation of
+        Inf, which conforms to the IEEE standard, is interpreted by the SPU as a number that is smaller
+        than the largest number used on the SPU.</li>
+        <li>Denorms are not supported and are treated as zero. Thus, an operation that would generate a denorm
+        under IEEE rules instead generates a positive zero. If a denorm is used as an operand, it is treated as a
+        zero.</li>
+        <li>The only supported rounding mode is truncation (toward zero).</li>
+        </ul>
+    </blockquote>
+    <blockquote>
+      A different-from-IEEE exception indicates that the result produced with extended-range arithmetic could
+      be different from the IEEE result. This occurs when one of the following conditions exists:
+      <ul>
+        <li>Any of the inputs or the result has a maximal exponent (IEEE arithmetic treats such an operand as
+        NaN or Infinity; extended-range arithmetic treats them as normalized values.)</li>
+        <li>Any of the inputs has a zero exponent and a nonzero fraction (IEEE arithmetic treats such an oper-
+        and as a denormal number; extended-range arithmetic treats them as a zero.)</li>
+        <li>An underflow occurs; that is, the result before rounding is different from zero and the result after
+        rounding is zero.</li>
+      </ul>
+    </blockquote>
+
+    <p>
+
     </p>
 
     <p>
@@ -255,10 +373,9 @@
 
 
     <p>
-      https://archive.fosdem.org/2022/schedule/event/ps3/attachments/slides/5257/export/events/attachments/ps3/slides/5257/slides.pdf 
-    </p>
-    <p>
-      <a href="https://github.com/Whatcookie/rpcs3/blob/732fd479121fe09587fb43fce0cebb55f085d5e7/rpcs3/Emu/Cell/SPURecompiler.cpp#L7284-L7340">Updated version</a>
+      <a
+        href="https://github.com/Whatcookie/rpcs3/blob/732fd479121fe09587fb43fce0cebb55f085d5e7/rpcs3/Emu/Cell/SPURecompiler.cpp#L7284-L7340">Updated
+        version</a>
     </p>
 
     <h3>Go GC</h3>
@@ -273,16 +390,17 @@
       &lt;search for an application and get a speedup&gt;
     </p>
 
-  https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0 
+    https://gist.github.com/animetosho/d3ca95da2131b5813e16b5bb1b137ca0
 
-  https://bitmath.blogspot.com/2023/04/not-transposing-16x16-bitmatrix.html
+    https://bitmath.blogspot.com/2023/04/not-transposing-16x16-bitmatrix.html
 
 
-  https://github.com/riscv/riscv-bitmanip/wiki 
+    https://github.com/riscv/riscv-bitmanip/wiki
 
-  https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/
+    https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/
 
-    <a href="https://github.com/animetosho/ParPar/blob/master/fast-gf-multiplication.md#affine-transformation--bit-matrix-xor">
+    <a
+      href="https://github.com/animetosho/ParPar/blob/master/fast-gf-multiplication.md#affine-transformation--bit-matrix-xor">
       i don't even fucking know man
     </a>
 
