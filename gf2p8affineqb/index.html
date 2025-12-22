@@ -326,51 +326,51 @@
 
 
     <style>
-      blockquote {
+      blockquote.ibm {
         font-family: Arial, sans-serif;
         padding: 20px;
         background-color: #f5f5f5;
       }
 
-      table {
+      blockquote.ibm table {
         border-collapse: collapse;
         width: 100%;
         background-color: white;
       }
 
-      th,
-      td {
+      blockquote.ibm th,
+      blockquote.ibm td {
         border: 2px solid #4a90e2;
         padding: 3px;
         text-align: center;
       }
 
-      th {
+      blockquote.ibm th {
         background-color: #e3f2fd;
         font-weight: bold;
       }
 
-      .header-row {
+      blockquote.ibm .header-row {
         background-color: #e3f2fd;
       }
 
-      .notes-section {
+      blockquote.ibm .notes-section {
         background-color: #e3f2fd;
         text-align: left;
         padding: 5px;
       }
 
-      .notes-section ul {
+      blockquote.ibm .notes-section ul {
         margin: 10px 0;
         padding-left: 20px;
       }
 
-      sup {
+      blockquote.ibm sup {
         font-size: 0.7em;
       }
     </style>
 
-    <blockquote>
+    <blockquote class="ibm">
 
       For single-precision operations, the range of normalized numbers is extended. However, the full range
       defined in the standard is not implemented. 
@@ -475,7 +475,7 @@ operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1
         <li>The only supported rounding mode is truncation (toward zero).</li>
       </ul>
     </blockquote>
-    <blockquote>
+    <blockquote class="ibm">
       A different-from-IEEE exception indicates that the result produced with extended-range arithmetic could
       be different from the IEEE result. This occurs when one of the following conditions exists:
       <ul>
