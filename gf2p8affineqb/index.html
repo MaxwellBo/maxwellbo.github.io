@@ -7,8 +7,8 @@
   <title>Off-label GF2P8AFFINEQB</title>
 
   <style>
-    @import url('./stylesheets/fonts.css');
-    @import url('./stylesheets/gf2p8affineqb-visualizer.css');
+    @import url('../../stylesheets/fonts.css');
+    @import url('./gf2p8affineqb-visualizer.css');
 
     body {
       font-family: 'Happy Times at the IKOB', 'Times New Roman', serif;
@@ -57,7 +57,13 @@
 
   <main>
 
+    <p>
+      <a href="../index.html">← Max Bo</a> 
+    </p>
+
     <h1>Off-label GF2P8AFFINEQB</h1>
+
+    <time datetime="2025-12-21"><i>December 21, 2025</i></time>
 
     <p>
       Often used as a way to take the piss out of CISC ISAs, <a href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine Transformation, part of the <a href="https://en.wikipedia.org/wiki/AVX-512#GFNI">"Galois Field New Instructions" x86 extension</a>, has intruiged me for a while now.
@@ -154,7 +160,7 @@
     <div id="viz-sign-extension" class="simulator-container"></div>
 
     <script type="module">
-      import { createVisualization, matrixToSrc2 } from './js/gf2p8affineqb-visualizer.js';
+      import { createVisualization, matrixToSrc2 } from './gf2p8affineqb-visualizer.js';
 
       const identityMatrix = 0x0102040810204080n;
       const identitySrc1 = new Uint8Array(16);
@@ -201,9 +207,9 @@
     <p>
       Through GitHub searches I found that <a href="https://wunkolo.github.io/about/">Wunkolo</a>,
       author of <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-int8-shifting/">
-        gf2p8affineqb: Int8 shifting
+        <cite>gf2p8affineqb: Int8 shifting</cite>
       </a> and <a href="https://wunkolo.github.io/post/2020/11/gf2p8affineqb-bit-reversal/">
-        gf2p8affineqb: Bit reversal
+        <cite>gf2p8affineqb: Bit reversal</cite>
       </a>, submitted optimizations to Ymir, a Sega Saturn emulator (<a href="https://github.com/StrikerX3/Ymir/pull/183">1</a>),
       and Xenia, an Xbox 360 emulator (<a href="https://github.com/xenia-project/xenia/pull/1934">1</a>),
       (<a href="https://github.com/xenia-project/xenia/pull/1963">2</a>), (<a href="https://github.com/xenia-project/xenia/pull/1991">3</a>).
@@ -233,7 +239,6 @@
     <p>
       The PS3's Cell processor's <a href="https://www.copetti.org/writings/consoles/playstation-3#architecture-of-the-spu">SPU</a> does not use 
       IEEE 754 floating point: it uses a custom floating point format, nicknamed "Xfloat" by the RPCS3 community.
-      
     </p>
 
     <p>
