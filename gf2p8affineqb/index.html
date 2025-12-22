@@ -296,62 +296,195 @@
     <p>
       The PS3's Cell processor's <a
         href="https://www.copetti.org/writings/consoles/playstation-3#architecture-of-the-spu">SPU</a> does not use
-      IEEE 754 floating point: it uses a custom floating point format, nicknamed "Xfloat" by the RPCS3 community.
+      IEEE 754 floating point: it uses a custom floating point format, nicknamed "Xfloat" by the RPCS3 community:
     </p>
 
-    <div>
-    <a
-      href="https://archive.fosdem.org/2022/schedule/event/ps3/attachments/slides/5257/export/events/attachments/ps3/slides/5257/slides.pdf">
-      <img src="./Xfloat.png" style="max-width: 100%; height: auto;">
-    </a>
-      <div style="text-align: right; display: block;">
-        – Alexandro Sanchez Bach,
-        <a href="https://archive.fosdem.org/2022/schedule/event/ps3/attachments/slides/5257/export/events/attachments/ps3/slides/5257/slides.pdf">
+    <figure>
+      <a
+        href="https://archive.fosdem.org/2022/schedule/event/ps3/attachments/slides/5257/export/events/attachments/ps3/slides/5257/slides.pdf">
+        <img src="./Xfloat.png" style="max-width: 100%; height: auto;"
+          alt="Slide showing RPCS3 emulator's approach to floating-point accuracy. Title reads 'RPCS3 > CPU > SPU'. Content describes optional solutions to edge cases for accurate vs approximate xfloat modes. Accurate Xfloat emulates non-IEEE F32 behavior using ±smax-clamp and round-to-zero by: 1) Extending sign/exponent/mantissa bits from U32[4] to F64[4], 2) Doing the operation on AVX2/YMMI, 3) Bitcasting/truncating back to U32[4] with clamping and rounding. Approximate Xfloat uses <smin for math operations by applying clamps and setting denorms to 0, and for comparisons by bitcasting to integer. Right side shows God of War 3 gameplay comparison between ASMJIT (FPS: 12.02) and LLVM (FPS: 25.28) with caption thanking Nekotekina as accurate xfloat setting is no longer needed for most games with SPU LLVM Recompiler issues. Source cited as RPCS3 YouTube channel.">
+      </a>
+      <figcaption>
+        Alexandro Sanchez Bach,
+        <a
+          href="https://archive.fosdem.org/2022/schedule/event/ps3/attachments/slides/5257/export/events/attachments/ps3/slides/5257/slides.pdf">
           <cite>
             PlayStation 3 Emulation
             (Re)implementing the impossible
           </cite>
         </a>
-      </div>
-    </div>
+      </figcaption>
+    </figure>
+    </p>
+
+    <p>
+      We can take a look at the
+      <a href="./SPU_ISA_v1.2_27Jan2007_pub.pdf">IBM Synergistic Processor Unit Instruction Set Architecture</a>
+      documentation for more detail:
     </p>
 
 
-    <blockquote>
-      For single-precision operations, the range of normalized numbers is extended. However, the full range
-      defined in the standard is not implemented.
+    <style>
+      blockquote {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
 
-        Zero has two representations:
-          <ul>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+        background-color: white;
+      }
+
+      th,
+      td {
+        border: 2px solid #4a90e2;
+        padding: 3px;
+        text-align: center;
+      }
+
+      th {
+        background-color: #e3f2fd;
+        font-weight: bold;
+      }
+
+      .header-row {
+        background-color: #e3f2fd;
+      }
+
+      .notes-section {
+        background-color: #e3f2fd;
+        text-align: left;
+        padding: 5px;
+      }
+
+      .notes-section ul {
+        margin: 10px 0;
+        padding-left: 20px;
+      }
+
+      sup {
+        font-size: 0.7em;
+      }
+    </style>
+
+    <blockquote>
+
+      For single-precision operations, the range of normalized numbers is extended. However, the full range
+      defined in the standard is not implemented. 
+      The range of nonzero numbers that can be represented and
+operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1</i>. <i>Table 9-1</i> also demonstrates converting from a register value to a decimal value.
+
+<br />
+<br />
+
+      <i>Table 9-1. Single-Precision (Extended-Range Mode) Minimum and Maximum Values</i>
+      <table>
+        <thead>
+          <tr class="header-row">
+            <th>Number Format</th>
+            <th colspan="3">Minimum Positive<br>Magnitude (Smin)</th>
+            <th colspan="3">Maximum Positive<br>Magnitude (Smax)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Register Value</strong></td>
+            <td colspan="3">0x00800000</td>
+            <td colspan="3">0x7FFFFFFF</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>Bit Fields</strong></td>
+            <td>Sign</td>
+            <td>8-Bit Biased<br>Exponent</td>
+            <td>Fraction (implied<br>[1] and 23 bits)</td>
+            <td>Sign</td>
+            <td>8-Bit Biased<br>Exponent</td>
+            <td>Fraction (implied<br>[1] and 23 bits)</td>
+            <td>1</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td>0</td>
+            <td>00000001</td>
+            <td>[1.]000...000</td>
+            <td>0</td>
+            <td>11111111</td>
+            <td>[1.]111...111</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>Value in Powers of 2</strong></td>
+            <td>+</td>
+            <td>2<sup>(1 - 127)</sup></td>
+            <td>1</td>
+            <td>+</td>
+            <td>2<sup>(255 - 127)</sup></td>
+            <td>2 - 2<sup>-23</sup></td>
+            <td>2</td>
+          </tr>
+          <tr>
+            <td><strong>Combined Exponent and Fraction</strong></td>
+            <td colspan="3">2<sup>-126</sup> * (+1)</td>
+            <td colspan="3">2<sup>128</sup> * (+[2 - 2<sup>-23</sup>])</td>
+            <td></td>
+          </tr>
+          <tr>
+            <td><strong>Value of Register in Decimal</strong></td>
+            <td colspan="3">1.2 * 10<sup>-38</sup></td>
+            <td colspan="3">6.8 * 10<sup>38</sup></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td colspan="8" class="notes-section">
+              <strong>Notes:</strong>
+              <ol>
+                <li>The exponent field is biased by +127.</li>
+                <li>The value 2 - 2<sup>-23</sup> is one least significant bit (LSb) less than 2.</li>
+              </ol>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+    <br />
+
+      Zero has two representations:
+      <ul>
         <li>For a positive zero, all bits are zero; that is, the sign, exponent, and fraction are zero.</li>
         <li>For a negative zero, the sign is one; that is, the exponent and fraction are zero.</li>
-          </ul>
-        As inputs, both kinds of zero are supported; however, a zero result is always a positive zero.
-        <br />
-        Single-precision operations in the SPU have the following characteristics:
-          <ul>
+      </ul>
+      As inputs, both kinds of zero are supported; however, a zero result is always a positive zero.
+      <br />
+      Single-precision operations in the SPU have the following characteristics:
+      <ul>
         <li>Not a Number (NaN) is not supported as an operand and is not produced as a result.</li>
         <li>Infinity (Inf) is not supported. An operation that produces a magnitude greater than the largest number
-        representable in the target floating-point format instead produces a number with the appropriate sign, the
-        largest biased exponent, and a magnitude of all (binary) ones. It is important to note that the representation of
-        Inf, which conforms to the IEEE standard, is interpreted by the SPU as a number that is smaller
-        than the largest number used on the SPU.</li>
+          representable in the target floating-point format instead produces a number with the appropriate sign, the
+          largest biased exponent, and a magnitude of all (binary) ones. It is important to note that the representation
+          of
+          Inf, which conforms to the IEEE standard, is interpreted by the SPU as a number that is smaller
+          than the largest number used on the SPU.</li>
         <li>Denorms are not supported and are treated as zero. Thus, an operation that would generate a denorm
-        under IEEE rules instead generates a positive zero. If a denorm is used as an operand, it is treated as a
-        zero.</li>
+          under IEEE rules instead generates a positive zero. If a denorm is used as an operand, it is treated as a
+          zero.</li>
         <li>The only supported rounding mode is truncation (toward zero).</li>
-        </ul>
+      </ul>
     </blockquote>
     <blockquote>
       A different-from-IEEE exception indicates that the result produced with extended-range arithmetic could
       be different from the IEEE result. This occurs when one of the following conditions exists:
       <ul>
         <li>Any of the inputs or the result has a maximal exponent (IEEE arithmetic treats such an operand as
-        NaN or Infinity; extended-range arithmetic treats them as normalized values.)</li>
+          NaN or Infinity; extended-range arithmetic treats them as normalized values.)</li>
         <li>Any of the inputs has a zero exponent and a nonzero fraction (IEEE arithmetic treats such an oper-
-        and as a denormal number; extended-range arithmetic treats them as a zero.)</li>
+          and as a denormal number; extended-range arithmetic treats them as a zero.)</li>
         <li>An underflow occurs; that is, the result before rounding is different from zero and the result after
-        rounding is zero.</li>
+          rounding is zero.</li>
       </ul>
     </blockquote>
 
