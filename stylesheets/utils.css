@@ -35,6 +35,11 @@
   font-style: normal;
 }
 
+#rym {
+  font-family: 'Hershey Noailles', serif;
+  background-color: rgb(191, 175, 196);
+}
+
 #html-in-hyde {
   font-family: serif !important;
   color: rgb(0, 100, 0)

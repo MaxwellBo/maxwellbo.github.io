@@ -96,7 +96,7 @@ a:hover:active:visited, a:hover:active:visited * {
 
 h2, h3, h4, h5, h6 {
   font-weight: normal;
-  font-family: 'HerscheyTimes', sans-serif;
+  font-family: 'hersheytimes', sans-serif;
 }
 
 ::-webkit-scrollbar {

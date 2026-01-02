@@ -8,9 +8,18 @@
 }
 
 @font-face {
-  font-family: 'HerscheyTimes';
-  src: url("../fonts/hersheytimes.otf");
+  font-family: 'hersheytimes';
+  src: url("../fonts/hershey/hersheytimes.otf");
 }
+
+@font-face {
+  font-family: 'Hershey Noailles';
+  src: url('../fonts/hershey/Hershey-Noailles-OldFrench-Bold.woff') format('woff'),
+        url('../fonts/hershey/Hershey-Noailles-OldFrench-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
 
 /* @font-face {
   font-family: 'Ductus Geometric';
