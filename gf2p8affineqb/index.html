@@ -71,15 +71,23 @@
       Often used as a way to take the piss out of CISC ISAs, <a
         href="https://www.felixcloutier.com/x86/gf2p8affineqb">GF2P8AFFINEQB</a>, the Galois Field Affine
       Transformation, part of the <a href="https://en.wikipedia.org/wiki/AVX-512#GFNI">"Galois Field New Instructions"
-        x86 extension</a>, has intruiged me for a while now.
-
-      Unlike <a href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a> and <a
-        href="https://www.felixcloutier.com/x86/gf2p8mulb">GF2P8MULB</a>,
-      which have more obvious relevance for performing the <a
+        x86 extension</a> (GFNI), has intruiged me for a while now.
+    </p>
+    <p>
+      GFNI's 3 instructions, GF2P8AFFINEQB <a
+        href="https://www.felixcloutier.com/x86/gf2p8affineinvqb">GF2P8AFFINEINVQB</a>, <a
+        href="https://www.felixcloutier.com/x86/gf2p8mulb">GF2P8MULB</a> have obvious applications for the <a
         href="https://en.wikipedia.org/wiki/Rijndael_S-box">Rijndael S-box</a> and <a
         href="https://en.wikipedia.org/wiki/Rijndael_MixColumns">Rijndael MixColumns</a> steps of <a
-        href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a> respectively, GF2P8AFFINEQB is a
-      little more general-purpose, finding "off-label" usage outside of cryptography.
+        href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">AES</a>.
+    </p>
+    <p>
+      But GF2P8AFFINEQB has found general-purpose, "off-label" usage outside of cryptography, particularly in the game
+      console emulation community.
+    </p>
+    <p>
+      Let's investigate.
+    </p>
     </p>
 
     <h2>What is a Galois field?</h2>
@@ -321,7 +329,8 @@
 
     <p>
       We can take a look at page 195 of the
-      <a href="https://arcb.csc.ncsu.edu/~mueller/cluster/ps3/SDK3.0/docs/arch/SPU_ISA_v1.2_27Jan2007_pub.pdf">IBM Synergistic Processor Unit Instruction Set Architecture</a>
+      <a href="https://arcb.csc.ncsu.edu/~mueller/cluster/ps3/SDK3.0/docs/arch/SPU_ISA_v1.2_27Jan2007_pub.pdf">IBM
+        Synergistic Processor Unit Instruction Set Architecture</a>
       documentation for more detail:
     </p>
 
@@ -374,12 +383,13 @@
     <blockquote class="ibm">
 
       For single-precision operations, the range of normalized numbers is extended. However, the full range
-      defined in the standard is not implemented. 
+      defined in the standard is not implemented.
       The range of nonzero numbers that can be represented and
-operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1</i>. <i>Table 9-1</i> also demonstrates converting from a register value to a decimal value.
+      operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1</i>. <i>Table 9-1</i> also
+      demonstrates converting from a register value to a decimal value.
 
-<br />
-<br />
+      <br />
+      <br />
 
       <i>Table 9-1. Single-Precision (Extended-Range Mode) Minimum and Maximum Values</i>
       <table>
@@ -452,7 +462,7 @@ operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1
         </tbody>
       </table>
 
-    <br />
+      <br />
 
       Zero has two representations:
       <ul>
@@ -487,7 +497,7 @@ operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1
         <li>An underflow occurs; that is, the result before rounding is different from zero and the result after
           rounding is zero.</li>
       </ul>
-    </blockquote> 
+    </blockquote>
 
     <p>
       RPCS3 has an optimized path for <code>shufb</code>:
@@ -555,7 +565,8 @@ operated on in the SPU is between the minimum and maximum listed in <i>Table 9-1
         </tr>
       </table>
       <p>
-        Registers RA and RB are logically concatenated with the least-significant bit of RA adjacent to the most-significant bit of RB. The bytes of the resulting value are considered to be numbered from 0 to 31.
+        Registers RA and RB are logically concatenated with the least-significant bit of RA adjacent to the
+        most-significant bit of RB. The bytes of the resulting value are considered to be numbered from 0 to 31.
       </p>
       <p>
         For each byte slot in registers RC and RT:
