@@ -85,6 +85,9 @@
     .preview {
       font-size: 2em;
       white-space: pre-wrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
     }
 
     .japanese-text {
@@ -330,6 +333,40 @@
         href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
       doesn't guarantee that all characters in the text will have the same width.</p>
 
+      <div id="source-han-fwid-preview" style="margin:16px 0;">
+        <div class="fwid-state" style="font-family:monospace; margin-bottom:8px;">
+          <code id="fwid-line">font-variant-east-asian: <span style="color:green">full-width</span></code>
+        </div>
+
+        <div id="source-han-sample-fullwidth" class="preview"
+             style="font-family: source-han-serif-japanese">Sphinx of black quartz, judge my vow.
+        </div>
+      </div>
+
+      <script>
+        (function () {
+          const sample = document.getElementById('source-han-sample-fullwidth');
+          const line = document.getElementById('fwid-line');
+          let fwidOn = true;
+
+          function setFwid(on) {
+            if (on) {
+              sample.style.fontVariantEastAsian = "full-width";
+              line.innerHTML = "font-variant-east-asian: <code>'<span style=\"color:green\">full-width</span>'</code>";
+            } else {
+              sample.style.fontVariantEastAsian = "normal";
+              line.innerHTML = "font-variant-east-asian: <code>'<span style=\"color:red\">normal</span>'</code>";
+            }
+          }
+
+          setFwid(fwidOn);
+          setInterval(() => {
+            fwidOn = !fwidOn;
+            setFwid(fwidOn);
+          }, 1000);
+        })();
+      </script>
+
     <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle" checked> Show 'Hello, world!'</label>
   </div>
 
@@ -408,6 +445,55 @@
     <tbody id="font-table-body-halfwidth">
     </tbody>
   </table>
+
+  <div class="maxwidth">
+    <h2>Character width comparison</h2>
+
+    <p>
+      Characters have different widths in standard, fullwidth, and halfwidth forms.
+      It is <b>not</b> just different letter spacing.
+    </p>
+
+    <style>
+      .width-comparison-table {
+        table-layout: fixed;
+      }
+      
+      .width-comparison-table th:first-child,
+      .width-comparison-table td:first-child {
+        width: 100px;
+      }
+      
+      .width-comparison-table th:not(:first-child),
+      .width-comparison-table td:not(:first-child) {
+        width: auto;
+        padding: 4px;
+      }
+      
+      .width-comparison-table .letter-cell {
+        display: inline-block;
+        border: 1px solid #999;
+      }
+    </style>
+
+    <table class="width-comparison-table">
+      <tbody>
+        <tr>
+          <td>Standard</td>
+          <td><span class="letter-cell">A</span></td><td><span class="letter-cell">B</span></td><td><span class="letter-cell">C</span></td><td><span class="letter-cell">D</span></td><td><span class="letter-cell">E</span></td><td><span class="letter-cell">F</span></td><td><span class="letter-cell">G</span></td><td><span class="letter-cell">H</span></td><td><span class="letter-cell">I</span></td><td><span class="letter-cell">J</span></td><td><span class="letter-cell">K</span></td><td><span class="letter-cell">L</span></td><td><span class="letter-cell">M</span></td><td><span class="letter-cell">N</span></td><td><span class="letter-cell">O</span></td><td><span class="letter-cell">P</span></td><td><span class="letter-cell">Q</span></td><td><span class="letter-cell">R</span></td><td><span class="letter-cell">S</span></td><td><span class="letter-cell">T</span></td><td><span class="letter-cell">U</span></td><td><span class="letter-cell">V</span></td><td><span class="letter-cell">W</span></td><td><span class="letter-cell">X</span></td><td><span class="letter-cell">Y</span></td><td><span class="letter-cell">Z</span></td>
+        </tr>
+        <tr>
+          <td>Fullwidth</td>
+          <td><span class="letter-cell full-width">A</span></td><td><span class="letter-cell full-width">B</span></td><td><span class="letter-cell full-width">C</span></td><td><span class="letter-cell full-width">D</span></td><td><span class="letter-cell full-width">E</span></td><td><span class="letter-cell full-width">F</span></td><td><span class="letter-cell full-width">G</span></td><td><span class="letter-cell full-width">H</span></td><td><span class="letter-cell full-width">I</span></td><td><span class="letter-cell full-width">J</span></td><td><span class="letter-cell full-width">K</span></td><td><span class="letter-cell full-width">L</span></td><td><span class="letter-cell full-width">M</span></td><td><span class="letter-cell full-width">N</span></td><td><span class="letter-cell full-width">O</span></td><td><span class="letter-cell full-width">P</span></td><td><span class="letter-cell full-width">Q</span></td><td><span class="letter-cell full-width">R</span></td><td><span class="letter-cell full-width">S</span></td><td><span class="letter-cell full-width">T</span></td><td><span class="letter-cell full-width">U</span></td><td><span class="letter-cell full-width">V</span></td><td><span class="letter-cell full-width">W</span></td><td><span class="letter-cell full-width">X</span></td><td><span class="letter-cell full-width">Y</span></td><td><span class="letter-cell full-width">Z</span></td>
+        </tr>
+        <tr>
+          <td>Halfwidth</td>
+          <td><span class="letter-cell half-width">A</span></td><td><span class="letter-cell half-width">B</span></td><td><span class="letter-cell half-width">C</span></td><td><span class="letter-cell half-width">D</span></td><td><span class="letter-cell half-width">E</span></td><td><span class="letter-cell half-width">F</span></td><td><span class="letter-cell half-width">G</span></td><td><span class="letter-cell half-width">H</span></td><td><span class="letter-cell half-width">I</span></td><td><span class="letter-cell half-width">J</span></td><td><span class="letter-cell half-width">K</span></td><td><span class="letter-cell half-width">L</span></td><td><span class="letter-cell half-width">M</span></td><td><span class="letter-cell half-width">N</span></td><td><span class="letter-cell half-width">O</span></td><td><span class="letter-cell half-width">P</span></td><td><span class="letter-cell half-width">Q</span></td><td><span class="letter-cell half-width">R</span></td><td><span class="letter-cell half-width">S</span></td><td><span class="letter-cell half-width">T</span></td><td><span class="letter-cell half-width">U</span></td><td><span class="letter-cell half-width">V</span></td><td><span class="letter-cell half-width">W</span></td><td><span class="letter-cell half-width">X</span></td><td><span class="letter-cell half-width">Y</span></td><td><span class="letter-cell half-width">Z</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
 
   <div class="maxwidth">
     <h2>Form support table</h2>
