@@ -56,11 +56,6 @@
       background-color: yellow;
     }
 
-    b,
-    strong {
-      text-decoration: underline;
-    }
-
     @media (max-width: 768px) {
       h1 {
         font-size: calc(3em);
@@ -85,7 +80,10 @@
     .preview {
       font-size: 2em;
       white-space: pre-wrap;
-      overflow-x: auto;
+    }
+
+    .one-line-preview {
+      font-size: 2em;
       overflow-y: hidden;
       white-space: nowrap;
     }
@@ -127,6 +125,12 @@
       border-left: 1px dotted #000;
       padding-left: 15px;
       margin-left: 15px;
+    }
+
+    aside {
+      border: 1px dotted black;
+      padding: 32px;
+      margin: 32px
     }
 
     p {
@@ -241,14 +245,36 @@
   <div class="maxwidth">
 
     <div style="padding-top: 16px;">
-      <a href="index.html">← max bo</a>
+      <a href="index.html">← Max Bo</a>
     </div>
 
     <header>
       <h1><q>Subordinate Latin</q></h1>
-      <p>September 26 2024</p>
+      <p>
+        <i>Updated</i>: 9 January 2026<br />
+        <i>Published</i>: 26 September 2024
+      </p>
     </header>
 
+    <p>
+      Analyses like <a href="https://sabrinas.space/"><cite>
+          the peculiar case of japanese web design
+        </cite></a> have attempted to characterize the factors that give Japanese websites that certain <i>
+        look
+      </i>. But I believe the choice of typeface is a significant, but rarely discussed, contributing factor.
+      There's something
+      about the fonts used on these websites that code them as as Japanese in origin. But what?
+    </p>
+
+    <p>
+      Japanese fonts (more broadly <a href="https://en.wikipedia.org/wiki/List_of_CJK_fonts">CJK fonts</a>)
+      have <b>wider Latin letterforms.</b>
+
+      The blog post <a href="https://fonts.googleblog.com/2021/10/say-hello-to-our-big-new-japanese.html"><cite>Say
+          Hello to our
+          preview new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by
+      Min-Young Kim, explains:
+    </p>
     <blockquote>
       <b>The Latin inside Japanese fonts</b>
       <br />
@@ -268,25 +294,242 @@
       <br />
 
       <figure>
-        <img style="width: 100%; max-width: 600px;" src="img/comparison.png"
+        <img style="width: 100%; max-width: 500px;" src="img/comparison.png"
           alt="“Hello Type” set in Shippori Mincho Subordinate Latin vs. Times New Roman">
 
         <figcaption>Japanese Subordinate Latin (top) compared to Times New Roman (bottom)</figcaption>
 
       </figure>
     </blockquote>
-    ~ <a href="https://fonts.googleblog.com/2021/10/say-hello-to-our-big-new-japanese.html"><cite>Say Hello to our
-        preview new Japanese collection with Zen Fonts: Learn about the complex beauty of Japanese fonts</cite></a> by
-    Min-Young Kim
 
-    <p style="border: 1px dotted black; padding: 32px; margin: 32px">
-      i really fw the look of <q>Subordinate Latin</q> so i thought i'd compile a collection of fonts that feature it
+    <h2>Fullwidth and halfwidth forms</h2>
+
+    <p>So that mixed-Latin/<a href="https://en.wikipedia.org/wiki/CJK_characters">CJK</a> text is visually
+      <q>harmonious</q>
+      some fonts also have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">Latin fullwidth forms</a>,
+      matching the width of CJK characters.
+      They are rendered by either enabling the <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a>
+      or <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a>
+      CSS properties, or by using <a
+        href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
+        Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.
+    <p>Like monospace fonts, fullwidth characters occupy the same horizontal space regardless of their natural width.
+    <p><b>Unlike</b> true monospace fonts, <code>full-width</code> only affects certain characters (mainly <a
+        href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
+      doesn't guarantee that all characters in the text will have the same width.</p>
+
+    <div id="source-han-fwid-preview" style="margin:16px 0;">
+      <div class="fwid-state" style="font-family:monospace; margin-bottom:8px;">
+        <code id="fwid-line">font-variant-east-asian: <span style="color:green">full-width</span></code>
+      </div>
+
+      <div id="source-han-sample-fullwidth" class="one-line-preview" style="font-family: source-han-serif-japanese">This
+        is the Source Han Serif font.<br />
+        ハローワールド</div>
+    </div>
+
+    <script>
+      (function () {
+        const sample = document.getElementById('source-han-sample-fullwidth');
+        const line = document.getElementById('fwid-line');
+        let fwidOn = true;
+
+        function setFwid(on) {
+          if (on) {
+            sample.style.fontVariantEastAsian = "full-width";
+            line.innerHTML = "font-variant-east-asian: <code>'<span style=\"color:green\">full-width</span>'</code>";
+          } else {
+            sample.style.fontVariantEastAsian = "normal";
+            line.innerHTML = "font-variant-east-asian: <code>'<span style=\"color:red\">normal</span>'</code>";
+          }
+        }
+
+        setFwid(fwidOn);
+        setInterval(() => {
+          fwidOn = !fwidOn;
+          setFwid(fwidOn);
+        }, 1000);
+      })();
+    </script>
+
+    <p>Some fonts also support a <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">halfwidth</a>
+      variant, rendered by either enabling the <a
+        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'hwid'</code></a>
+      CSS property, or by using <a
+        href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
+        Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
+
+
+    <div id="source-han-hwid-preview" style="margin:16px 0;">
+      <div class="hwid-state" style="font-family:monospace; margin-bottom:8px;">
+        <code id="hwid-line">font-feature-settings: <span style="color:green">'hwid'</span></code>
+      </div>
+
+      <div id="source-han-sample" class="one-line-preview" style="font-family: source-han-serif-japanese">This is the
+        Source Han Serif font.<br />
+        ハローワールド</div>
+    </div>
+
+    <script>
+      (function () {
+        const sample = document.getElementById('source-han-sample');
+        const line = document.getElementById('hwid-line');
+        let hwidOn = true;
+
+        function setHwid(on) {
+          if (on) {
+            sample.style.fontFeatureSettings = "'hwid'";
+            line.innerHTML = "font-feature-settings: <code>'<span style=\"color:green\">hwid</span>'</code>";
+          } else {
+            sample.style.fontFeatureSettings = "normal";
+            line.innerHTML = "font-feature-settings: <code>'<span style=\"color:red\">normal</span>'</code>";
+          }
+        }
+
+        setHwid(hwidOn);
+        setInterval(() => {
+          hwidOn = !hwidOn;
+          setHwid(hwidOn);
+        }, 1000);
+      })();
+    </script>
+
+    <p>
+      Fullwidth forms and halfwidth forms may have letterforms with different widths and shapes:
     </p>
-    <center>▼▼▼</center>
 
-    <br />
+    <style>
+      .width-comparison-table {
+        font-family: source-han-serif-japanese;
+        table-layout: fixed;
+      }
+
+      .width-comparison-table th:first-child,
+      .width-comparison-table td:first-child {
+        width: 100px;
+      }
+
+      .width-comparison-table th:nth-child(2),
+      .width-comparison-table td:nth-child(2) {
+        background-color: transparent;
+      }
+
+      .width-comparison-table th:not(:first-child),
+      .width-comparison-table td:not(:first-child) {
+        width: auto;
+        padding: 4px;
+      }
+
+      .width-comparison-table .letter-cell {
+        display: inline-block;
+        border: 1px solid #999;
+      }
+    </style>
+
+    <table class="width-comparison-table">
+      <tbody>
+        <tr>
+          <td>Standard</td>
+          <td><span class="letter-cell">A</span></td>
+          <td><span class="letter-cell">B</span></td>
+          <td><span class="letter-cell">C</span></td>
+          <td><span class="letter-cell">D</span></td>
+          <td><span class="letter-cell">E</span></td>
+          <td><span class="letter-cell">F</span></td>
+          <td><span class="letter-cell">G</span></td>
+          <td><span class="letter-cell">H</span></td>
+          <td><span class="letter-cell">I</span></td>
+          <td><span class="letter-cell">J</span></td>
+          <td><span class="letter-cell">K</span></td>
+          <td><span class="letter-cell">L</span></td>
+          <td><span class="letter-cell">M</span></td>
+          <td><span class="letter-cell">N</span></td>
+          <td><span class="letter-cell">O</span></td>
+          <td><span class="letter-cell">P</span></td>
+          <td><span class="letter-cell">Q</span></td>
+          <td><span class="letter-cell">R</span></td>
+          <td><span class="letter-cell">S</span></td>
+          <td><span class="letter-cell">T</span></td>
+          <td><span class="letter-cell">U</span></td>
+          <td><span class="letter-cell">V</span></td>
+          <td><span class="letter-cell">W</span></td>
+          <td><span class="letter-cell">X</span></td>
+          <td><span class="letter-cell">Y</span></td>
+          <td><span class="letter-cell">Z</span></td>
+        </tr>
+        <tr>
+          <td>Fullwidth</td>
+          <td><span class="letter-cell full-width">A</span></td>
+          <td><span class="letter-cell full-width">B</span></td>
+          <td><span class="letter-cell full-width">C</span></td>
+          <td><span class="letter-cell full-width">D</span></td>
+          <td><span class="letter-cell full-width">E</span></td>
+          <td><span class="letter-cell full-width">F</span></td>
+          <td><span class="letter-cell full-width">G</span></td>
+          <td><span class="letter-cell full-width">H</span></td>
+          <td><span class="letter-cell full-width">I</span></td>
+          <td><span class="letter-cell full-width">J</span></td>
+          <td><span class="letter-cell full-width">K</span></td>
+          <td><span class="letter-cell full-width">L</span></td>
+          <td><span class="letter-cell full-width">M</span></td>
+          <td><span class="letter-cell full-width">N</span></td>
+          <td><span class="letter-cell full-width">O</span></td>
+          <td><span class="letter-cell full-width">P</span></td>
+          <td><span class="letter-cell full-width">Q</span></td>
+          <td><span class="letter-cell full-width">R</span></td>
+          <td><span class="letter-cell full-width">S</span></td>
+          <td><span class="letter-cell full-width">T</span></td>
+          <td><span class="letter-cell full-width">U</span></td>
+          <td><span class="letter-cell full-width">V</span></td>
+          <td><span class="letter-cell full-width">W</span></td>
+          <td><span class="letter-cell full-width">X</span></td>
+          <td><span class="letter-cell full-width">Y</span></td>
+          <td><span class="letter-cell full-width">Z</span></td>
+        </tr>
+        <tr>
+          <td>Halfwidth</td>
+          <td><span class="letter-cell half-width">A</span></td>
+          <td><span class="letter-cell half-width">B</span></td>
+          <td><span class="letter-cell half-width">C</span></td>
+          <td><span class="letter-cell half-width">D</span></td>
+          <td><span class="letter-cell half-width">E</span></td>
+          <td><span class="letter-cell half-width">F</span></td>
+          <td><span class="letter-cell half-width">G</span></td>
+          <td><span class="letter-cell half-width">H</span></td>
+          <td><span class="letter-cell half-width">I</span></td>
+          <td><span class="letter-cell half-width">J</span></td>
+          <td><span class="letter-cell half-width">K</span></td>
+          <td><span class="letter-cell half-width">L</span></td>
+          <td><span class="letter-cell half-width">M</span></td>
+          <td><span class="letter-cell half-width">N</span></td>
+          <td><span class="letter-cell half-width">O</span></td>
+          <td><span class="letter-cell half-width">P</span></td>
+          <td><span class="letter-cell half-width">Q</span></td>
+          <td><span class="letter-cell half-width">R</span></td>
+          <td><span class="letter-cell half-width">S</span></td>
+          <td><span class="letter-cell half-width">T</span></td>
+          <td><span class="letter-cell half-width">U</span></td>
+          <td><span class="letter-cell half-width">V</span></td>
+          <td><span class="letter-cell half-width">W</span></td>
+          <td><span class="letter-cell half-width">X</span></td>
+          <td><span class="letter-cell half-width">Y</span></td>
+          <td><span class="letter-cell half-width">Z</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <small>
+      This table is also set in <a href="#Source Han Serif">Source Han Serif</a> and ignores the global stylesheet.
+    </small>
+
 
     <h2>Type tester</h2>
+
+    <!-- <aside>
+      i really fw the look of <q>Subordinate Latin</q> so i thought i'd compile a collection of fonts that feature it
+    </aside> -->
 
     <p>❗ If you see <span style="font-family: 'Hello Kitty', Webdings">dingbats</span>, then the font is either
       unavailable on your platform or has failed to load.</p>
@@ -317,57 +560,9 @@
   <div class="maxwidth">
     <h3 id="fullwidth-forms"><a href="#fullwidth-forms">#</a> Fullwidth forms</h3>
 
-    <p>So that mixed-Latin/<a href="https://en.wikipedia.org/wiki/CJK_characters">CJK</a> text is visually
-      <q>harmonious</q>
-      some fonts have <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">Latin fullwidth forms</a>,
-      matching the width of CJK characters.
-      They are rendered by either enabling the <a
-        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-east-asian"><code>font-variant-east-asian: full-width</code></a>
-      or <a
-        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'fwid'</code></a>
-      CSS properties, or by using <a
-        href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
-        Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.
-    <p>Like monospace fonts, fullwidth characters occupy the same horizontal space regardless of their natural width.
-    <p><b>Unlike</b> true monospace fonts, <code>full-width</code> only affects certain characters (mainly <a
-        href="https://en.wikipedia.org/wiki/ASCII">ASCII character set</a> letters, numbers, and punctuation), so it
-      doesn't guarantee that all characters in the text will have the same width.</p>
 
-      <div id="source-han-fwid-preview" style="margin:16px 0;">
-        <div class="fwid-state" style="font-family:monospace; margin-bottom:8px;">
-          <code id="fwid-line">font-variant-east-asian: <span style="color:green">full-width</span></code>
-        </div>
-
-        <div id="source-han-sample-fullwidth" class="preview"
-             style="font-family: source-han-serif-japanese">Sphinx of black quartz, judge my vow.
-        </div>
-      </div>
-
-      <script>
-        (function () {
-          const sample = document.getElementById('source-han-sample-fullwidth');
-          const line = document.getElementById('fwid-line');
-          let fwidOn = true;
-
-          function setFwid(on) {
-            if (on) {
-              sample.style.fontVariantEastAsian = "full-width";
-              line.innerHTML = "font-variant-east-asian: <code>'<span style=\"color:green\">full-width</span>'</code>";
-            } else {
-              sample.style.fontVariantEastAsian = "normal";
-              line.innerHTML = "font-variant-east-asian: <code>'<span style=\"color:red\">normal</span>'</code>";
-            }
-          }
-
-          setFwid(fwidOn);
-          setInterval(() => {
-            fwidOn = !fwidOn;
-            setFwid(fwidOn);
-          }, 1000);
-        })();
-      </script>
-
-    <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle" checked> Show 'Hello, world!'</label>
+    <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle" checked> Show 'Hello,
+      world!'</label>
   </div>
 
   <table>
@@ -386,51 +581,11 @@
 
     <h3 id="halfwidth-forms"><a href="#halfwidth-forms">#</a> Halfwidth forms</h3>
 
-    <p>Some fonts also support a <a href="https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms">halfwidth</a>
-      variant, rendered by either enabling the <a
-        href="https://developer.mozilla.org/en-US/docs/Web/CSS/font-feature-settings"><code>font-feature-settings: 'hwid'</code></a>
-      CSS property, or by using <a
-        href="https://en.wikipedia.org/wiki/Halfwidth_and_Fullwidth_Forms_(Unicode_block)">Halfwidth and Fullwidth
-        Forms</a> Unicode <a href="https://en.wikipedia.org/wiki/Code_point">code points</a>.</p>
-
-
-        <div id="source-han-hwid-preview" style="margin:16px 0;">
-          <div class="hwid-state" style="font-family:monospace; margin-bottom:8px;">
-            <code id="hwid-line">font-feature-settings: <span style="color:green">'hwid'</span></code>
-          </div>
-
-          <div id="source-han-sample" class="preview"
-               style="font-family: source-han-serif-japanese">Sphinx of black quartz, judge my vow.
-          </div>
-        </div>
-
-        <script>
-          (function () {
-            const sample = document.getElementById('source-han-sample');
-            const line = document.getElementById('hwid-line');
-            let hwidOn = true;
-
-            function setHwid(on) {
-              if (on) {
-                sample.style.fontFeatureSettings = "'hwid'";
-                line.innerHTML = "font-feature-settings: <code>'<span style=\"color:green\">hwid</span>'</code>";
-              } else {
-                sample.style.fontFeatureSettings = "normal";
-                line.innerHTML = "font-feature-settings: <code>'<span style=\"color:red\">normal</span>'</code>";
-              }
-            }
-
-            setHwid(hwidOn);
-            setInterval(() => {
-              hwidOn = !hwidOn;
-              setHwid(hwidOn);
-            }, 1000);
-          })();
-        </script>
-
     <div>
-        <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle-2" checked> Show 'Hello, world!'</label>
-        <label style="margin-left: 20px;"><input type="checkbox" onchange="toggleHwid()" id="hwid-toggle" checked> <code>font-feature-settings: 'hwid'</code></label>
+      <label><input type="checkbox" onchange="toggleHelloWorld()" id="hello-world-toggle-2" checked> Show 'Hello,
+        world!'</label>
+      <label style="margin-left: 20px;"><input type="checkbox" onchange="toggleHwid()" id="hwid-toggle" checked>
+        <code>font-feature-settings: 'hwid'</code></label>
     </div>
   </div>
 
@@ -445,55 +600,6 @@
     <tbody id="font-table-body-halfwidth">
     </tbody>
   </table>
-
-  <div class="maxwidth">
-    <h2>Character width comparison</h2>
-
-    <p>
-      Characters have different widths in standard, fullwidth, and halfwidth forms.
-      It is <b>not</b> just different letter spacing.
-    </p>
-
-    <style>
-      .width-comparison-table {
-        table-layout: fixed;
-      }
-      
-      .width-comparison-table th:first-child,
-      .width-comparison-table td:first-child {
-        width: 100px;
-      }
-      
-      .width-comparison-table th:not(:first-child),
-      .width-comparison-table td:not(:first-child) {
-        width: auto;
-        padding: 4px;
-      }
-      
-      .width-comparison-table .letter-cell {
-        display: inline-block;
-        border: 1px solid #999;
-      }
-    </style>
-
-    <table class="width-comparison-table">
-      <tbody>
-        <tr>
-          <td>Standard</td>
-          <td><span class="letter-cell">A</span></td><td><span class="letter-cell">B</span></td><td><span class="letter-cell">C</span></td><td><span class="letter-cell">D</span></td><td><span class="letter-cell">E</span></td><td><span class="letter-cell">F</span></td><td><span class="letter-cell">G</span></td><td><span class="letter-cell">H</span></td><td><span class="letter-cell">I</span></td><td><span class="letter-cell">J</span></td><td><span class="letter-cell">K</span></td><td><span class="letter-cell">L</span></td><td><span class="letter-cell">M</span></td><td><span class="letter-cell">N</span></td><td><span class="letter-cell">O</span></td><td><span class="letter-cell">P</span></td><td><span class="letter-cell">Q</span></td><td><span class="letter-cell">R</span></td><td><span class="letter-cell">S</span></td><td><span class="letter-cell">T</span></td><td><span class="letter-cell">U</span></td><td><span class="letter-cell">V</span></td><td><span class="letter-cell">W</span></td><td><span class="letter-cell">X</span></td><td><span class="letter-cell">Y</span></td><td><span class="letter-cell">Z</span></td>
-        </tr>
-        <tr>
-          <td>Fullwidth</td>
-          <td><span class="letter-cell full-width">A</span></td><td><span class="letter-cell full-width">B</span></td><td><span class="letter-cell full-width">C</span></td><td><span class="letter-cell full-width">D</span></td><td><span class="letter-cell full-width">E</span></td><td><span class="letter-cell full-width">F</span></td><td><span class="letter-cell full-width">G</span></td><td><span class="letter-cell full-width">H</span></td><td><span class="letter-cell full-width">I</span></td><td><span class="letter-cell full-width">J</span></td><td><span class="letter-cell full-width">K</span></td><td><span class="letter-cell full-width">L</span></td><td><span class="letter-cell full-width">M</span></td><td><span class="letter-cell full-width">N</span></td><td><span class="letter-cell full-width">O</span></td><td><span class="letter-cell full-width">P</span></td><td><span class="letter-cell full-width">Q</span></td><td><span class="letter-cell full-width">R</span></td><td><span class="letter-cell full-width">S</span></td><td><span class="letter-cell full-width">T</span></td><td><span class="letter-cell full-width">U</span></td><td><span class="letter-cell full-width">V</span></td><td><span class="letter-cell full-width">W</span></td><td><span class="letter-cell full-width">X</span></td><td><span class="letter-cell full-width">Y</span></td><td><span class="letter-cell full-width">Z</span></td>
-        </tr>
-        <tr>
-          <td>Halfwidth</td>
-          <td><span class="letter-cell half-width">A</span></td><td><span class="letter-cell half-width">B</span></td><td><span class="letter-cell half-width">C</span></td><td><span class="letter-cell half-width">D</span></td><td><span class="letter-cell half-width">E</span></td><td><span class="letter-cell half-width">F</span></td><td><span class="letter-cell half-width">G</span></td><td><span class="letter-cell half-width">H</span></td><td><span class="letter-cell half-width">I</span></td><td><span class="letter-cell half-width">J</span></td><td><span class="letter-cell half-width">K</span></td><td><span class="letter-cell half-width">L</span></td><td><span class="letter-cell half-width">M</span></td><td><span class="letter-cell half-width">N</span></td><td><span class="letter-cell half-width">O</span></td><td><span class="letter-cell half-width">P</span></td><td><span class="letter-cell half-width">Q</span></td><td><span class="letter-cell half-width">R</span></td><td><span class="letter-cell half-width">S</span></td><td><span class="letter-cell half-width">T</span></td><td><span class="letter-cell half-width">U</span></td><td><span class="letter-cell half-width">V</span></td><td><span class="letter-cell half-width">W</span></td><td><span class="letter-cell half-width">X</span></td><td><span class="letter-cell half-width">Y</span></td><td><span class="letter-cell half-width">Z</span></td>
-        </tr>
-      </tbody>
-    </table>
-
-  </div>
 
   <div class="maxwidth">
     <h2>Form support table</h2>
@@ -511,14 +617,16 @@
       </tbody>
     </table>
 
-  <div style="border: 1px dotted black; padding: 32px; margin: 32px">
-    honestly i really think that <a href="#Source Han Serif">Source Han Serif</a> looks the "cleanest" <i>and</i> is available free on Adobe Fonts (and <a href="#Noto Serif JP">Google Fonts</a><sup><a href="#[c]">[c]</a></sup>)
+    <aside>
+      honestly i really think that <a href="#Source Han Serif">Source Han Serif</a> looks the "cleanest" <i>and</i> is
+      available free on Adobe Fonts (and <a href="#Noto Serif JP">Google Fonts</a><sup><a href="#[c]">[c]</a></sup>)
 
-    <br />
-    <br />
+      <br />
+      <br />
 
-    special mention to <a href="#Hiragino Mincho ProN">Hiragino Mincho ProN</a> which is really quite pretty, and the general goofiness of <a href="#SimSun">SimSun</a> and <a href="#MS Mincho">MS Mincho</a>
-  </div>
+      special mention to <a href="#Hiragino Mincho ProN">Hiragino Mincho ProN</a> which is really quite pretty, and the
+      general goofiness of <a href="#SimSun">SimSun</a> and <a href="#MS Mincho">MS Mincho</a>
+    </aside>
 
     <a id="[a]" href="#[a]"><sup>[a]</sup></a> This is the article's <code>&lt;body&gt;</code> font stack. <a
       href="#ref[a]">⤣</a>
@@ -538,7 +646,8 @@
     <br />
 
     <a id="[d]" href="#[d]"><sup>[d]</sup></a>
-    Unlike all other listed fonts, Noto <a href="#Noto Serif JP">Serif</a>|<a href="#Noto Sans JP">Sans</a> JP's CJK characters remain fullwidth 
+    Unlike all other listed fonts, Noto <a href="#Noto Serif JP">Serif</a>|<a href="#Noto Sans JP">Sans</a> JP's CJK
+    characters remain fullwidth
     with the application of <code>font-feature-settings: 'hwid'</code>. Odd. <a href="#ref[d]">⤣</a>
 
     <br />
@@ -733,16 +842,16 @@
 
   function toggleHelloWorld() {
     const checkboxes = document.querySelectorAll('#hello-world-toggle, #hello-world-toggle-2');
-    
+
     // Get the state from the checkbox that triggered the event
     const triggeredCheckbox = event.target;
     helloWorldVisible = triggeredCheckbox.checked;
-    
+
     // Sync all checkboxes to the same state
     checkboxes.forEach(checkbox => {
       checkbox.checked = helloWorldVisible;
     });
-    
+
     // Toggle the hide-japanese class on the body to show/hide all Japanese text
     if (helloWorldVisible) {
       document.body.classList.remove('hide-japanese');
@@ -754,7 +863,7 @@
   function toggleHwid() {
     const checkbox = document.getElementById('hwid-toggle');
     const hwidEnabled = checkbox.checked;
-    
+
     // Toggle the disable-hwid class on the body to enable/disable hwid
     if (hwidEnabled) {
       document.body.classList.remove('disable-hwid');
