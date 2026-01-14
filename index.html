@@ -163,6 +163,10 @@
     });
 
     function onButterflyClick(event) {
+      // Prevent default behavior and stop propagation
+      event.preventDefault();
+      event.stopPropagation();
+      
       // Get the clicked element
       const butterfly = event.currentTarget;
 
@@ -172,6 +176,12 @@
       // Calculate screen coordinates (viewport position + window position)
       const screenX = window.screenX + rect.left;
       const screenY = window.screenY + rect.top;
+
+      // Clean up hover-img preview before removing the butterfly
+      const hoverImg = document.getElementById('hover-img');
+      if (hoverImg) {
+        hoverImg.remove();
+      }
 
       // Remove the butterfly from the DOM
       butterfly.remove();
