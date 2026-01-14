@@ -130,7 +130,6 @@ header {
 
 
 .distort {
-  -webkit-filter: url("#distort");
   filter: url("#distort") url("#n1");
 }
 

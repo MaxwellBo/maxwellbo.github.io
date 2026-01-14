@@ -57,6 +57,26 @@
   font-family: "Fake Receipt";
 }
 
+@font-face {
+  font-family: "Merchant Copy Doublesize";
+  src:
+    url('../fonts/merchant_copy/Merchant Copy Doublesize.ttf') format('truetype');
+}
+
+.merchant-copy-doublesize {
+  font-family: "Merchant Copy Doublesize";
+}
+
+@font-face {
+  font-family: "Merchant Copy Wide";
+  src:
+    url('../fonts/merchant_copy/Merchant Copy Wide.ttf') format('truetype');
+}
+
+.merchant-copy-wide {
+  font-family: "Merchant Copy Wide";
+}
+
 
 @font-face {
   font-family: 'Redaction 35';
