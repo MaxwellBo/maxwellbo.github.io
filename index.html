@@ -118,26 +118,9 @@
     })();
   </script>
   <script>
-    function openButterflyWindow() {
-      // Don't open butterfly popup on mobile devices (same breakpoint as CSS)
-      if (window.innerWidth < 640) {
-        return;
-      }
-
-      // Don't open when page is loaded from the local filesystem (file:///...)
-      if (window.location.protocol === 'file:') {
-        return;
-      }
-
-      // Get the current window dimensions
-      const screenWidth = window.screen.width;
-      const screenHeight = window.screen.height;
-
-      // Position the popup in the bottom right corner
+    function openButterflyWindow(left, top) {
       const popupWidth = 1;
       const popupHeight = 1;
-      const left = screenWidth - popupWidth - 50; // 50px margin from edge
-      const top = screenHeight - popupHeight - 100; // 100px margin from edge
 
       // Open the butterfly popup window
       const butterflyWindow = window.open(
@@ -154,16 +137,48 @@
 
     // Open butterfly window when the page loads
     window.addEventListener('load', () => {
-      // Check if butterfly has already been shown this session
-      if (!localStorage.getItem('butterflyShown')) {
-        // Small delay to ensure page is fully loaded
-        setTimeout(() => {
-          openButterflyWindow();
-          localStorage.setItem('butterflyShown', 'true');
-        }, 500);
+      // Don't open butterfly popup on mobile devices (same breakpoint as CSS)
+      if (window.innerWidth < 640) {
+        return;
       }
+
+      // Don't open when page is loaded from the local filesystem (file:///...)
+      if (window.location.protocol === 'file:') {
+        return;
+      }
+
+      // Check if butterfly has already been shown this session
+      if (localStorage.getItem('butterflyShown')) {
+        return;
+      }
+
+      // Small delay to ensure page is fully loaded
+      setTimeout(() => {
+        // Default to bottom right corner
+        const left = window.screen.width - 1 - 50;
+        const top = window.screen.height - 1 - 100;
+        openButterflyWindow(left, top);
+        localStorage.setItem('butterflyShown', 'true');
+      }, 500);
     });
 
+    function onButterflyClick(event) {
+      // Get the clicked element
+      const butterfly = event.currentTarget;
+
+      // Get the position of the butterfly relative to the viewport
+      const rect = butterfly.getBoundingClientRect();
+
+      // Calculate screen coordinates (viewport position + window position)
+      const screenX = window.screenX + rect.left;
+      const screenY = window.screenY + rect.top;
+
+      // Remove the butterfly from the DOM
+      butterfly.remove();
+
+      // Open the butterfly window at the clicked position
+      openButterflyWindow(screenX, screenY);
+    }
   </script>
   <meta name="author" content="Max Bo, max@maxbo.me">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -889,7 +904,8 @@
       󱠡
 
       <marquee id="ticker2" class="dindong" scrollamount="7" style="flex: 1">
-        <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;" onclick="localStorage.removeItem('butterflyShown'); openButterflyWindow();" />
+        <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;"
+          onclick="onButterflyClick(event);" />
       </marquee>
       <script type="module">
         renderAtom('atom.xml', 'ticker2');
@@ -1147,7 +1163,9 @@
         <article class="art bottom-align" style="position: relative;">
           <div style="position: relative; display: inline-block;">
             <img src="img/plantstudio_flowers.webp" style="display: block;" />
-            <img src="img/butterfly/0.gif" style="position: absolute; bottom: 84%; right: 49%; width: 32px; cursor: pointer;" onclick="localStorage.removeItem('butterflyShown'); openButterflyWindow();" />
+            <img src="img/butterfly/0.gif"
+              style="position: absolute; bottom: 84%; right: 49%; width: 32px; cursor: pointer;"
+              onclick="onButterflyClick(event);" />
           </div>
         </article>
         <article class="listing" id="html-in-hyde">
@@ -2120,7 +2138,8 @@
         Sans</a>,
       <a href="https://www.redaction.us/" style="font-family: 'Redaction 35', serif;">Redaction 35</a>,
       <a href="https://cinni.net/font" style="font-family: 'basiic', monospace;">basiic</a>,
-      <a href="http://hershey-noailles.luuse.io/www/#Hershey-Noailles-OldFrench-Bold" style="font-family: 'Hershey Noailles OldFrench Bold', serif;">Hershey Noailles OldFrench Bold</a>,
+      <a href="http://hershey-noailles.luuse.io/www/#Hershey-Noailles-OldFrench-Bold"
+        style="font-family: 'Hershey Noailles OldFrench Bold', serif;">Hershey Noailles OldFrench Bold</a>,
       &amp; a corrupted form of <a href="http://hershey-noailles.luuse.io/www/#Hershey-Noailles-Times-Triplex-Light"
         style="font-family: 'hersheytimes', serif; font-size: 0.5em;">
         Hershey Times Triplex Light
@@ -2182,7 +2201,8 @@
     </div>
 
     <marquee id="ticker" class="dindong" scrollamount="7">
-      <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;" onclick="localStorage.removeItem('butterflyShown'); openButterflyWindow();" />
+      <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;"
+        onclick="onButterflyClick(event);" />
     </marquee>
     <script type="module">
       renderAtom('atom.xml', 'ticker');
