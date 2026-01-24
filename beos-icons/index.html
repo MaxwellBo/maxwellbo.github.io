@@ -14,30 +14,34 @@
   <meta name="twitter:description" content="A large collection of classic BeOS r5, Haiku OS, Zeta OS, and other retro operating system icons in PNG format." />
   <meta name="twitter:image" content="https://maxbo.me/beos-icons/og.png" />
   <style>
-    body { margin: 20px; }
-    h1 { font-size: 18px; margin-bottom: 10px; }
-    h2 { font-size: 14px; margin: 20px 0 8px 0; border-bottom: 1px solid #ccc; }
-    .category { margin-bottom: 25px; }
-    .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; margin-bottom: 15px; }
-    .icon-item { text-align: center; padding: 5px;  }
+    body { margin: 1.25em; }
+    h2 { margin-left: 1vw; border-bottom: 1px solid #ccc; }
+    h3 { margin-left: 2vw; color: #888; border-bottom: 1px dotted #ccc; }
+    .category { margin-bottom: 1em; }
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(4em, 1fr)); gap: 0.5em; margin-bottom: 0.9375em; margin-left: 3vw; }
+    .icon-item { text-align: center; padding: 0.25em;  }
     .icon-item img { 
       image-rendering: pixelated;
       display: block; 
-      margin: 0 auto 3px;
-      width: 64px;
-      height: 64px;
+      margin: 0 auto 0.125em;
+      width: 4em;
+      height: 4em;
       object-fit: contain;
     }
-    .icon-name { font-size: 9px; color: #666; word-break: break-word; }
-    .size-label { font-size: 10px; color: #888; margin-bottom: 5px; }
-    #loading { margin: 20px 0; }
+    .icon-name {color: #666; word-break: break-word; font-size: 0.6em; }
+    #loading { margin: 1em 0; }
+    #toc { margin: 1em 0; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body>
   <h1>BeOS icons</h1>
-  <p>Icons from the <a href="https://gitlab.com/metsatron/BeOS-r5-Icons">BeOS-r5-Icons</a> repository by <a href="https://gitlab.com/metsatron">Metsatron</a></p>
-  <p style="font-size: 0.9em; color: #666;">This collection includes original creations and adaptations by Metsatron, as well as icons from BeOS-r5, Zeta OS, Haiku OS, KDEclassic, OldGNOME2, Copland, and classic95 (Windows 95).</p>
+  <p>Icons from the <a href="https://gitlab.com/metsatron/BeOS-r5-Icons">BeOS-r5-Icons</a> repository by <a href="https://gitlab.com/metsatron">Metsatron</a>.</p>
+  <p>This collection includes original creations and adaptations by Metsatron, as well as icons from BeOS-r5, Zeta OS, Haiku OS, KDEclassic, OldGNOME2, Copland, and classic95 (Windows 95).</p>
+  <details id="toc">
+    <summary>Table of contents</summary>
+    <ul id="toc-list"></ul>
+  </details>
   <div id="loading">
     <p>Loading icons...</p>
   </div>
@@ -171,6 +175,8 @@
       categoryDiv.className = 'category';
 
       const heading = document.createElement('h2');
+      const categoryId = category.toLowerCase().replace(/\s+/g, '-');
+      heading.id = categoryId;
       heading.textContent = category;
       categoryDiv.appendChild(heading);
 
@@ -178,8 +184,9 @@
       const otherSizes = Object.keys(sizes).filter(s => !/^\d+$/.test(s)).sort();
 
       [...numericSizes, ...otherSizes].forEach(size => {
-        const sizeLabel = document.createElement('div');
-        sizeLabel.className = 'size-label';
+        const sizeLabel = document.createElement('h3');
+        const sizeId = `${categoryId}-${size}`;
+        sizeLabel.id = sizeId;
         sizeLabel.textContent = `${size}x${size}`;
         categoryDiv.appendChild(sizeLabel);
 
@@ -262,16 +269,48 @@
         });
       });
 
-      console.log('=== DISCOVERED ICON MAP ===');
-      console.log(JSON.stringify(iconMap, null, 2));
-      console.log('=== END DISCOVERED ICON MAP ===');
-
       return iconMap;
+    }
+
+    // Build table of contents
+    function buildTableOfContents(iconMap) {
+      const tocList = document.getElementById('toc-list');
+      tocList.innerHTML = '';
+      
+      Object.keys(iconMap).sort().forEach(category => {
+        const categoryLi = document.createElement('li');
+        const categoryId = category.toLowerCase().replace(/\s+/g, '-');
+        const categoryLink = document.createElement('a');
+        categoryLink.href = `#${categoryId}`;
+        categoryLink.textContent = category;
+        categoryLi.appendChild(categoryLink);
+        
+        // Add nested list for sizes
+        const sizesUl = document.createElement('ul');
+        const numericSizes = Object.keys(iconMap[category]).filter(s => /^\d+$/.test(s)).sort((a, b) => parseInt(a) - parseInt(b));
+        const otherSizes = Object.keys(iconMap[category]).filter(s => !/^\d+$/.test(s)).sort();
+        
+        [...numericSizes, ...otherSizes].forEach(size => {
+          const sizeLi = document.createElement('li');
+          const sizeId = `${categoryId}-${size}`;
+          const sizeLink = document.createElement('a');
+          sizeLink.href = `#${sizeId}`;
+          sizeLink.textContent = `${size}x${size}`;
+          sizeLi.appendChild(sizeLink);
+          sizesUl.appendChild(sizeLi);
+        });
+        
+        categoryLi.appendChild(sizesUl);
+        tocList.appendChild(categoryLi);
+      });
     }
 
     // Load icons from zip file structure
     function loadIcons() {
       const iconMap = discoverIconsFromZip();
+      
+      // Build table of contents first
+      buildTableOfContents(iconMap);
       
       Object.keys(iconMap).sort().forEach(category => {
         loadIconsForCategory(category, iconMap[category]);
