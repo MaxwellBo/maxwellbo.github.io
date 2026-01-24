@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>BeOS r5 Icons</title>
+  <meta property="og:title" content="BeOS r5 Icons" />
+  <meta property="og:description" content="A large collection of classic BeOS r5, Haiku OS, Zeta OS, and other retro operating system icons in PNG format." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://maxbo.me/beos-icons/" />
+  <meta property="og:image" content="https://maxbo.me/beos-icons/og.png" />
+  <meta property="og:site_name" content="maxbo.me" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="BeOS r5 Icons" />
+  <meta name="twitter:description" content="A large collection of classic BeOS r5, Haiku OS, Zeta OS, and other retro operating system icons in PNG format." />
+  <meta name="twitter:image" content="https://maxbo.me/beos-icons/og.png" />
+  <style>
+    body { margin: 20px; }
+    h1 { font-size: 18px; margin-bottom: 10px; }
+    h2 { font-size: 14px; margin: 20px 0 8px 0; border-bottom: 1px solid #ccc; }
+    .category { margin-bottom: 25px; }
+    .icon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); gap: 8px; margin-bottom: 15px; }
+    .icon-item { text-align: center; padding: 5px;  }
+    .icon-item img { 
+      image-rendering: pixelated;
+      display: block; 
+      margin: 0 auto 3px;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+    .icon-name { font-size: 9px; color: #666; word-break: break-word; }
+    .size-label { font-size: 10px; color: #888; margin-bottom: 5px; }
+    #loading { margin: 20px 0; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+</head>
+<body>
+  <h1>BeOS r5 Icons</h1>
+  <p>Icons from the <a href="https://gitlab.com/metsatron/BeOS-r5-Icons">BeOS-r5-Icons</a> repository by <a href="https://gitlab.com/metsatron">Metsatron</a></p>
+  <p style="font-size: 0.9em; color: #666;">This collection includes original creations and adaptations by Metsatron, as well as icons from BeOS-r5, Zeta OS, Haiku OS, KDEclassic, OldGNOME2, Copland, and classic95 (Windows 95).</p>
+  <div id="loading">
+    <p>Loading icons...</p>
+  </div>
+  <div id="icons-container"></div>
+
+  <script>
+    // Store unpacked files in memory
+    const zipFiles = new Map();
+    let zipLoaded = false;
+
+    // Unpack zip file from array buffer
+    async function unpackZip(arrayBuffer) {
+      try {
+        const zip = await JSZip.loadAsync(arrayBuffer);
+        
+        // Extract all files into memory
+        const filePromises = [];
+        zip.forEach((relativePath, file) => {
+          if (!file.dir) {
+            filePromises.push(
+              file.async('blob').then(blob => {
+                // Normalize path (remove leading directory if present, e.g., "BeOS-r5-Icons/")
+                let normalizedPath = relativePath;
+                // Remove leading slashes
+                normalizedPath = normalizedPath.replace(/^\/+/, '');
+                // Remove the root directory name if it matches common patterns
+                const parts = normalizedPath.split('/');
+                if (parts.length > 0 && (parts[0].includes('BeOS') || parts[0] === 'BeOS-r5-Icons' || parts[0] === 'BeOS-r5-Icons-master')) {
+                  normalizedPath = parts.slice(1).join('/');
+                }
+                // Store both the normalized path and original path for lookup
+                zipFiles.set(normalizedPath, blob);
+                if (normalizedPath !== relativePath) {
+                  zipFiles.set(relativePath, blob);
+                }
+              })
+            );
+          }
+        });
+        
+        await Promise.all(filePromises);
+        zipLoaded = true;
+        
+        // Log zip structure for debugging
+        console.log('=== ZIP FILE STRUCTURE ===');
+        console.log(`Total files in zip: ${zipFiles.size}`);
+        const allPaths = Array.from(zipFiles.keys()).sort();
+        console.log('All paths in zip:');
+        allPaths.forEach(path => console.log(`  ${path}`));
+        console.log('=== END ZIP STRUCTURE ===');
+        
+        document.getElementById('loading').style.display = 'none';
+        return true;
+      } catch (error) {
+        console.error('Error unpacking zip:', error);
+        document.getElementById('loading').innerHTML = `<p>Error unpacking zip file: ${error.message}</p>`;
+        return false;
+      }
+    }
+
+    // Download and unpack the zip file
+    async function loadZip() {
+      try {
+        // Try to load from a zip file - adjust the path as needed
+        const zipUrl = 'BeOS-r5-Icons-master.zip';
+        const response = await fetch(zipUrl);
+        if (!response.ok) {
+          throw new Error(`Failed to fetch zip: ${response.statusText}`);
+        }
+        const arrayBuffer = await response.arrayBuffer();
+        return await unpackZip(arrayBuffer);
+      } catch (error) {
+        console.error('Error loading zip:', error);
+        document.getElementById('loading').innerHTML = `<p>Error loading zip file: ${error.message}</p>`;
+        return false;
+      }
+    }
+
+    function getIconUrl(path) {
+      const blob = zipFiles.get(path);
+      if (blob) {
+        return URL.createObjectURL(blob);
+      }
+      
+      // Try case-insensitive search as fallback
+      for (const [zipPath, zipBlob] of zipFiles.entries()) {
+        if (zipPath.toLowerCase() === path.toLowerCase()) {
+          return URL.createObjectURL(zipBlob);
+        }
+      }
+      
+      return '';
+    }
+
+    function createIconElement(path, name) {
+      const iconItem = document.createElement('div');
+      iconItem.className = 'icon-item';
+
+      const img = document.createElement('img');
+      const iconUrl = getIconUrl(path);
+      if (iconUrl) {
+        img.src = iconUrl;
+        img.alt = name;
+        // Extract size from path for data-size attribute
+        const pathParts = path.split('/');
+        if (pathParts.length >= 2) {
+          const size = pathParts[pathParts.length - 2];
+          img.setAttribute('data-size', size);
+        }
+        img.onerror = () => {
+          // Hide broken images
+          iconItem.style.display = 'none';
+        };
+      } else {
+        // Hide if icon not found in zip
+        iconItem.style.display = 'none';
+        return null;
+      }
+
+      const label = document.createElement('div');
+      label.className = 'icon-name';
+      label.textContent = name;
+
+      iconItem.appendChild(img);
+      iconItem.appendChild(label);
+      return iconItem;
+    }
+
+    function loadIconsForCategory(category, sizes) {
+      const categoryDiv = document.createElement('div');
+      categoryDiv.className = 'category';
+
+      const heading = document.createElement('h2');
+      heading.textContent = category;
+      categoryDiv.appendChild(heading);
+
+      const numericSizes = Object.keys(sizes).filter(s => /^\d+$/.test(s)).sort((a, b) => parseInt(a) - parseInt(b));
+      const otherSizes = Object.keys(sizes).filter(s => !/^\d+$/.test(s)).sort();
+
+      [...numericSizes, ...otherSizes].forEach(size => {
+        const sizeLabel = document.createElement('div');
+        sizeLabel.className = 'size-label';
+        sizeLabel.textContent = `${size}x${size}`;
+        categoryDiv.appendChild(sizeLabel);
+
+        const iconGrid = document.createElement('div');
+        iconGrid.className = 'icon-grid';
+
+        sizes[size].forEach(icon => {
+          const element = createIconElement(icon.path, icon.name);
+          if (element) {
+            iconGrid.appendChild(element);
+          }
+        });
+
+        categoryDiv.appendChild(iconGrid);
+      });
+
+      document.getElementById('icons-container').appendChild(categoryDiv);
+    }
+
+    // Discover icons from zip file structure
+    function discoverIconsFromZip() {
+      const iconMap = {}; // { category: { size: [{ name, path }] } }
+
+      console.log('=== DISCOVERING ICONS FROM ZIP ===');
+      console.log(`Processing ${zipFiles.size} files from zip`);
+
+      // Process all files in the zip
+      for (const [path, blob] of zipFiles.entries()) {
+        // Skip non-image files
+        if (!/\.(png|gif|jpg|jpeg|svg|ico|webp)$/i.test(path)) {
+          continue;
+        }
+
+        const parts = path.split('/').filter(p => p.length > 0);
+        if (parts.length < 2) continue; // Need at least category/size/filename
+
+        let category, size, name;
+
+        // Handle extras/misc structure: extras/misc/subcat/filename.ext
+        if (parts[0] === 'extras' && parts[1] === 'misc' && parts.length >= 4) {
+          category = 'extras';
+          size = `misc-${parts[2]}`;
+          name = parts.slice(3).join('/').replace(/\.[^/.]+$/, ''); // Remove extension
+        }
+        // Handle scalable structure: scalable/size/filename.ext
+        else if (parts[0] === 'scalable' && parts.length >= 3) {
+          category = 'scalable';
+          size = parts[1];
+          name = parts.slice(2).join('/').replace(/\.[^/.]+$/, ''); // Remove extension
+        }
+        // Handle standard structure: category/size/filename.ext
+        else if (parts.length >= 3) {
+          category = parts[0];
+          size = parts[1];
+          name = parts.slice(2).join('/').replace(/\.[^/.]+$/, ''); // Remove extension
+        } else {
+          continue;
+        }
+
+        // Initialize category if needed
+        if (!iconMap[category]) {
+          iconMap[category] = {};
+        }
+        // Initialize size if needed
+        if (!iconMap[category][size]) {
+          iconMap[category][size] = [];
+        }
+
+        // Add icon if not already present (avoid duplicates)
+        const exists = iconMap[category][size].some(icon => icon.name === name && icon.path === path);
+        if (!exists) {
+          iconMap[category][size].push({ name, path });
+        }
+      }
+
+      // Sort icons by name within each size
+      Object.keys(iconMap).forEach(category => {
+        Object.keys(iconMap[category]).forEach(size => {
+          iconMap[category][size].sort((a, b) => a.name.localeCompare(b.name));
+        });
+      });
+
+      console.log('=== DISCOVERED ICON MAP ===');
+      console.log(JSON.stringify(iconMap, null, 2));
+      console.log('=== END DISCOVERED ICON MAP ===');
+
+      return iconMap;
+    }
+
+    // Load icons from zip file structure
+    function loadIcons() {
+      const iconMap = discoverIconsFromZip();
+      
+      Object.keys(iconMap).sort().forEach(category => {
+        loadIconsForCategory(category, iconMap[category]);
+      });
+    }
+
+    // Load zip first, then load icons
+    loadZip().then(success => {
+      if (success) {
+        loadIcons();
+      }
+    });
+  </script>
+</body>
+</html>
