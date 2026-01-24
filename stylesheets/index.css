@@ -23,7 +23,12 @@ h1 {
 }
 
 img.icon {
+  /* display: inline-block; */
   display: none;
+  image-rendering: pixelated;
+  vertical-align: middle;
+  margin-left: 0.5ch;
+  margin-right: 0.5ch;
 }
 
 img.favicon {
