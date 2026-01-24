@@ -1,4 +1,4 @@
-name: Deploy to neocities
+name: Deploy to Neocities
 
 # only run on changes to master
 on:
@@ -20,12 +20,16 @@ jobs:
 
     steps:
     - uses: actions/checkout@v5
+    - name: Prepare public directory
+      run: |
+        mkdir -p public
+        rsync -av --exclude='.git' --exclude='.github' --exclude='public' . public/
     - name: Deploy to neocities
       uses: bcomnes/deploy-to-neocities@master # dont use master in production
       with:
         api_key: ${{ secrets.NEOCITIES_API_TOKEN }}
         cleanup: true
-        dist_dir: .
+        dist_dir: public
         protected_files: 'dropbox/*'
         neocities_supporter: true
         preview_before_deploy: true
