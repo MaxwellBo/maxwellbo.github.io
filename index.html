@@ -2392,6 +2392,25 @@
   </div>
   <script src="scrollbuddy/script.js"></script>
 
+  <script>
+    // Moon phases cycling through query string
+    (() => {
+      const moonPhases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+      let phaseIndex = 0;
+
+      function updateMoonPhase() {
+        const moon = moonPhases[phaseIndex];
+        const url = new URL(window.location);
+        url.searchParams.set('m', moon);
+        window.history.pushState({ moon }, '', url);
+        phaseIndex = (phaseIndex + 1) % moonPhases.length;
+      }
+
+      // Start cycling every 500ms
+      setInterval(updateMoonPhase, 500);
+    })();
+  </script>
+
   <style>
     /* main {
        filter: url(#n1);
