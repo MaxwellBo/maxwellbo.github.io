@@ -321,10 +321,15 @@ article.listing {
 }
 
 article.listing.dark {
-  box-shadow: 0 0 0 2px black;
-  clip-path: polygon(0% 0%, calc(100% - 20px) 0%, 100% 20px, 100% 100%, 0% 100%);
+  corner-shape: bevel;
+  border-top-right-radius: 12px;
   background-color: black;
   color: white;
+
+  img {
+  corner-shape: bevel;
+    border-top-right-radius: 12px;
+  }
 
   time {
     color: #d4d4d4;
