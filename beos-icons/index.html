@@ -32,11 +32,38 @@
     }
     .icon-name {color: #666; word-break: break-word; font-size: 0.6em; }
     #loading { margin: 1em 0; }
+    #loading p { margin: 0.25em 0; }
+    /* Progressive loading stages (CSS-only timing) */
+    #loading .loading-stage {
+      opacity: 0;
+      visibility: hidden;
+      animation-name: showStage;
+      animation-duration: 0s;
+      animation-timing-function: step-end;
+      animation-fill-mode: forwards;
+    }
+    #stage-1.loading-stage { animation-delay: 0s; }
+    #stage-2.loading-stage { animation-delay: 3s; }
+    #stage-3.loading-stage { animation-delay: 6s; }
+    #stage-4.loading-stage { animation-delay: 12s; }
+    @keyframes showStage {
+      to {
+        opacity: 1;
+        visibility: visible;
+      }
+    }
+    /* Error text is only shown when JS detects a failure */
+    #error {
+      display: none;
+      color: #b00020;
+      font-weight: 600;
+    }
     #toc { margin: 1em 0; }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body>
+  <p><a href="index.html">← Max Bo</a></p>
   <h1>BeOS icons</h1>
   <p>Icons from the <a href="https://gitlab.com/metsatron/BeOS-r5-Icons">BeOS-r5-Icons</a> repository by <a href="https://gitlab.com/metsatron">Metsatron</a>.</p>
   <p>This collection includes original creations and adaptations by Metsatron, as well as icons from BeOS-r5, Zeta OS, Haiku OS, KDEclassic, OldGNOME2, Copland, and classic95 (Windows 95).</p>
@@ -45,11 +72,44 @@
     <ul id="toc-list"></ul>
   </details>
   <div id="loading">
-    <p>Loading icons... (18.7 MB compressed)</p>
+    <p id="stage-1" class="loading-stage">Loading icons... (18.7 MB compressed, this may take a while)</p>
+    <p id="stage-2" class="loading-stage">Yep still loading...</p>
+    <p id="stage-3" class="loading-stage">STILL LOADING</p>
+    <p id="stage-4" class="loading-stage">yep its still loading lol</p>
+    <p id="error">Error loading icons: <span id="error-message"></span></p>
   </div>
   <div id="icons-container"></div>
 
   <script>
+    // Manage loading errors (stages themselves are handled purely via CSS animations)
+    const loadingError = document.getElementById('error');
+    const loadingErrorMessage = document.getElementById('error-message');
+    const loadingContainer = document.getElementById('loading');
+    let loadingFailed = false;
+
+    function showLoadingError(message) {
+      loadingFailed = true;
+      // Hide any staged messages and show the error instead
+      document.querySelectorAll('#loading .loading-stage').forEach(el => {
+        el.style.display = 'none';
+      });
+      if (loadingErrorMessage) {
+        loadingErrorMessage.textContent = message;
+      }
+      if (loadingError) {
+        loadingError.style.display = 'block';
+      }
+      if (loadingContainer) {
+        loadingContainer.style.display = 'block';
+      }
+    }
+
+    function loadingSucceeded() {
+      if (loadingContainer) {
+        loadingContainer.style.display = 'none';
+      }
+    }
+
     // Store unpacked files in memory
     const zipFiles = new Map();
     let zipLoaded = false;
@@ -94,12 +154,12 @@
         console.log('All paths in zip:');
         allPaths.forEach(path => console.log(`  ${path}`));
         console.log('=== END ZIP STRUCTURE ===');
-        
-        document.getElementById('loading').style.display = 'none';
+
+        loadingSucceeded();
         return true;
       } catch (error) {
         console.error('Error unpacking zip:', error);
-        document.getElementById('loading').innerHTML = `<p>Error unpacking zip file: ${error.message}</p>`;
+        showLoadingError(`Failed to unpack zip file: ${error.message}`);
         return false;
       }
     }
@@ -117,7 +177,7 @@
         return await unpackZip(arrayBuffer);
       } catch (error) {
         console.error('Error loading zip:', error);
-        document.getElementById('loading').innerHTML = `<p>Error loading zip file: ${error.message}</p>`;
+        showLoadingError(`Failed to load zip file: ${error.message}`);
         return false;
       }
     }
