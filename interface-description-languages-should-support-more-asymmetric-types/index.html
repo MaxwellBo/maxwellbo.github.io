@@ -6,9 +6,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interface Description Languages should support more asymmetric types</title>
 
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true,  logLevel: 'debug'});
+  </script>
+
   <link 
     rel="stylesheet" 
     href="https://esm.sh/jsr/@celine/libertine@16.0.0/libertine.css" />
+
+  <link 
+    rel="stylesheet" 
+    href="https://esm.sh/jsr/@celine/celine@6.0.1/cell.css" />
 
   <style>
     p {
@@ -18,8 +27,16 @@
   </style>
 
   <script type="module">
-    import mermaid from 'https://cdn.jsdelivr.net';
-    mermaid.initialize({ startOnLoad: true });
+import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@6.0.1';
+import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+import * as htl from 'https://esm.run/htl@0.3.1';
+
+window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+window.library = celine.library; /* @observablehq/stdlib */
+window.Inputs = Inputs;
+window.htl = htl;
+
+registerScriptReevaluationOnBlur(document, /*class=*/'echo');
   </script>
 </head>
 
@@ -48,27 +65,40 @@
 
     <p><em>use mermaid</em></p>
 
+    <!-- <script data-display="cmermaid" type="module">
+      celine.cell("cmermaid", async () => {
+        const mermaid = await celine.library.mermaid();
+        return mermaid`
+      `;
+      });
+    </script> -->
+
     <pre class="mermaid">
 flowchart TD
-    A[Schema (abstract)]
-    B[Schema version (abbreviated just version) (concrete file)]
-    C[(generate) classes]
-    D[(validate and construct) instances]
-    E[(serialize) payloads]
-    F[(built into) artifacts]
-    G[(deployed as) Deployment]
+  A["a schema"]
+  B0["schema version v0"]
+  B["schema version v1"]
+  B2["schema version v2 "]
+  C["classes"]
+  D["instances"]
+  E["payloads"]
+  F["artifacts"]
+  G["deployment"]
 
-    A --> B
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-    F --> G
+    A -- "has" --> B0
+    A -- "has" --> B
+    A -- "has" --> B2
+    B -- "generates" --> C
+    C -- "deserialize or validate" --> D
+    D -- "serialize" --> E
+    C -- "built into" --> F
+    F -- "deployed as" --> G
+    E -- "sent to" --> C
     </pre>
 
     <p>Schemas may be services, which define methods, that have request types and response types</p>
 
-    <p>They may be messages, that have fields with types and labels. Labels may indicate <code>optional</code>, 'required' or 'repeated'</p>
+    <p>They may be messages, that have fields with types and labels. Labels may indicate <code>optional</code>, <code>required</code> or <code>repeated</code>.</p>
 
     <p>I make a distinction between a "type", in an IDL, and a "validation" in generated code. Typically a type generates 1 validation. In the case of asymmetric validations, 2.</p>
 
@@ -124,7 +154,7 @@ flowchart TD
 
     <p>Even ordered deployment is insufficient to avoid this scenario.</p>
 
-    <h2>What is an asymmetric type</h2>
+    <h2>What is an asymmetric type?</h2>
 
     <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
 
@@ -162,7 +192,7 @@ flowchart TD
 
     <h5>Implicit type defaults</h5>
 
-    <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior, and even enums, defaulting to the member with the lowest value. Thus, proto enums, are defined by programming convention to have an UNKNOWN variant, that either pollutes the domain model, or necessitate a validation post-deserialization to strip out the UNKNOWN variant and map it onto a UNKNOWN-less domain model enum.</p>
+    <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior, and even enums, defaulting to the member with the lowest value. Thus, proto enums, are defined by programming convention to have an <code>UNKNOWN</code> variant, that either pollutes the domain model, or necessitate a validation post-deserialization to strip out the <code>UNKNOWN</code> variant and map it onto a <code>UNKNOWN</code>-less domain model enum.</p>
 
     <p>I feel this rather common pattern is an unfortunate rejection of a "parse, don't validate" philosophy.</p>
 
@@ -249,32 +279,44 @@ message Foo {
     <pre><code>message Foo {
   required int32 f = 1 [ 
       (validation_extensions.constructor_cel_validation) =  "this <= 5",
-       (validation_extensions.deserialization_cel_validation) = "this <= 5"]}
+       (validation_extensions.deserialization_cel_validation) = "this <= 5"
+  ]
+}
 
 message Foo {
   required int32 f = 1 [ 
       (validation_extensions.constructor_cel_validation) =  "this <= 5",
-       (validation_extensions.deserialization_cel_validation) = "this <= 6" ]}
+       (validation_extensions.deserialization_cel_validation) = "this <= 6" 
+  ]
+}
 
 message Foo {
   required int32 f = 1 [ 
       (validation_extensions.constructor_cel_validation) =  "this <= 6",
-       (validation_extensions.deserialization_cel_validation) ="this <= 6" ]}</code></pre>
+       (validation_extensions.deserialization_cel_validation) ="this <= 6" 
+  ]
+}</code></pre>
 
     <pre><code>message Foo {
   required int32 f = 1 [ 
       (validation_extensions.constructor_cel_validation) =  "this <= 5",
-       (validation_extensions.deserialization_cel_validation) = "this <= 5"]}
+       (validation_extensions.deserialization_cel_validation) = "this <= 5"
+  ]
+}
 
 message Foo {
   required int32 f = 1 [ 
       (validation_extensions.constructor_cel_validation) =  "this <= 4",
-       (validation_extensions.deserialization_cel_validation) = "this <= 5" ]}
+       (validation_extensions.deserialization_cel_validation) = "this <= 5" 
+  ]
+}
 
 message Foo {
   required int32 f = 1 [ 
       (validation_extensions.constructor_cel_validation) =  "this <= 4",
-       (validation_extensions.deserialization_cel_validation) ="this <= 4" ]}</code></pre>
+       (validation_extensions.deserialization_cel_validation) ="this <= 4" 
+  ]
+}</code></pre>
 
     <p>Thus, a message field's constructor validation must entail the deserialisation validation.</p>
 
