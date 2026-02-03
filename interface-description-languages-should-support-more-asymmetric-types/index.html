@@ -115,7 +115,8 @@
       });
     </script> -->
 
-    <pre class="mermaid">
+    <figure>
+      <pre class="mermaid">
 flowchart TD
   A["a schema"]
   B0["schema version v0"]
@@ -136,7 +137,8 @@ flowchart TD
     F -- "deployed as" --> G
     E -- "sent to" --> C
 
-    </pre>
+      </pre>
+    </figure>
 
     <p>Schemas may be services, which define methods, that have request types and response types</p>
 
@@ -205,11 +207,8 @@ flowchart TD
   required string f = 1;
 }</code></pre>
   </div>
-  <figcaption>↑ Incompatibility caused by adding <code>required</code> field</figcaption>
 </figure>
 
-
-</div>
 
     <script>
       window.addEventListener('load', function () {
@@ -397,24 +396,26 @@ flowchart TD
 
     <p>Good</p>
 
-    <div class="container-3-col" id="required">
-      <pre class="blue" id="b-client0"><code>message Foo {
+    <figure>
+      <div class="container-3-col" id="required">
+        <pre class="blue" id="b-client0"><code>message Foo {
 }</code></pre>
-      <pre class="green" id="b-client1"><code>message Foo {
+        <pre class="green" id="b-client1"><code>message Foo {
   asymmetric string f = 1;
 }</code></pre>
-      <pre class="blue" id="b-client2"><code>message Foo {
+        <pre class="blue" id="b-client2"><code>message Foo {
   required string f = 1;
 }</code></pre>
-      <pre class="blue" id="b-server0"><code>message Foo {
+        <pre class="blue" id="b-server0"><code>message Foo {
 }</code></pre>
-      <pre class="green" id="b-server1"><code>message Foo {
+        <pre class="green" id="b-server1"><code>message Foo {
   asymmetric string f = 1;
 }</code></pre>
-      <pre class="blue" id="b-server2"><code>message Foo {
+        <pre class="blue" id="b-server2"><code>message Foo {
   required string f = 1;
 }</code></pre>
-    </div>
+      </div>
+    </figure>
 
 
 <script>
@@ -503,28 +504,30 @@ and it follows that it may also permit:
 
 
     <p>Bad (single validation)</p>
-    <div class="container-2-col">
-      <pre class="blue client0" id="v1-client0"><code>message Foo {
+    <figure>
+      <div class="container-2-col">
+        <pre class="blue client0" id="v1-client0"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green client1" id="v1-client1"><code>message Foo {
+        <pre class="green client1" id="v1-client1"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 4"
   ]
 }</code></pre>
-      <pre class="blue server0" id="v1-server0"><code>message Foo {
+        <pre class="blue server0" id="v1-server0"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green server1" id="v1-server1"><code>message Foo {
+        <pre class="green server1" id="v1-server1"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 4"
   ]
 }</code></pre>
-    </div>
+      </div>
+    </figure>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -558,28 +561,30 @@ and it follows that it may also permit:
     </script>
 
     <p>Bad (widening single validation)</p>
-    <div class="container-2-col">
-      <pre class="blue client0" id="v2-client0"><code>message Foo {
+    <figure>
+      <div class="container-2-col">
+        <pre class="blue client0" id="v2-client0"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green client1" id="v2-client1"><code>message Foo {
+        <pre class="green client1" id="v2-client1"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 6"
   ]
 }</code></pre>
-      <pre class="blue server0" id="v2-server0"><code>message Foo {
+        <pre class="blue server0" id="v2-server0"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green server1" id="v2-server1"><code>message Foo {
+        <pre class="green server1" id="v2-server1"><code>message Foo {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 6"
   ]
 }</code></pre>
-    </div>
+      </div>
+    </figure>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -616,44 +621,46 @@ and it follows that it may also permit:
       the validation.</p>
 
     <p>Good (widening validation in two steps)</p>
-    <div class="container-3-col">
-      <pre class="blue" id="v3-client0"><code>message Foo {
+    <figure>
+      <div class="container-3-col">
+        <pre class="blue" id="v3-client0"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green" id="v3-client1"><code>message Foo {
+        <pre class="green" id="v3-client1"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
-      <pre class="blue" id="v3-client2"><code>message Foo {
+        <pre class="blue" id="v3-client2"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 6",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
-      <pre class="blue" id="v3-server0"><code>message Foo {
+        <pre class="blue" id="v3-server0"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green" id="v3-server1"><code>message Foo {
+        <pre class="green" id="v3-server1"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
-      <pre class="blue" id="v3-server2"><code>message Foo {
+        <pre class="blue" id="v3-server2"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 6",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
-    </div>
+      </div>
+    </figure>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
@@ -701,44 +708,46 @@ and it follows that it may also permit:
     </script>
 
     <p>Good (narrowing validation in two steps)</p>
-    <div class="container-3-col">
-      <pre class="blue" id="v4-client0"><code>message Foo {
+    <figure>
+      <div class="container-3-col">
+        <pre class="blue" id="v4-client0"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green" id="v4-client1"><code>message Foo {
+        <pre class="green" id="v4-client1"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="blue" id="v4-client2"><code>message Foo {
+        <pre class="blue" id="v4-client2"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 4"
   ]
 }</code></pre>
-      <pre class="blue" id="v4-server0"><code>message Foo {
+        <pre class="blue" id="v4-server0"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="green" id="v4-server1"><code>message Foo {
+        <pre class="green" id="v4-server1"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-      <pre class="blue" id="v4-server2"><code>message Foo {
+        <pre class="blue" id="v4-server2"><code>message Foo {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 4"
   ]
 }</code></pre>
-    </div>
+      </div>
+    </figure>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
