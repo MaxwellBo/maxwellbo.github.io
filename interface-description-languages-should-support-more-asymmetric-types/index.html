@@ -8,35 +8,69 @@
 
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-    mermaid.initialize({ startOnLoad: true,  logLevel: 'debug'});
+    mermaid.initialize({ startOnLoad: true, logLevel: 'debug' });
   </script>
 
-  <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/libertine@16.0.0/libertine.css" />
+  <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
 
-  <link 
-    rel="stylesheet" 
-    href="https://esm.sh/jsr/@celine/celine@6.0.1/cell.css" />
+  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@16.0.0/libertine.css" />
+
+  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/celine@6.0.1/cell.css" />
 
   <style>
     p {
       padding-top: 0.5ch;
       padding-bottom: 0.5 ch;
     }
+
+    .container-2-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 80px;
+    }
+
+    .container-3-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: auto auto auto;
+      gap: 40px 80px;
+      align-items: center;
+      justify-items: center;
+    }
+
+
+    .blue {
+      border: 2px solid #0000aa;
+    }
+
+    .green {
+      border: 2px solid #006644;
+    }
+
+    .error-label {
+      position: absolute;
+      color: #d64545;
+      font-size: 13px;
+      white-space: nowrap;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
   </style>
 
   <script type="module">
-import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@6.0.1';
-import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
-import * as htl from 'https://esm.run/htl@0.3.1';
+    import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@6.0.1';
+    import * as Inputs from 'https://esm.run/@observablehq/inputs@0.12.0';
+    import * as htl from 'https://esm.run/htl@0.3.1';
 
-window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
-window.library = celine.library; /* @observablehq/stdlib */
-window.Inputs = Inputs;
-window.htl = htl;
+    window.celine = CelineModule.usingNewObservableRuntimeAndModule(document);
+    window.library = celine.library; /* @observablehq/stdlib */
+    window.Inputs = Inputs;
+    window.htl = htl;
 
-registerScriptReevaluationOnBlur(document, /*class=*/'echo');
+    registerScriptReevaluationOnBlur(document, /*class=*/'echo');
   </script>
 </head>
 
@@ -52,18 +86,20 @@ registerScriptReevaluationOnBlur(document, /*class=*/'echo');
     </div>
 
     <div class="abstract">
-      IDLs that support asymmetric types generate code that have stronger constructor validations than their deserialization validations. I believe they make schema evolution safer and more IDLs should support them.
+      IDLs that support asymmetric types generate code that have stronger constructor validations than their
+      deserialization validations. I believe they make schema evolution safer and more IDLs should support them.
     </div>
 
     <h2>Context</h2>
 
-    <p>I worked at Canva for 3 and a bit years, where I worked on, for all intents and purposes, a hard fork of Protocol Buffers. One addition in that fork was that of the "Safe proto evolution extensions", that, along with a schema registry, almost entirely eliminated API and RPC compatibility issues.</p>
+    <p>I worked at Canva for 3 and a bit years, where I worked on, for all intents and purposes, a hard fork of Protocol
+      Buffers. One addition in that fork was that of the "Safe proto evolution extensions", that, along with a schema
+      registry, almost entirely eliminated API and RPC compatibility issues.</p>
 
     <h2>Terminology</h2>
 
-    <p>For the purposes of this article, I will define some terminology upfront. If may be non-standard as I'm not <em>entirely</em> around the academic literature, for which I apologize.</p>
-
-    <p><em>use mermaid</em></p>
+    <p>For the purposes of this article, I will define some terminology upfront. If may be non-standard as I'm not
+      <em>entirely</em> around the academic literature, for which I apologize.</p>
 
     <!-- <script data-display="cmermaid" type="module">
       celine.cell("cmermaid", async () => {
@@ -98,19 +134,25 @@ flowchart TD
 
     <p>Schemas may be services, which define methods, that have request types and response types</p>
 
-    <p>They may be messages, that have fields with types and labels. Labels may indicate <code>optional</code>, <code>required</code> or <code>repeated</code>.</p>
+    <p>They may be messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
+      <code>required</code> or <code>repeated</code>.</p>
 
-    <p>I make a distinction between a "type", in an IDL, and a "validation" in generated code. Typically a type generates 1 validation. In the case of asymmetric validations, 2.</p>
+    <p>I make a distinction between a "type", in an IDL, and a "validation" in generated code. Typically a type
+      generates 1 validation. In the case of asymmetric validations, 2.</p>
 
     <p>They may be enums, that have values.</p>
 
-    <p>Schemas generate classes which build instances which serialize to payloads. Objects are embedded in artifacts and deployed into old releases.</p>
+    <p>Schemas generate classes which build instances which serialize to payloads. Objects are embedded in artifacts and
+      deployed into old releases.</p>
 
-    <p>Out of convenience, I may choose mention a payload version rather than a "payload serialized by an instance build by a class generated by a specific schema version".</p>
+    <p>Out of convenience, I may choose mention a payload version rather than a "payload serialized by an instance build
+      by a class generated by a specific schema version".</p>
 
-    <p>Versions can have a "liveness" property. A version is live if its classes CAN attempt to deserialize a new payload OR a version's payload CAN be deserialized by new classes.</p>
+    <p>Versions can have a "liveness" property. A version is live if its classes CAN attempt to deserialize a new
+      payload OR a version's payload CAN be deserialized by new classes.</p>
 
-    <p>This implies that if a specific schema version's payload is persisted to a data store, it remains indefinitely live.</p>
+    <p>This implies that if a specific schema version's payload is persisted to a data store, it remains indefinitely
+      live.</p>
 
     <p>A change to a schema is called an evolution.</p>
 
@@ -130,13 +172,16 @@ flowchart TD
 
     <p>A service is said to made narrower if any its methods are made narrower (etc)</p>
 
-    <p>For the purposes of this article I will use proto2 syntax and semantics and Java, but I believe this would applicable to any mature IDL (list them) and language target. I will highlight suggested modifications in <strong>bold</strong>. I will highlight non-existent, but demonstration extensions, in <em>italics</em>.</p>
+    <p>For the purposes of this article I will use proto2 syntax and semantics and Java, but I believe this would
+      applicable to any mature IDL (list them) and language target. I will highlight suggested modifications in
+      <strong>bold</strong>. I will highlight non-existent, but demonstration extensions, in <em>italics</em>.</p>
 
     <h2>Problems with asymmetric types</h2>
 
     <p>We assume an environment where we do not control deployment ordering, such for a given release.</p>
 
-    <p>If an engineer needs to strengthen a message, such as the simple act of a trying to add a <code>required</code> field they create an incompatibility risk.</p>
+    <p>If an engineer needs to strengthen a message, such as the simple act of a trying to add a <code>required</code>
+      field they create an incompatibility risk.</p>
 
     <p>This also occurs when weakening a message, by removing a field.</p>
 
@@ -148,9 +193,11 @@ flowchart TD
 
     <p>Not true.</p>
 
-    <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering that prevents incompatibilities.</p>
+    <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
+      that prevents incompatibilities.</p>
 
-    <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate messages that are in a request position and a response position also deadlocks.</p>
+    <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
+      messages that are in a request position and a response position also deadlocks.</p>
 
     <p>Even ordered deployment is insufficient to avoid this scenario.</p>
 
@@ -158,11 +205,13 @@ flowchart TD
 
     <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
 
-    <p>These validations execute at typecheck-time or runtime in the constructor, or just runtime in the deserializer.</p>
+    <p>These validations execute at typecheck-time or runtime in the constructor, or just runtime in the deserializer.
+    </p>
 
     <p>A rule of thumb is that the constructor validation must always entail the deserialization validation.</p>
 
-    <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the evolution is merged and then deployed immediately or at the next scheduled release.</p>
+    <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the
+      evolution is merged and then deployed immediately or at the next scheduled release.</p>
 
     <p>More formally, CV ⇛ DV which expands to ∀x. CV(x) ⟹ DV(x)</p>
 
@@ -182,17 +231,24 @@ flowchart TD
 
     <p>Some types don't have a reasonable default value, particularly non-primitive messages.</p>
 
-    <p>We may typically choose a <code>0</code> default for primitives but we deprive the domain layer of useful distinction: whether the 0 was a fallback or a legitimate value sent over the wire.</p>
+    <p>We may typically choose a <code>0</code> default for primitives but we deprive the domain layer of useful
+      distinction: whether the 0 was a fallback or a legitimate value sent over the wire.</p>
 
     <h5>Field fallbacks</h5>
 
-    <p>typical has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but the deserialization validation only requires 1, the fallback.</p>
+    <p>typical has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
+      the deserialization validation only requires 1, the fallback.</p>
 
     <h4>Type defaults</h4>
 
     <h5>Implicit type defaults</h5>
 
-    <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior, and even enums, defaulting to the member with the lowest value. Thus, proto enums, are defined by programming convention to have an <code>UNKNOWN</code> variant, that either pollutes the domain model, or necessitate a validation post-deserialization to strip out the <code>UNKNOWN</code> variant and map it onto a <code>UNKNOWN</code>-less domain model enum.</p>
+    <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax
+      for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior,
+      and even enums, defaulting to the member with the lowest value. Thus, proto enums, are defined by programming
+      convention to have an <code>UNKNOWN</code> variant, that either pollutes the domain model, or necessitate a
+      validation post-deserialization to strip out the <code>UNKNOWN</code> variant and map it onto a
+      <code>UNKNOWN</code>-less domain model enum.</p>
 
     <p>I feel this rather common pattern is an unfortunate rejection of a "parse, don't validate" philosophy.</p>
 
@@ -204,13 +260,17 @@ flowchart TD
 
     <h3>Optional vs required</h3>
 
-    <p>The simplest means of avoiding the use of a default is to use an <code>optional</code> label when adding fields.</p>
+    <p>The simplest means of avoiding the use of a default is to use an <code>optional</code> label when adding fields.
+    </p>
 
-    <p>But unfortunately, <code>optional</code> alone offers no such safe evolution pathway to transform a field into a <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code> without incompatibility risk, and vice versa.</p>
+    <p>But unfortunately, <code>optional</code> alone offers no such safe evolution pathway to transform a field into a
+      <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
+      without incompatibility risk, and vice versa.</p>
 
     <p><em>DIAGRAM</em></p>
 
-    <p>Use of <code>required</code> was perceived to so fraught with danger at Google that the following tortured convention was littered throughout the google3 monorepo</p>
+    <p>Use of <code>required</code> was perceived to so fraught with danger at Google that the following tortured
+      convention was littered throughout the google3 monorepo</p>
 
     <pre><code>message Foo {
   // required
@@ -219,42 +279,207 @@ flowchart TD
 
     <p>and the required label was removed entirely in proto3 syntax.</p>
 
-    <p>I strongly believe the removal or this label was unnecessary, and instead an asymmetric label should have been added instead.</p>
+    <p>I strongly believe the removal or this label was unnecessary, and instead an asymmetric label should have been
+      added instead.</p>
 
-    <p>Thus, the second, less common type of asymmetric type we'll look at is "construct required deserialization optional" label. To save ink, I will instead call it <code>asymmetric</code> the same as field label from the IDL <a href="https://github.com/stepchowfun/typical">typical</a>, and the namesake of this article.</p>
+    <p>Thus, the second, less common type of asymmetric type we'll look at is "construct required deserialization
+      optional" label. To save ink, I will instead call it <code>asymmetric</code> the same as field label from the IDL
+      <a href="https://github.com/stepchowfun/typical">typical</a>, and the namesake of this article.</p>
 
-    <p><code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits data absence in the payload.</p>
+    <p><code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
+      data absence in the payload.</p>
 
-    <p>Use of this label admits safe evolution semantics! We use it as an intermediate stage when:</p>
+    <p>Use of this label admits safe evolution semantics! We use it as an intermediate stage when</p>
 
-    <ul>
-      <li>transitioning from optional to required — <em>DIAGRAM</em></li>
-      <li>adding a required — <em>DIAGRAM</em></li>
-      <li>Transitioning from required to optional — <em>DIAGRAM</em></li>
-      <li>Removing a required field — <em>DIAGRAM</em></li>
-    </ul>
+    <p>adding a required field:</p>
+
+<div class="container-2-col">
+<pre class="blue" id="client0"><code>message Foo {
+}</code></pre>
+
+<pre class="blue" id="client1"><code>message Foo {
+  required string f = 1;
+}</code></pre>
+
+<pre class="green" id="server0"><code>message Foo {
+}</code></pre>
+
+<pre class="green" id="server1"><code>message Foo {
+  required string f = 1;
+}</code></pre>
+
+</div>
+
+    <script>
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          new LeaderLine(
+            document.getElementById('client0'),
+            document.getElementById('server0'),
+            {
+              color: 'black',
+              size: 2,
+              path: 'straight',
+              middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -20 }),
+              startSocket: 'bottom',
+              endSocket: 'top',
+            }
+          );
+
+          new LeaderLine(
+            document.getElementById('client1'),
+            document.getElementById('server1'),
+            {
+              color: 'black',
+              size: 2,
+              path: 'straight',
+              middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -20 }),
+              startSocket: 'bottom',
+              endSocket: 'top',
+            }
+          );
+
+          new LeaderLine(
+            document.getElementById('client1'),
+            document.getElementById('server0'),
+            {
+              color: 'black',
+              size: 2,
+              path: 'straight',
+              middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -100 }),
+              startSocket: 'bottom',
+              endSocket: 'top',
+            }
+          );
+
+          const redLine = new LeaderLine(
+            document.getElementById('client0'),
+            document.getElementById('server1'),
+            {
+              color: '#d64545',
+              size: 2,
+              path: 'straight',
+              startSocket: 'bottom',
+              middleLabel: LeaderLine.pathLabel('{}', { lineOffset: -100 }),
+              endSocket: 'top',
+              endLabel: LeaderLine.captionLabel('Could not deserialize field: f (ID: 1)', {
+                color: '#d64545',
+                outlineColor: ''
+              })
+            }
+          );
+        }, 100);
+      });
+    </script>
+
+<div class="container-3-col">
+<pre class="blue" id="t1"><code>message Foo {
+}</code></pre>
+<pre class="green" id="t2"><code>message Foo {
+  asymmetric string f = 1;
+}</code></pre>
+<pre class="blue" id="t3"><code>message Foo {
+  required string f = 1;
+}</code></pre>
+
+<pre class="blue" id="m1"><code>message Foo {
+}</code></pre>
+<pre class="green" id="m2"><code>message Foo {
+  asymmetric string f = 1;
+}</code></pre>
+<pre class="blue" id="m3"><code>message Foo {
+  required string f = 1;
+}</code></pre>
+
+<pre class="blue" id="b1"><code>message Foo {
+}</code></pre>
+<pre class="green" id="b2"><code>message Foo {
+  asymmetric string f = 1;
+}</code></pre>
+<pre class="blue" id="b3"><code>message Foo {
+  required string f = 1;
+}</code></pre>
+</div>
+
+    <script>
+      window.addEventListener('load', function () {
+        setTimeout(function () {
+          // Top row → intermediate row
+          new LeaderLine(document.getElementById('t1'), document.getElementById('m1'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -20 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+          new LeaderLine(document.getElementById('t2'), document.getElementById('m2'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -20 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+          new LeaderLine(document.getElementById('t2'), document.getElementById('m3'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+          new LeaderLine(document.getElementById('t3'), document.getElementById('m2'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+          // Intermediate row → bottom row
+          new LeaderLine(document.getElementById('m1'), document.getElementById('b1'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -20 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+          new LeaderLine(document.getElementById('m2'), document.getElementById('b2'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -20 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+          new LeaderLine(document.getElementById('m2'), document.getElementById('b3'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+          new LeaderLine(document.getElementById('m3'), document.getElementById('b2'), {
+            color: 'black', size: 2, path: 'straight',
+            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
+            startSocket: 'bottom', endSocket: 'top',
+          });
+        }, 100);
+      });
+    </script>
 
     <h3>Unproducible</h3>
 
     <p>The third type is <code>unproducible</code>.</p>
 
-    <p>For enums (or any sum type), we prevent the use of the value or variant in certain contexts, but permit its deserialization.</p>
+    <p>For enums (or any sum type), we prevent the use of the value or variant in certain contexts, but permit its
+      deserialization.</p>
 
-    <p>The label permits us to safely add a variant under the assumption that no other engineer can construct, serialize and send it to deserializers that are unprepared to handle it.</p>
+    <p>The label permits us to safely add a variant under the assumption that no other engineer can construct, serialize
+      and send it to deserializers that are unprepared to handle it.</p>
 
-    <p>One of the reasons I suspect that it quite difficult, although possible, to statically enforce unproducibility.</p>
+    <p>One of the reasons I suspect that it quite difficult, although possible, to statically enforce unproducibility.
+    </p>
 
-    <p>One such way is to enforce unproducibility is the use of a linter that ensures that values and constructors may only be used in 'if' tests, and switch case labels and patterns.</p>
+    <p>One such way is to enforce unproducibility is the use of a linter that ensures that values and constructors may
+      only be used in 'if' tests, and switch case labels and patterns.</p>
 
     <h3>Two validations</h3>
 
     <p>The fourth type is "two validations".</p>
 
-    <p>Some IDLs support arbitrary field validations, such as Amazon's <a href="https://smithy.io/">Smithy</a> and Protocol Buffers with <a href="https://buf.build/">Buf</a>'s <a href="https://protovalidate.com/">protovalidate</a>.</p>
+    <p>Some IDLs support arbitrary field validations, such as Amazon's <a href="https://smithy.io/">Smithy</a> and
+      Protocol Buffers with <a href="https://buf.build/">Buf</a>'s <a
+        href="https://protovalidate.com/">protovalidate</a>.</p>
 
-    <p>But these validations inherit the restrictions placed upon <code>required</code> and <code>optional</code> fields: they cannot change safely in RPC and API contexts.</p>
+    <p>But these validations inherit the restrictions placed upon <code>required</code> and <code>optional</code>
+      fields: they cannot change safely in RPC and API contexts.</p>
 
-    <p>TO CLAUDE: <a href="https://protovalidate.com/schemas/custom-rules/#basics-of-cel-expressions">https://protovalidate.com/schemas/custom-rules/#basics-of-cel-expressions</a> Change these to use protovalidate syntax</p>
+    <p>TO CLAUDE: <a
+        href="https://protovalidate.com/schemas/custom-rules/#basics-of-cel-expressions">https://protovalidate.com/schemas/custom-rules/#basics-of-cel-expressions</a>
+      Change these to use protovalidate syntax</p>
 
     <pre><code>message Foo {
   required int32 f = 1 [ 
@@ -274,7 +499,8 @@ message Foo {
       (validation_extensions.constructor_cel_validation) =  "this <= 6",
        (validation_extensions.deserialization_cel_validation) = "this <= 6"]}</code></pre>
 
-    <p>Once again, decoupling the constructor validation and the deserialisation validation admits the ability to change the validation.</p>
+    <p>Once again, decoupling the constructor validation and the deserialisation validation admits the ability to change
+      the validation.</p>
 
     <pre><code>message Foo {
   required int32 f = 1 [ 
@@ -322,15 +548,18 @@ message Foo {
 
     <p>Checking whether the invariant holds, and whether a proposed evolution is legal, can prove difficult.</p>
 
-    <p>CEL ensures that evolutions of field validations are compatible with their previous schema versions using a lattice based type-system.</p>
+    <p>CEL ensures that evolutions of field validations are compatible with their previous schema versions using a
+      lattice based type-system.</p>
 
-    <p>Although somewhat overkill, I believe that Z3 would be sufficient to check the invariant, and to check that the constructor validation entails the deserialization validations of all previous schema versions.</p>
+    <p>Although somewhat overkill, I believe that Z3 would be sufficient to check the invariant, and to check that the
+      constructor validation entails the deserialization validations of all previous schema versions.</p>
 
     <hr>
 
     <p><strong>AI usage disclosure.</strong></p>
 
-    <p>All prose was handwritten, with predictive autocomplete disabled. Diagrams were generated. Proof-read by Claude Opus 4.5 on DATE.</p>
+    <p>All prose was handwritten, with predictive autocomplete disabled. Diagrams were generated. Proof-read by Claude
+      Opus 4.5 on DATE.</p>
 
     <p><em>Use the word "schema evolution"</em></p>
 
