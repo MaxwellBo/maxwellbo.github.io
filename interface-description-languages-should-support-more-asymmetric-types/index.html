@@ -295,10 +295,9 @@ flowchart TD
     <p><code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
       data absence in the payload.</p>
 
-    <p>Use of this label admits safe evolution semantics! We use it as an intermediate stage when</p>
+    <p>Use of this label admits safe evolution semantics! We use it as an intermediate stage when adding a required field:</p>
 
-    <p>adding a required field:</p>
-
+    <p>Bad</p>
 <div class="container-2-col">
 <pre class="blue" id="client0"><code>message Foo {
 }</code></pre>
@@ -313,6 +312,7 @@ flowchart TD
 <pre class="green" id="server1"><code>message Foo {
   required string f = 1;
 }</code></pre>
+
 
 </div>
 
@@ -378,6 +378,84 @@ flowchart TD
       });
     </script>
 
+    <p>Good</p>
+
+    <div class="container-3-col" id="required">
+      <pre class="blue" id="b-client0"><code>message Foo {
+}</code></pre>
+      <pre class="green" id="b-client1"><code>message Foo {
+  asymmetric string f = 1;
+}</code></pre>
+      <pre class="blue" id="b-client2"><code>message Foo {
+  required string f = 1;
+}</code></pre>
+      <pre class="blue" id="b-server0"><code>message Foo {
+}</code></pre>
+      <pre class="green" id="b-server1"><code>message Foo {
+  asymmetric string f = 1;
+}</code></pre>
+      <pre class="blue" id="b-server2"><code>message Foo {
+  required string f = 1;
+}</code></pre>
+    </div>
+
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      // Draw arrows: b-client0 -> b-server0, b-server1
+      new LeaderLine(
+        document.getElementById('b-client0'),
+        document.getElementById('b-server0'),
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -10 }) }
+      );
+      new LeaderLine(
+        document.getElementById('b-client0'),
+        document.getElementById('b-server1'),
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+      );
+
+      // b-client1 -> b-server0, b-server1, b-server2
+      new LeaderLine(
+        document.getElementById('b-client1'),
+        document.getElementById('b-server0'),
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+      );
+      new LeaderLine(
+        document.getElementById('b-client1'),
+        document.getElementById('b-server1'),
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -10 }) }
+      );
+      new LeaderLine(
+        document.getElementById('b-client1'),
+        document.getElementById('b-server2'),
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+      );
+
+      // b-client2 -> b-server1, b-server2
+      new LeaderLine(
+        document.getElementById('b-client2'),
+        document.getElementById('b-server1'),
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+      );
+      new LeaderLine(
+        document.getElementById('b-client2'),
+        document.getElementById('b-server2'),
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -10 }) }
+      );
+    }, 300);
+  });
+</script>
+<p>
+
+and it follows that it may also permit:
+<ul>
+  <li>transitioning from optional to required</li>
+  <li>transitioning from required to optional</li>
+  <li>removing a required field</li>
+</ul>
+
+</p>
 
     <h3>Unproducible</h3>
 
@@ -399,7 +477,7 @@ flowchart TD
 
     <p>The fourth type is "two validations".</p>
 
-    <p>Some IDLs support arbitrary field validations, such as Amazon's <a href="https://smithy.io/">Smithy</a> and
+    <p>Some IDLs support arbitrary field validations, such as Amazon's <a href="https://smithy.io/2.0/index.html">Smithy</a> and
       Protocol Buffers with <a href="https://buf.build/">Buf</a>'s <a
         href="https://protovalidate.com/">protovalidate</a>.</p>
 
