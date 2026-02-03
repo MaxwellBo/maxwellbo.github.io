@@ -187,91 +187,7 @@ flowchart TD
     <p>We assume an environment where we do not control deployment ordering, such for a given release.</p>
 
     <p>If an engineer needs to strengthen a message, such as the simple act of a trying to add a <code>required</code>
-      field they create an incompatibility risk.</p>
-
-    <p>This also occurs when weakening a message, by removing a field.</p>
-
-    <p>And strengthening an enum, by removing a value.</p>
-
-    <p>And weakening an enum, by adding a value.</p>
-
-    <p>One may assume that controlling the ordering of deploys prevents these incompatibilities.</p>
-
-    <p>Not true.</p>
-
-    <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
-      that prevents incompatibilities.</p>
-
-    <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
-      messages that are in a request position and a response position also deadlocks.</p>
-
-    <p>Even ordered deployment is insufficient to avoid this scenario.</p>
-
-    <h2>What is an asymmetric type?</h2>
-
-    <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
-
-    <p>These validations execute at typecheck-time or runtime in the constructor, or just runtime in the deserializer.
-    </p>
-
-    <p>A rule of thumb is that the constructor validation must always entail the deserialization validation.</p>
-
-    <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the
-      evolution is merged and then deployed immediately or at the next scheduled release.</p>
-
-    <p>More formally, CV ⇛ DV which expands to ∀x. CV(x) ⟹ DV(x)</p>
-
-    <p>There is a rich design space of asymmetric types. Let's look at a few.</p>
-
-    <h3>Defaults</h3>
-
-    <h4>Field defaults</h4>
-
-    <p>The most common form of asymmetric type is a field default.</p>
-
-    <p>It relaxes the just deserializer such that it accepts missing payload data.</p>
-
-    <p>But the default must be a member of type field type T.</p>
-
-    <p>This poses 2 problems:</p>
-
-    <p>Some types don't have a reasonable default value, particularly non-primitive messages.</p>
-
-    <p>We may typically choose a <code>0</code> default for primitives but we deprive the domain layer of useful
-      distinction: whether the 0 was a fallback or a legitimate value sent over the wire.</p>
-
-    <h5>Field fallbacks</h5>
-
-    <p>typical has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
-      the deserialization validation only requires 1, the fallback.</p>
-
-    <h4>Type defaults</h4>
-
-    <h5>Implicit type defaults</h5>
-
-    <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax
-      for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior,
-      and even enums, defaulting to the member with the lowest value. Thus, proto enums, are defined by programming
-      convention to have an <code>UNKNOWN</code> variant, that either pollutes the domain model, or necessitate a
-      validation post-deserialization to strip out the <code>UNKNOWN</code> variant and map it onto a
-      <code>UNKNOWN</code>-less domain model enum.</p>
-
-    <p>I feel this rather common pattern is an unfortunate rejection of a "parse, don't validate" philosophy.</p>
-
-    <h5>Explicit type defaults</h5>
-
-    <h5>Tristates</h5>
-
-    <p>a differentiation between absence and non-recognition</p>
-
-    <h3>Optional vs required</h3>
-
-    <p>The simplest means of avoiding the use of a default is to use an <code>optional</code> label when adding fields.
-    </p>
-
-    <p>But unfortunately, <code>optional</code> alone offers no such safe evolution pathway to transform a field into a
-      <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
-      without incompatibility risk, and vice versa.</p>
+      field they create an incompatibility risk:</p>
 
 <figure>
   <div class="container-2-col">
@@ -356,6 +272,102 @@ flowchart TD
         }, 100);
       });
     </script>
+
+    <p>This also occurs when weakening a message, by removing a <code>required</code> field.</p>
+
+    NEED DIAGRAM
+
+    <p>And strengthening an enum, by removing a value.</p>
+
+    NEED DIAGRAM
+
+
+    <p>And weakening an enum, by adding a value.</p>
+
+    NEED DIAGRAM
+
+    <p>One may assume that controlling the ordering of deploys prevents these incompatibilities.</p>
+
+    <p>Not true.</p>
+
+    <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
+      that prevents incompatibilities.</p>
+
+    NEED DIAGRAM
+
+    <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
+      messages that are in a request position and a response position also deadlocks.</p>
+
+    NEED DIAGRAM
+
+    <p>Even ordered deployment is insufficient to avoid this scenario.</p>
+
+    <h2>What is an asymmetric type?</h2>
+
+    <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
+
+    <p>These validations execute at typecheck-time or runtime in the constructor, or just runtime in the deserializer.
+    </p>
+
+    <p>A rule of thumb is that the constructor validation must always entail the deserialization validation.</p>
+
+    <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the
+      evolution is merged and then deployed immediately or at the next scheduled release.</p>
+
+    <p>More formally, CV ⇛ DV which expands to ∀x. CV(x) ⟹ DV(x)</p>
+
+    <p>There is a rich design space of asymmetric types. Let's look at a few.</p>
+
+    <h3>Defaults</h3>
+
+    <h4>Field defaults</h4>
+
+    <p>The most common form of asymmetric type is a field default.</p>
+
+    <p>It relaxes the just deserializer such that it accepts missing payload data.</p>
+
+    <p>But the default must be a member of type field type T.</p>
+
+    <p>This poses 2 problems:</p>
+
+    <p>Some types don't have a reasonable default value, particularly non-primitive messages.</p>
+
+    <p>We may typically choose a <code>0</code> default for primitives but we deprive the domain layer of useful
+      distinction: whether the 0 was a fallback or a legitimate value sent over the wire.</p>
+
+    <h5>Field fallbacks</h5>
+
+    <p>typical has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
+      the deserialization validation only requires 1, the fallback.</p>
+
+    <h4>Type defaults</h4>
+
+    <h5>Implicit type defaults</h5>
+
+    <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax
+      for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior,
+      and even enums, defaulting to the member with the lowest value. Thus, proto enums, are defined by programming
+      convention to have an <code>UNKNOWN</code> variant, that either pollutes the domain model, or necessitate a
+      validation post-deserialization to strip out the <code>UNKNOWN</code> variant and map it onto a
+      <code>UNKNOWN</code>-less domain model enum.</p>
+
+    <p>I feel this rather common pattern is an unfortunate rejection of a "parse, don't validate" philosophy.</p>
+
+    <h5>Explicit type defaults</h5>
+
+    <h5>Tristates</h5>
+
+    <p>a differentiation between absence and non-recognition</p>
+
+    <h3>Optional vs required</h3>
+
+    <p>The simplest means of avoiding the use of a default is to use an <code>optional</code> label when adding fields.
+    </p>
+
+    <p>But unfortunately, <code>optional</code> alone offers no such safe evolution pathway to transform a field into a
+      <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
+      without incompatibility risk, and vice versa.</p>
+
 
     <p><em>DIAGRAM</em></p>
 
