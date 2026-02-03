@@ -23,20 +23,26 @@
       padding-bottom: 0.5 ch;
     }
 
-    .container-2-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      grid-template-rows: 1fr 1fr;
-      gap: 80px;
-    }
-
+    .container-2-col,
     .container-3-col {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: auto auto auto;
       gap: 40px 80px;
       align-items: center;
       justify-items: center;
+    }
+
+    .container-2-col {
+      grid-template-rows: auto auto;
+    }
+
+    .container-2-col #client0 { grid-column: 1; grid-row: 1; }
+    .container-2-col #client1 { grid-column: 3; grid-row: 1; }
+    .container-2-col #server0 { grid-column: 1; grid-row: 2; }
+    .container-2-col #server1 { grid-column: 3; grid-row: 2; }
+
+    .container-3-col {
+      grid-template-rows: auto auto auto;
     }
 
 
@@ -297,11 +303,11 @@ flowchart TD
 <pre class="blue" id="client0"><code>message Foo {
 }</code></pre>
 
-<pre class="blue" id="client1"><code>message Foo {
+<pre class="green" id="client1"><code>message Foo {
   required string f = 1;
 }</code></pre>
 
-<pre class="green" id="server0"><code>message Foo {
+<pre class="blue" id="server0"><code>message Foo {
 }</code></pre>
 
 <pre class="green" id="server1"><code>message Foo {
@@ -320,7 +326,7 @@ flowchart TD
               color: 'black',
               size: 2,
               path: 'straight',
-              middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -20 }),
+              middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -10 }),
               startSocket: 'bottom',
               endSocket: 'top',
             }
@@ -333,7 +339,7 @@ flowchart TD
               color: 'black',
               size: 2,
               path: 'straight',
-              middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -20 }),
+              middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -10 }),
               startSocket: 'bottom',
               endSocket: 'top',
             }
@@ -346,7 +352,7 @@ flowchart TD
               color: 'black',
               size: 2,
               path: 'straight',
-              middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -100 }),
+              middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: 30 }),
               startSocket: 'bottom',
               endSocket: 'top',
             }
@@ -372,83 +378,6 @@ flowchart TD
       });
     </script>
 
-<div class="container-3-col">
-<pre class="blue" id="t1"><code>message Foo {
-}</code></pre>
-<pre class="green" id="t2"><code>message Foo {
-  asymmetric string f = 1;
-}</code></pre>
-<pre class="blue" id="t3"><code>message Foo {
-  required string f = 1;
-}</code></pre>
-
-<pre class="blue" id="m1"><code>message Foo {
-}</code></pre>
-<pre class="green" id="m2"><code>message Foo {
-  asymmetric string f = 1;
-}</code></pre>
-<pre class="blue" id="m3"><code>message Foo {
-  required string f = 1;
-}</code></pre>
-
-<pre class="blue" id="b1"><code>message Foo {
-}</code></pre>
-<pre class="green" id="b2"><code>message Foo {
-  asymmetric string f = 1;
-}</code></pre>
-<pre class="blue" id="b3"><code>message Foo {
-  required string f = 1;
-}</code></pre>
-</div>
-
-    <script>
-      window.addEventListener('load', function () {
-        setTimeout(function () {
-          // Top row → intermediate row
-          new LeaderLine(document.getElementById('t1'), document.getElementById('m1'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -20 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-          new LeaderLine(document.getElementById('t2'), document.getElementById('m2'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -20 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-          new LeaderLine(document.getElementById('t2'), document.getElementById('m3'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-          new LeaderLine(document.getElementById('t3'), document.getElementById('m2'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-          // Intermediate row → bottom row
-          new LeaderLine(document.getElementById('m1'), document.getElementById('b1'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -20 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-          new LeaderLine(document.getElementById('m2'), document.getElementById('b2'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -20 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-          new LeaderLine(document.getElementById('m2'), document.getElementById('b3'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-          new LeaderLine(document.getElementById('m3'), document.getElementById('b2'), {
-            color: 'black', size: 2, path: 'straight',
-            middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -60 }),
-            startSocket: 'bottom', endSocket: 'top',
-          });
-        }, 100);
-      });
-    </script>
 
     <h3>Unproducible</h3>
 
