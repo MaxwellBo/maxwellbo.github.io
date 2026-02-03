@@ -119,23 +119,23 @@
 flowchart TD
   A["a schema"]
   B0["schema version v0"]
-  B["schema version v1"]
-  B2["schema version v2 "]
+  B1["schema version v1"]
+  B2["schema version v2"]
   C["classes"]
   D["instances"]
   E["payloads"]
   F["artifacts"]
-  G["deployment"]
 
     A -- "has" --> B0
-    A -- "has" --> B
+    A -- "has" --> B1
     A -- "has" --> B2
-    B -- "generates" --> C
+    B2 -- "generates" --> C
     C -- "deserialize or validate" --> D
     D -- "serialize" --> E
     C -- "built into" --> F
     F -- "deployed as" --> G
     E -- "sent to" --> C
+
     </pre>
 
     <p>Schemas may be services, which define methods, that have request types and response types</p>
@@ -273,45 +273,24 @@ flowchart TD
       <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
       without incompatibility risk, and vice versa.</p>
 
-    <p><em>DIAGRAM</em></p>
-
-    <p>Use of <code>required</code> was perceived to so fraught with danger at Google that the following tortured
-      convention was littered throughout the google3 monorepo</p>
-
-    <pre><code>message Foo {
-  // required
-  optional
+<figure>
+  <div class="container-2-col">
+    <pre class="blue client0" id="client0"><code>message Foo {
 }</code></pre>
 
-    <p>and the required label was removed entirely in proto3 syntax.</p>
-
-    <p>I strongly believe the removal or this label was unnecessary, and instead an asymmetric label should have been
-      added instead.</p>
-
-    <p>Thus, the second, less common type of asymmetric type we'll look at is "construct required deserialization
-      optional" label. To save ink, I will instead call it <code>asymmetric</code> the same as field label from the IDL
-      <a href="https://github.com/stepchowfun/typical">typical</a>, and the namesake of this article.</p>
-
-    <p><code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
-      data absence in the payload.</p>
-
-    <p>Use of this label admits safe evolution semantics! We use it as an intermediate stage when adding a required field:</p>
-
-    <p>Bad</p>
-<div class="container-2-col">
-<pre class="blue client0" id="client0"><code>message Foo {
-}</code></pre>
-
-<pre class="green client1" id="client1"><code>message Foo {
+    <pre class="green client1" id="client1"><code>message Foo {
   required string f = 1;
 }</code></pre>
 
-<pre class="blue server0" id="server0"><code>message Foo {
+    <pre class="blue server0" id="server0"><code>message Foo {
 }</code></pre>
 
-<pre class="green server1" id="server1"><code>message Foo {
+    <pre class="green server1" id="server1"><code>message Foo {
   required string f = 1;
 }</code></pre>
+  </div>
+  <figcaption>↑ Incompatibility caused by adding <code>required</code> field</figcaption>
+</figure>
 
 
 </div>
@@ -377,6 +356,32 @@ flowchart TD
         }, 100);
       });
     </script>
+
+    <p><em>DIAGRAM</em></p>
+
+    <p>Use of <code>required</code> was perceived to so fraught with danger at Google that the following tortured
+      convention was littered throughout the google3 monorepo</p>:
+
+    <pre><code>message Foo {
+  // required
+  optional string f = 1;
+}</code></pre>
+
+    <p>and the required label was <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">removed entirely in proto3 syntax.</a></p>
+
+    <p>I strongly believe the removal or this label was unnecessary, and instead an asymmetric label should have been
+      added instead.</p>
+
+    <p>Thus, the second, less common type of asymmetric type we'll look at is "construct required deserialization
+      optional" label. To save ink, I will instead call it <code>asymmetric</code> the same as field label from the IDL
+      <a href="https://github.com/stepchowfun/typical">typical</a>, and the namesake of this article.</p>
+
+    <p><code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
+      data absence in the payload.</p>
+
+    <p>Use of this label admits safe evolution semantics! We use it as an intermediate stage when adding a required field:</p>
+
+    <p>Bad</p>
 
     <p>Good</p>
 
