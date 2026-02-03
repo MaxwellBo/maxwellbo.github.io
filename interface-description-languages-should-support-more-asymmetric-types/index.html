@@ -36,10 +36,10 @@
       grid-template-rows: auto auto;
     }
 
-    .container-2-col #client0 { grid-column: 1; grid-row: 1; }
-    .container-2-col #client1 { grid-column: 3; grid-row: 1; }
-    .container-2-col #server0 { grid-column: 1; grid-row: 2; }
-    .container-2-col #server1 { grid-column: 3; grid-row: 2; }
+    .container-2-col .client0 { grid-column: 1; grid-row: 1; }
+    .container-2-col .client1 { grid-column: 3; grid-row: 1; }
+    .container-2-col .server0 { grid-column: 1; grid-row: 2; }
+    .container-2-col .server1 { grid-column: 3; grid-row: 2; }
 
     .container-3-col {
       grid-template-rows: auto auto auto;
@@ -299,17 +299,17 @@ flowchart TD
 
     <p>Bad</p>
 <div class="container-2-col">
-<pre class="blue" id="client0"><code>message Foo {
+<pre class="blue client0" id="client0"><code>message Foo {
 }</code></pre>
 
-<pre class="green" id="client1"><code>message Foo {
+<pre class="green client1" id="client1"><code>message Foo {
   required string f = 1;
 }</code></pre>
 
-<pre class="blue" id="server0"><code>message Foo {
+<pre class="blue server0" id="server0"><code>message Foo {
 }</code></pre>
 
-<pre class="green" id="server1"><code>message Foo {
+<pre class="green server1" id="server1"><code>message Foo {
   required string f = 1;
 }</code></pre>
 
@@ -484,72 +484,289 @@ and it follows that it may also permit:
     <p>But these validations inherit the restrictions placed upon <code>required</code> and <code>optional</code>
       fields: they cannot change safely in RPC and API contexts.</p>
 
-    <p>TO CLAUDE: <a
-        href="https://protovalidate.com/schemas/custom-rules/#basics-of-cel-expressions">https://protovalidate.com/schemas/custom-rules/#basics-of-cel-expressions</a>
-      Change these to use protovalidate syntax</p>
 
-    <pre><code>message Foo {
+    <p>Bad (single validation)</p>
+    <div class="container-2-col">
+      <pre class="blue client0" id="v1-client0"><code>message Foo {
   required int32 f = 1 [ 
-      (validation_extensions.cel_validation) =  "this <= 5"]}
+    (cel_validation) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="green client1" id="v1-client1"><code>message Foo {
+  required int32 f = 1 [ 
+    (cel_validation) = "this <= 4"
+  ]
+}</code></pre>
+      <pre class="blue server0" id="v1-server0"><code>message Foo {
+  required int32 f = 1 [ 
+    (cel_validation) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="green server1" id="v1-server1"><code>message Foo {
+  required int32 f = 1 [ 
+    (cel_validation) = "this <= 4"
+  ]
+}</code></pre>
+    </div>
 
-message Foo {
-  required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 4"]}</code></pre>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          new LeaderLine(
+            document.getElementById('v1-client0'),
+            document.getElementById('v1-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 5 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v1-client1'),
+            document.getElementById('v1-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 4 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v1-client1'),
+            document.getElementById('v1-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 4 }', { lineOffset: 30 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v1-client0'),
+            document.getElementById('v1-server1'),
+            {
+              color: '#d64545', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top',
+              middleLabel: LeaderLine.pathLabel('{ "1": 5 }', { lineOffset: -100 }),
+              endLabel: LeaderLine.captionLabel('Validation failed: 5 <= 4', { color: '#d64545', outlineColor: '' })
+            }
+          );
+        }, 400);
+      });
+    </script>
 
-    <pre><code>message Foo {
+    <p>Bad (widening single validation)</p>
+    <div class="container-2-col">
+      <pre class="blue client0" id="v2-client0"><code>message Foo {
   required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 5",
-       (validation_extensions.deserialization_cel_validation) = "this <= 5"]}
+    (cel_validation) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="green client1" id="v2-client1"><code>message Foo {
+  required int32 f = 1 [ 
+    (cel_validation) = "this <= 6"
+  ]
+}</code></pre>
+      <pre class="blue server0" id="v2-server0"><code>message Foo {
+  required int32 f = 1 [ 
+    (cel_validation) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="green server1" id="v2-server1"><code>message Foo {
+  required int32 f = 1 [ 
+    (cel_validation) = "this <= 6"
+  ]
+}</code></pre>
+    </div>
 
-message Foo {
-  required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 6",
-       (validation_extensions.deserialization_cel_validation) = "this <= 6"]}</code></pre>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          new LeaderLine(
+            document.getElementById('v2-client0'),
+            document.getElementById('v2-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 5 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v2-client1'),
+            document.getElementById('v2-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 6 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v2-client0'),
+            document.getElementById('v2-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 5 }', { lineOffset: 30 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v2-client1'),
+            document.getElementById('v2-server0'),
+            {
+              color: '#d64545', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top',
+              middleLabel: LeaderLine.pathLabel('{ "1": 6 }', { lineOffset: -100 }),
+              endLabel: LeaderLine.captionLabel('Validation failed: 6 <= 5', { color: '#d64545', outlineColor: '' })
+            }
+          );
+        }, 500);
+      });
+    </script>
 
     <p>Once again, decoupling the constructor validation and the deserialisation validation admits the ability to change
       the validation.</p>
 
-    <pre><code>message Foo {
+    <p>Good (widening validation in two steps)</p>
+    <div class="container-3-col">
+      <pre class="blue" id="v3-client0"><code>message Foo {
   required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 5",
-       (validation_extensions.deserialization_cel_validation) = "this <= 5"
-  ]
-}
-
-message Foo {
-  required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 5",
-       (validation_extensions.deserialization_cel_validation) = "this <= 6" 
-  ]
-}
-
-message Foo {
-  required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 6",
-       (validation_extensions.deserialization_cel_validation) ="this <= 6" 
+    (constructor_cel) = "this <= 5",
+    (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-
-    <pre><code>message Foo {
+      <pre class="green" id="v3-client1"><code>message Foo {
   required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 5",
-       (validation_extensions.deserialization_cel_validation) = "this <= 5"
-  ]
-}
-
-message Foo {
-  required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 4",
-       (validation_extensions.deserialization_cel_validation) = "this <= 5" 
-  ]
-}
-
-message Foo {
-  required int32 f = 1 [ 
-      (validation_extensions.constructor_cel_validation) =  "this <= 4",
-       (validation_extensions.deserialization_cel_validation) ="this <= 4" 
+    (constructor_cel) = "this <= 5",
+    (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
+      <pre class="blue" id="v3-client2"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 6",
+    (deserialize_cel) = "this <= 6"
+  ]
+}</code></pre>
+      <pre class="blue" id="v3-server0"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 5",
+    (deserialize_cel) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="green" id="v3-server1"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 5",
+    (deserialize_cel) = "this <= 6"
+  ]
+}</code></pre>
+      <pre class="blue" id="v3-server2"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 6",
+    (deserialize_cel) = "this <= 6"
+  ]
+}</code></pre>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          // v3-client0 -> v3-server0, v3-server1
+          new LeaderLine(
+            document.getElementById('v3-client0'),
+            document.getElementById('v3-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 5 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client0'),
+            document.getElementById('v3-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          // v3-client1 -> v3-server0, v3-server1, v3-server2
+          new LeaderLine(
+            document.getElementById('v3-client1'),
+            document.getElementById('v3-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client1'),
+            document.getElementById('v3-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 5 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client1'),
+            document.getElementById('v3-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          // v3-client2 -> v3-server1, v3-server2
+          new LeaderLine(
+            document.getElementById('v3-client2'),
+            document.getElementById('v3-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client2'),
+            document.getElementById('v3-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 6 }', { lineOffset: -10 }) }
+          );
+        }, 600);
+      });
+    </script>
+
+    <p>Good (narrowing validation in two steps)</p>
+    <div class="container-3-col">
+      <pre class="blue" id="v4-client0"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 5",
+    (deserialize_cel) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="green" id="v4-client1"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 4",
+    (deserialize_cel) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="blue" id="v4-client2"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 4",
+    (deserialize_cel) = "this <= 4"
+  ]
+}</code></pre>
+      <pre class="blue" id="v4-server0"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 5",
+    (deserialize_cel) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="green" id="v4-server1"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 4",
+    (deserialize_cel) = "this <= 5"
+  ]
+}</code></pre>
+      <pre class="blue" id="v4-server2"><code>message Foo {
+  required int32 f = 1 [ 
+    (constructor_cel) = "this <= 4",
+    (deserialize_cel) = "this <= 4"
+  ]
+}</code></pre>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          // v4-client0 -> v4-server0, v4-server1
+          new LeaderLine(
+            document.getElementById('v4-client0'),
+            document.getElementById('v4-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 5 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v4-client0'),
+            document.getElementById('v4-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          // v4-client1 -> v4-server0, v4-server1, v4-server2
+          new LeaderLine(
+            document.getElementById('v4-client1'),
+            document.getElementById('v4-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('v4-client1'),
+            document.getElementById('v4-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 4 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v4-client1'),
+            document.getElementById('v4-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          // v4-client2 -> v4-server1, v4-server2
+          new LeaderLine(
+            document.getElementById('v4-client2'),
+            document.getElementById('v4-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('v4-client2'),
+            document.getElementById('v4-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": 4 }', { lineOffset: -10 }) }
+          );
+        }, 700);
+      });
+    </script>
 
     <p>Thus, a message field's constructor validation must entail the deserialisation validation.</p>
 
