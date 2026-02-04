@@ -13,11 +13,19 @@
 
   <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
 
-  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@16.0.0/libertine.css" />
+  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@16.0.1/libertine.css" />
 
   <link rel="stylesheet" href="https://esm.sh/jsr/@celine/celine@6.0.1/cell.css" />
 
   <style>
+    .semifullwidth {
+      width: min(80vw, 65em);
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+
     p {
       padding-top: 0.5ch;
       padding-bottom: 0.5 ch;
@@ -27,9 +35,8 @@
     .container-3-col {
       display: grid;
       grid-template-columns: 1fr 1fr 1fr;
-      gap: 40px 80px;
+      gap: 4vw 4vw;
       align-items: center;
-      justify-items: center;
     }
 
     .container-2-col {
@@ -191,7 +198,7 @@ flowchart TD
     <p>If an engineer needs to strengthen a message, such as the simple act of a trying to add a <code>required</code>
       field they create an incompatibility risk:</p>
 
-<figure>
+<figure class="semifullwidth">
   <div class="container-2-col">
     <pre class="blue client0" id="client0"><code>message SearchRequest {
 }</code></pre>
@@ -274,7 +281,7 @@ flowchart TD
 
     <p>This also occurs when weakening a message, by removing a <code>required</code> field.</p>
 
-<figure>
+<figure class="semifullwidth">
   <div class="container-2-col">
     <pre class="blue client0" id="weak-client0"><code>message SearchRequest {
   required string user = 1;
@@ -356,7 +363,7 @@ flowchart TD
 
     <p>And strengthening an enum, by removing a value.</p>
 
-<figure>
+<figure class="semifullwidth">
   <div class="container-2-col">
     <pre class="blue client0" id="enum-str-client0"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -447,7 +454,7 @@ flowchart TD
 
     <p>And weakening an enum, by adding a value.</p>
 
-<figure>
+<figure class="semifullwidth">
   <div class="container-2-col">
     <pre class="blue client0" id="enum-weak-client0"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -546,7 +553,7 @@ flowchart TD
     <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
       that prevents incompatibilities.</p>
 
-<figure>
+<figure class="semifullwidth">
   <div class="container-2-col">
     <pre class="blue client0" id="deadlock-client0"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -651,7 +658,7 @@ flowchart TD
     <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
       messages that are in a request position and a response position also deadlocks.</p>
 
-<figure>
+<figure class="semifullwidth">
   <pre class="mermaid">
 flowchart LR
   subgraph v0["Schema v0"]
@@ -779,7 +786,7 @@ flowchart LR
 
     <p>Good</p>
 
-    <figure>
+    <figure class="semifullwidth">
       <div class="container-3-col" id="required">
         <pre class="blue" id="b-client0"><code>message SearchRequest {
 }</code></pre>
@@ -887,7 +894,7 @@ and it follows that it may also permit:
 
 
     <p>Bad (single validation)</p>
-    <figure>
+    <figure class="semifullwidth">
       <div class="container-2-col">
         <pre class="blue client0" id="v1-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
@@ -944,7 +951,7 @@ and it follows that it may also permit:
     </script>
 
     <p>Bad (widening single validation)</p>
-    <figure>
+    <figure class="semifullwidth">
       <div class="container-2-col">
         <pre class="blue client0" id="v2-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
@@ -1004,7 +1011,7 @@ and it follows that it may also permit:
       the validation.</p>
 
     <p>Good (widening validation in two steps)</p>
-    <figure>
+    <figure class="semifullwidth">
       <div class="container-3-col">
         <pre class="blue" id="v3-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
@@ -1091,7 +1098,7 @@ and it follows that it may also permit:
     </script>
 
     <p>Good (narrowing validation in two steps)</p>
-    <figure>
+    <figure class="semifullwidth">
       <div class="container-3-col">
         <pre class="blue" id="v4-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
