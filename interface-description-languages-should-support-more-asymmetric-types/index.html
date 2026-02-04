@@ -193,18 +193,18 @@ flowchart TD
 
 <figure>
   <div class="container-2-col">
-    <pre class="blue client0" id="client0"><code>message Foo {
+    <pre class="blue client0" id="client0"><code>message SearchRequest {
 }</code></pre>
 
-    <pre class="green client1" id="client1"><code>message Foo {
-  required string f = 1;
+    <pre class="green client1" id="client1"><code>message SearchRequest {
+  required string user = 1;
 }</code></pre>
 
-    <pre class="blue server0" id="server0"><code>message Foo {
+    <pre class="blue server0" id="server0"><code>message SearchRequest {
 }</code></pre>
 
-    <pre class="green server1" id="server1"><code>message Foo {
-  required string f = 1;
+    <pre class="green server1" id="server1"><code>message SearchRequest {
+  required string user = 1;
 }</code></pre>
   </div>
 </figure>
@@ -262,7 +262,7 @@ flowchart TD
               startSocket: 'bottom',
               middleLabel: LeaderLine.pathLabel('{}', { lineOffset: -100 }),
               endSocket: 'top',
-              endLabel: LeaderLine.captionLabel('Could not deserialize field: f (ID: 1)', {
+              endLabel: LeaderLine.captionLabel('Could not deserialize field: user (ID: 1)', {
                 color: '#d64545',
                 outlineColor: ''
               })
@@ -274,16 +274,270 @@ flowchart TD
 
     <p>This also occurs when weakening a message, by removing a <code>required</code> field.</p>
 
-    NEED DIAGRAM
+<figure>
+  <div class="container-2-col">
+    <pre class="blue client0" id="weak-client0"><code>message SearchRequest {
+  required string user = 1;
+}</code></pre>
+
+    <pre class="green client1" id="weak-client1"><code>message SearchRequest {
+}</code></pre>
+
+    <pre class="blue server0" id="weak-server0"><code>message SearchRequest {
+  required string user = 1;
+}</code></pre>
+
+    <pre class="green server1" id="weak-server1"><code>message SearchRequest {
+}</code></pre>
+  </div>
+</figure>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      new LeaderLine(
+        document.getElementById('weak-client0'),
+        document.getElementById('weak-server0'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('weak-client1'),
+        document.getElementById('weak-server1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('weak-client0'),
+        document.getElementById('weak-server1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: 30 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('weak-client1'),
+        document.getElementById('weak-server0'),
+        {
+          color: '#d64545',
+          size: 2,
+          path: 'straight',
+          startSocket: 'bottom',
+          middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -100 }),
+          endSocket: 'top',
+          endLabel: LeaderLine.captionLabel('Could not deserialize field: user (ID: 1)', {
+            color: '#d64545',
+            outlineColor: ''
+          })
+        }
+      );
+    }, 150);
+  });
+</script>
 
     <p>And strengthening an enum, by removing a value.</p>
 
-    NEED DIAGRAM
+<figure>
+  <div class="container-2-col">
+    <pre class="blue client0" id="enum-str-client0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;}</code></pre>
+
+    <pre class="green client1" id="enum-str-client1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;}</code></pre>
+
+    <pre class="blue server0" id="enum-str-server0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;}</code></pre>
+
+    <pre class="green server1" id="enum-str-server1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;}</code></pre>
+  </div>
+</figure>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      new LeaderLine(
+        document.getElementById('enum-str-client0'),
+        document.getElementById('enum-str-server0'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('enum-str-client1'),
+        document.getElementById('enum-str-server1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('1', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('enum-str-client1'),
+        document.getElementById('enum-str-server0'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('1', { lineOffset: 30 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('enum-str-client0'),
+        document.getElementById('enum-str-server1'),
+        {
+          color: '#d64545',
+          size: 2,
+          path: 'straight',
+          startSocket: 'bottom',
+          middleLabel: LeaderLine.pathLabel('3', { lineOffset: -100 }),
+          endSocket: 'top',
+          endLabel: LeaderLine.captionLabel('Unknown enum value: 3', {
+            color: '#d64545',
+            outlineColor: ''
+          })
+        }
+      );
+    }, 200);
+  });
+</script>
 
 
     <p>And weakening an enum, by adding a value.</p>
 
-    NEED DIAGRAM
+<figure>
+  <div class="container-2-col">
+    <pre class="blue client0" id="enum-weak-client0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+}</code></pre>
+
+    <pre class="green client1" id="enum-weak-client1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
+
+    <pre class="blue server0" id="enum-weak-server0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+}</code></pre>
+
+    <pre class="green server1" id="enum-weak-server1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
+  </div>
+</figure>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      new LeaderLine(
+        document.getElementById('enum-weak-client0'),
+        document.getElementById('enum-weak-server0'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('1', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('enum-weak-client1'),
+        document.getElementById('enum-weak-server1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('enum-weak-client0'),
+        document.getElementById('enum-weak-server1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('1', { lineOffset: 30 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('enum-weak-client1'),
+        document.getElementById('enum-weak-server0'),
+        {
+          color: '#d64545',
+          size: 2,
+          path: 'straight',
+          startSocket: 'bottom',
+          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -100 }),
+          endSocket: 'top',
+          endLabel: LeaderLine.captionLabel('Unknown enum value: 3', {
+            color: '#d64545',
+            outlineColor: ''
+          })
+        }
+      );
+    }, 250);
+  });
+</script>
 
     <p>One may assume that controlling the ordering of deploys prevents these incompatibilities.</p>
 
@@ -292,12 +546,141 @@ flowchart TD
     <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
       that prevents incompatibilities.</p>
 
-    NEED DIAGRAM
+<figure>
+  <div class="container-2-col">
+    <pre class="blue client0" id="deadlock-client0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
+
+    <pre class="green client1" id="deadlock-client1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_FAX = 4;
+}</code></pre>
+
+    <pre class="blue server0" id="deadlock-server0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
+
+    <pre class="green server1" id="deadlock-server1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_FAX = 4;
+}</code></pre>
+  </div>
+  <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
+    Deploying v1 first breaks old clients sending WORK (3). Deploying v0 last breaks new clients sending FAX (4).
+    No safe deployment order exists.
+  </figcaption>
+</figure>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      new LeaderLine(
+        document.getElementById('deadlock-client0'),
+        document.getElementById('deadlock-server0'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('deadlock-client1'),
+        document.getElementById('deadlock-server1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('4', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('deadlock-client0'),
+        document.getElementById('deadlock-server1'),
+        {
+          color: '#d64545',
+          size: 2,
+          path: 'straight',
+          startSocket: 'bottom',
+          middleLabel: LeaderLine.pathLabel('3', { lineOffset: 30 }),
+          endSocket: 'top',
+          endLabel: LeaderLine.captionLabel('Unknown enum value: 3', {
+            color: '#d64545',
+            outlineColor: ''
+          })
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('deadlock-client1'),
+        document.getElementById('deadlock-server0'),
+        {
+          color: '#d64545',
+          size: 2,
+          path: 'straight',
+          startSocket: 'bottom',
+          middleLabel: LeaderLine.captionLabel('4', { lineOffset: -100 }),
+          endSocket: 'top',
+          endLabel: LeaderLine.captionLabel('Unknown enum value: 4', {
+            color: '#d64545',
+            outlineColor: ''
+          })
+        }
+      );
+    }, 300);
+  });
+</script>
 
     <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
       messages that are in a request position and a response position also deadlocks.</p>
 
-    NEED DIAGRAM
+<figure>
+  <pre class="mermaid">
+flowchart LR
+  subgraph v0["Schema v0"]
+    CreateReq0["CreateUserRequest"]
+    GetResp0["GetUserResponse"]
+    User0["User { }"]
+    CreateReq0 -->|contains| User0
+    GetResp0 -->|contains| User0
+  end
+
+  subgraph v1["Schema v1"]
+    CreateReq1["CreateUserRequest"]
+    GetResp1["GetUserResponse"]
+    User1["User { required email }"]
+    CreateReq1 -->|contains| User1
+    GetResp1 -->|contains| User1
+  end
+
+  Client0["Client v0"] -->|"CreateUser(User {})"| Server1["Server v1"]
+  Server1 -.->|"❌ Missing email"| Client0
+
+  Client1["Client v1"] -->|"GetUser()"| Server0["Server v0"]
+  Server0 -.->|"❌ Returns User without email"| Client1
+  </pre>
+  <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
+    User is in both request (CreateUserRequest) and response (GetUserResponse) position.
+    Adding a required field to User creates incompatibilities in both directions.
+  </figcaption>
+</figure>
 
     <p>Even ordered deployment is insufficient to avoid this scenario.</p>
 
@@ -373,9 +756,9 @@ flowchart TD
     <p>Use of <code>required</code> was perceived to so fraught with danger at Google that the following tortured
       convention was littered throughout the google3 monorepo</p>:
 
-    <pre><code>message Foo {
+    <pre><code>message SearchRequest {
   // required
-  optional string f = 1;
+  optional string user = 1;
 }</code></pre>
 
     <p>and the required label was <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">removed entirely in proto3 syntax.</a></p>
@@ -398,21 +781,21 @@ flowchart TD
 
     <figure>
       <div class="container-3-col" id="required">
-        <pre class="blue" id="b-client0"><code>message Foo {
+        <pre class="blue" id="b-client0"><code>message SearchRequest {
 }</code></pre>
-        <pre class="green" id="b-client1"><code>message Foo {
-  asymmetric string f = 1;
+        <pre class="green" id="b-client1"><code>message SearchRequest {
+  asymmetric string user = 1;
 }</code></pre>
-        <pre class="blue" id="b-client2"><code>message Foo {
-  required string f = 1;
+        <pre class="blue" id="b-client2"><code>message SearchRequest {
+  required string user = 1;
 }</code></pre>
-        <pre class="blue" id="b-server0"><code>message Foo {
+        <pre class="blue" id="b-server0"><code>message SearchRequest {
 }</code></pre>
-        <pre class="green" id="b-server1"><code>message Foo {
-  asymmetric string f = 1;
+        <pre class="green" id="b-server1"><code>message SearchRequest {
+  asymmetric string user = 1;
 }</code></pre>
-        <pre class="blue" id="b-server2"><code>message Foo {
-  required string f = 1;
+        <pre class="blue" id="b-server2"><code>message SearchRequest {
+  required string user = 1;
 }</code></pre>
       </div>
     </figure>
@@ -506,22 +889,22 @@ and it follows that it may also permit:
     <p>Bad (single validation)</p>
     <figure>
       <div class="container-2-col">
-        <pre class="blue client0" id="v1-client0"><code>message Foo {
+        <pre class="blue client0" id="v1-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green client1" id="v1-client1"><code>message Foo {
+        <pre class="green client1" id="v1-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 4"
   ]
 }</code></pre>
-        <pre class="blue server0" id="v1-server0"><code>message Foo {
+        <pre class="blue server0" id="v1-server0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green server1" id="v1-server1"><code>message Foo {
+        <pre class="green server1" id="v1-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 4"
   ]
@@ -563,22 +946,22 @@ and it follows that it may also permit:
     <p>Bad (widening single validation)</p>
     <figure>
       <div class="container-2-col">
-        <pre class="blue client0" id="v2-client0"><code>message Foo {
+        <pre class="blue client0" id="v2-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green client1" id="v2-client1"><code>message Foo {
+        <pre class="green client1" id="v2-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 6"
   ]
 }</code></pre>
-        <pre class="blue server0" id="v2-server0"><code>message Foo {
+        <pre class="blue server0" id="v2-server0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green server1" id="v2-server1"><code>message Foo {
+        <pre class="green server1" id="v2-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (cel_validation) = "this <= 6"
   ]
@@ -609,7 +992,7 @@ and it follows that it may also permit:
             document.getElementById('v2-server0'),
             {
               color: '#d64545', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top',
-              middleLabel: LeaderLine.pathLabel('{ "1": 6 }', { lineOffset: -100 }),
+              middleLabel: LeaderLine.captionLabel('{ "1": 6 }', { lineOffset: -100 }),
               endLabel: LeaderLine.captionLabel('Validation failed: 6 <= 5', { color: '#d64545', outlineColor: '' })
             }
           );
@@ -623,37 +1006,37 @@ and it follows that it may also permit:
     <p>Good (widening validation in two steps)</p>
     <figure>
       <div class="container-3-col">
-        <pre class="blue" id="v3-client0"><code>message Foo {
+        <pre class="blue" id="v3-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green" id="v3-client1"><code>message Foo {
+        <pre class="green" id="v3-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
-        <pre class="blue" id="v3-client2"><code>message Foo {
+        <pre class="blue" id="v3-client2"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 6",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
-        <pre class="blue" id="v3-server0"><code>message Foo {
+        <pre class="blue" id="v3-server0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green" id="v3-server1"><code>message Foo {
+        <pre class="green" id="v3-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
-        <pre class="blue" id="v3-server2"><code>message Foo {
+        <pre class="blue" id="v3-server2"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 6",
     (deserialize_cel) = "this <= 6"
@@ -710,37 +1093,37 @@ and it follows that it may also permit:
     <p>Good (narrowing validation in two steps)</p>
     <figure>
       <div class="container-3-col">
-        <pre class="blue" id="v4-client0"><code>message Foo {
+        <pre class="blue" id="v4-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green" id="v4-client1"><code>message Foo {
+        <pre class="green" id="v4-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="blue" id="v4-client2"><code>message Foo {
+        <pre class="blue" id="v4-client2"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 4"
   ]
 }</code></pre>
-        <pre class="blue" id="v4-server0"><code>message Foo {
+        <pre class="blue" id="v4-server0"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="green" id="v4-server1"><code>message Foo {
+        <pre class="green" id="v4-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
-        <pre class="blue" id="v4-server2"><code>message Foo {
+        <pre class="blue" id="v4-server2"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
     (deserialize_cel) = "this <= 4"
