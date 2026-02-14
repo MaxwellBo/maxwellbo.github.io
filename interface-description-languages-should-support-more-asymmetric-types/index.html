@@ -19,7 +19,8 @@
 
   <style>
     .semifullwidth {
-      width: min(80vw, 65em);
+      width: 95vw;
+      max-width: 180ch;
       position: relative;
       left: 50%;
       transform: translateX(-50%);
@@ -31,25 +32,18 @@
       padding-bottom: 0.5 ch;
     }
 
-    .container-2-col,
-    .container-3-col {
+    .container-2-col {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 4vw 4vw;
+      grid-template-columns: 1fr 1fr;
+      gap: 4vw;
       align-items: center;
     }
 
-    .container-2-col {
-      grid-template-rows: auto auto;
-    }
-
-    .container-2-col .client0 { grid-column: 1; grid-row: 1; }
-    .container-2-col .client1 { grid-column: 3; grid-row: 1; }
-    .container-2-col .server0 { grid-column: 1; grid-row: 2; }
-    .container-2-col .server1 { grid-column: 3; grid-row: 2; }
-
     .container-3-col {
-      grid-template-rows: auto auto auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 4vw;
+      align-items: center;
     }
 
 
@@ -70,6 +64,16 @@
       left: 50%;
       transform: translate(-50%, -50%);
       pointer-events: none;
+    }
+
+    .container-2-col,
+    .container-3-col {
+      container-type: inline-size;
+    }
+
+    .container-2-col pre code,
+    .container-3-col pre code {
+      font-size: clamp(0.5rem, 2.5cqw, 0.83rem);
     }
   </style>
 
@@ -198,7 +202,7 @@ flowchart TD
     <p>If an engineer needs to strengthen a message, such as the simple act of a trying to add a <code>required</code>
       field they create an incompatibility risk:</p>
 
-<figure class="semifullwidth">
+<figure>
   <div class="container-2-col">
     <pre class="blue client0" id="client0"><code>message SearchRequest {
 }</code></pre>
@@ -281,7 +285,7 @@ flowchart TD
 
     <p>This also occurs when weakening a message, by removing a <code>required</code> field.</p>
 
-<figure class="semifullwidth">
+<figure>
   <div class="container-2-col">
     <pre class="blue client0" id="weak-client0"><code>message SearchRequest {
   required string user = 1;
@@ -363,7 +367,7 @@ flowchart TD
 
     <p>And strengthening an enum, by removing a value.</p>
 
-<figure class="semifullwidth">
+<figure>
   <div class="container-2-col">
     <pre class="blue client0" id="enum-str-client0"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -454,7 +458,7 @@ flowchart TD
 
     <p>And weakening an enum, by adding a value.</p>
 
-<figure class="semifullwidth">
+<figure>
   <div class="container-2-col">
     <pre class="blue client0" id="enum-weak-client0"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -553,7 +557,7 @@ flowchart TD
     <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
       that prevents incompatibilities.</p>
 
-<figure class="semifullwidth">
+<figure>
   <div class="container-2-col">
     <pre class="blue client0" id="deadlock-client0"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -894,7 +898,7 @@ and it follows that it may also permit:
 
 
     <p>Bad (single validation)</p>
-    <figure class="semifullwidth">
+    <figure>
       <div class="container-2-col">
         <pre class="blue client0" id="v1-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
@@ -951,7 +955,7 @@ and it follows that it may also permit:
     </script>
 
     <p>Bad (widening single validation)</p>
-    <figure class="semifullwidth">
+    <figure>
       <div class="container-2-col">
         <pre class="blue client0" id="v2-client0"><code>message SearchRequest {
   required int32 f = 1 [ 
