@@ -103,15 +103,16 @@
     </div>
 
     <div class="abstract">
-      IDLs that support asymmetric types generate code that have stronger constructor validations than their
-      deserialization validations. I believe they make schema evolution safer and more IDLs should support them.
+      IDLs that support asymmetric types generate code that have stronger constructor validations than their deserialization validations. 
+      I believe they make schema evolution safer and more IDLs should support them.
     </div>
 
     <h2>Context</h2>
 
-    <p>I worked at Canva for 3 and a bit years, where I worked on, for all intents and purposes, a hard fork of Protocol
-      Buffers. One addition in that fork was that of the "Safe proto evolution extensions", that, along with a schema
-      registry, almost entirely eliminated API and RPC compatibility issues.</p>
+    <p>I worked at Canva for 3 and a bit years, where I worked on, for all intents and purposes, a hard fork of Protocol Buffers. 
+      One addition in that fork was that of the "Safe proto evolution extensions", that, along with a schema registry, almost entirely eliminated API and RPC compatibility issues.</p>
+
+    TODO: LINK THAT ARTICLE I SAW
 
     <h2>Terminology</h2>
 
@@ -151,7 +152,7 @@ flowchart TD
       </pre>
     </figure>
 
-    <p>Schemas may be services, which define methods, that have request types and response types</p>
+    <p>Schemas may be services, which define methods, that have request types and response types.</p>
 
     <p>They may be messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
       <code>required</code> or <code>repeated</code>.</p>
