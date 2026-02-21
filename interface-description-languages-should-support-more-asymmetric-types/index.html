@@ -152,15 +152,44 @@ flowchart TD
       </pre>
     </figure>
 
-    <p>Schemas may be services, which define methods, that have request types and response types.</p>
+
+
+    <p>Schemas may be services, which define methods, that have request types and response types:</p>
+
+    <pre>
+<code>service SearchService {
+  rpc Search(SearchRequest) returns (SearchResponse);
+}</code></pre>
+
 
     <p>They may be messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
-      <code>required</code> or <code>repeated</code>.</p>
+      <code>required</code> or <code>repeated</code>:</p>
+
+    <pre>
+<code>message SearchRequest {
+  required string query = 1;
+  optional int32 page_number = 2;
+  optional int32 results_per_page = 3;
+  optional Corpus corpus = 4;
+}</code></pre>
 
     <p>I make a distinction between a "type", in an IDL, and a "validation" in generated code. Typically a type
       generates 1 validation. In the case of asymmetric validations, 2.</p>
 
-    <p>They may be enums, that have values.</p>
+
+
+    <p>They may be enums, that have values:</p>
+    <pre>
+<code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_UNIVERSAL = 1;
+  CORPUS_WEB = 2;
+  CORPUS_IMAGES = 3;
+  CORPUS_LOCAL = 4;
+  CORPUS_NEWS = 5;
+  CORPUS_PRODUCTS = 6;
+  CORPUS_VIDEO = 7;
+}</code></pre>
 
     <p>Schemas generate classes which build instances which serialize to payloads. Objects are embedded in artifacts and
       deployed into old releases.</p>
