@@ -6,6 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
   <style>
+    /* We want to keep styling as minimal as possible. We want a "raw"
+    HTML aesthetic */
     #map {
       width: 100%;
       height: 600px;
@@ -15,14 +17,33 @@
 <body>
   <h1>partitionguessr</h1>
 
+  <p>
+    in partionguessr, you have to create an
+    <a href="TODO">OpenStreetMap<a href="TODO">overpassturbo</a> query that when the results are joined together in its shortest <a href="TODO">Hamiltonian Path</a>, most effectively
+    divides the poor from the rich. Of course, with a query long enough, one can draw an arbitrarily detailed path to more or less <a href="TODO">gerrymander</a>
+    the polity. Thus, the the total query length has been limited to 256 characters.
+  </p>
+
+  <p>
+    You are aiming for a 50%/50% split (0% difference). If you, instead, split by 55%/45%,
+    your score will be 5% difference.
+
+    Skill grades are:
+    &lt; 5% GOLD
+    &lt; 10% SILVER
+    &lt; 15% BRONZE
+  </p>
+
   <a href="https://honisoit.com/2017/09/food-fault-lines-mapping-class-division-through-food-chains/">https://honisoit.com/2017/09/food-fault-lines-mapping-class-division-through-food-chains/</a>
   <a href="https://x.com/SardineTruther/status/1924725005675593970?t=23LKn0gjnV0FRQWZ7a3f5A&s=19">https://x.com/SardineTruther/status/1924725005675593970?t=23LKn0gjnV0FRQWZ7a3f5A&s=19</a>
 
+  <!-- We should really only need these dependencies -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7.0.0/turf.min.js"></script>
 
   <div>
     <form id="overpass-form">
+      <!-- TODO: Limit the total character count to 256 -->
       <textarea id="overpass-query" rows="10" cols="60" placeholder="Enter your Overpass Turbo query here...">[out:json][timeout:25];
 
 (
@@ -122,11 +143,8 @@ out geom;</textarea>
           }).addTo(map);
         }
 
-
-
         statusElement.textContent = 'Query completed successfully!';
         geoJSONOutElement.textContent = JSON.stringify(geojson, null, 2);
-        
         
         L.geoJSON(geojson, {
           onEachFeature: function (feature, layer) {
@@ -139,9 +157,6 @@ out geom;</textarea>
         statusElement.textContent = 'Error running query: ' + error.message;
       }
     });
-  </script>
-
-
   </script>
 </body>
 </html>

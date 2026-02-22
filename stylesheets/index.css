@@ -76,7 +76,6 @@ body.ruined * {
   }
 }
 
-
 header {
   overflow-y: auto;
 }
@@ -347,6 +346,38 @@ footer {
   white-space: nowrap;
   gap: 1rem;
   border: 1px dotted grey;
+}
+
+#devcommentary-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+aside.devcommentary {
+  display: none;
+  position: absolute;
+  z-index: 1000;
+  min-width: 300px;
+  max-width: 420px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+  border-radius: 16px;
+  corner-shape: squircle;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 14px;
+  line-height: 1.5;
+  transition: background 0.2s ease;
+  pointer-events: auto;
+}
+
+aside.devcommentary:hover {
+  background: rgba(255, 255, 255, 0.45);
 }
 
 #receipt {

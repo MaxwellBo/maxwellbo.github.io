@@ -6,6 +6,11 @@ html {
 
 }
 
+code {
+  border: 1px solid grey;
+  padding: 1px;
+}
+
 body {
   font-family: 'DINdong', sans-serif;
   background-repeat: repeat;

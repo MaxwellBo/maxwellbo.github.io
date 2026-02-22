@@ -123,6 +123,18 @@
   }
 }
 
+.celine {
+  font-family: 'Libertinus Serif', 'Times New Roman', serif;
+
+  a {
+    font-family: 'Libertinus Sans', 'Times New Roman', serif;
+  }
+
+  time {
+    font-variant: small-caps;
+  }
+}
+
 .alert {
   background: #fff5b1;
   padding: 4px 12px;

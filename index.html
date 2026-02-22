@@ -15,17 +15,6 @@
   <link rel="preload" href="stylesheets/index.css" as="style">
   <link rel="stylesheet" href="https://maxbo.me/celine/libertine/fonts/Libertinus/documentation/libertinus.css">
   <style>
-    .celine {
-      font-family: 'Libertinus Serif', 'Times New Roman', serif;
-
-      a {
-        font-family: 'Libertinus Sans', 'Times New Roman', serif;
-      }
-
-      time {
-        font-variant: small-caps;
-      }
-    }
   </style>
   <!-- <script>
     (function (d) {
@@ -404,11 +393,15 @@
     }
   </script>
   <p id="watermark">Max Bo</p>
-  <div class="only-show-on-desktop" style="position: absolute; top: 10px; right: 20px; z-index: 1001;">
+  <div class="only-show-on-desktop" style="position: absolute; top: 10px; right: 20px; z-index: 1001; display: flex; gap: 12px;">
     <label style="cursor: pointer; font-size: 14px;">
       <input type="checkbox" id="ruin-toggle" style="margin-right: 5px;">
       ruin site?
     </label>
+    <!-- <label style="cursor: pointer; font-size: 14px;">
+      <input type="checkbox" id="devcommentary-toggle" style="margin-right: 5px;">
+      dev commentary?
+    </label> -->
   </div>
   <script>
     document.getElementById('ruin-toggle').addEventListener('change', function (e) {
@@ -418,6 +411,8 @@
         document.body.classList.remove('ruined');
       }
     });
+
+
   </script>
   <header>
     <div id="receipt" style="overflow-y: hidden">
@@ -805,7 +800,7 @@
             <center>
               <p>
                 <img src="img/graphic-recycle.svg" style="display: inline-block" />
-                <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2025
+                <img src="img/graphic-checker.svg" style="display: inline-block" /> © 2026
               </p>
 
             </center>
@@ -827,7 +822,7 @@
             });
 
             function formatBytes(bytes, decimals = 2) {
-              if (bytes === 0) return '0 Bytes';
+              if (bytes === 0) return '0B';
               const k = 1024;
               const dm = decimals < 0 ? 0 : decimals;
               const sizes = ['B', 'KiB', 'MiB', 'GiB', 'TiB', 'PiB', 'EiB', 'ZiB', 'YiB'];
@@ -1206,7 +1201,7 @@
           </a>
           <p class="description">Digital dollhouse</p>
         </article>
-        <article class="art bottom-align" style="position: relative;">
+        <article id="butterfly" class="art bottom-align" style="position: relative;">
           <div style="position: relative; display: inline-block;">
             <img src="img/plantstudio_flowers.webp" style="display: block;" />
             <img src="img/butterfly/0.gif"
@@ -2196,10 +2191,11 @@
         style="font-family: 'hersheytimes', serif; font-size: 0.5em;">
         Hershey Times Triplex Light
       </a> that I have been unable to recover the source of (???).
-
+      ASCII font from <a href="https://patorjk.com/software/taag/">TAAG</a>".
       Weather data from <a href="https://open-meteo.com/">Open-Meteo</a>. Dataviz with <a
         href="https://observablehq.com/plot/">Observable Plot</a>.
       Atmospheric rendering by <a href="https://github.com/dnlzro/horizon">Horizon</a>.
+      Scrollbar guy from <a href="TODO">scrollbuddy</a>.
     </section>
 
     <section style="border: 1px dotted grey; margin: 4px; padding: 2px">
@@ -2469,6 +2465,62 @@
         <rect width="100%" height="100%" fill="url(#grid)" />
       </svg>
   </div> -->
+
+  <div id="devcommentary-container">
+    <aside class="devcommentary" data-anchor="#receipt">
+      I use the <a href="TODO">SVG filters</a>
+      <a href="TODO">&lt;feTurbulence&gt;</a>,
+      <a href="TODO">&lt;feGaussianBlur&gt;</a>,
+      to emulate the <q>bleed</q> of thermal paper and
+      <a href="TODO">&lt;feDisplacementMap&gt;</a>
+      for the crinkle. I also have a <a href="../img/register-tape-ads.webp">
+        scan of receipt ads
+      </a> with low opacity behind the receipt. I borrowed this from
+      <a href="TODO">Websites Done Cheap</a>.
+    </aside>
+    <aside class="devcommentary" data-anchor="#size">
+      This is the actual amount of data sent over the wire on page load.
+      I'm using <code>window.performance</code> to measure this. It might even be 0B if served from cache.
+    </aside>
+    <aside class="devcommentary" data-anchor="#butterfly">
+      Click the butterfly! It's inspired by <a href="TODO">Chia Amisola</a>'s various performances.
+    </aside>
+    <aside class="devcommentary" data-anchor="#colophon">
+      This shader implementation of the paper
+      <a href="TODO">TODO</a> to try and approximate what the sky actually looks
+      like in New York right now.
+    </aside>
+  </div>
+  <script>
+    (function () {
+      var toggle = document.getElementById('devcommentary-toggle');
+      var asides = document.querySelectorAll('#devcommentary-container aside.devcommentary');
+
+      function positionAsides() {
+        asides.forEach(function (aside) {
+          var anchor = document.querySelector(aside.dataset.anchor);
+          if (!anchor) return;
+          var rect = anchor.getBoundingClientRect();
+          aside.style.top = (window.scrollY + rect.bottom + 8) + 'px';
+          aside.style.left = (window.scrollX + rect.left) + 'px';
+        });
+      }
+
+      toggle.addEventListener('change', function (e) {
+        asides.forEach(function (el) {
+          el.style.display = e.target.checked ? 'block' : 'none';
+        });
+        if (e.target.checked) positionAsides();
+      });
+
+      window.addEventListener('scroll', function () {
+        if (toggle.checked) positionAsides();
+      });
+      window.addEventListener('resize', function () {
+        if (toggle.checked) positionAsides();
+      });
+    })();
+  </script>
 
 </body>
 
