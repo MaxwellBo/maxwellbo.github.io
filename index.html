@@ -77,35 +77,37 @@
     </script>
   -->
 
-  <script>
-    (() => {
-      const base = 'Max Bo';
-      const decorators = ['✶', '✷', '✸', '✹', '✺'];
-      const flowerDecorators = ['❀', '❁', '❂', '❃', '❄', '❅', '❆', '❇', '❈', '❉', '❊', '❋', '✤', '✥', '✦', '✧', '✨', '✩', '✪', '✫', '✬', '✭', '✮', '✯', '✰', '✱', '✲', '✳', '✴', '✵', '✶', '✷', '✸', '✹', '✺', '✻', '✼', '✽', '✾', '✿', '❀'];
-      let decoratorIndex = 0;
-      let direction = 1; // 1 for forward, -1 for backward
+  <!--
+    <script>
+      (() => {
+        const base = 'Max Bo';
+        const decorators = ['✶', '✷', '✸', '✹', '✺'];
+        const flowerDecorators = ['❀', '❁', '❂', '❃', '❄', '❅', '❆', '❇', '❈', '❉', '❊', '❋', '✤', '✥', '✦', '✧', '✨', '✩', '✪', '✫', '✬', '✭', '✮', '✯', '✰', '✱', '✲', '✳', '✴', '✵', '✶', '✷', '✸', '✹', '✺', '✻', '✼', '✽', '✾', '✿', '❀'];
+        let decoratorIndex = 0;
+        let direction = 1; // 1 for forward, -1 for backward
 
-      function updateDecorator() {
-        const decorator = decorators[decoratorIndex];
-        document.title = `${decorator} ${base} ${decorator}`;
+        function updateDecorator() {
+          const decorator = decorators[decoratorIndex];
+          document.title = `${decorator} ${base} ${decorator}`;
 
-        // Update decorator index
-        decoratorIndex += direction;
+          // Update decorator index
+          decoratorIndex += direction;
 
-        // Change direction when we hit the ends
-        if (decoratorIndex >= decorators.length - 1) {
-          direction = -1;
-        } else if (decoratorIndex <= 0) {
-          direction = 1;
+          // Change direction when we hit the ends
+          if (decoratorIndex >= decorators.length - 1) {
+            direction = -1;
+          } else if (decoratorIndex <= 0) {
+            direction = 1;
+          }
         }
-      }
 
-      // run repeatedly
-      setTimeout(() => {
-        setInterval(updateDecorator, 1000);
-      }, 1000);
-    })();
-  </script>
+        // run repeatedly
+        setTimeout(() => {
+          setInterval(updateDecorator, 1000);
+        }, 1000);
+      })();
+    </script>
+  -->
   <script>
     function openButterflyWindow(left, top) {
       const popupWidth = 1;
@@ -2426,21 +2428,39 @@
   <script src="scrollbuddy/script.js"></script>
 
   <script>
-    // Moon phases cycling through query string
+    // Moon in tab title; marquee in URL query parameter.
     (() => {
       const moonPhases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
-      let phaseIndex = 0;
+      const text = 'welcome';
+      const width = 14;
+      const padding = '.'.repeat(width);
+      const buffer = `${padding}${text}${padding}`;
+      const frames = [];
 
-      function updateMoonPhase() {
-        const moon = moonPhases[phaseIndex];
-        const url = new URL(window.location);
-        url.searchParams.set('m', moon);
-        window.history.replaceState({ moon }, '', url);
-        phaseIndex = (phaseIndex + 1) % moonPhases.length;
+      for (let i = 0; i <= buffer.length - width; i++) {
+        frames.push(buffer.slice(i, i + width));
       }
 
-      // Start cycling every 500ms
-      setInterval(updateMoonPhase, 500);
+      let phaseIndex = 0;
+      let frameIndex = 0;
+
+      function updateMoonAndMarquee() {
+        const moon = moonPhases[phaseIndex];
+        const marquee = frames[frameIndex];
+
+        window.title = `Max Bo ${moon}`;
+        document.title = window.title;
+
+        const url = new URL(window.location);
+        url.searchParams.set('m', marquee);
+        window.history.replaceState({ marquee }, '', url);
+
+        phaseIndex = (phaseIndex + 1) % moonPhases.length;
+        frameIndex = (frameIndex + 1) % frames.length;
+      }
+
+      updateMoonAndMarquee();
+      setInterval(updateMoonAndMarquee, 500);
     })();
   </script>
 
