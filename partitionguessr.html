@@ -12,38 +12,53 @@
       width: 100%;
       height: 600px;
     }
+    #query-meta {
+      margin: 0.5rem 0;
+      font-family: monospace;
+    }
+    #query-status {
+      margin: 0.5rem 0;
+    }
+    #char-count.over {
+      color: #b00020;
+      font-weight: bold;
+    }
   </style>
 </head>
 <body>
   <h1>partitionguessr</h1>
 
   <p>
-    in partionguessr, you have to create an
-    <a href="TODO">OpenStreetMap<a href="TODO">overpassturbo</a> query that when the results are joined together in its shortest <a href="TODO">Hamiltonian Path</a>, most effectively
-    divides the poor from the rich. Of course, with a query long enough, one can draw an arbitrarily detailed path to more or less <a href="TODO">gerrymander</a>
-    the polity. Thus, the the total query length has been limited to 256 characters.
+    In partitionguessr, you create an
+    <a href="https://www.openstreetmap.org/" target="_blank" rel="noopener noreferrer">OpenStreetMap</a>
+    <a href="https://overpass-turbo.eu/" target="_blank" rel="noopener noreferrer">Overpass Turbo</a> query.
+    The returned points are joined into a short path and plotted as your partition line.
+    With a long enough query you could effectively
+    <a href="https://en.wikipedia.org/wiki/Gerrymandering" target="_blank" rel="noopener noreferrer">gerrymander</a>
+    anything, so the query is limited to 256 characters.
   </p>
 
   <p>
-    You are aiming for a 50%/50% split (0% difference). If you, instead, split by 55%/45%,
-    your score will be 5% difference.
+    Aim for a 50% / 50% split of points on each side of your line (0% difference).
+    If your split is 55% / 45%, your score is 5% difference.
+  </p>
 
-    Skill grades are:
-    &lt; 5% GOLD
-    &lt; 10% SILVER
-    &lt; 15% BRONZE
+  <p>
+    Skill grades:
+    <br>&lt; 5% GOLD
+    <br>&lt; 10% SILVER
+    <br>&lt; 15% BRONZE
   </p>
 
   <a href="https://honisoit.com/2017/09/food-fault-lines-mapping-class-division-through-food-chains/">https://honisoit.com/2017/09/food-fault-lines-mapping-class-division-through-food-chains/</a>
+  <br>
   <a href="https://x.com/SardineTruther/status/1924725005675593970?t=23LKn0gjnV0FRQWZ7a3f5A&s=19">https://x.com/SardineTruther/status/1924725005675593970?t=23LKn0gjnV0FRQWZ7a3f5A&s=19</a>
 
-  <!-- We should really only need these dependencies -->
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@turf/turf@7.0.0/turf.min.js"></script>
 
   <div>
     <form id="overpass-form">
-      <!-- TODO: Limit the total character count to 256 -->
       <textarea id="overpass-query" rows="10" cols="60" placeholder="Enter your Overpass Turbo query here...">[out:json][timeout:25];
 
 (
@@ -53,6 +68,9 @@
 );
 
 out geom;</textarea>
+      <div id="query-meta">
+        Query length: <span id="char-count">0 / 256</span>
+      </div>
       <br>
       <button type="submit">Run query</button>
     </form>
@@ -64,35 +82,235 @@ out geom;</textarea>
   <pre id="geojson-out"></pre>
 
   <script type="module">
+    const MAX_QUERY_CHARS = 256;
     const BBOX = [-34.02136404964111, 150.77362060546875, -33.67978264318627, 151.5220642089844];
-
-    const osmtogeojson = await import('https://cdn.skypack.dev/osmtogeojson@3.0.0-beta.5?min')
+    const SA2_DATA_URL = 'data/partitionguessr/sa2_nsw_2021_income_joined.geojson';
+    const osmtogeojson = await import('https://cdn.skypack.dev/osmtogeojson@3.0.0-beta.5?min');
 
     const map = L.map('map').setView([-33.8688, 151.2093], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 19,
     }).addTo(map);
 
-    document.getElementById('overpass-form').addEventListener('submit', async function(e) {
+    const overpassForm = document.getElementById('overpass-form');
+    const queryInput = document.getElementById('overpass-query');
+    const statusElement = document.getElementById('query-status');
+    const geoJSONOutElement = document.getElementById('geojson-out');
+    const charCountElement = document.getElementById('char-count');
+
+    let activeDataLayer = null;
+    let activePathLayer = null;
+    let activeSa2Layer = null;
+    let sa2IncomeFeatures = [];
+
+    function updateCharCount() {
+      const length = queryInput.value.length;
+      charCountElement.textContent = `${length} / ${MAX_QUERY_CHARS}`;
+      charCountElement.classList.toggle('over', length > MAX_QUERY_CHARS);
+    }
+
+    function toPointList(featureCollection) {
+      const points = [];
+      for (const feature of featureCollection.features) {
+        if (!feature.geometry) {
+          continue;
+        }
+
+        if (feature.geometry.type === 'Point') {
+          points.push(feature.geometry.coordinates);
+        } else if (feature.geometry.type === 'MultiPoint') {
+          points.push(...feature.geometry.coordinates);
+        }
+      }
+      return points;
+    }
+
+    function nearestNeighborPath(points) {
+      if (points.length <= 1) {
+        return points;
+      }
+
+      const remaining = points.slice(1);
+      const ordered = [points[0]];
+
+      while (remaining.length > 0) {
+        const last = ordered[ordered.length - 1];
+        let bestIndex = 0;
+        let bestDistance = Infinity;
+
+        for (let i = 0; i < remaining.length; i++) {
+          const candidate = remaining[i];
+          const dx = candidate[0] - last[0];
+          const dy = candidate[1] - last[1];
+          const distanceSquared = dx * dx + dy * dy;
+          if (distanceSquared < bestDistance) {
+            bestDistance = distanceSquared;
+            bestIndex = i;
+          }
+        }
+
+        ordered.push(remaining.splice(bestIndex, 1)[0]);
+      }
+
+      return ordered;
+    }
+
+    function getColorForIncome(income) {
+      if (!Number.isFinite(income)) {
+        return '#cccccc';
+      }
+      if (income < 900) return '#f7fbff';
+      if (income < 1100) return '#deebf7';
+      if (income < 1300) return '#c6dbef';
+      if (income < 1500) return '#9ecae1';
+      if (income < 1800) return '#6baed6';
+      if (income < 2200) return '#4292c6';
+      return '#2171b5';
+    }
+
+    function extractSa2IncomeFeatures(sa2Geojson) {
+      const out = [];
+
+      for (const feature of sa2Geojson.features) {
+        if (!feature.geometry || !feature.properties) {
+          continue;
+        }
+
+        const income = Number(feature.properties.median_equivalised_household_income_weekly_2021);
+        if (!Number.isFinite(income)) {
+          continue;
+        }
+
+        const centroid = turf.centroid(feature);
+        out.push({
+          sa2Code: feature.properties.sa2_code_2021,
+          sa2Name: feature.properties.sa2_name_2021,
+          income,
+          coordinates: centroid.geometry.coordinates,
+        });
+      }
+
+      return out;
+    }
+
+    function getIncomeSplit(pathCoords, weightedPoints) {
+      if (pathCoords.length < 2 || weightedPoints.length === 0) {
+        return null;
+      }
+
+      let leftIncome = 0;
+      let rightIncome = 0;
+
+      for (const point of weightedPoints) {
+        const p = point.coordinates;
+        let nearestSegmentIndex = 0;
+        let nearestDistance = Infinity;
+
+        for (let i = 0; i < pathCoords.length - 1; i++) {
+          const segment = turf.lineString([pathCoords[i], pathCoords[i + 1]]);
+          const distance = turf.pointToLineDistance(turf.point(p), segment, { units: 'kilometers' });
+          if (distance < nearestDistance) {
+            nearestDistance = distance;
+            nearestSegmentIndex = i;
+          }
+        }
+
+        const [x1, y1] = pathCoords[nearestSegmentIndex];
+        const [x2, y2] = pathCoords[nearestSegmentIndex + 1];
+        const [px, py] = p;
+        const cross = (x2 - x1) * (py - y1) - (y2 - y1) * (px - x1);
+
+        if (cross >= 0) {
+          leftIncome += point.income;
+        } else {
+          rightIncome += point.income;
+        }
+      }
+
+      const total = leftIncome + rightIncome;
+      if (!total) {
+        return null;
+      }
+
+      const leftPercent = (leftIncome / total) * 100;
+      const rightPercent = (rightIncome / total) * 100;
+      return {
+        leftIncome,
+        rightIncome,
+        leftPercent,
+        rightPercent,
+        difference: Math.abs(leftPercent - 50),
+      };
+    }
+
+    async function loadSa2IncomeData() {
+      const response = await fetch(SA2_DATA_URL);
+      if (!response.ok) {
+        throw new Error(`Failed to load SA2 income data (${response.status})`);
+      }
+
+      const sa2Geojson = await response.json();
+      sa2IncomeFeatures = extractSa2IncomeFeatures(sa2Geojson);
+
+      if (activeSa2Layer) {
+        map.removeLayer(activeSa2Layer);
+      }
+
+      activeSa2Layer = L.geoJSON(sa2Geojson, {
+        style: function (feature) {
+          const income = Number(feature.properties?.median_equivalised_household_income_weekly_2021);
+          return {
+            color: '#555',
+            weight: 0.5,
+            fillOpacity: 0.35,
+            fillColor: getColorForIncome(income),
+          };
+        },
+        onEachFeature: function (feature, layer) {
+          const props = feature.properties || {};
+          const income = Number(props.median_equivalised_household_income_weekly_2021);
+          const incomeText = Number.isFinite(income) ? `$${income.toLocaleString()}` : 'N/A';
+          layer.bindPopup(
+            `<strong>${props.sa2_name_2021 || 'Unknown SA2'}</strong><br>` +
+            `Median equivalised household income (weekly): ${incomeText}`
+          );
+        }
+      }).addTo(map);
+    }
+
+    queryInput.addEventListener('input', updateCharCount);
+    updateCharCount();
+
+    try {
+      await loadSa2IncomeData();
+      statusElement.textContent = `Loaded ${sa2IncomeFeatures.length} SA2 income areas.`;
+    } catch (error) {
+      statusElement.textContent = `Could not load SA2 income data: ${error.message}`;
+    }
+
+    overpassForm.addEventListener('submit', async function(e) {
       e.preventDefault();
-      let query = document.getElementById('overpass-query').value;
-      const statusElement = document.getElementById('query-status');
-      const geoJSONOutElement = document.getElementById('geojson-out');
-      
+      const rawQuery = queryInput.value;
+
+      if (rawQuery.length > MAX_QUERY_CHARS) {
+        statusElement.textContent = `Query is too long (${rawQuery.length} chars). Limit is ${MAX_QUERY_CHARS}.`;
+        return;
+      }
+
       statusElement.textContent = 'Running query...';
+      geoJSONOutElement.textContent = '';
 
-      // replace the {{bbox}} placeholder with the actual bounding box coordinates
-      query = query.replace(/{{bbox}}/g, BBOX.join(','));
-
-      console.log(turf)
+      const query = rawQuery.replace(/{{bbox}}/g, BBOX.join(','));
       
       try {
-        // Clear existing GeoJSON layers and add the new data
-        map.eachLayer(layer => {
-          if (layer instanceof L.GeoJSON) {
-            map.removeLayer(layer);
-          }
-        });
+        if (activeDataLayer) {
+          map.removeLayer(activeDataLayer);
+          activeDataLayer = null;
+        }
+        if (activePathLayer) {
+          map.removeLayer(activePathLayer);
+          activePathLayer = null;
+        }
 
         const response = await fetch('https://overpass-api.de/api/interpreter', {
           method: 'POST',
@@ -101,58 +319,60 @@ out geom;</textarea>
             'Content-Type': 'application/x-www-form-urlencoded'
           }
         });
-        
-        const data = await response.json();
-        const geojson = osmtogeojson.default(data);
 
-        // Create a new GeoJSON collection for the lines
+        if (!response.ok) {
+          throw new Error(`Overpass request failed (${response.status})`);
+        }
+
+        const data = await response.json();
+        const geojson = osmtogeojson.default(data || { elements: [] });
+        const points = toPointList(geojson);
+        const orderedPoints = nearestNeighborPath(points);
+
         const lineCollection = {
-          type: "FeatureCollection",
+          type: 'FeatureCollection',
           features: []
         };
 
-        // Extract all nodes for line creation
-        const points = [];
-        geojson.features.forEach(feature => {
-          if (feature.geometry && (feature.geometry.type === "Point" || feature.geometry.type === "MultiPoint")) {
-            if (feature.geometry.type === "Point") {
-              points.push(feature.geometry.coordinates);
-            } else if (feature.geometry.type === "MultiPoint") {
-              points.push(...feature.geometry.coordinates);
-            }
-          }
-        });
-
-        // Create lines between consecutive points if there are at least 2 points
-        if (points.length >= 2) {
-          for (let i = 0; i < points.length - 1; i++) {
-            const line = turf.lineString([points[i], points[i + 1]], {
+        if (orderedPoints.length >= 2) {
+          for (let i = 0; i < orderedPoints.length - 1; i++) {
+            const line = turf.lineString([orderedPoints[i], orderedPoints[i + 1]], {
               name: `Line ${i + 1}`,
-              source: 'Generated line'
+              source: 'Generated nearest-neighbor path'
             });
             lineCollection.features.push(line);
           }
-          
-          // Add the line collection to the map
-          L.geoJSON(lineCollection, {
+
+          activePathLayer = L.geoJSON(lineCollection, {
             style: {
               color: '#ff7800',
-              weight: 3,
+              weight: 4,
               opacity: 0.65
             }
           }).addTo(map);
         }
 
-        statusElement.textContent = 'Query completed successfully!';
-        geoJSONOutElement.textContent = JSON.stringify(geojson, null, 2);
-        
-        L.geoJSON(geojson, {
+        activeDataLayer = L.geoJSON(geojson, {
           onEachFeature: function (feature, layer) {
             if (feature.properties) {
               layer.bindPopup(`<strong>${feature.properties.name || 'Unnamed'}</strong><br>ID: ${feature.properties.id || 'N/A'}`);
             }
           }
         }).addTo(map);
+
+        if (activeDataLayer.getLayers().length > 0) {
+          map.fitBounds(activeDataLayer.getBounds(), { padding: [20, 20] });
+        }
+
+        let scoreText = '';
+        const split = getIncomeSplit(orderedPoints, sa2IncomeFeatures);
+
+        if (split) {
+          scoreText = ` Income split: ${split.leftPercent.toFixed(1)}% / ${split.rightPercent.toFixed(1)}% (${split.difference.toFixed(1)}% difference from 50/50).`;
+        }
+
+        statusElement.textContent = `Query completed successfully. ${geojson.features.length} features loaded.${scoreText}`;
+        geoJSONOutElement.textContent = JSON.stringify(geojson, null, 2);
       } catch (error) {
         statusElement.textContent = 'Error running query: ' + error.message;
       }
