@@ -952,7 +952,44 @@ message GetUserResponse {
 
     <p>But the default must be a member of type field type <code>T</code>.</p>
 
-    !!! DIAGRAM !!!
+    <figure class="semifullwidth">
+      <div class="container-3-col" id="field-default">
+        <pre class="blue" id="field-default-client0"><code>message SearchRequest {
+}</code></pre>
+        <pre class="green" id="field-default-client1"><code>message SearchRequest {
+  <ins>optional string user = 1
+    [default = "anonymous"];</ins>
+}</code></pre>
+        <pre class="blue" id="field-default-client2"><code>message SearchRequest {
+  <ins>required</ins> string user = 1
+    [default = "anonymous"];
+}</code></pre>
+        <pre class="blue" id="field-default-server0"><code>message SearchRequest {
+}</code></pre>
+        <pre class="green" id="field-default-server1"><code>message SearchRequest {
+  <ins>optional string user = 1
+    [default = "anonymous"];</ins>
+}</code></pre>
+        <pre class="blue" id="field-default-server2"><code>message SearchRequest {
+  <ins>required</ins> string user = 1
+    [default = "anonymous"];
+}</code></pre>
+      </div>
+    </figure>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          new LeaderLine(document.getElementById('field-default-client0'), document.getElementById('field-default-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -10 }) });
+          new LeaderLine(document.getElementById('field-default-client0'), document.getElementById('field-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('field-default-client1'), document.getElementById('field-default-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('field-default-client1'), document.getElementById('field-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "alice" }', { lineOffset: -10 }) });
+          new LeaderLine(document.getElementById('field-default-client1'), document.getElementById('field-default-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('field-default-client2'), document.getElementById('field-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('field-default-client2'), document.getElementById('field-default-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "alice" }', { lineOffset: -10 }) });
+        }, 425);
+      });
+    </script>
 
     <p>This poses 2 problems:</p>
 
@@ -969,9 +1006,67 @@ message GetUserResponse {
       and even enums, defaulting to the member with the lowest value.</p>
 
 
-      !!! DIAGRAM !!!
-      
-      
+      <figure class="semifullwidth">
+        <div class="container-3-col" id="impl-default">
+          <pre class="blue" id="impl-default-client0"><code>enum Corpus {
+  CORPUS_WEB = 1;
+  CORPUS_IMAGES = 3;
+  CORPUS_NEWS = 5;
+}</code></pre>
+          <pre class="green" id="impl-default-client1"><code>enum Corpus {
+  <ins>CORPUS_UNSPECIFIED = 0;</ins>
+  CORPUS_WEB = 1;
+  CORPUS_IMAGES = 3;
+  CORPUS_NEWS = 5;
+}</code></pre>
+          <pre class="blue" id="impl-default-client2"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_WEB = 1;
+  CORPUS_IMAGES = 3;
+  CORPUS_NEWS = 5;
+  <ins>CORPUS_VIDEO = 7;</ins>
+}</code></pre>
+          <pre class="blue" id="impl-default-server0"><code>enum Corpus {
+  CORPUS_WEB = 1;
+  CORPUS_IMAGES = 3;
+  CORPUS_NEWS = 5;
+}</code></pre>
+          <pre class="green" id="impl-default-server1"><code>enum Corpus {
+  <ins>CORPUS_UNSPECIFIED = 0;</ins>
+  CORPUS_WEB = 1;
+  CORPUS_IMAGES = 3;
+  CORPUS_NEWS = 5;
+}</code></pre>
+          <pre class="blue" id="impl-default-server2"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_WEB = 1;
+  CORPUS_IMAGES = 3;
+  CORPUS_NEWS = 5;
+  <ins>CORPUS_VIDEO = 7;</ins>
+}</code></pre>
+        </div>
+        <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
+          Proto3 implicitly defaults unknown enum values to 0. Naming that 0 as
+          CORPUS_UNSPECIFIED makes the implicit behaviour explicit, and enables
+          further safe additions: c2 sending VIDEO (7) to s1 is silently coerced
+          to CORPUS_UNSPECIFIED rather than rejected.
+        </figcaption>
+      </figure>
+
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          setTimeout(function () {
+            new LeaderLine(document.getElementById('impl-default-client0'), document.getElementById('impl-default-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('1', { lineOffset: -10 }) });
+            new LeaderLine(document.getElementById('impl-default-client0'), document.getElementById('impl-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+            new LeaderLine(document.getElementById('impl-default-client1'), document.getElementById('impl-default-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+            new LeaderLine(document.getElementById('impl-default-client1'), document.getElementById('impl-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('1', { lineOffset: -10 }) });
+            new LeaderLine(document.getElementById('impl-default-client1'), document.getElementById('impl-default-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+            new LeaderLine(document.getElementById('impl-default-client2'), document.getElementById('impl-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('7 → 0', { lineOffset: 30 }) });
+            new LeaderLine(document.getElementById('impl-default-client2'), document.getElementById('impl-default-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('7', { lineOffset: -10 }) });
+          }, 450);
+        });
+      </script>
+
       <p>Thus, proto enums, are defined by programming
       convention to have an <code>UNKNOWN</code> variant, that either pollutes the domain model, or necessitate a
       validation post-deserialization to strip out the <code>UNKNOWN</code> variant and map it onto a
@@ -1262,7 +1357,68 @@ and it follows that it may also permit:
     <p>The label permits us to safely add a variant under the assumption that no other engineer can construct, serialize
       and send it to deserializers that are unprepared to handle it.</p>
 
-    !!! DIAGRAM !!!
+    <figure class="semifullwidth">
+      <div class="container-3-col" id="unproducible">
+        <pre class="blue" id="unprod-client0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
+        <pre class="green" id="unprod-client1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+  <ins>unproducible PHONE_TYPE_FAX = 4;</ins>
+}</code></pre>
+        <pre class="blue" id="unprod-client2"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+  <ins>PHONE_TYPE_FAX = 4;</ins>
+}</code></pre>
+        <pre class="blue" id="unprod-server0"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
+        <pre class="green" id="unprod-server1"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+  <ins>unproducible PHONE_TYPE_FAX = 4;</ins>
+}</code></pre>
+        <pre class="blue" id="unprod-server2"><code>enum PhoneType {
+  PHONE_TYPE_UNSPECIFIED = 0;
+  PHONE_TYPE_MOBILE = 1;
+  PHONE_TYPE_HOME = 2;
+  PHONE_TYPE_WORK = 3;
+  <ins>PHONE_TYPE_FAX = 4;</ins>
+}</code></pre>
+      </div>
+      <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
+        v1 can deserialize FAX (4) but cannot construct or send it. Once v1 is universally deployed,
+        v2 can safely promote FAX to a regular producible value.
+      </figcaption>
+    </figure>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          new LeaderLine(document.getElementById('unprod-client0'), document.getElementById('unprod-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }) });
+          new LeaderLine(document.getElementById('unprod-client0'), document.getElementById('unprod-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('unprod-client1'), document.getElementById('unprod-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('unprod-client1'), document.getElementById('unprod-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }) });
+          new LeaderLine(document.getElementById('unprod-client1'), document.getElementById('unprod-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('unprod-client2'), document.getElementById('unprod-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
+          new LeaderLine(document.getElementById('unprod-client2'), document.getElementById('unprod-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('4', { lineOffset: -10 }) });
+        }, 475);
+      });
+    </script>
 
     <p>One of the reasons I suspect that it quite difficult, although possible, to statically enforce unproducibility.
     </p>
@@ -1583,14 +1739,10 @@ and it follows that it may also permit:
     <p>Although somewhat overkill, I believe that Z3 would be sufficient to check the invariant, and to check that the
       constructor validation entails the deserialization validations of all previous schema versions.</p>
 
-    <hr>
-
-    <p><strong>AI usage disclosure.</strong></p>
+    <h2>AI usage disclosure</h2>
 
     <p>All prose was handwritten, with predictive autocomplete disabled. Diagrams were generated. Proof-read by Claude
-      Opus 4.5 on DATE.</p>
-
-    <p><em>Use the word "schema evolution"</em></p>
+      Opus 4.6 on TODO.</p>
 
     <script>
       document.addEventListener("DOMContentLoaded", function () {
