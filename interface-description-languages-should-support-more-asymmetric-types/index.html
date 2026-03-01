@@ -955,8 +955,161 @@ message GetUserResponse {
 
     <h5>Field fallbacks</h5>
 
-    <p>typical has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
+    <p><a href="https://github.com/stepchowfun/typical">typical</a> has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
       the deserialization validation only requires 1, the fallback.</p>
+
+    <p>For <code>choice</code> types, Typical treats this dually: writers of optional/asymmetric cases must provide a fallback,
+      and readers can always recover to a known case while rollouts are in flight.</p>
+
+    <p>Good (adding and removing an <code>optional</code> choice case)</p>
+    <figure class="semifullwidth">
+      <div class="container-3-col" id="choice-optional">
+        <pre class="blue" id="choice-optional-client0"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+}</code></pre>
+        <pre class="green" id="choice-optional-client1"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+  <ins>optional authentication_error: String = 2</ins>
+}</code></pre>
+        <pre class="blue" id="choice-optional-client2"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+}</code></pre>
+        <pre class="blue" id="choice-optional-server0"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+}</code></pre>
+        <pre class="green" id="choice-optional-server1"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+  <ins>optional authentication_error: String = 2</ins>
+}</code></pre>
+        <pre class="blue" id="choice-optional-server2"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+}</code></pre>
+      </div>
+    </figure>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          new LeaderLine(
+            document.getElementById('choice-optional-client0'),
+            document.getElementById('choice-optional-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('choice-optional-client0'),
+            document.getElementById('choice-optional-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-optional-client1'),
+            document.getElementById('choice-optional-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-optional-client1'),
+            document.getElementById('choice-optional-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": "bad token", "1": "please try again" }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('choice-optional-client1'),
+            document.getElementById('choice-optional-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-optional-client2'),
+            document.getElementById('choice-optional-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-optional-client2'),
+            document.getElementById('choice-optional-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
+          );
+        }, 350);
+      });
+    </script>
+
+    <p>Good (adding an <code>asymmetric</code> choice case, then promoting to required)</p>
+    <figure class="semifullwidth">
+      <div class="container-3-col" id="choice-asymmetric">
+        <pre class="blue" id="choice-asymmetric-client0"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+}</code></pre>
+        <pre class="green" id="choice-asymmetric-client1"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+  <ins>asymmetric please_try_again = 3</ins>
+}</code></pre>
+        <pre class="blue" id="choice-asymmetric-client2"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+  <ins>please_try_again = 3</ins>
+}</code></pre>
+        <pre class="blue" id="choice-asymmetric-server0"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+}</code></pre>
+        <pre class="green" id="choice-asymmetric-server1"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+  <ins>asymmetric please_try_again = 3</ins>
+}</code></pre>
+        <pre class="blue" id="choice-asymmetric-server2"><code>choice SendEmailResponse {
+  success = 0
+  error: String = 1
+  <ins>please_try_again = 3</ins>
+}</code></pre>
+      </div>
+    </figure>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          new LeaderLine(
+            document.getElementById('choice-asymmetric-client0'),
+            document.getElementById('choice-asymmetric-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('choice-asymmetric-client0'),
+            document.getElementById('choice-asymmetric-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-asymmetric-client1'),
+            document.getElementById('choice-asymmetric-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-asymmetric-client1'),
+            document.getElementById('choice-asymmetric-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "3": null, "1": "please try again" }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('choice-asymmetric-client1'),
+            document.getElementById('choice-asymmetric-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-asymmetric-client2'),
+            document.getElementById('choice-asymmetric-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('choice-asymmetric-client2'),
+            document.getElementById('choice-asymmetric-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "3": null }', { lineOffset: -10 }) }
+          );
+        }, 375);
+      });
+    </script>
 
     <h4>Type defaults</h4>
 
