@@ -774,36 +774,149 @@ flowchart TD
     <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
       messages that are in a request position and a response position also deadlocks.</p>
 
-<figure class="semifullwidth">
-  <pre class="mermaid">
-flowchart LR
-  subgraph v0["Schema v0"]
-    CreateReq0["CreateUserRequest"]
-    GetResp0["GetUserResponse"]
-    User0["User { }"]
-    CreateReq0 -->|contains| User0
-    GetResp0 -->|contains| User0
-  end
+<figure>
+  <div class="container-2-col">
+    <pre class="blue client0" id="transitive-deadlock-client0"><code>message User {}
 
-  subgraph v1["Schema v1"]
-    CreateReq1["CreateUserRequest"]
-    GetResp1["GetUserResponse"]
-    User1["User { required email }"]
-    CreateReq1 -->|contains| User1
-    GetResp1 -->|contains| User1
-  end
+message CreateUserRequest {
+  required User user = 1;
+}
 
-  Client0["Client v0"] -->|"CreateUser(User {})"| Server1["Server v1"]
-  Server1 -.->|"❌ Missing email"| Client0
+message GetUserResponse {
+  required User user = 1;
+}</code></pre>
 
-  Client1["Client v1"] -->|"GetUser()"| Server0["Server v0"]
-  Server0 -.->|"❌ Returns User without email"| Client1
-  </pre>
+    <pre class="green client1" id="transitive-deadlock-client1"><code>message User {
+  <ins>required string email = 1;</ins>
+}
+
+message CreateUserRequest {
+  required User user = 1;
+}
+
+message GetUserResponse {
+  required User user = 1;
+}</code></pre>
+
+    <pre class="blue server0" id="transitive-deadlock-server0"><code>message User {}
+
+message CreateUserRequest {
+  required User user = 1;
+}
+
+message GetUserResponse {
+  required User user = 1;
+}</code></pre>
+
+    <pre class="green server1" id="transitive-deadlock-server1"><code>message User {
+  <ins>required string email = 1;</ins>
+}
+
+message CreateUserRequest {
+  required User user = 1;
+}
+
+message GetUserResponse {
+  required User user = 1;
+}</code></pre>
+  </div>
   <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
     User is in both request (CreateUserRequest) and response (GetUserResponse) position.
     Adding a required field to User creates incompatibilities in both directions.
   </figcaption>
 </figure>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+      new LeaderLine(
+        document.getElementById('transitive-deadlock-client0'),
+        document.getElementById('transitive-deadlock-server0'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('CreateUserRequest(User {})', { lineOffset: -10 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('transitive-deadlock-server0'),
+        document.getElementById('transitive-deadlock-client0'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('GetUserResponse(User {})', { lineOffset: 25 }),
+          startSocket: 'top',
+          endSocket: 'bottom',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('transitive-deadlock-client1'),
+        document.getElementById('transitive-deadlock-server1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('CreateUserRequest(User { email })', { lineOffset: -55 }),
+          startSocket: 'bottom',
+          endSocket: 'top',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('transitive-deadlock-server1'),
+        document.getElementById('transitive-deadlock-client1'),
+        {
+          color: 'black',
+          size: 2,
+          path: 'straight',
+          middleLabel: LeaderLine.captionLabel('GetUserResponse(User { email })', { lineOffset: -85 }),
+          startSocket: 'top',
+          endSocket: 'bottom',
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('transitive-deadlock-client0'),
+        document.getElementById('transitive-deadlock-server1'),
+        {
+          color: '#d64545',
+          size: 2,
+          path: 'straight',
+          startSocket: 'bottom',
+          middleLabel: LeaderLine.captionLabel('CreateUserRequest(User {})', { lineOffset: 30 }),
+          endSocket: 'top',
+          endLabel: LeaderLine.captionLabel('Missing required field: user.email', {
+            color: '#d64545',
+            outlineColor: ''
+          })
+        }
+      );
+
+      new LeaderLine(
+        document.getElementById('transitive-deadlock-server0'),
+        document.getElementById('transitive-deadlock-client1'),
+        {
+          color: '#d64545',
+          size: 2,
+          path: 'straight',
+          startSocket: 'top',
+          middleLabel: LeaderLine.captionLabel('GetUserResponse(User {})', { lineOffset: -100 }),
+          endSocket: 'bottom',
+          endLabel: LeaderLine.captionLabel('Missing required field: user.email', {
+            color: '#d64545',
+            outlineColor: ''
+          })
+        }
+      );
+    }, 300);
+  });
+</script>
 
     <p>Even ordered deployment is insufficient to avoid this scenario.</p>
 
