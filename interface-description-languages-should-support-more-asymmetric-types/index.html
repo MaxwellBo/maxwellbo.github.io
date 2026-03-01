@@ -835,10 +835,10 @@ flowchart LR
 
     <p>This poses 2 problems:</p>
 
-    <p>Some types don't have a reasonable default value, particularly non-primitive messages.</p>
-
-    <p>We may typically choose a <code>0</code> default for primitives but we deprive the domain layer of useful
-      distinction: whether the 0 was a fallback or a legitimate value sent over the wire.</p>
+    <ol>
+      <li>Some types don't have a reasonable default value, particularly non-primitive messages.</li>
+      <li>We may typically choose a <code>0</code> default for primitives, but this deprives the domain layer of a useful distinction: whether the <code>0</code> was a fallback or a legitimate value sent over the wire.</li>
+    </ol>
 
     <h5>Field fallbacks</h5>
 
@@ -896,11 +896,7 @@ flowchart LR
     <p><code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
       data absence in the payload.</p>
 
-    <p>Use of this label admits safe evolution semantics! We use it as an intermediate stage when adding a required field:</p>
-
-    <p>Bad</p>
-
-    <p>Good</p>
+    <p>Use of this label admits safe evolution semantics! We can now use it as a safe intermediate stage when adding a required field:</p>
 
     <figure class="semifullwidth">
       <div class="container-3-col" id="required">
@@ -974,9 +970,9 @@ flowchart LR
 
 and it follows that it may also permit:
 <ul>
-  <li>transitioning from optional to required</li>
-  <li>transitioning from required to optional</li>
-  <li>removing a required field</li>
+  <li>transitioning from <code>optional</code> to <code>required</code></li>
+  <li>transitioning from <code>required</code> to <code>optional</code></li>
+  <li>removing a <code>required</code> field</li>
 </ul>
 
 </p>
