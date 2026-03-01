@@ -13,7 +13,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
 
-  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@20.0.0/libertine.css" />
+  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@21.0.0/libertine.css" />
 
   <link rel="stylesheet" href="https://esm.sh/jsr/@celine/celine@7.0.1/cell.css" />
 
@@ -25,7 +25,6 @@
       left: 50%;
       transform: translateX(-50%);
     }
-
 
     p {
       padding-top: 0.5ch;
@@ -109,42 +108,50 @@
 
     <h2>Context</h2>
 
-    <p>I worked at Canva for 3 and a bit years, where I worked on, for all intents and purposes, a hard fork of Protocol Buffers. 
-      One addition in that fork was that of the "Safe proto evolution extensions", that, along with a schema registry, almost entirely eliminated API and RPC compatibility issues.</p>
 
     <p>
-      About a month ago I read <a href="TODO"><cite>TODO</cite></a> by <a href="TODO">TODO</a>
+      About a month ago I read <a href="https://www.iankduncan.com/engineering/2026-02-09-what-functional-programmers-get-wrong-about-systems/"><cite>What Functional Programmers Get Wrong About Systems</cite></a> by <a href="https://www.iankduncan.com/">Ian Duncan</a>.
       
       I thought this was a excellent article. It exposed me to a lot of
       academic literature that I was not aware of, tackling what I learned
-      to be the problem of <q>WHATEVER ITS CALLED</q>
-      
+      to be the problem of <q>Dynamic Software Updating</q>.
       
       In general, the article took extra time to stress
       the risk of type compatibility errors at the boundaries of a program,
-      typically between databases and other services. While it alluded
-      to the use of an IDL compatibility checker to verify that changes 
-      were or were not safe:
+      typically between databases and other services.
+      </p> 
+      
+      <p>
+        Additionally, it pointed out the use of a compatibility checker to verify whether boundary type changes 
+        were or were not safe:
+      </p>
 
       <blockquote>
-        QUOTE
+        <p>
+          If you have all three [subsystems] (version tags, compatibility functions, and runtime version inventory) you can answer the question that actually matters before every deploy: “Is the version I’m about to deploy compatible with every version currently running?” Not “does it compile?” Not “do the tests pass?” But: “given the actual set of deployments that exist right now, is it safe to add this one?”
+        </p>
+
+        <p>
+        Nobody has built the unified tool that answers this across all boundary types simultaneously. (If you are reading this and thinking “that sounds like a startup,” please, by all means.) But the components exist. A deploy pipeline that queries your orchestrator for running image tags, checks your migration history against the schema registry, diffs your GraphQL schema against collected client operations, and runs Buf’s compatibility checks: this is buildable today, with off-the-shelf parts. It is engineering work, not research.
+        </p>
       </blockquote>
 
-      I feel that not enough was said about techniques for <i>making</i> these changes safe.
-      </p>
+    </p>
+
+    <p>I worked at <a href="https://www.canva.com/about/">Canva</a> for 3 and a bit years, where I worked on, for all intents and purposes, a hard fork of Protocol Buffers, and these 3 separate subsystems. 
+      One addition in that fork was that of the "Safe proto evolution extensions", that, along with "extension aware compatibility functions" almost entirely eliminated API and RPC compatibility issues.</p>
 
       <p>
-        I hope to achieve that in this article.
+      I feel that not enough was said in the cited article about techniques for <i>making</i> boundary type changes safe, rather than just checking their safety. I hope to achieve that in this article.
       </p>
-    </p>
 
     <h2>Preamble</h2>
 
     <p>For the purposes of this article I have chosen to
-      use <a href="TODO">Protocol Buffers</a>, specifically with <a href="TODO">proto 2 syntax</a>
+      use <a href="https://protobuf.dev/">Protocol Buffers</a>, specifically with <a href="https://protobuf.dev/programming-guides/proto2/">proto 2 syntax</a>
       as it is what I am most familiar with.
       But asymmetric types could be added
-      to any mature IDL (<a href="TODO">Thrift</a>, <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.).
+      to any mature IDL (<a href="https://thrift.apache.org/">Thrift</a>, <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.).
       
       <!-- I will highlight suggested modifications in
       <strong>bold</strong>.  -->
@@ -192,13 +199,12 @@
   CORPUS_VIDEO = 7;
 }</code></pre>
 
-    <p>A change to a schema is called an evolution.</p>
+    <p>A change to a schema is called an evolution:</p>
 
       <pre>
   <code>message SearchRequest {
-    <del>required string query = 1;</del>
-    <ins>required string query = 1;</ins>
-    ...
+    required string query = 1;
+    <ins>optional int32 page_number = 2;</ins>
   }</code></pre>
 
   <!-- <p>
@@ -210,16 +216,24 @@
   </p> -->
 
     <p>
-      and creates a new schema <i>version, a specific snapshot of a file.</i>
+      and creates a new schema <i>version, a specific snapshot of a file</i>:
     </p>
 
   <div class="container-2-col">
-    <pre ><code>message SearchRequest {
+    <figure class="card">
+      <pre><code>message SearchRequest {
+  required string query = 1;
 }</code></pre>
+      <figcaption>search-2026-02-28.proto</figcaption>
+    </figure>
 
-    <pre><code>message SearchRequest {
-  required string user = 1;
+    <figure class="card">
+      <pre><code>message SearchRequest {
+  required string query = 1;
+  <ins>optional int32 page_number = 2;</ins>
 }</code></pre>
+      <figcaption>search-2026-03-01.proto</figcaption>
+    </figure>
   </div>
 
     <p>Schema versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and
@@ -279,11 +293,11 @@ flowchart TD
     message and an enum respectively. Use examples I've already used in this 
     document -->
 
-    <p>A method, is said to be made narrower if its request or response is made narrower. (Repeat)</p>
-    <p>A method, is said to be made wider if its request or response is made wiser. (Repeat)</p>
+    <p>A method, is said to be made narrower if its request or response is made narrower.</p>
+    <p>A method, is said to be made wider if its request or response is made wider.</p>
 
-    <p>A service is said to made narrower if any its methods are made narrower (etc)</p>
-    <p>A service is said to made wider if any its methods are made wider (etc)</p>
+    <p>A service is said to made narrower if any its methods are made narrower.</p>
+    <p>A service is said to made wider if any its methods are made wider.</p>
 
     <h2>Problems with symmetric types</h2>
 
@@ -298,14 +312,14 @@ flowchart TD
 }</code></pre>
 
     <pre class="green client1" id="client1"><code>message SearchRequest {
-  required string user = 1;
+  <ins>required string user = 1;</ins>
 }</code></pre>
 
     <pre class="blue server0" id="server0"><code>message SearchRequest {
 }</code></pre>
 
     <pre class="green server1" id="server1"><code>message SearchRequest {
-  required string user = 1;
+  <ins>required string user = 1;</ins>
 }</code></pre>
   </div>
 </figure>
@@ -382,6 +396,7 @@ flowchart TD
 }</code></pre>
 
     <pre class="green client1" id="weak-client1"><code>message SearchRequest {
+  <del>required string user = 1;</del>
 }</code></pre>
 
     <pre class="blue server0" id="weak-server0"><code>message SearchRequest {
@@ -389,6 +404,7 @@ flowchart TD
 }</code></pre>
 
     <pre class="green server1" id="weak-server1"><code>message SearchRequest {
+  <del>required string user = 1;</del>
 }</code></pre>
   </div>
 </figure>
@@ -468,7 +484,9 @@ flowchart TD
     <pre class="green client1" id="enum-str-client1"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;}</code></pre>
+  PHONE_TYPE_HOME = 2;
+  <del>PHONE_TYPE_WORK = 3;</del>
+}</code></pre>
 
     <pre class="blue server0" id="enum-str-server0"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -479,7 +497,9 @@ flowchart TD
     <pre class="green server1" id="enum-str-server1"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;}</code></pre>
+  PHONE_TYPE_HOME = 2;
+  <del>PHONE_TYPE_WORK = 3;</del>
+}</code></pre>
   </div>
 </figure>
 
@@ -560,7 +580,7 @@ flowchart TD
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
   PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+  <ins>PHONE_TYPE_WORK = 3;</ins>
 }</code></pre>
 
     <pre class="blue server0" id="enum-weak-server0"><code>enum PhoneType {
@@ -573,7 +593,7 @@ flowchart TD
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
   PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+  <ins>PHONE_TYPE_WORK = 3;</ins>
 }</code></pre>
   </div>
 </figure>
@@ -660,7 +680,8 @@ flowchart TD
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
   PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_FAX = 4;
+  <del>PHONE_TYPE_WORK = 3;</del>
+  <ins>PHONE_TYPE_FAX = 4;</ins>
 }</code></pre>
 
     <pre class="blue server0" id="deadlock-server0"><code>enum PhoneType {
@@ -674,7 +695,8 @@ flowchart TD
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
   PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_FAX = 4;
+  <del>PHONE_TYPE_WORK = 3;</del>
+  <ins>PHONE_TYPE_FAX = 4;</ins>
 }</code></pre>
   </div>
   <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
@@ -809,7 +831,7 @@ flowchart LR
 
     <p>It relaxes the just deserializer such that it accepts missing payload data.</p>
 
-    <p>But the default must be a member of type field type T.</p>
+    <p>But the default must be a member of type field type <code>T</code>.</p>
 
     <p>This poses 2 problems:</p>
 
@@ -885,18 +907,18 @@ flowchart LR
         <pre class="blue" id="b-client0"><code>message SearchRequest {
 }</code></pre>
         <pre class="green" id="b-client1"><code>message SearchRequest {
-  asymmetric string user = 1;
+  <ins>asymmetric string user = 1;</ins>
 }</code></pre>
         <pre class="blue" id="b-client2"><code>message SearchRequest {
-  required string user = 1;
+  <ins>required</ins> string user = 1;
 }</code></pre>
         <pre class="blue" id="b-server0"><code>message SearchRequest {
 }</code></pre>
         <pre class="green" id="b-server1"><code>message SearchRequest {
-  asymmetric string user = 1;
+  <ins>asymmetric string user = 1;</ins>
 }</code></pre>
         <pre class="blue" id="b-server2"><code>message SearchRequest {
-  required string user = 1;
+  <ins>required</ins> string user = 1;
 }</code></pre>
       </div>
     </figure>
@@ -997,7 +1019,7 @@ and it follows that it may also permit:
 }</code></pre>
         <pre class="green client1" id="v1-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (cel_validation) = "this <= 4"
+    (cel_validation) = "this <= <ins>4</ins>"
   ]
 }</code></pre>
         <pre class="blue server0" id="v1-server0"><code>message SearchRequest {
@@ -1007,7 +1029,7 @@ and it follows that it may also permit:
 }</code></pre>
         <pre class="green server1" id="v1-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (cel_validation) = "this <= 4"
+    (cel_validation) = "this <= <ins>4</ins>"
   ]
 }</code></pre>
       </div>
@@ -1054,7 +1076,7 @@ and it follows that it may also permit:
 }</code></pre>
         <pre class="green client1" id="v2-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (cel_validation) = "this <= 6"
+    (cel_validation) = "this <= <ins>6</ins>"
   ]
 }</code></pre>
         <pre class="blue server0" id="v2-server0"><code>message SearchRequest {
@@ -1064,7 +1086,7 @@ and it follows that it may also permit:
 }</code></pre>
         <pre class="green server1" id="v2-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (cel_validation) = "this <= 6"
+    (cel_validation) = "this <= <ins>6</ins>"
   ]
 }</code></pre>
       </div>
@@ -1116,12 +1138,12 @@ and it follows that it may also permit:
         <pre class="green" id="v3-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
-    (deserialize_cel) = "this <= 6"
+    (deserialize_cel) = "this <= <ins>6</ins>"
   ]
 }</code></pre>
         <pre class="blue" id="v3-client2"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (constructor_cel) = "this <= 6",
+    (constructor_cel) = "this <= <ins>6</ins>",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
@@ -1134,12 +1156,12 @@ and it follows that it may also permit:
         <pre class="green" id="v3-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 5",
-    (deserialize_cel) = "this <= 6"
+    (deserialize_cel) = "this <= <ins>6</ins>"
   ]
 }</code></pre>
         <pre class="blue" id="v3-server2"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (constructor_cel) = "this <= 6",
+    (constructor_cel) = "this <= <ins>6</ins>",
     (deserialize_cel) = "this <= 6"
   ]
 }</code></pre>
@@ -1202,14 +1224,14 @@ and it follows that it may also permit:
 }</code></pre>
         <pre class="green" id="v4-client1"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (constructor_cel) = "this <= 4",
+    (constructor_cel) = "this <= <ins>4</ins>",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
         <pre class="blue" id="v4-client2"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
-    (deserialize_cel) = "this <= 4"
+    (deserialize_cel) = "this <= <ins>4</ins>"
   ]
 }</code></pre>
         <pre class="blue" id="v4-server0"><code>message SearchRequest {
@@ -1220,14 +1242,14 @@ and it follows that it may also permit:
 }</code></pre>
         <pre class="green" id="v4-server1"><code>message SearchRequest {
   required int32 f = 1 [ 
-    (constructor_cel) = "this <= 4",
+    (constructor_cel) = "this <= <ins>4</ins>",
     (deserialize_cel) = "this <= 5"
   ]
 }</code></pre>
         <pre class="blue" id="v4-server2"><code>message SearchRequest {
   required int32 f = 1 [ 
     (constructor_cel) = "this <= 4",
-    (deserialize_cel) = "this <= 4"
+    (deserialize_cel) = "this <= <ins>4</ins>"
   ]
 }</code></pre>
       </div>
@@ -1296,6 +1318,23 @@ and it follows that it may also permit:
       Opus 4.5 on DATE.</p>
 
     <p><em>Use the word "schema evolution"</em></p>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const faviconBase = "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=64&url=";
+        document.querySelectorAll('main a[href^="http"]').forEach(function (link) {
+          if (link.querySelector("img.favicon")) return;
+          const icon = document.createElement("img");
+          icon.src = faviconBase + encodeURIComponent(link.href);
+          icon.className = "favicon";
+          icon.alt = "";
+          icon.loading = "lazy";
+          icon.decoding = "async";
+          link.prepend(document.createTextNode("\u00A0"));
+          link.prepend(icon);
+        });
+      });
+    </script>
 
   </main>
 
