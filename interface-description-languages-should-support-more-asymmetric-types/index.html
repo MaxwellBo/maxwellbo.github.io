@@ -986,9 +986,6 @@ message GetUserResponse {
       <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
       without incompatibility risk, and vice versa.</p>
 
-
-    <p><em>DIAGRAM</em></p>
-
     <p>Use of <code>required</code> was perceived to so fraught with danger at Google that the following tortured
       convention was littered throughout the google3 monorepo</p>:
 
@@ -999,7 +996,7 @@ message GetUserResponse {
 
     <p>and the required label was <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">removed entirely in proto3 syntax.</a></p>
 
-    <p>I strongly believe the removal or this label was unnecessary, and instead an asymmetric label should have been
+    <p>I strongly believe the removal or this label was unnecessary, and an asymmetric label should have been
       added instead.</p>
 
     <p>Thus, the second, less common type of asymmetric type we'll look at is "construct required deserialization
