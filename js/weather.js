@@ -9,6 +9,9 @@ const conditionsEmoji = document.getElementById('conditionsEmoji');
 const currentTemp = document.getElementById('currentTemp');
 const low = document.getElementById('low');
 const high = document.getElementById('high');
+const rainDiv = document.getElementById('rain');
+const rainBanner = document.getElementById('rain-banner');
+const rainBannerText = document.getElementById('rain-banner-text');
 
 
 const setTime = () => {
@@ -68,9 +71,43 @@ const url = 'https://api.open-meteo.com/v1/forecast?'
   + '&current=temperature_2m,is_day,weather_code'
   + '&timezone=America%2FNew_York';
 
+const simulateRain = false;
+
+function updateRainBannerText() {
+  if (!rainBannerText) return;
+  const chunk = 'IT IS CURRENTLY RAINING IN NEW YORK ⋅ ';
+  const repeatCount = Math.max(3, Math.ceil(window.innerWidth / 325) + 2);
+  rainBannerText.textContent = chunk.repeat(repeatCount);
+}
+
+function setRainState(isRaining) {
+  if (rainDiv) {
+    rainDiv.style.display = isRaining ? 'block' : 'none';
+  }
+
+  if (rainBanner) {
+    rainBanner.style.display = isRaining ? 'block' : 'none';
+    if (isRaining) {
+      updateRainBannerText();
+    } else if (rainBannerText) {
+      rainBannerText.textContent = '';
+    }
+  }
+}
+
+setRainState(false);
+
+window.addEventListener('resize', () => {
+  if (rainBanner && rainBanner.style.display === 'block') {
+    updateRainBannerText();
+  }
+});
+
 fetch(url)
   .then(response => response.json())
   .then(data => {
+    const weatherCode = simulateRain ? 63 : data.current.weather_code;
+
     currentTemp.textContent = data.current.temperature_2m.toFixed(1) + '°C';
     high.textContent = "H: " + data.daily.temperature_2m_max[0].toFixed(1) + '°C';
     low.textContent = "L: " + data.daily.temperature_2m_min[0].toFixed(1) + '°C';
@@ -89,7 +126,7 @@ fetch(url)
     // 85, 86	Snow showers slight and heavy
     // 95 *	Thunderstorm: Slight or moderate
     // 96, 99 *	Thunderstorm with slight and heavy hail
-    switch (data.current.weather_code) {
+    switch (weatherCode) {
       case 0: // Clear sky
         conditions.textContent = 'Clear sky';
         element.style.background = 'linear-gradient(0deg, #87CEEB, #FFD700)';
@@ -244,14 +281,8 @@ fetch(url)
       useSkyGradient();
     }
 
-    if (
-      [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(data.current.weather_code)
-    ) {
-      const rainDiv = document.getElementById('rain');
-      if (rainDiv) {
-        rainDiv.style.display = 'block';
-      }
-    }
+    const isRaining = [51, 53, 55, 61, 63, 65, 80, 81, 82].includes(weatherCode);
+    setRainState(isRaining);
 
 
     const daily = data.daily.time.map((time, i) => ({
@@ -315,4 +346,7 @@ fetch(url)
     if (usedGradient) {
       document.getElementById('attribution').style.display = 'block';
     }
+  })
+  .catch(() => {
+    setRainState(false);
   });
