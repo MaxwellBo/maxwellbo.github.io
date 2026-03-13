@@ -126,6 +126,21 @@
       }
     }
 
+    function openWormWindow(left, top) {
+      const popupWidth = 1;
+      const popupHeight = 1;
+
+      const wormWindow = window.open(
+        'worm.html',
+        'worm',
+        `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no`
+      );
+
+      if (wormWindow) {
+        wormWindow.focus();
+      }
+    }
+
     // Open butterfly window when the page loads
     window.addEventListener('load', () => {
       // Don't open butterfly popup on mobile devices (same breakpoint as CSS)
@@ -179,6 +194,12 @@
 
       // Open the butterfly window at the clicked position
       openButterflyWindow(screenX, screenY);
+    }
+
+    function createWorm() {
+      const left = window.screenX + Math.round((window.innerWidth - 1) / 2);
+      const top = window.screenY + Math.round((window.innerHeight - 1) / 2);
+      openWormWindow(left, top);
     }
   </script>
   <meta name="author" content="Max Bo, max@maxbo.me">
@@ -1212,6 +1233,9 @@
             <img src="img/butterfly/0.gif"
               style="position: absolute; bottom: 84%; right: 49%; width: 32px; cursor: pointer;"
               onclick="onButterflyClick(event);" />
+          </div>
+          <div style="margin-top: 8px; text-align: center;">
+            <button type="button" onclick="createWorm();">createWorm</button>
           </div>
         </article>
         <article class="listing" id="html-in-hyde">
