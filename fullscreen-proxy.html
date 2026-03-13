@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fullscreen Proxy</title>
+  <meta name="robots" content="noindex">
+</head>
+<body>
+  <header hidden id="toolbar">
+    <div>
+      <p>Loaded URL</p>
+      <a class="url" id="target-link" href="#" rel="noopener noreferrer" target="_blank"></a>
+    </div>
+    <div>
+      <button id="fullscreen-button" type="button">MAKE FULLSCREEN</button>
+    </div>
+  </header>
+
+  <main hidden id="message"></main>
+
+  <section hidden id="frame-shell">
+    <iframe
+      id="target-frame"
+      title="Fullscreen proxy target"
+      allow="fullscreen; autoplay; clipboard-read; clipboard-write"
+      allowfullscreen
+      referrerpolicy="no-referrer"
+      width="100%"
+      height="900"
+    ></iframe>
+  </section>
+
+  <script>
+    const toolbar = document.getElementById('toolbar');
+    const message = document.getElementById('message');
+    const frameShell = document.getElementById('frame-shell');
+    const targetFrame = document.getElementById('target-frame');
+    const targetLink = document.getElementById('target-link');
+    const fullscreenButton = document.getElementById('fullscreen-button');
+
+    function showMessage(html) {
+      message.innerHTML = html;
+      message.hidden = false;
+      toolbar.hidden = true;
+      frameShell.hidden = true;
+    }
+
+    function parseTargetUrl(value) {
+      if (!value) {
+        return null;
+      }
+
+      try {
+        const parsed = new URL(value);
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+          return null;
+        }
+        return parsed;
+      } catch (error) {
+        return null;
+      }
+    }
+
+    async function requestFullscreenFor(element) {
+      if (element.requestFullscreen) {
+        return element.requestFullscreen();
+      }
+      if (element.webkitRequestFullscreen) {
+        return element.webkitRequestFullscreen();
+      }
+      throw new Error('Fullscreen API not supported in this browser.');
+    }
+
+    function getRawUrlParam() {
+      const query = window.location.search.startsWith('?')
+        ? window.location.search.slice(1)
+        : window.location.search;
+
+      const urlPrefixIndex = query.indexOf('url=');
+      if (urlPrefixIndex === -1) {
+        return null;
+      }
+
+      return query.slice(urlPrefixIndex + 4) || null;
+    }
+
+    function isFrameShellFullscreen() {
+      return document.fullscreenElement === frameShell || document.webkitFullscreenElement === frameShell;
+    }
+
+    function syncFrameSize() {
+      if (isFrameShellFullscreen()) {
+        targetFrame.width = String(window.innerWidth);
+        targetFrame.height = String(window.innerHeight);
+        return;
+      }
+
+      targetFrame.width = '100%';
+      targetFrame.height = String(Math.max(900, window.innerHeight - toolbar.offsetHeight - 16));
+    }
+
+    const targetUrl = parseTargetUrl(getRawUrlParam());
+
+    if (!targetUrl) {
+      showMessage(
+        '<h1>Missing or invalid URL</h1>' +
+        '<p>Open this page with a <code>?url=</code> query parameter containing an <code>http://</code> or <code>https://</code> URL.</p>' +
+        '<p>Example: <code>?url=https://example.com</code></p>'
+      );
+    } else {
+      document.title = 'Fullscreen Proxy: ' + targetUrl.hostname;
+      targetFrame.src = targetUrl.toString();
+      targetLink.href = targetUrl.toString();
+      targetLink.textContent = targetUrl.toString();
+
+      toolbar.hidden = false;
+      frameShell.hidden = false;
+      syncFrameSize();
+
+      fullscreenButton.addEventListener('click', async () => {
+        try {
+          await requestFullscreenFor(frameShell);
+        } catch (error) {
+          showMessage(
+            '<h1>Could not enter fullscreen</h1>' +
+            '<p>' + error.message + '</p>'
+          );
+        }
+      });
+
+      targetFrame.addEventListener('load', () => {
+        fullscreenButton.disabled = false;
+      });
+
+      window.addEventListener('resize', syncFrameSize);
+      document.addEventListener('fullscreenchange', syncFrameSize);
+      document.addEventListener('webkitfullscreenchange', syncFrameSize);
+
+      targetFrame.addEventListener('error', () => {
+        showMessage(
+          '<h1>Unable to load the requested site</h1>' +
+          '<p>The target may block being embedded in an iframe with <code>X-Frame-Options</code> or CSP <code>frame-ancestors</code>.</p>'
+        );
+      });
+    }
+  </script>
+</body>
+</html>
