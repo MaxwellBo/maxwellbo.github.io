@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>worm</title>
+  <style>
+    :root {
+      color-scheme: light;
+    }
+
+    body {
+      margin: 0;
+      background: transparent;
+      overflow: hidden;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+    }
+
+    #worm {
+      width: 100vw;
+      height: 15px;
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      padding: 1px;
+      box-sizing: border-box;
+    }
+
+    .segment {
+      background: #ff8fc7;
+      border: 1px solid #c64d85;
+      box-sizing: border-box;
+    }
+
+    .segment:first-child {
+      border-radius: 8px 4px 4px 8px;
+    }
+
+    .segment:last-child {
+      border-radius: 4px 8px 8px 4px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="worm">
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+    <div class="segment"></div>
+  </div>
+
+  <script>
+    const minWidth = 170;
+    const maxWidth = 240;
+    const windowHeight = 21;
+    const cycleFrames = 30;
+    const pauseFrames = 18;
+    const leftInset = 32;
+    const bottomInset = 112;
+
+    let frame = 0;
+    let pauseFrame = 0;
+    let animationInterval;
+    let anchorLeft = leftInset;
+    let phase = 'stretch';
+
+    function getBottomY() {
+      return Math.max(0, window.screen.availHeight - windowHeight - bottomInset);
+    }
+
+    if (window.resizeTo) {
+      window.resizeTo(minWidth, windowHeight);
+    }
+
+    if (window.moveTo) {
+      window.moveTo(anchorLeft, getBottomY());
+    }
+
+    function animate() {
+      const widthRange = maxWidth - minWidth;
+      const progress = frame / cycleFrames;
+      const width = phase === 'pause'
+        ? minWidth
+        : Math.round(
+          phase === 'stretch'
+            ? minWidth + (progress * widthRange)
+            : maxWidth - (progress * widthRange)
+        );
+
+      let x;
+
+      if (phase === 'stretch') {
+        x = anchorLeft;
+      } else if (phase === 'contract') {
+        const anchorRight = anchorLeft + maxWidth;
+        x = anchorRight - width;
+      } else {
+        x = anchorLeft;
+      }
+
+      if (x + width >= window.screen.availWidth) {
+        clearInterval(animationInterval);
+        window.close();
+        return;
+      }
+
+      if (window.resizeTo) {
+        window.resizeTo(width, windowHeight);
+      }
+
+      if (window.moveTo) {
+        window.moveTo(x, getBottomY());
+      }
+
+      if (phase === 'pause') {
+        pauseFrame += 1;
+        if (pauseFrame > pauseFrames) {
+          phase = 'stretch';
+          pauseFrame = 0;
+        }
+        return;
+      }
+
+      frame += 1;
+
+      if (frame > cycleFrames) {
+        if (phase === 'stretch') {
+          phase = 'contract';
+        } else {
+          anchorLeft += widthRange;
+          phase = 'pause';
+          pauseFrame = 0;
+        }
+        frame = 0;
+      }
+    }
+
+    setTimeout(() => {
+      animationInterval = setInterval(animate, 1000 / 10);
+    }, 1000);
+  </script>
+</body>
+
+</html>
