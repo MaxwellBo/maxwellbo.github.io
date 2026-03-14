@@ -2452,9 +2452,11 @@
   <script src="scrollbuddy/script.js"></script>
 
   <script>
-    // Moon in tab title; marquee in URL query parameter.
+    // Animate marquee and moon phase in the URL query parameters.
     (() => {
       const moonPhases = ['🌑', '🌒', '🌓', '🌔', '🌕', '🌖', '🌗', '🌘'];
+      const baseTitle = 'Max Bo';
+      const decorators = ['❀', '❁', '❂', '❃', '❅', '❆', '❈', '❉', '❊', '❋', '✤', '✥', '✦', '✧', '✩', '✪', '✫', '✬', '✭', '✮', '✯', '✰', '✱', '✲', '✵', '✶', '✷', '✸', '✹', '✺', '✻', '✼', '✽', '✾', '✿', '❀'];
       const text = 'welcome';
       const width = 14;
       const padding = '.'.repeat(width);
@@ -2467,24 +2469,34 @@
 
       let phaseIndex = 0;
       let frameIndex = 0;
+      let decoratorIndex = 0;
 
       function updateMoonAndMarquee() {
         const moon = moonPhases[phaseIndex];
         const marquee = frames[frameIndex];
 
-        window.title = `Max Bo ${moon}`;
-        document.title = window.title;
-
         const url = new URL(window.location);
-        url.searchParams.set('m', marquee);
+        const params = new URLSearchParams();
+        params.set('l', moon);
+        params.set('m', marquee);
+        url.search = params.toString();
         window.history.replaceState({ marquee }, '', url);
 
         phaseIndex = (phaseIndex + 1) % moonPhases.length;
         frameIndex = (frameIndex + 1) % frames.length;
       }
 
+      function updateDecorator() {
+        const decorator = decorators[decoratorIndex];
+        document.title = `${decorator} ${baseTitle} ${decorator}`;
+        decoratorIndex = (decoratorIndex + 1) % decorators.length;
+      }
+
+      document.title = `${decorators[0]} ${baseTitle} ${decorators[0]}`;
       updateMoonAndMarquee();
-      setInterval(updateMoonAndMarquee, 500);
+      updateDecorator();
+      setInterval(updateMoonAndMarquee, 1000);
+      setInterval(updateDecorator, 1000);
     })();
   </script>
 
