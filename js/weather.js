@@ -11,7 +11,6 @@ const low = document.getElementById('low');
 const high = document.getElementById('high');
 const rainDiv = document.getElementById('rain');
 const rainBanner = document.getElementById('rain-banner');
-const rainBannerText = document.getElementById('rain-banner-text');
 
 
 const setTime = () => {
@@ -73,35 +72,17 @@ const url = 'https://api.open-meteo.com/v1/forecast?'
 
 const simulateRain = false;
 
-function updateRainBannerText() {
-  if (!rainBannerText) return;
-  const chunk = 'IT IS CURRENTLY RAINING IN NEW YORK ⋅ ';
-  const repeatCount = Math.max(3, Math.ceil(window.innerWidth / 325) + 2);
-  rainBannerText.textContent = chunk.repeat(repeatCount);
-}
-
 function setRainState(isRaining) {
   if (rainDiv) {
     rainDiv.style.display = isRaining ? 'block' : 'none';
   }
 
   if (rainBanner) {
-    rainBanner.style.display = isRaining ? 'block' : 'none';
-    if (isRaining) {
-      updateRainBannerText();
-    } else if (rainBannerText) {
-      rainBannerText.textContent = '';
-    }
+    rainBanner.style.visibility = isRaining ? 'visible' : 'hidden';
   }
 }
 
 setRainState(false);
-
-window.addEventListener('resize', () => {
-  if (rainBanner && rainBanner.style.display === 'block') {
-    updateRainBannerText();
-  }
-});
 
 fetch(url)
   .then(response => response.json())

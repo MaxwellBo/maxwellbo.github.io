@@ -9,26 +9,14 @@
 }
 
 #rain-banner {
-  display: none;
+  display: block;
+  visibility: hidden;
   width: 100%;
   background: rgb(92, 96, 98);
-}
-
-#rain-banner-text {
   color: #ffffff;
   padding: 0.5ch;
   white-space: nowrap;
   text-transform: uppercase;
-  animation: rain-banner-text-blink 3s step-end infinite;
-}
-
-@keyframes rain-banner-text-blink {
-  0%, 66% {
-    opacity: 1;
-  }
-  66%, 100% {
-    opacity: 0;
-  }
 }
 
 #rain {
