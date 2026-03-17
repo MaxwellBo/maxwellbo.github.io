@@ -9,8 +9,7 @@
 }
 
 #rain-banner {
-  display: block;
-  visibility: hidden;
+  display: none;
   width: 100%;
   background: rgb(92, 96, 98);
   color: #ffffff;

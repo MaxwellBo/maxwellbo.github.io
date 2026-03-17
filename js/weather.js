@@ -78,7 +78,7 @@ function setRainState(isRaining) {
   }
 
   if (rainBanner) {
-    rainBanner.style.visibility = isRaining ? 'visible' : 'hidden';
+    rainBanner.style.display = isRaining ? 'block' : 'none';
   }
 }
 
