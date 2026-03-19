@@ -162,5 +162,11 @@ input:focus + label {
 
 .marquee-inner {
   display: inline-block;
-  will-change: transform;
+  padding-left: 100%;
+  animation: marquee-scroll linear infinite;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
 }
