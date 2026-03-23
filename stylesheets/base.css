@@ -154,13 +154,3 @@ input:focus + label {
   image-rendering: -moz-crisp-edges;
   image-rendering: crisp-edges;
 }
-
-.marquee {
-  overflow: hidden;
-  white-space: nowrap;
-}
-
-.marquee-inner {
-  display: inline-block;
-  will-change: transform;
-}

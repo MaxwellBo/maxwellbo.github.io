@@ -968,10 +968,10 @@
       <a href="atom.xml">⚛&nbsp;&nbsp;atom.xml</a>
       󱠡
 
-      <div id="ticker2" class="marquee dindong" scrollamount="7" style="flex: 1">
+      <marquee id="ticker2" class="dindong" scrollamount="7" style="flex: 1">
         <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;"
           onclick="onButterflyClick(event);" />
-      </div>
+      </marquee>
       <script type="module">
         renderAtom('atom.xml', 'ticker2');
       </script>
@@ -980,9 +980,9 @@
       <a href="https://letterboxd.com/mbo_/rss/">⚛</a>
       <a href="https://letterboxd.com/mbo_">letterboxd.com/mbo_</a>
       <span>⤞</span>
-      <div id="feed" class="marquee" scrollamount="9" style="flex: 1;">
+      <marquee id="feed" scrollamount="9" style="flex: 1;">
         ඞ
-      </div>
+      </marquee>
       <script type="module">
         renderRss('https://mbo-letterboxdrss.web.val.run', 'feed', (title) => {
           const [name, stars] = title.split(" - ");
@@ -995,9 +995,9 @@
       <a href="https://rateyourmusic.com/~mbo/data/rss">⚛</a>
       <a href="https://rateyourmusic.com/~mbo">rateyourmusic.com/&tilde;mbo</a>
       <span>⤞</span>
-      <div id="rymFeed" class="marquee" scrollamount="8" style="flex: 1;">
+      <marquee id="rymFeed" scrollamount="8" style="flex: 1;">
         ඞ
-      </div>
+      </marquee>
       <script type="module">
         renderRss('rym.xml', 'rymFeed', (title) => {
           if (!title) return title;
@@ -1019,9 +1019,9 @@
       <a href="https://www.are.na/max-bo/feed/rss">⚛</a>
       <a href="https://www.are.na/max-bo">are.na/max-bo</a>
       <span>⤞</span>
-      <div id="arenaFeed" class="marquee" scrollamount="7" style="flex: 1;">
+      <marquee id="arenaFeed" scrollamount="7" style="flex: 1;">
         ඞ
-      </div>
+      </marquee>
       <script type="module">
         renderRss('https://mbo-arenarss.web.val.run', 'arenaFeed',
           (title) => title || "Untitled"
@@ -1736,9 +1736,9 @@
         </style>
         <article id="come-and-take-it" class="listing art">
           <div class="star">★</div>
-          <div class="marquee marquee-container">
+          <marquee class="marquee-container">
             &lt;center&gt; &lt;marquee&gt; &lt;/marquee&gt; &lt;/center&gt;
-          </div>
+          </marquee>
           <div>COME AND TAKE IT</div>
         </article>
       </div>
@@ -2272,10 +2272,10 @@
       󱠡
     </div>
 
-    <div id="ticker" class="marquee dindong" scrollamount="7">
+    <marquee id="ticker" class="dindong" scrollamount="7">
       <img src="img/butterfly.gif" style="width: 16px; display: inline-block; cursor: pointer;"
         onclick="onButterflyClick(event);" />
-    </div>
+    </marquee>
     <script type="module">
       renderAtom('atom.xml', 'ticker');
     </script>
@@ -2547,41 +2547,6 @@
     </aside>
   </div>
   <script>
-    (function initMarquees() {
-      var SCROLL_DELAY = 85;
-      document.querySelectorAll('.marquee').forEach(function (el) {
-        var scrollAmount = parseInt(el.getAttribute('scrollamount')) || 6;
-        var pxPerMs = scrollAmount / SCROLL_DELAY;
-
-        var inner = document.createElement('span');
-        inner.className = 'marquee-inner';
-        while (el.firstChild) inner.appendChild(el.firstChild);
-        el.appendChild(inner);
-
-        var observer = new MutationObserver(function (mutations) {
-          mutations.forEach(function (m) {
-            Array.from(m.addedNodes).forEach(function (node) {
-              if (node !== inner) inner.appendChild(node);
-            });
-          });
-        });
-        observer.observe(el, { childList: true });
-
-        var pos = el.offsetWidth;
-        var last = null;
-        function step(ts) {
-          if (last === null) last = ts;
-          var dt = ts - last;
-          last = ts;
-          pos -= pxPerMs * dt;
-          if (pos < -inner.offsetWidth) pos = el.offsetWidth;
-          inner.style.transform = 'translateX(' + pos + 'px)';
-          requestAnimationFrame(step);
-        }
-        requestAnimationFrame(step);
-      });
-    })();
-
     (function () {
       var toggle = document.getElementById('devcommentary-toggle');
       var asides = document.querySelectorAll('#devcommentary-container aside.devcommentary');
