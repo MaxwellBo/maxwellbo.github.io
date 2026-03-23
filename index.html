@@ -2549,31 +2549,36 @@
   <script>
     (function initMarquees() {
       var SCROLL_DELAY = 85;
-
-      function calibrate(el, inner) {
-        var scrollAmount = parseInt(el.getAttribute('scrollamount')) || 6;
-        var duration = inner.offsetWidth * SCROLL_DELAY / scrollAmount;
-        inner.style.animationDuration = duration + 'ms';
-      }
-
       document.querySelectorAll('.marquee').forEach(function (el) {
+        var scrollAmount = parseInt(el.getAttribute('scrollamount')) || 6;
+        var pxPerMs = scrollAmount / SCROLL_DELAY;
+
         var inner = document.createElement('span');
         inner.className = 'marquee-inner';
         while (el.firstChild) inner.appendChild(el.firstChild);
         el.appendChild(inner);
 
-        calibrate(el, inner);
-
         var observer = new MutationObserver(function (mutations) {
-          var moved = false;
           mutations.forEach(function (m) {
             Array.from(m.addedNodes).forEach(function (node) {
-              if (node !== inner) { inner.appendChild(node); moved = true; }
+              if (node !== inner) inner.appendChild(node);
             });
           });
-          if (moved) calibrate(el, inner);
         });
         observer.observe(el, { childList: true });
+
+        var pos = el.offsetWidth;
+        var last = null;
+        function step(ts) {
+          if (last === null) last = ts;
+          var dt = ts - last;
+          last = ts;
+          pos -= pxPerMs * dt;
+          if (pos < -inner.offsetWidth) pos = el.offsetWidth;
+          inner.style.transform = 'translateX(' + pos + 'px)';
+          requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
       });
     })();
 
