@@ -196,10 +196,34 @@
       openButterflyWindow(screenX, screenY);
     }
 
-    function createWorm() {
-      const left = window.screenX + Math.round((window.innerWidth - 1) / 2);
-      const top = window.screenY + Math.round((window.innerHeight - 1) / 2);
-      openWormWindow(left, top);
+    function onWormTileClick(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const tile = event.currentTarget;
+      const screenX = window.screenX + event.clientX;
+      const screenY = window.screenY + event.clientY;
+      const hoverImg = document.getElementById('hover-img');
+      if (hoverImg) {
+        hoverImg.remove();
+      }
+      tile.remove();
+      openWormWindow(screenX, screenY);
+    }
+
+    function onWormTileKeydown(event) {
+      if (event.key !== 'Enter' && event.key !== ' ') return;
+      event.preventDefault();
+      event.stopPropagation();
+      const tile = event.currentTarget;
+      const r = tile.getBoundingClientRect();
+      const screenX = window.screenX + Math.round(r.left + r.width / 2);
+      const screenY = window.screenY + Math.round(r.top + r.height / 2);
+      const hoverImg = document.getElementById('hover-img');
+      if (hoverImg) {
+        hoverImg.remove();
+      }
+      tile.remove();
+      openWormWindow(screenX, screenY);
     }
   </script>
   <meta name="author" content="Max Bo, max@maxbo.me">
@@ -211,6 +235,7 @@
   <link href="stylesheets/base.css" rel="stylesheet">
   <link href="stylesheets/utils.css" rel="stylesheet">
   <link href="stylesheets/index.css" rel="stylesheet">
+  <link href="stylesheets/worm.css" rel="stylesheet">
   <link href="stylesheets/weather.css" rel="stylesheet">
   <link rel="icon" type="image/png" href="favicon.ico">
   <link href="atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide Atom feed" />
@@ -1873,6 +1898,43 @@
         #cccbd-preview {
           font-family: monospace;
         }
+
+        #worm-tile {
+          cursor: pointer; 
+          display: flex;
+          flex-direction: column;
+          min-height: 14ch;
+          padding-bottom: 0.5ch;
+          overflow: hidden;
+          background: #fff;
+        }
+
+        #worm-tile .worm-tile-body {
+          flex: 1 1 auto;
+          min-height: 8ch;
+          width: 100%;
+          box-sizing: border-box;
+        }
+
+        #worm-tile p.title {
+          flex-shrink: 0;
+          padding-left: 0.5rem;
+          padding-right: 0.5rem;
+          margin: 0;
+        }
+
+        /* id + segment rules beat .pseudolink:hover alone — mirror base.css link hover */
+        #worm-tile.pseudolink:hover,
+        #worm-tile.pseudolink:hover * {
+          cursor: url('img/kirbywandpuff.cur'), auto;
+          background-color: color(display-p3 1 0 1);
+          color: white;
+        }
+
+        #worm-tile.pseudolink:hover .worm-body .segment {
+          background-color: color(display-p3 1 0 1);
+          border-color: white;
+        }
       </style>
       <div class="cards">
         <script type="module">
@@ -1917,8 +1979,27 @@
             <p class="title">cccbd</p>
           </a>
         </article>
-        <article id="cycle" class="art" onclick="createWorm();" style="cursor: pointer;">
+        <article id="cycle" class="art">
         </article>
+        <article id="worm-tile" class="art pseudolink" onclick="onWormTileClick(event)" title="da worm"
+          aria-labelledby="worm-tile-label"
+          tabindex="0"
+          onkeydown="onWormTileKeydown(event)">
+          <div class="worm-tile-body worm-body" aria-hidden="true">
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+            <div class="segment"></div>
+          </div>
+          <p class="title" id="worm-tile-label">da worm</p>
+        </article>
+
         <article class="listing observable dark">
           <a href="https://observablehq.com/@mjbo/whale-choir">
             <img

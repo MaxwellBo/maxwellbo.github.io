@@ -147,6 +147,7 @@
 
 
 #cycle {
+  min-height: 14ch;
   animation: cycle 30s linear infinite;
 }
 

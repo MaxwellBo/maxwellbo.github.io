@@ -1,0 +1,22 @@
+/* Shared worm UI: 10-segment grid used by worm.html and index listing preview */
+.worm-body {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  padding: 1px;
+  box-sizing: border-box;
+}
+
+.worm-body .segment {
+  background: #ff8fc7;
+  border: 1px solid #c64d85;
+  box-sizing: border-box;
+  min-height: 0;
+}
+
+.worm-body .segment:first-child {
+  border-radius: 8px 4px 4px 8px;
+}
+
+.worm-body .segment:last-child {
+  border-radius: 4px 8px 8px 4px;
+}

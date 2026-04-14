@@ -4,6 +4,7 @@
 <head>
   <meta charset="utf-8">
   <title>worm</title>
+  <link href="stylesheets/worm.css" rel="stylesheet">
   <style>
     :root {
       color-scheme: light;
@@ -21,30 +22,12 @@
     #worm {
       width: 100vw;
       height: 15px;
-      display: grid;
-      grid-template-columns: repeat(10, 1fr);
-      padding: 1px;
-      box-sizing: border-box;
-    }
-
-    .segment {
-      background: #ff8fc7;
-      border: 1px solid #c64d85;
-      box-sizing: border-box;
-    }
-
-    .segment:first-child {
-      border-radius: 8px 4px 4px 8px;
-    }
-
-    .segment:last-child {
-      border-radius: 4px 8px 8px 4px;
     }
   </style>
 </head>
 
 <body>
-  <div id="worm">
+  <div id="worm" class="worm-body">
     <div class="segment"></div>
     <div class="segment"></div>
     <div class="segment"></div>

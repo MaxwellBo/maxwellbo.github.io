@@ -62,39 +62,57 @@ script {
   display: none;
 }
 
-a {
+a,
+.pseudolink {
   color: color(display-p3 0 0 1);
   text-decoration: none;
 }
 
-.dark a {
+.pseudolink {
+  cursor: pointer;
+}
+
+.dark a,
+.dark .pseudolink {
   color: color(display-p3 0.7 0.7 1);
 }
 
-a:active {
+a:active,
+.pseudolink:active {
   color: orange;
 }
 
-a:visited {
+a:visited,
+.pseudolink:visited {
   color: color(display-p3 1 0 1);
 }
 
-.dark a:visited {
+.dark a:visited,
+.dark .pseudolink:visited {
   color: color(display-p3 1 0.6 1);
 }
 
-a:hover, a:hover * {
+a:hover,
+a:hover *,
+.pseudolink:hover,
+.pseudolink:hover * {
   cursor: url('../img/kirbywandpuff.cur'), auto;
   background-color: color(display-p3 1 0 1);
   color: white;
 }
 
-a:hover:visited, a:hover:visited * {
+a:hover:visited,
+a:hover:visited *,
+.pseudolink:hover:visited,
+.pseudolink:hover:visited * {
   background-color: color(display-p3 1 0 1);
   color: white;
 }
 
-a:hover:active:visited, a:hover:active:visited * {
+a:hover:active:visited,
+a:hover:active:visited *,
+.pseudolink:hover:active:visited,
+.pseudolink:hover:active:visited * {
   background-color: color(display-p3 1 1 0);
   color: black;
 }
