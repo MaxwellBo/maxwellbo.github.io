@@ -196,34 +196,10 @@
       openButterflyWindow(screenX, screenY);
     }
 
-    function onWormTileClick(event) {
-      event.preventDefault();
-      event.stopPropagation();
-      const tile = event.currentTarget;
-      const screenX = window.screenX + event.clientX;
-      const screenY = window.screenY + event.clientY;
-      const hoverImg = document.getElementById('hover-img');
-      if (hoverImg) {
-        hoverImg.remove();
-      }
-      tile.remove();
-      openWormWindow(screenX, screenY);
-    }
-
-    function onWormTileKeydown(event) {
-      if (event.key !== 'Enter' && event.key !== ' ') return;
-      event.preventDefault();
-      event.stopPropagation();
-      const tile = event.currentTarget;
-      const r = tile.getBoundingClientRect();
-      const screenX = window.screenX + Math.round(r.left + r.width / 2);
-      const screenY = window.screenY + Math.round(r.top + r.height / 2);
-      const hoverImg = document.getElementById('hover-img');
-      if (hoverImg) {
-        hoverImg.remove();
-      }
-      tile.remove();
-      openWormWindow(screenX, screenY);
+    function wormTileClick(e) {
+      document.getElementById('hover-img')?.remove();
+      e.currentTarget.remove();
+      openWormWindow(window.screenX + e.clientX, window.screenY + e.clientY);
     }
   </script>
   <meta name="author" content="Max Bo, max@maxbo.me">
@@ -1981,10 +1957,8 @@
         </article>
         <article id="cycle" class="art">
         </article>
-        <article id="worm-tile" class="art pseudolink" onclick="onWormTileClick(event)" title="da worm"
-          aria-labelledby="worm-tile-label"
-          tabindex="0"
-          onkeydown="onWormTileKeydown(event)">
+        <article id="worm-tile" class="art pseudolink" onclick="wormTileClick(event)" title="da worm"
+          aria-labelledby="worm-tile-label">
           <div class="worm-tile-body worm-body" aria-hidden="true">
             <div class="segment"></div>
             <div class="segment"></div>
