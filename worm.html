@@ -46,17 +46,27 @@
     const windowHeight = 21;
     const cycleFrames = 30;
     const pauseFrames = 18;
-    const leftInset = 32;
-    const bottomInset = 112;
 
     let frame = 0;
     let pauseFrame = 0;
     let animationInterval;
-    let anchorLeft = leftInset;
     let phase = 'stretch';
 
-    function getBottomY() {
-      return Math.max(0, window.screen.availHeight - windowHeight - bottomInset);
+    /*
+     * butterfly.html: no resize on load, so screenX/screenY match window.open(left,top).
+     * Here we resize immediately; the OS often moves the window, and screenX/Y can be 0
+     * in inline script. Spawn position comes from query params (set by openWormWindow).
+     */
+    const q = new URLSearchParams(window.location.search);
+    let anchorLeft = parseInt(q.get('spawnLeft'), 10);
+    let anchorY = parseInt(q.get('spawnTop'), 10);
+    if (!Number.isFinite(anchorLeft) || !Number.isFinite(anchorY)) {
+      anchorLeft = window.screenX;
+      anchorY = window.screenY;
+    }
+    if (anchorLeft === 0 && anchorY === 0) {
+      anchorLeft = window.screen.width - 82;
+      anchorY = Math.round(window.screen.height / 2) - 16;
     }
 
     if (window.resizeTo) {
@@ -64,7 +74,7 @@
     }
 
     if (window.moveTo) {
-      window.moveTo(anchorLeft, getBottomY());
+      window.moveTo(anchorLeft, anchorY);
     }
 
     function animate() {
@@ -100,7 +110,7 @@
       }
 
       if (window.moveTo) {
-        window.moveTo(x, getBottomY());
+        window.moveTo(x, anchorY);
       }
 
       if (phase === 'pause') {

@@ -129,11 +129,13 @@
     function openWormWindow(left, top) {
       const popupWidth = 1;
       const popupHeight = 1;
-
+      const lx = Math.round(left);
+      const ty = Math.round(top);
+      /* worm.html must read spawn from the URL: after resizeTo(), screenX/screenY are unreliable vs butterfly.html (no resize on load). */
       const wormWindow = window.open(
-        'worm.html',
+        `worm.html?spawnLeft=${lx}&spawnTop=${ty}`,
         'worm',
-        `width=${popupWidth},height=${popupHeight},left=${left},top=${top},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no`
+        `width=${popupWidth},height=${popupHeight},left=${lx},top=${ty},resizable=no,scrollbars=no,toolbar=no,menubar=no,location=no,status=no`
       );
 
       if (wormWindow) {
@@ -198,7 +200,18 @@
 
     function wormTileClick(e) {
       document.getElementById('hover-img')?.remove();
-      e.currentTarget.remove();
+      const tile = e.currentTarget;
+      const label = document.getElementById('worm-tile-label');
+      if (label) {
+        label.textContent = 'bye bye worm :C';
+      }
+      tile.title = 'bye bye worm :C';
+      const worm = tile.querySelector('.worm-tile-body');
+      if (worm) {
+        worm.remove();
+        tile.classList.add('worm-tile-empty');
+      }
+      /* Same screen coords as onButterflyClick (viewport + opener window position). */
       openWormWindow(window.screenX + e.clientX, window.screenY + e.clientY);
     }
   </script>
@@ -1883,6 +1896,10 @@
           padding-bottom: 0.5ch;
           overflow: hidden;
           background: #fff;
+        }
+
+        #worm-tile.worm-tile-empty {
+          min-height: 0;
         }
 
         #worm-tile .worm-tile-body {
