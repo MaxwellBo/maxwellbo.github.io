@@ -140,7 +140,9 @@
 
       if (wormWindow) {
         wormWindow.focus();
+        return true;
       }
+      return false;
     }
 
     // Open butterfly window when the page loads
@@ -200,6 +202,17 @@
 
     function wormTileClick(e) {
       document.getElementById('hover-img')?.remove();
+      /* Same screen coords as onButterflyClick (viewport + opener window position). */
+      const opened = openWormWindow(
+        window.screenX + e.clientX,
+        window.screenY + e.clientY
+      );
+      if (!opened) {
+        alert(
+          'Click the worm on desktop or in an environment where pop-ups are supported or allowed (this site needs to allow pop-ups).'
+        );
+        return;
+      }
       const tile = e.currentTarget;
       const label = document.getElementById('worm-tile-label');
       if (label) {
@@ -211,8 +224,6 @@
         worm.remove();
         tile.classList.add('worm-tile-empty');
       }
-      /* Same screen coords as onButterflyClick (viewport + opener window position). */
-      openWormWindow(window.screenX + e.clientX, window.screenY + e.clientY);
     }
   </script>
   <meta name="author" content="Max Bo, max@maxbo.me">
