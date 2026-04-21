@@ -13,10 +13,11 @@ flood.textureWidth = 314;
 flood.textureHeight = 98;
 flood.drainSound = "https://melonking.net/audio/ui/flush.mp3";
 flood.drainTooSoonSound = "https://melonking.net/audio/ui/clunk.mp3";
-flood.updateSpeed = 5000; // Please do not lower!
+flood.updateSpeed = 12000; // ms between local level ticks (MelonKing default 5000; longer = slower refill).
+flood.fillStartDelayMs = 45000; // Local sim: no rise until this long after load.
+flood.localRisePerTick = 0.5; // Local sim: added to level each updateFloodLevel (0–100 scale).
 flood.renderSpeed = 70;
 flood.maxLevel = 100; // Server - Do not Edit.
-flood.scaleFactor = 0.2; // Scale flood level to 20%
 flood.bilgeDelay = 10000; // Server - Do not Edit.
 flood.changeStep = 0.1;
 flood.includeInfo = false; // Returns a list of all sites who are flooded.
@@ -42,6 +43,7 @@ flood.lastBilge = 0;
 flood.logicLevel = 0;
 flood.level = 0;
 flood.info = undefined;
+flood.localFloodNotBefore = undefined; // set on DOMContentLoaded (epoch ms when rise may start)
 
 // HTML references!
 flood.html = {};
@@ -55,6 +57,8 @@ flood.audio.clunk = undefined;
 
 // Setup event!
 window.addEventListener("DOMContentLoaded", async () => {
+    flood.localFloodNotBefore = Date.now() + flood.fillStartDelayMs;
+
     if (flood.disableInFrames && window !== window.parent) {
         updateFloodLevel(false, false);
         flood.updateLoop = setInterval(updateFloodLevel, flood.updateSpeed);
@@ -123,21 +127,38 @@ function doBilge() {
     flood.audio.flush.play();
 }
 
-// Communicate with the flood server!
-async function updateFloodLevel(doBilge = false, doQuickUpdate = false) {
-    let path = window.location.pathname;
-    fetch(flood.serverURL + "/flood?bilge=" + doBilge + "&info=" + flood.includeInfo + "&path=" + path)
-        .then(function (response) {
-            return response.json();
-        })
-        .then(function (jsonResponse) {
-            flood.levelCache = flood.level;
-            flood.level = jsonResponse.level * flood.scaleFactor;
-            flood.info = jsonResponse.info;
-            if (doQuickUpdate) {
-                flood.html.flood.style.top = flood.maxLevel - flood.level + "%";
-            }
-        });
+const localSimLevelByPath = Object.create(null);
+
+// Browser-only flood state: same 0–100 units as brain.melonking.net (see original updateFloodLevel).
+// Gentler than the live ring: slower rise per tick.
+function useLocalState(doBilge, path) {
+    let level = localSimLevelByPath[path];
+    if (typeof level !== "number" || Number.isNaN(level)) level = 0;
+    level = Math.max(0, Math.min(100, level));
+
+    if (doBilge) {
+        level = 0;
+        flood.localFloodNotBefore = Date.now() + flood.fillStartDelayMs;
+    } else if (Date.now() >= flood.localFloodNotBefore) {
+        level = Math.min(100, level + flood.localRisePerTick);
+    }
+
+    localSimLevelByPath[path] = level;
+
+    const payload = { level: Math.round(level) };
+    if (flood.includeInfo) payload.info = [];
+    return payload;
+}
+
+function updateFloodLevel(doBilge = false, doQuickUpdate = false) {
+    const path = window.location.pathname;
+    const jsonResponse = useLocalState(doBilge, path);
+    flood.levelCache = flood.level;
+    flood.level = jsonResponse.level;
+    flood.info = jsonResponse.info;
+    if (doQuickUpdate) {
+        flood.html.flood.style.top = flood.maxLevel - flood.level + "%";
+    }
 }
 
 // Update the visuals
