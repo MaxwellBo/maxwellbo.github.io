@@ -14,8 +14,8 @@ flood.textureHeight = 98;
 flood.drainSound = "https://melonking.net/audio/ui/flush.mp3";
 flood.drainTooSoonSound = "https://melonking.net/audio/ui/clunk.mp3";
 flood.updateSpeed = 12000; // ms between local level ticks (MelonKing default 5000; longer = slower refill).
-flood.fillStartDelayMs = 45000; // Local sim: no rise until this long after load.
-flood.localRisePerTick = 0.3; // Local sim: added to level each updateFloodLevel (0–100 scale).
+flood.fillStartDelayMs = 30000; // Local sim: no rise until this long after load.
+flood.localRisePerTick = 1; // Local sim: added to level each updateFloodLevel (0–100 scale).
 flood.renderSpeed = 70;
 flood.maxLevel = 100; // Server - Do not Edit.
 flood.bilgeDelay = 10000; // Server - Do not Edit.
@@ -128,6 +128,7 @@ function doBilge() {
 }
 
 const localSimLevelByPath = Object.create(null);
+const localPermanentlyDrainedByPath = Object.create(null);
 
 // Browser-only flood state: same 0–100 units as brain.melonking.net (see original updateFloodLevel).
 // Gentler than the live ring: slower rise per tick.
@@ -138,8 +139,8 @@ function useLocalState(doBilge, path) {
 
     if (doBilge) {
         level = 0;
-        flood.localFloodNotBefore = Date.now() + flood.fillStartDelayMs;
-    } else if (Date.now() >= flood.localFloodNotBefore) {
+        localPermanentlyDrainedByPath[path] = true;
+    } else if (!localPermanentlyDrainedByPath[path] && Date.now() >= flood.localFloodNotBefore) {
         level = Math.min(100, level + flood.localRisePerTick);
     }
 
