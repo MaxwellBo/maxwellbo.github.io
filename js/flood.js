@@ -13,9 +13,9 @@ flood.textureWidth = 314;
 flood.textureHeight = 98;
 flood.drainSound = "https://melonking.net/audio/ui/flush.mp3";
 flood.drainTooSoonSound = "https://melonking.net/audio/ui/clunk.mp3";
-flood.updateSpeed = 12000; // ms between local level ticks (MelonKing default 5000; longer = slower refill).
-flood.fillStartDelayMs = 30000; // Local sim: no rise until this long after load.
-flood.localRisePerTick = 1; // Local sim: added to level each updateFloodLevel (0–100 scale).
+flood.updateSpeed = 10000; // ms between local level ticks (MelonKing default 5000; longer = slower refill).
+flood.fillStartDelayMs = 15000; // Local sim: no rise until this long after load.
+flood.localRisePerTick = 2; // Local sim: added to level each updateFloodLevel (0–100 scale).
 flood.renderSpeed = 70;
 flood.maxLevel = 100; // Server - Do not Edit.
 flood.bilgeDelay = 10000; // Server - Do not Edit.
@@ -29,6 +29,8 @@ flood.msg.info = "&#x1FAA3;";
 flood.msg.rising = "The water level is rising...";
 flood.msg.falling = "The water level is falling...";
 flood.msg.toosoon = "Its too soon to bilge again!";
+flood.msg.permanentlyDrained =
+    "You bilged this page for good — the water will not rise here again.";
 flood.msg.one = "This page has a harmless leak.";
 flood.msg.two = "It looks like the page has a bad leak!";
 flood.msg.three = "Goodness, this page has a major leak!";
@@ -131,8 +133,8 @@ const localSimLevelByPath = Object.create(null);
 const localPermanentlyDrainedByPath = Object.create(null);
 
 // Browser-only flood state: same 0–100 units as brain.melonking.net (see original updateFloodLevel).
-// Gentler than the live ring: slower rise per tick.
-function useLocalState(doBilge, path) {
+function useLocalState(doBilge) {
+    const path = window.location.pathname;
     let level = localSimLevelByPath[path];
     if (typeof level !== "number" || Number.isNaN(level)) level = 0;
     level = Math.max(0, Math.min(100, level));
@@ -152,8 +154,7 @@ function useLocalState(doBilge, path) {
 }
 
 function updateFloodLevel(doBilge = false, doQuickUpdate = false) {
-    const path = window.location.pathname;
-    const jsonResponse = useLocalState(doBilge, path);
+    const jsonResponse = useLocalState(doBilge);
     flood.levelCache = flood.level;
     flood.level = jsonResponse.level;
     flood.info = jsonResponse.info;
@@ -164,7 +165,11 @@ function updateFloodLevel(doBilge = false, doQuickUpdate = false) {
 
 // Update the visuals
 function renderWater() {
+    const path = window.location.pathname;
     if (flood.logicLevel == flood.level) {
+        if (localPermanentlyDrainedByPath[path] && !flood.disableMessages) {
+            flood.html.message.innerHTML = flood.msg.permanentlyDrained;
+        }
         return; // Save the processing time, nothing to do!
     }
     let renderLevel = Number(flood.html.flood.style.top.replace("%", "")); // 0 is top
@@ -176,7 +181,9 @@ function renderWater() {
         flood.html.flood.style.top = renderLevel + flood.changeStep + "%";
         flood.html.message.innerHTML = flood.msg.falling;
     } else {
-        if (flood.level > 90) {
+        if (localPermanentlyDrainedByPath[path]) {
+            flood.html.message.innerHTML = flood.msg.permanentlyDrained;
+        } else if (flood.level > 90) {
             flood.html.message.innerHTML = flood.msg.six;
         } else if (flood.level > 70) {
             flood.html.message.innerHTML = flood.msg.five;
