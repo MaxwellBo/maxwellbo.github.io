@@ -14,7 +14,7 @@ flood.textureHeight = 98;
 flood.drainSound = "https://melonking.net/audio/ui/flush.mp3";
 flood.drainTooSoonSound = "https://melonking.net/audio/ui/clunk.mp3";
 flood.updateSpeed = 10000; // ms between local level ticks (MelonKing default 5000; longer = slower refill).
-flood.fillStartDelayMs = 15000; // Local sim: no rise until this long after load.
+flood.fillStartDelayMs = 20000; // Local sim: no rise until this long after load.
 flood.localRisePerTick = 2; // Local sim: added to level each updateFloodLevel (0–100 scale).
 flood.renderSpeed = 70;
 flood.maxLevel = 100; // Server - Do not Edit.

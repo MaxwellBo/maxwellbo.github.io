@@ -21,9 +21,9 @@
     bottom: 0px;
     padding: 5px;
     text-align: right;
-    color: color(display-p3 0 1 1) !important;
+    color: #afebff;
     font-size: 13px;
-    z-index: 0;
+    z-index: 1001;
 }
 #flood-menu button {
     border-radius: 0px;
