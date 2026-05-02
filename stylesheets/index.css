@@ -335,6 +335,18 @@ article.listing.dark {
   }
 }
 
+article.listing.dis-engineering {
+  background-color: #050505;
+  font-family: 'Happy Times at the IKOB', serif;
+  letter-spacing: 0.15em;
+
+  img {
+    background: #050505;
+    object-fit: contain;
+    padding: 1rem;
+  }
+}
+
 footer {
   font-family: 'Fake Receipt', sans-serif;
   padding: 1px;

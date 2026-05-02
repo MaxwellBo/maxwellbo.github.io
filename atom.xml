@@ -4,12 +4,23 @@
     <title>Max Bo's Atom feed</title>
     <link href="https://maxbo.me/atom.xml" rel="self"/>
     <link href="https://maxbo.me/"/>
-    <updated>2024-09-18T00:00:00Z</updated>
+    <updated>2025-12-01T00:00:00Z</updated>
 
     <author>
         <name>Max Bo</name>
     </author>
     <id>https://maxbo.me/atom.xml</id>
+
+    <entry>
+        <title>Do male IMDb users dislike Simpson's episodes with more Lisa screentime?</title>
+        <link href="https://observablehq.com/@mjbo/do-male-imdb-users-dislike-simpsons-episodes-with-more-lisa-screentime" />
+        <id>tag:maxbo.me,2025-12-01:/do-male-imdb-users-dislike-simpsons-episodes-with-more-lisa-screentime</id>
+        <updated>2025-12-01T00:00:00Z</updated>
+        <summary>An Observable notebook investigating the relationship between Simpsons episode ratings and Lisa screentime.</summary>
+        <author>
+            <name>Max Bo</name>
+        </author>
+    </entry>
 
     <entry>
         <title>let me live with you</title>
