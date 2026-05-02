@@ -483,6 +483,12 @@ aside.devcommentary:hover {
 
 .annex {
   display: grid;
+  gap: 4px;
+}
+
+.annex-stack {
+  display: grid;
+  gap: 4px;
 }
 
 .annex-section {

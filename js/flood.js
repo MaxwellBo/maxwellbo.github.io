@@ -20,6 +20,7 @@ flood.renderSpeed = 70;
 flood.maxLevel = 100; // Server - Do not Edit.
 flood.bilgeDelay = 10000; // Server - Do not Edit.
 flood.changeStep = 0.1;
+flood.drainChangeStep = 0.8;
 flood.includeInfo = false; // Returns a list of all sites who are flooded.
 flood.disableInFrames = false; // Stop the script running in frames
 flood.disableMessages = false; // Hides the info message.
@@ -178,7 +179,7 @@ function renderWater() {
         flood.html.flood.style.top = renderLevel - flood.changeStep + "%";
         flood.html.message.innerHTML = flood.msg.rising;
     } else if (flood.level < flood.logicLevel) {
-        flood.html.flood.style.top = renderLevel + flood.changeStep + "%";
+        flood.html.flood.style.top = renderLevel + flood.drainChangeStep + "%";
         flood.html.message.innerHTML = flood.msg.falling;
     } else {
         if (localPermanentlyDrainedByPath[path]) {
