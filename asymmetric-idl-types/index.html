@@ -78,7 +78,116 @@
     .container-3-col pre code {
       font-size: clamp(0.5rem, 2.5cqw, 0.83rem);
     }
+
+    pre code ins {
+      background: rgba(0, 102, 68, 0.18);
+      text-decoration: none;
+    }
+
+    pre code del {
+      background: rgba(214, 69, 69, 0.18);
+      text-decoration: line-through;
+    }
   </style>
+
+  <script type="module">
+    import { createHighlighter } from 'https://esm.sh/shiki@4.0.2';
+
+    const highlighter = await createHighlighter({
+      themes: ['github-light'],
+      langs: ['proto'],
+    });
+
+    function extractCodeAndMarkupRegions(codeEl) {
+      const regions = [];
+      let stripped = '';
+
+      function walk(node) {
+        for (const child of node.childNodes) {
+          if (child.nodeType === Node.TEXT_NODE) {
+            stripped += child.textContent;
+          } else if (child.nodeName === 'INS' || child.nodeName === 'DEL') {
+            const start = stripped.length;
+            stripped += child.textContent;
+            regions.push({
+              start,
+              end: stripped.length,
+              tag: child.nodeName.toLowerCase(),
+            });
+          } else {
+            walk(child);
+          }
+        }
+      }
+
+      walk(codeEl);
+      return { stripped, regions };
+    }
+
+    function wrapRange(container, start, end, tag) {
+      const nodes = [];
+      let pos = 0;
+      const walker = document.createTreeWalker(container, NodeFilter.SHOW_TEXT);
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        const len = node.textContent.length;
+        if (pos + len > start && pos < end) {
+          nodes.push({ node, start: pos, end: pos + len });
+        }
+        pos += len;
+      }
+
+      for (let i = nodes.length - 1; i >= 0; i--) {
+        const { node, start: nodeStart, end: nodeEnd } = nodes[i];
+        const localStart = Math.max(start, nodeStart) - nodeStart;
+        const localEnd = Math.min(end, nodeEnd) - nodeStart;
+        const text = node.textContent;
+        const before = text.slice(0, localStart);
+        const middle = text.slice(localStart, localEnd);
+        const after = text.slice(localEnd);
+        const parent = node.parentNode;
+        const markup = document.createElement(tag);
+
+        if (before) {
+          parent.insertBefore(document.createTextNode(before), node);
+        }
+        markup.textContent = middle;
+        parent.insertBefore(markup, node);
+        if (after) {
+          parent.insertBefore(document.createTextNode(after), node);
+        }
+        parent.removeChild(node);
+      }
+    }
+
+    function applyMarkupRegions(container, regions) {
+      for (const region of [...regions].sort((a, b) => b.start - a.start)) {
+        wrapRange(container, region.start, region.end, region.tag);
+      }
+    }
+
+    function highlightProtoBlock(pre) {
+      const codeEl = pre.querySelector('code');
+      if (!codeEl) return;
+
+      const { stripped, regions } = extractCodeAndMarkupRegions(codeEl);
+      const highlighted = highlighter.codeToHtml(stripped, {
+        lang: 'proto',
+        theme: 'github-light',
+      });
+
+      const template = document.createElement('template');
+      template.innerHTML = highlighted.trim();
+      codeEl.innerHTML = template.content.querySelector('code').innerHTML;
+      applyMarkupRegions(codeEl, regions);
+    }
+
+    for (const pre of document.querySelectorAll('pre:not(.mermaid)')) {
+      if (pre.querySelector(':scope > code')) {
+        highlightProtoBlock(pre);
+      }
+    }
+  </script>
 
   <script type="module">
     import { CelineModule, registerScriptReevaluationOnBlur } from 'https://esm.sh/jsr/@celine/celine@7.0.1';
@@ -112,7 +221,7 @@
 
     <h2>Context</h2>
 
-    <p>On the <time>28th of July 2016</time>, <a href="https://github.com/protocolbuffers/protobuf/releases/tag/v3.0.0">the <code>required</code> and <code>optional</code> field labels were removed from Protocol Buffers</a>, marking the release of Protocol Buffers v3.0.0.
+    <p>On the <time>28th of July 2016</time>, <a href="https://github.com/protocolbuffers/protobuf/releases/tag/v3.0.0">the <code>required</code> and <code>optional</code> field labels were removed from Protocol Buffers</a>, marking the release of <a href="https://protobuf.dev/programming-guides/proto3/">Protocol Buffers v3.0.0</a>.
       From now on, all fields would effectively behave as if they were <code>optional</code>.
       You would have to opt-in to the new syntax with an explicit <code>syntax</code> directive:
 <pre><code>syntax = "proto3";
@@ -125,9 +234,10 @@ message SearchRequest {
     </p>
 
     <p>
-      <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">
-        On the <time>15th of December 2016</time>, one of the Protocol Buffers maintainers offered up some rationale for this rather drastic change: 
-      </a>
+      This change upset quite a few people. 
+      On the <time>15th of December 2016</time>, one of the Protocol Buffers maintainers
+      <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale  
+      </a> for this rather drastic change:
 
       <blockquote>
         <p>
@@ -151,10 +261,10 @@ message SearchRequest {
 
     <p>In 2022, I joined <a href="https://www.canva.com/about/">Canva</a>. 
       For the next 3 years I worked on, for all intents and purposes, a hard fork of Protocol Buffers. This fork was locked to <code>proto2</code> syntax, preserving
-      the <code>required</code> and <code>optional</code> while adding a set of <code>"Safe proto evolution extensions"</code>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
+      the <code>required</code> and <code>optional</code> while adding a set of <i>"Safe proto evolution extensions"</i>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
 
     <p>
-      In light of this, I view the proto3 changes to be a major "throwing the baby out with the bathwwater" moment in the development of Protocol Buffers. I am writing this article to show that that some small extensions to proto2 (and more broadly, any IDL) can dramatically expand backwards compatibility guarantees.
+      In light of this, I view the proto3 changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to proto2 (and more broadly, any mature IDL like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can dramatically expand backwards compatibility guarantees.
     </p>
 
 
@@ -196,26 +306,9 @@ message SearchRequest {
 
     <h2>Preamble</h2>
 
-    <p>For the purposes of this article I have chosen to
-      use <a href="https://protobuf.dev/">Protocol Buffers</a>, specifically with <a href="https://protobuf.dev/programming-guides/proto2/">proto 2 syntax</a>
-      as it is what I am most familiar with.
-      But asymmetric types could be added
-      to any mature IDL (<a href="https://thrift.apache.org/">Thrift</a>, <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.).
-      
-      <!-- I will highlight suggested modifications in
-      <strong>bold</strong>.  -->
-      <!-- I will highlight non-existent, but demonstration extensions, in <em>italics</em>.</p> -->
+    <p>But first, I will provide a refresher on Protocol Buffers and define some useful terminology:</p>
 
-    <p>But I will now define some terminology that I think is abstract enough to talk about any IDL, not just Protocol Buffers:<sup><a id="fnref:1" href="#fn:1">†</a></sup></p>
-      
-      <aside>
-        <p id="fn:1">
-          <a href="#fnref:1">†</a> These may be non-standard as I'm not
-          <em>entirely</em> around the academic literature, for which I apologize.
-        </p>
-      </aside>
-
-    <p>A schema may define services, which define methods, that have request types and response types:</p>
+    <p>A proto schema may define services, which define methods, that have request types and response types:</p>
 
     <pre>
 <code>service SearchService {
@@ -223,9 +316,8 @@ message SearchRequest {
 }</code></pre>
 
 
-    <p>A schema may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
+    <p>A proto schema may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
       <code>required</code> or <code>repeated</code>:</p>
-
     <pre>
 <code>message SearchRequest {
   required string query = 1;
@@ -234,8 +326,7 @@ message SearchRequest {
   optional Corpus corpus = 4;
 }</code></pre>
 
-    <p>I make a distinction between a "type", in an IDL, and a "validation" in generated code. Typically a type
-      generates 1 validation. In the case of asymmetric validations, 2.</p>
+    
 
     <p>A schema may define enums, that have values:</p>
     <pre>
@@ -250,13 +341,13 @@ message SearchRequest {
   CORPUS_VIDEO = 7;
 }</code></pre>
 
-    <p>A change to a schema is called an evolution:</p>
+    <p>A committed change to a schema is called an <i>evolution</i>:</p>
 
-      <pre>
-  <code>message SearchRequest {
-    required string query = 1;
-    <ins>optional int32 page_number = 2;</ins>
-  }</code></pre>
+    <pre>
+<code>message SearchRequest {
+  required string query = 1;
+  <ins>optional int32 page_number = 2;</ins>
+}</code></pre>
 
   <!-- <p>
     An evolution that has not yet been confirmed to be safe is called a proposed evolution.
@@ -267,7 +358,7 @@ message SearchRequest {
   </p> -->
 
     <p>
-      and creates a new schema <i>version, a specific snapshot of a file</i>:
+      If a committed change is merged to <code>master</code>, we get a new <i>schema version</i>, which is a specific snapshot of a file</i>:
     </p>
 
   <div class="container-2-col">
@@ -288,7 +379,7 @@ message SearchRequest {
   </div>
 
     <p>Schema versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and
-      deployed into old releases.<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
+      deployed into releases.<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
 
     <aside>
       <p id="fn:2">
