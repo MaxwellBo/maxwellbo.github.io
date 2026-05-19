@@ -108,6 +108,45 @@
 
     <h2>Context</h2>
 
+    <p>On Jul 28, 2016, <a href="https://github.com/protocolbuffers/protobuf/releases/tag/v3.0.0"><code>required</code> fields were removed from Protocol Buffers</a>, marking the release of Protocol Buffers v3.0.0.
+      You would have to opt-in to the new syntax with an explicit <code>syntax</code> directive:
+      <pre>
+        <code>
+          syntax = "proto3";
+          message Bar {...}
+        </code>
+      </pre>
+
+    </p>
+    <p>
+https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550
+
+      The rationale provided Dec 15, 2016
+
+      <blockquote>
+        We dropped required fields in proto3 because required fields are generally considered harmful and violating protobuf's compatibility semantics. The whole idea of using protobuf is that it allows you to add/remove fields from your protocol definition while still being fully forward/backward compatible with newer/older binaries. Required fields break this though. You can never safely add a required field to a .proto definition, nor can you safely remove an existing required field because both of these actions break wire compatibility. For example, if you add a required field to a .proto definition, binaries built with the new definition won't be able to parse data serialized using the old definition because the required field is not present in old data. In a complex system where .proto definitions are shared widely across many different components of the system, adding/removing required fields could easily bring down multiple parts of the system. We have seen production issues caused by this multiple times and it's pretty much banned everywhere inside Google for anyone to add/remove required fields. For this reason we completely removed required fields in proto3.
+
+After the removal of "required", "optional" is just redundant so we removed "optional" as well.
+      </blockquote>
+    </p>
+<!-- 
+    <p>In 2020, I joined Google. I found myself in a team of <code>proto2</code> holdouts. I would see files filled with
+    <pre><code>message SearchRequest {
+      // required
+      optional string user = 1;
+    }</code></pre>
+    <p>and would scratch my head. Asking why, I was sent a Google Doc written by people who were very mad about the proto3 changes. They took 
+      
+      
+      
+      I moved on with my life.</p> -->
+
+
+    <p>In 2022, I joined <a href="https://www.canva.com/about/">Canva</a>. 
+      For the next 3 years for all intents and purposes, a hard fork of Protocol Buffers. This fork was based off <code>proto2</code> syntax
+      One addition in that fork was that of the "Safe proto evolution extensions", that, along with "extension aware compatibility functions" almost entirely eliminated API and RPC compatibility issues.</p>
+
+
 
     <p>
       About a month ago I read <a href="https://www.iankduncan.com/engineering/2026-02-09-what-functional-programmers-get-wrong-about-systems/"><cite>What Functional Programmers Get Wrong About Systems</cite></a> by <a href="https://www.iankduncan.com/">Ian Duncan</a>.
