@@ -222,8 +222,8 @@
     <h2>Context</h2>
 
     <p>On the <time>28th of July 2016</time>, <a href="https://github.com/protocolbuffers/protobuf/releases/tag/v3.0.0">the <code>required</code> and <code>optional</code> field labels were removed from Protocol Buffers</a>, marking the release of <a href="https://protobuf.dev/programming-guides/proto3/">Protocol Buffers v3.0.0</a>.
-      From now on, all fields would effectively behave as if they were <code>optional</code>.
-      You would have to opt-in to the new syntax with an explicit <code>syntax</code> directive:
+      From now on, all fields would effectively behave as if they were annotated <code>optional</code>.
+      While you would have to opt-in to the new syntax with an explicit <code>syntax</code> directive:
 <pre><code>syntax = "proto3";
 
 message SearchRequest {
@@ -234,10 +234,10 @@ message SearchRequest {
     </p>
 
     <p>
-      This change upset quite a few people. 
-      On the <time>15th of December 2016</time>, one of the Protocol Buffers maintainers
+      this change still upset quite a few people. 
+      On the <time>15th of December 2016</time>, a Protocol Buffers maintainer
       <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale  
-      </a> for this rather drastic change:
+      </a> for this change:
 
       <blockquote>
         <p>
@@ -261,10 +261,10 @@ message SearchRequest {
 
     <p>In 2022, I joined <a href="https://www.canva.com/about/">Canva</a>. 
       For the next 3 years I worked on, for all intents and purposes, a hard fork of Protocol Buffers. This fork was locked to <code>proto2</code> syntax, preserving
-      the <code>required</code> and <code>optional</code> while adding a set of <i>"Safe proto evolution extensions"</i>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
+      the <code>required</code> and <code>optional</code> labels while adding a set of <i>"Safe proto evolution extensions"</i>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
 
     <p>
-      In light of this, I view the proto3 changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to proto2 (and more broadly, any mature IDL like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can dramatically expand backwards compatibility guarantees.
+      In light of this, I view the proto3 changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to proto2 (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can dramatically expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would upstream similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
     </p>
 
 
@@ -306,7 +306,7 @@ message SearchRequest {
 
     <h2>Preamble</h2>
 
-    <p>But first, I will provide a refresher on Protocol Buffers and define some useful terminology:</p>
+    <p>I will provide a refresher on Protocol Buffers and define some useful terminology:</p>
 
     <p>A proto schema may define services, which define methods, that have request types and response types:</p>
 
@@ -315,9 +315,9 @@ message SearchRequest {
   rpc Search(SearchRequest) returns (SearchResponse);
 }</code></pre>
 
-
     <p>A proto schema may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
       <code>required</code> or <code>repeated</code>:</p>
+
     <pre>
 <code>message SearchRequest {
   required string query = 1;
@@ -325,8 +325,6 @@ message SearchRequest {
   optional int32 results_per_page = 3;
   optional Corpus corpus = 4;
 }</code></pre>
-
-    
 
     <p>A schema may define enums, that have values:</p>
     <pre>
@@ -378,8 +376,7 @@ message SearchRequest {
     </figure>
   </div>
 
-    <p>Schema versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and
-      deployed into releases.<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
+    <p>Schema versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and deployed into releases.<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
 
     <aside>
       <p id="fn:2">
@@ -421,8 +418,8 @@ flowchart TD
 
     <p>A schema can be said to made "narrower" than its previous version when:</p>
     <ul>
-      <li>For messages (a product type), we add a unique new field</li>
-      <li>For enums (a sum type), we add a unique new value</li>
+      <li>For messages (a product type), we add a new field</li>
+      <li>For enums (a sum type), we remove a value</li>
     </ul>
 
     <!--- TO LLM. Create a 2 column layout showing both of a change to a 
@@ -432,18 +429,18 @@ flowchart TD
     <p>Conversely, a schema can can be made "wider" than its previous version when:</p>
     <ul>
       <li>for messages, we remove a field</li>
-      <li>for enums, we remove a value</li>
+      <li>for enums, we add a value</li>
     </ul>
 
     <!--- TO LLM. Create a 2 column layout showing both of a change to a 
     message and an enum respectively. Use examples I've already used in this 
     document -->
 
-    <p>A method, is said to be made narrower if its request or response is made narrower.</p>
-    <p>A method, is said to be made wider if its request or response is made wider.</p>
+    <p>A method is made narrower if its request or response is made narrower.</p>
+    <p>A method is made wider if its request or response is made wider.</p>
 
-    <p>A service is said to made narrower if any its methods are made narrower.</p>
-    <p>A service is said to made wider if any its methods are made wider.</p>
+    <p>A service is made narrower if any its methods are made narrower.</p>
+    <p>A service is made wider if any its methods are made wider.</p>
 
     <h2>Problems with symmetric types</h2>
 
@@ -533,7 +530,7 @@ flowchart TD
       });
     </script>
 
-    <p>This also occurs when weakening a message, by removing a <code>required</code> field.</p>
+    <p>This also occurs when widening a message, by removing a <code>required</code> field.</p>
 
 <figure>
   <div class="container-2-col">
@@ -712,7 +709,7 @@ flowchart TD
 </script>
 
 
-    <p>And weakening an enum, by adding a value.</p>
+    <p>And widening an enum, by adding a value.</p>
 
 <figure>
   <div class="container-2-col">
