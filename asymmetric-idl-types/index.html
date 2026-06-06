@@ -39,7 +39,6 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 4vw;
-      align-items: center;
     }
 
     .container-3-col {
@@ -416,25 +415,67 @@ flowchart TD
       </pre>
     </figure>
 
-    <p>A schema can be said to made "narrower" than its previous version when:</p>
+    <p>A schema can be said to made "narrower" than its previous version when:
     <ul>
       <li>For messages (a product type), we add a new field</li>
       <li>For enums (a sum type), we remove a value</li>
     </ul>
+    </p>
 
-    <!--- TO LLM. Create a 2 column layout showing both of a change to a 
-    message and an enum respectively. Use examples I've already used in this 
-    document -->
+    <figure>
+      <div class="container-2-col">
+        <figure>
+          <pre><code>message SearchRequest {
+  required string query = 1;
+  <ins>optional int32 page_number = 2;</ins>
+}</code></pre>
+        </figure>
+
+        <figure>
+          <pre><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_UNIVERSAL = 1;
+  CORPUS_WEB = 2;
+  CORPUS_IMAGES = 3;
+  CORPUS_LOCAL = 4;
+  CORPUS_NEWS = 5;
+  CORPUS_PRODUCTS = 6;
+  <del>CORPUS_VIDEO = 7;</del>
+}</code></pre>
+        </figure>
+      </div>
+    </figure>
 
     <p>Conversely, a schema can can be made "wider" than its previous version when:</p>
     <ul>
       <li>for messages, we remove a field</li>
       <li>for enums, we add a value</li>
     </ul>
+    </p>
 
-    <!--- TO LLM. Create a 2 column layout showing both of a change to a 
-    message and an enum respectively. Use examples I've already used in this 
-    document -->
+    <figure>
+      <div class="container-2-col">
+        <figure>
+          <pre><code>message SearchRequest {
+  required string query = 1;
+  <del>optional int32 page_number = 2;</del>
+}</code></pre>
+        </figure>
+
+        <figure>
+          <pre><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_UNIVERSAL = 1;
+  CORPUS_WEB = 2;
+  CORPUS_IMAGES = 3;
+  CORPUS_LOCAL = 4;
+  CORPUS_NEWS = 5;
+  CORPUS_PRODUCTS = 6;
+  <ins>CORPUS_VIDEO = 7;</ins>
+}</code></pre>
+        </figure>
+      </div>
+    </figure>
 
     <p>A method is made narrower if its request or response is made narrower.</p>
     <p>A method is made wider if its request or response is made wider.</p>
@@ -530,7 +571,7 @@ flowchart TD
       });
     </script>
 
-    <p>This also occurs when widening a message, by removing a <code>required</code> field.</p>
+    <p>This also occurs when widening a message, by removing a <code>required</code> field:</p>
 
 <figure>
   <div class="container-2-col">
@@ -614,7 +655,7 @@ flowchart TD
   });
 </script>
 
-    <p>And strengthening an enum, by removing a value.</p>
+    <p>And strengthening an enum, by removing a value:</p>
 
 <figure>
   <div class="container-2-col">
@@ -622,7 +663,8 @@ flowchart TD
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
   PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;}</code></pre>
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
 
     <pre class="green client1" id="enum-str-client1"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -635,7 +677,8 @@ flowchart TD
   PHONE_TYPE_UNSPECIFIED = 0;
   PHONE_TYPE_MOBILE = 1;
   PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;}</code></pre>
+  PHONE_TYPE_WORK = 3;
+}</code></pre>
 
     <pre class="green server1" id="enum-str-server1"><code>enum PhoneType {
   PHONE_TYPE_UNSPECIFIED = 0;
@@ -709,7 +752,7 @@ flowchart TD
 </script>
 
 
-    <p>And widening an enum, by adding a value.</p>
+    <p>And widening an enum, by adding a value:</p>
 
 <figure>
   <div class="container-2-col">
@@ -808,7 +851,7 @@ flowchart TD
     <p>Not true.</p>
 
     <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
-      that prevents incompatibilities.</p>
+      that prevents incompatibilities:</p>
 
 <figure>
   <div class="container-2-col">
@@ -842,10 +885,6 @@ flowchart TD
   <ins>PHONE_TYPE_FAX = 4;</ins>
 }</code></pre>
   </div>
-  <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
-    Deploying v1 first breaks old clients sending WORK (3). Deploying v0 last breaks new clients sending FAX (4).
-    No safe deployment order exists.
-  </figcaption>
 </figure>
 
 <script>
@@ -963,10 +1002,6 @@ message GetUserResponse {
   required User user = 1;
 }</code></pre>
   </div>
-  <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
-    User is in both request (CreateUserRequest) and response (GetUserResponse) position.
-    Adding a required field to User creates incompatibilities in both directions.
-  </figcaption>
 </figure>
 
 <script>
@@ -1182,12 +1217,6 @@ message GetUserResponse {
   <ins>CORPUS_VIDEO = 7;</ins>
 }</code></pre>
         </div>
-        <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
-          Proto3 implicitly defaults unknown enum values to 0. Naming that 0 as
-          CORPUS_UNSPECIFIED makes the implicit behaviour explicit, and enables
-          further safe additions: c2 sending VIDEO (7) to s1 is silently coerced
-          to CORPUS_UNSPECIFIED rather than rejected.
-        </figcaption>
       </figure>
 
       <script>
@@ -1537,10 +1566,6 @@ and it follows that it may also permit:
   <ins>PHONE_TYPE_FAX = 4;</ins>
 }</code></pre>
       </div>
-      <figcaption style="text-align: center; margin-top: 1em; font-style: italic;">
-        v1 can deserialize FAX (4) but cannot construct or send it. Once v1 is universally deployed,
-        v2 can safely promote FAX to a regular producible value.
-      </figcaption>
     </figure>
 
     <script>
