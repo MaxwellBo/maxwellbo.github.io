@@ -87,6 +87,20 @@
       background: rgba(214, 69, 69, 0.18);
       text-decoration: line-through;
     }
+
+    .favicon {
+      height: 1em;
+      width: 1em;
+      vertical-align: -0.125em;
+    }
+
+    main a:has(.favicon):hover {
+      text-decoration: none;
+      background-image: linear-gradient(currentColor, currentColor);
+      background-position: 0 100%;
+      background-repeat: repeat-x;
+      background-size: 100% 0.08em;
+    }
   </style>
 
   <script type="module">
@@ -218,7 +232,7 @@
       I believe they make schema evolution safer and more IDLs should support them.
     </div>
 
-    <h2>Context</h2>
+    <h2><a id="context" href="#context"></a>Context</h2>
 
     <p>On the <time>28th of July 2016</time>, <a href="https://github.com/protocolbuffers/protobuf/releases/tag/v3.0.0">the <code>required</code> and <code>optional</code> field labels were removed from Protocol Buffers</a>, marking the release of <a href="https://protobuf.dev/programming-guides/proto3/">Protocol Buffers v3.0.0</a>.
       From now on, all fields would effectively behave as if they were annotated <code>optional</code>.
@@ -235,35 +249,41 @@ message SearchRequest {
     <p>
       this change still upset quite a few people. 
       On the <time>15th of December 2016</time>, a Protocol Buffers maintainer
-      <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale  
+      <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale
       </a> for this change:
+    </p>
 
+    <figure class="blockquote">
       <blockquote>
         <p>
-          We dropped required fields in proto3 because required fields are generally considered harmful and violating protobuf's compatibility semantics. The whole idea of using protobuf is that it allows you to add/remove fields from your protocol definition while still being fully forward/backward compatible with newer/older binaries. Required fields break this though. You can never safely add a required field to a .proto definition, nor can you safely remove an existing required field because both of these actions break wire compatibility. For example, if you add a required field to a .proto definition, binaries built with the new definition won't be able to parse data serialized using the old definition because the required field is not present in old data. In a complex system where .proto definitions are shared widely across many different components of the system, adding/removing required fields could easily bring down multiple parts of the system. We have seen production issues caused by this multiple times and it's pretty much banned everywhere inside Google for anyone to add/remove required fields. For this reason we completely removed required fields in proto3.
+          We dropped <code>required</code> fields in <i>proto3</i> because <code>required</code> fields are generally considered harmful and violating protobuf's compatibility semantics. The whole idea of using protobuf is that it allows you to add/remove fields from your protocol definition while still being fully forward/backward compatible with newer/older binaries. <code>Required</code> fields break this though. You can never safely add a <code>required</code> field to a <code>.proto</code> definition, nor can you safely remove an existing <code>required</code> field because both of these actions break wire compatibility. For example, if you add a <code>required</code> field to a <code>.proto</code> definition, binaries built with the new definition won't be able to parse data serialized using the old definition because the <code>required</code> field is not present in old data. In a complex system where <code>.proto</code> definitions are shared widely across many different components of the system, adding/removing <code>required</code> fields could easily bring down multiple parts of the system. We have seen production issues caused by this multiple times and it's pretty much banned everywhere inside Google for anyone to add/remove <code>required</code> fields. For this reason we completely removed <code>required</code> fields in <i>proto3</i>.
         </p>
         <p>
-          After the removal of "required", "optional" is just redundant so we removed "optional" as well.
+          After the removal of <code>required</code>, <code>optional</code> is just redundant so we removed <code>optional</code> as well.
         </p>
       </blockquote>
+      <figcaption>
+        <cite><a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">xfxyjwf</a></cite>; formatting added for readability
+      </figcaption>
+    </figure>
+
+    <p>
+      Because of this change, you see the following tortured convention <a href="https://github.com/search?q=%22%2F%2F+required%22+language%3A%22Protocol+Buffers%22+&type=code">littered throughout <i>proto3</i>-using codebases</a>:
     </p>
-<!-- 
-    <p>In 2020, I joined Google. I found myself in a team of <code>proto2</code> holdouts. I would see files filled with
-    <pre><code>message SearchRequest {
-      // required
-      optional string user = 1;
-    }</code></pre>
-    <p>and would scratch my head. Asking why, I was sent a Google Doc written by people who were very mad about the proto3 changes. They took 
-      
-      
-      I moved on with my life.</p> -->
+    <pre><code>message ButtonPressRequest {
+  // Required: which button to press
+  Button button = 1;
+
+  // Required: duration in milliseconds for how long to press the button
+  uint32 duration_ms = 2;
+}</code></pre>
 
     <p>In 2022, I joined <a href="https://www.canva.com/about/">Canva</a>. 
-      For the next 3 years I worked on, for all intents and purposes, a hard fork of Protocol Buffers. This fork was locked to <code>proto2</code> syntax, preserving
+      For the next 3 years I worked on, for all intents and purposes, a hard fork of Protocol Buffers. This fork was locked to <i>proto2</i> syntax, preserving
       the <code>required</code> and <code>optional</code> labels while adding a set of <i>"Safe proto evolution extensions"</i>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
 
     <p>
-      In light of this, I view the proto3 changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to proto2 (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can dramatically expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would upstream similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
+      In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <i>proto2</i> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can dramatically expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would upstream similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
     </p>
 
 
@@ -303,7 +323,7 @@ message SearchRequest {
       I feel that not enough was said in the cited article about techniques for <i>making</i> boundary type changes safe, rather than just checking their safety. I hope to achieve that in this article.
       </p> -->
 
-    <h2>Preamble</h2>
+    <h2><a id="preamble" href="#preamble"></a>Preamble</h2>
 
     <p>I will provide a refresher on Protocol Buffers and define some useful terminology:</p>
 
@@ -359,14 +379,14 @@ message SearchRequest {
     </p>
 
   <div class="container-2-col">
-    <figure class="card">
+    <figure class="card blue">
       <pre><code>message SearchRequest {
   required string query = 1;
 }</code></pre>
       <figcaption>search-2026-02-28.proto</figcaption>
     </figure>
 
-    <figure class="card">
+    <figure class="card green">
       <pre><code>message SearchRequest {
   required string query = 1;
   <ins>optional int32 page_number = 2;</ins>
@@ -375,45 +395,232 @@ message SearchRequest {
     </figure>
   </div>
 
-    <p>Schema versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and deployed into releases.<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
+    <p>Schema versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and deployed into releases:<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
 
     <aside>
       <p id="fn:2">
-        <a href="#fnref:2">†</a> Out of convenience, I may choose mention a payload version rather than a "payload serialized by an instance build
+        <a href="#fnref:2">†</a> Out of convenience, I may choose mention a payload version rather than a "payload serialized by an instance built
         by a class generated by a specific schema version".
       </p>
     </aside>
 
-    <p>Schema versions can have a "liveness" property. A version is live if its classes CAN attempt to deserialize a new
+    <!-- <p>Schema versions can have a "liveness" property. A version is live if its classes CAN attempt to deserialize a new
       payload OR a version's payload CAN be deserialized by new classes. This implies that if a specific schema version's payload is persisted to a data store, it remains indefinitely
-      live.</p>
+      live.</p> -->
 
 
     <figure>
-      <pre class="mermaid">
-flowchart TD
-  A["a schema"]
-  B0["schema version v0"]
-  B1["schema version v1"]
-  B2["schema version v2"]
-  C["classes"]
-  D["instances"]
-  E["payloads"]
-  F["artifacts"]
-  G["releases"]
+      <svg viewBox="0 0 980 810" role="img" aria-labelledby="schema-lifecycle-title schema-lifecycle-desc">
+        <title id="schema-lifecycle-title">Schema versions, releases, instances, and payloads</title>
+        <desc id="schema-lifecycle-desc">A schema has three versions. Each schema version generates classes, classes are built into artifacts, artifacts are deployed into releases, release classes construct or deserialize into instances, release instances serialize payloads, and payloads are sent to neighboring release classes.</desc>
 
-    A -- "has" --> B0
-    A -- "has" --> B1
-    A -- "has" --> B2
-    B2 -- "generates" --> C
-    C -- "deserialize or validate" --> D
-    D -- "serialize" --> E
-    C -- "built into" --> F
-    F -- "deployed as" --> G
-    E -- "sent to" --> C
+        <defs>
+          <marker id="schema-lifecycle-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#222" />
+          </marker>
+          <style>
+            .schema-lifecycle-bg {
+              fill: #f5f5f5;
+            }
 
-      </pre>
+            .schema-lifecycle-node {
+              fill: #f0edff;
+              stroke: #8c7bbe;
+              stroke-width: 2;
+            }
+
+            .schema-lifecycle-release {
+              fill: #ffffdf;
+              stroke-width: 4;
+            }
+
+            .schema-lifecycle-release-blue {
+              stroke: #2563eb;
+            }
+
+            .schema-lifecycle-release-green {
+              stroke: #16a34a;
+            }
+
+            .schema-lifecycle-edge {
+              fill: none;
+              stroke: #222;
+              stroke-width: 2;
+              marker-end: url(#schema-lifecycle-arrow);
+            }
+
+            .schema-lifecycle-label {
+              fill: #222;
+              font-size: 15px;
+              text-anchor: middle;
+              dominant-baseline: middle;
+            }
+
+            .schema-lifecycle-small-label {
+              fill: #222;
+              font-size: 12px;
+              text-anchor: middle;
+              dominant-baseline: middle;
+            }
+
+            .schema-lifecycle-text {
+              fill: #2b2b2b;
+              font-size: 18px;
+              text-anchor: middle;
+              dominant-baseline: middle;
+            }
+          </style>
+        </defs>
+
+        <rect class="schema-lifecycle-bg" width="980" height="810" />
+
+        <g>
+          <rect class="schema-lifecycle-node" x="410" y="20" width="160" height="70" />
+          <text class="schema-lifecycle-text" x="490" y="55">a schema</text>
+        </g>
+
+        <g>
+          <rect class="schema-lifecycle-node" x="45" y="120" width="250" height="70" />
+          <text class="schema-lifecycle-text" x="170" y="155">schema version v0</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="365" y="120" width="250" height="70" />
+          <text class="schema-lifecycle-text" x="490" y="155">schema version v1</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="685" y="120" width="250" height="70" />
+          <text class="schema-lifecycle-text" x="810" y="155">schema version v2</text>
+        </g>
+
+        <g>
+          <rect class="schema-lifecycle-node" x="95" y="230" width="150" height="70" />
+          <text class="schema-lifecycle-text" x="170" y="265">classes</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="415" y="230" width="150" height="70" />
+          <text class="schema-lifecycle-text" x="490" y="265">classes</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="735" y="230" width="150" height="70" />
+          <text class="schema-lifecycle-text" x="810" y="265">classes</text>
+        </g>
+
+        <g>
+          <rect class="schema-lifecycle-node" x="85" y="340" width="170" height="70" />
+          <text class="schema-lifecycle-text" x="170" y="375">artifacts</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="405" y="340" width="170" height="70" />
+          <text class="schema-lifecycle-text" x="490" y="375">artifacts</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="725" y="340" width="170" height="70" />
+          <text class="schema-lifecycle-text" x="810" y="375">artifacts</text>
+        </g>
+
+        <g>
+          <rect class="schema-lifecycle-release schema-lifecycle-release-blue" x="40" y="450" width="260" height="180" />
+          <text class="schema-lifecycle-text" x="170" y="468">a release</text>
+          <rect class="schema-lifecycle-node" x="95" y="490" width="150" height="50" />
+          <text class="schema-lifecycle-text" x="170" y="515">classes</text>
+          <rect class="schema-lifecycle-node" x="95" y="570" width="150" height="50" />
+          <text class="schema-lifecycle-text" x="170" y="595">instances</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-release schema-lifecycle-release-green" x="360" y="450" width="260" height="180" />
+          <text class="schema-lifecycle-text" x="490" y="468">a release</text>
+          <rect class="schema-lifecycle-node" x="415" y="490" width="150" height="50" />
+          <text class="schema-lifecycle-text" x="490" y="515">classes</text>
+          <rect class="schema-lifecycle-node" x="415" y="570" width="150" height="50" />
+          <text class="schema-lifecycle-text" x="490" y="595">instances</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-release schema-lifecycle-release-blue" x="680" y="450" width="260" height="180" />
+          <text class="schema-lifecycle-text" x="810" y="468">a release</text>
+          <rect class="schema-lifecycle-node" x="735" y="490" width="150" height="50" />
+          <text class="schema-lifecycle-text" x="810" y="515">classes</text>
+          <rect class="schema-lifecycle-node" x="735" y="570" width="150" height="50" />
+          <text class="schema-lifecycle-text" x="810" y="595">instances</text>
+        </g>
+
+        <g>
+          <rect class="schema-lifecycle-node" x="85" y="710" width="170" height="70" />
+          <text class="schema-lifecycle-text" x="170" y="745">payloads</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="405" y="710" width="170" height="70" />
+          <text class="schema-lifecycle-text" x="490" y="745">payloads</text>
+        </g>
+        <g>
+          <rect class="schema-lifecycle-node" x="725" y="710" width="170" height="70" />
+          <text class="schema-lifecycle-text" x="810" y="745">payloads</text>
+        </g>
+
+        <path class="schema-lifecycle-edge" d="M 490 90 C 490 106 170 100 170 120" />
+        <text class="schema-lifecycle-label" x="300" y="108">has</text>
+        <path class="schema-lifecycle-edge" d="M 490 90 L 490 120" />
+        <text class="schema-lifecycle-label" x="512" y="106">has</text>
+        <path class="schema-lifecycle-edge" d="M 490 90 C 490 106 810 100 810 120" />
+        <text class="schema-lifecycle-label" x="680" y="108">has</text>
+
+        <path class="schema-lifecycle-edge" d="M 170 190 L 170 230" />
+        <text class="schema-lifecycle-label" x="210" y="210">generates</text>
+        <path class="schema-lifecycle-edge" d="M 490 190 L 490 230" />
+        <text class="schema-lifecycle-label" x="530" y="210">generates</text>
+        <path class="schema-lifecycle-edge" d="M 810 190 L 810 230" />
+        <text class="schema-lifecycle-label" x="850" y="210">generates</text>
+
+        <path class="schema-lifecycle-edge" d="M 170 300 L 170 340" />
+        <text class="schema-lifecycle-label" x="210" y="320">built into</text>
+        <path class="schema-lifecycle-edge" d="M 490 300 L 490 340" />
+        <text class="schema-lifecycle-label" x="530" y="320">built into</text>
+        <path class="schema-lifecycle-edge" d="M 810 300 L 810 340" />
+        <text class="schema-lifecycle-label" x="850" y="320">built into</text>
+
+        <path class="schema-lifecycle-edge" d="M 170 540 L 170 570" />
+        <text class="schema-lifecycle-small-label" x="170" y="555">
+          <tspan x="170" dy="-0.6em">construct or</tspan>
+          <tspan x="170" dy="1.2em">deserialize into</tspan>
+        </text>
+        <path class="schema-lifecycle-edge" d="M 490 540 L 490 570" />
+        <text class="schema-lifecycle-small-label" x="490" y="555">
+          <tspan x="490" dy="-0.6em">construct or</tspan>
+          <tspan x="490" dy="1.2em">deserialize into</tspan>
+        </text>
+        <path class="schema-lifecycle-edge" d="M 810 540 L 810 570" />
+        <text class="schema-lifecycle-small-label" x="810" y="555">
+          <tspan x="810" dy="-0.6em">construct or</tspan>
+          <tspan x="810" dy="1.2em">deserialize into</tspan>
+        </text>
+
+        <path class="schema-lifecycle-edge" d="M 170 410 L 170 450" />
+        <text class="schema-lifecycle-label" x="222" y="430">deployed into</text>
+        <path class="schema-lifecycle-edge" d="M 490 410 L 490 450" />
+        <text class="schema-lifecycle-label" x="542" y="430">deployed into</text>
+        <path class="schema-lifecycle-edge" d="M 810 410 L 810 450" />
+        <text class="schema-lifecycle-label" x="862" y="430">deployed into</text>
+
+        <path class="schema-lifecycle-edge" d="M 170 620 L 170 710" />
+        <text class="schema-lifecycle-label" x="212" y="665">serialize</text>
+        <path class="schema-lifecycle-edge" d="M 490 620 L 490 710" />
+        <text class="schema-lifecycle-label" x="532" y="665">serialize</text>
+        <path class="schema-lifecycle-edge" d="M 810 620 L 810 710" />
+        <text class="schema-lifecycle-label" x="852" y="665">serialize</text>
+
+        <path class="schema-lifecycle-edge" d="M 255 745 C 330 745 330 515 415 515" />
+        <text class="schema-lifecycle-label" x="330" y="635">sent to</text>
+        <path class="schema-lifecycle-edge" d="M 405 745 C 330 745 330 515 245 515" />
+        <text class="schema-lifecycle-label" x="330" y="705">sent to</text>
+        <path class="schema-lifecycle-edge" d="M 575 745 C 650 745 650 515 735 515" />
+        <text class="schema-lifecycle-label" x="650" y="705">sent to</text>
+        <path class="schema-lifecycle-edge" d="M 725 745 C 650 745 650 515 565 515" />
+        <text class="schema-lifecycle-label" x="650" y="635">sent to</text>
+      </svg>
     </figure>
+
+    <p>
+      We will use a simplified form of this diagram from now on.
+    </p>
 
     <p>A schema can be said to made "narrower" than its previous version when:
     <ul>
@@ -483,7 +690,8 @@ flowchart TD
     <p>A service is made narrower if any its methods are made narrower.</p>
     <p>A service is made wider if any its methods are made wider.</p>
 
-    <h2>Problems with symmetric types</h2>
+    <h2><a id="problems-with-symmetric-types" href="#problems-with-symmetric-types"></a>Problems with symmetric types
+    </h2>
 
     <p>Assume an environment where we do not control deployment ordering, such for a given release.</p>
 
@@ -1098,7 +1306,7 @@ message GetUserResponse {
 
     <p>Even ordered deployment is insufficient to avoid this scenario.</p>
 
-    <h2>What is an asymmetric type?</h2>
+    <h2><a id="what-is-an-asymmetric-type" href="#what-is-an-asymmetric-type"></a>What is an asymmetric type?</h2>
 
     <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
 
@@ -1114,9 +1322,9 @@ message GetUserResponse {
 
     <p>There is a rich design space of asymmetric types. Let's look at a few.</p>
 
-    <h3>Defaults</h3>
+    <h3><a id="defaults" href="#defaults"></a>Defaults</h3>
 
-    <h4>Explicit field defaults</h4>
+    <h4><a id="explicit-field-defaults" href="#explicit-field-defaults"></a>Explicit field defaults</h4>
 
     <p>The most common form of asymmetric type is a field default.</p>
 
@@ -1166,12 +1374,12 @@ message GetUserResponse {
     <p>This poses 2 problems:</p>
 
     <ol>
-      <li>Some types don't have a reasonable default value, particularly non-primitive messages.</li>
+      <li>Some types don't have a reasonable default value, particularly for non-primitive messages.</li>
       <li>We may typically choose a <code>0</code> default for primitives, but this deprives the domain layer of a useful distinction: whether the <code>0</code> was a fallback or a legitimate value sent over the wire.</li>
     </ol>
 
 
-    <h5>Implicit type defaults</h5>
+    <h5><a id="implicit-type-defaults" href="#implicit-type-defaults"></a>Implicit type defaults</h5>
 
     <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax
       for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior,
@@ -1240,12 +1448,12 @@ message GetUserResponse {
 
     <p>I feel this rather common pattern is an unfortunate rejection of a <a href="https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/">"parse, don't validate"</a> philosophy.</p>
 
-    <h3>Tristates</h3>
+    <h3><a id="tristates" href="#tristates"></a>Tristates</h3>
 
     <p>TODO: a differentiation between absence and non-recognition</p>
 
 
-    <h3>Field fallbacks</h3>
+    <h3><a id="field-fallbacks" href="#field-fallbacks"></a>Field fallbacks</h3>
 
     <p><a href="https://github.com/stepchowfun/typical">typical</a> has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
       the deserialization validation only requires 1, the fallback.</p>
@@ -1403,24 +1611,15 @@ message GetUserResponse {
       });
     </script>
 
-    <h3>constructor required deserialization optional</h3>
+    <h3><a id="constructor-required-deserialization-optional"
+        href="#constructor-required-deserialization-optional"></a>constructor required deserialization optional</h3>
 
     <p>The simplest means of avoiding the use of a default is to use an <code>optional</code> label when adding fields.
     </p>
 
     <p>But unfortunately, <code>optional</code> alone offers no such safe evolution pathway to transform a field into a
       <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
-      without incompatibility risk, and vice versa.</p>
-
-    <p>Use of <code>required</code> was perceived to so fraught with danger at Google that the following tortured
-      convention was littered throughout the google3 monorepo:</p>
-
-    <pre><code>message SearchRequest {
-  // required
-  optional string user = 1;
-}</code></pre>
-
-    <p>and the required label was <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">removed entirely in proto3 syntax.</a></p>
+      without incompatibility risk, and vice versa, as per the rationale offered up in <a href="#preamble">the preamble</a>.</p>
 
     <p>I strongly believe the removal or this label was unnecessary, and an asymmetric label should have been
       added instead.</p>
@@ -1513,7 +1712,7 @@ and it follows that it may also permit:
 
 </p>
 
-    <h3>Unproducible</h3>
+    <h3><a id="unproducible" href="#unproducible"></a>Unproducible</h3>
 
     <p>The third type is <code>unproducible</code>.</p>
 
@@ -1588,7 +1787,7 @@ and it follows that it may also permit:
     <p>One such way is to enforce unproducibility is the use of a linter that ensures that values and constructors may
       only be used in 'if' tests, and switch case labels and patterns.</p>
 
-    <h3>Two validations</h3>
+    <h3><a id="two-validations" href="#two-validations"></a>Two validations</h3>
 
     <p>The fourth type is "two validations".</p>
 
@@ -1901,7 +2100,7 @@ and it follows that it may also permit:
     <p>Although somewhat overkill, I believe that Z3 would be sufficient to check the invariant, and to check that the
       constructor validation entails the deserialization validations of all previous schema versions.</p>
 
-    <h2>AI usage disclosure</h2>
+    <h2><a id="ai-usage-disclosure" href="#ai-usage-disclosure"></a>AI usage disclosure</h2>
 
     <p>All prose was handwritten, with predictive autocomplete disabled. Diagrams were generated. Proof-read by Claude
       Opus 4.6 on TODO.</p>
@@ -1923,7 +2122,18 @@ and it follows that it may also permit:
       });
     </script>
 
+
+  <footer>
+    <center>
+    ❦
+
+    </center>
+    <p>
+    Built with <a href="https://maxbo.me/celine">@celine</a>
+</p>
+  </footer>
   </main>
+
 
 </body>
 
