@@ -341,29 +341,23 @@ message SearchRequest {
 <code>message SearchRequest {
   required string query = 1;
   optional int32 page_number = 2;
-  optional int32 results_per_page = 3;
-  optional Corpus corpus = 4;
 }</code></pre>
 
     <p>A schema may define enums, that have values:</p>
     <pre>
 <code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
-  CORPUS_UNIVERSAL = 1;
-  CORPUS_WEB = 2;
-  CORPUS_IMAGES = 3;
-  CORPUS_LOCAL = 4;
-  CORPUS_NEWS = 5;
-  CORPUS_PRODUCTS = 6;
-  CORPUS_VIDEO = 7;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
 
     <p>A committed change to a schema is called an <i>evolution</i>:</p>
 
     <pre>
-<code>message SearchRequest {
+<code>message Corpus {
   required string query = 1;
-  <ins>optional int32 page_number = 2;</ins>
+  optional int32 page_number = 2;
+  <ins>optional Corpus corpus = 3;</ins>
 }</code></pre>
 
   <!-- <p>
@@ -382,6 +376,7 @@ message SearchRequest {
     <figure class="card blue">
       <pre><code>message SearchRequest {
   required string query = 1;
+  optional int32 page_number = 2;
 }</code></pre>
       <figcaption>search-2026-02-28.proto</figcaption>
     </figure>
@@ -389,7 +384,8 @@ message SearchRequest {
     <figure class="card green">
       <pre><code>message SearchRequest {
   required string query = 1;
-  <ins>optional int32 page_number = 2;</ins>
+  optional int32 page_number = 2;
+  <ins>optional Corpus corpus = 3;</ins>
 }</code></pre>
       <figcaption>search-2026-03-01.proto</figcaption>
     </figure>
@@ -634,20 +630,17 @@ message SearchRequest {
         <figure>
           <pre><code>message SearchRequest {
   required string query = 1;
-  <ins>optional int32 page_number = 2;</ins>
+  optional int32 page_number = 2;
+  optional Corupus corpus = 3;
+  <ins>optional int32 results_per_page = 4;</ins>
 }</code></pre>
         </figure>
 
         <figure>
           <pre><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
-  CORPUS_UNIVERSAL = 1;
-  CORPUS_WEB = 2;
-  CORPUS_IMAGES = 3;
-  CORPUS_LOCAL = 4;
-  CORPUS_NEWS = 5;
-  CORPUS_PRODUCTS = 6;
-  <del>CORPUS_VIDEO = 7;</del>
+  CORPUS_TEXT = 1;
+  <del>CORPUS_IMAGES = 2;</del>
 }</code></pre>
         </figure>
       </div>
@@ -665,20 +658,17 @@ message SearchRequest {
         <figure>
           <pre><code>message SearchRequest {
   required string query = 1;
-  <del>optional int32 page_number = 2;</del>
+  optional int32 page_number = 2;
+  <del>optional Corupus corpus = 3;</del>
 }</code></pre>
         </figure>
 
         <figure>
-          <pre><code>enum Corpus {
+          <pre><code>enum PhoneType {
   CORPUS_UNSPECIFIED = 0;
-  CORPUS_UNIVERSAL = 1;
-  CORPUS_WEB = 2;
-  CORPUS_IMAGES = 3;
-  CORPUS_LOCAL = 4;
-  CORPUS_NEWS = 5;
-  CORPUS_PRODUCTS = 6;
-  <ins>CORPUS_VIDEO = 7;</ins>
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>CORUPUS_VIDEO = 3;</ins>
 }</code></pre>
         </figure>
       </div>
