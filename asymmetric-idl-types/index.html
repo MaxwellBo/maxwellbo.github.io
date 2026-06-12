@@ -242,7 +242,6 @@
 message SearchRequest {
   string query = 1;
   int32 page_number = 2;
-  int32 results_per_page = 3;
 }</code></pre>
     </p>
 
@@ -631,7 +630,7 @@ message SearchRequest {
           <pre><code>message SearchRequest {
   required string query = 1;
   optional int32 page_number = 2;
-  optional Corupus corpus = 3;
+  optional Corpus corpus = 3;
   <ins>optional int32 results_per_page = 4;</ins>
 }</code></pre>
         </figure>
@@ -659,16 +658,16 @@ message SearchRequest {
           <pre><code>message SearchRequest {
   required string query = 1;
   optional int32 page_number = 2;
-  <del>optional Corupus corpus = 3;</del>
+  <del>optional Corpus corpus = 3;</del>
 }</code></pre>
         </figure>
 
         <figure>
-          <pre><code>enum PhoneType {
+          <pre><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  <ins>CORUPUS_VIDEO = 3;</ins>
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
         </figure>
       </div>
@@ -694,14 +693,14 @@ message SearchRequest {
 }</code></pre>
 
     <pre class="green client1" id="client1"><code>message SearchRequest {
-  <ins>required string user = 1;</ins>
+  <ins>required string query = 1;</ins>
 }</code></pre>
 
     <pre class="blue server0" id="server0"><code>message SearchRequest {
 }</code></pre>
 
     <pre class="green server1" id="server1"><code>message SearchRequest {
-  <ins>required string user = 1;</ins>
+  <ins>required string query = 1;</ins>
 }</code></pre>
   </div>
 </figure>
@@ -759,7 +758,7 @@ message SearchRequest {
               startSocket: 'bottom',
               middleLabel: LeaderLine.pathLabel('{}', { lineOffset: -100 }),
               endSocket: 'top',
-              endLabel: LeaderLine.captionLabel('Could not deserialize field: user (ID: 1)', {
+              endLabel: LeaderLine.captionLabel('Could not deserialize field: query (ID: 1)', {
                 color: '#d64545',
                 outlineColor: ''
               })
@@ -774,19 +773,19 @@ message SearchRequest {
 <figure>
   <div class="container-2-col">
     <pre class="blue client0" id="weak-client0"><code>message SearchRequest {
-  required string user = 1;
+  required string query = 1;
 }</code></pre>
 
     <pre class="green client1" id="weak-client1"><code>message SearchRequest {
-  <del>required string user = 1;</del>
+  <del>required string query = 1;</del>
 }</code></pre>
 
     <pre class="blue server0" id="weak-server0"><code>message SearchRequest {
-  required string user = 1;
+  required string query = 1;
 }</code></pre>
 
     <pre class="green server1" id="weak-server1"><code>message SearchRequest {
-  <del>required string user = 1;</del>
+  <del>required string query = 1;</del>
 }</code></pre>
   </div>
 </figure>
@@ -843,7 +842,7 @@ message SearchRequest {
           startSocket: 'bottom',
           middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -100 }),
           endSocket: 'top',
-          endLabel: LeaderLine.captionLabel('Could not deserialize field: user (ID: 1)', {
+          endLabel: LeaderLine.captionLabel('Could not deserialize field: query (ID: 1)', {
             color: '#d64545',
             outlineColor: ''
           })
@@ -857,32 +856,28 @@ message SearchRequest {
 
 <figure>
   <div class="container-2-col">
-    <pre class="blue client0" id="enum-str-client0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+    <pre class="blue client0" id="enum-str-client0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
 
-    <pre class="green client1" id="enum-str-client1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  <del>PHONE_TYPE_WORK = 3;</del>
+    <pre class="green client1" id="enum-str-client1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  <del>CORPUS_IMAGES = 2;</del>
 }</code></pre>
 
-    <pre class="blue server0" id="enum-str-server0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+    <pre class="blue server0" id="enum-str-server0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
 
-    <pre class="green server1" id="enum-str-server1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  <del>PHONE_TYPE_WORK = 3;</del>
+    <pre class="green server1" id="enum-str-server1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  <del>CORPUS_IMAGES = 2;</del>
 }</code></pre>
   </div>
 </figure>
@@ -897,7 +892,7 @@ message SearchRequest {
           color: 'black',
           size: 2,
           path: 'straight',
-          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }),
+          middleLabel: LeaderLine.captionLabel('2', { lineOffset: -10 }),
           startSocket: 'bottom',
           endSocket: 'top',
         }
@@ -937,9 +932,9 @@ message SearchRequest {
           size: 2,
           path: 'straight',
           startSocket: 'bottom',
-          middleLabel: LeaderLine.pathLabel('3', { lineOffset: -100 }),
+          middleLabel: LeaderLine.pathLabel('2', { lineOffset: -100 }),
           endSocket: 'top',
-          endLabel: LeaderLine.captionLabel('Unknown enum value: 3', {
+          endLabel: LeaderLine.captionLabel('Unknown enum value: 2', {
             color: '#d64545',
             outlineColor: ''
           })
@@ -954,30 +949,30 @@ message SearchRequest {
 
 <figure>
   <div class="container-2-col">
-    <pre class="blue client0" id="enum-weak-client0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
+    <pre class="blue client0" id="enum-weak-client0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
 
-    <pre class="green client1" id="enum-weak-client1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  <ins>PHONE_TYPE_WORK = 3;</ins>
+    <pre class="green client1" id="enum-weak-client1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
 
-    <pre class="blue server0" id="enum-weak-server0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
+    <pre class="blue server0" id="enum-weak-server0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
 
-    <pre class="green server1" id="enum-weak-server1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  <ins>PHONE_TYPE_WORK = 3;</ins>
+    <pre class="green server1" id="enum-weak-server1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
   </div>
 </figure>
@@ -1053,34 +1048,30 @@ message SearchRequest {
 
 <figure>
   <div class="container-2-col">
-    <pre class="blue client0" id="deadlock-client0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+    <pre class="blue client0" id="deadlock-client0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
 
-    <pre class="green client1" id="deadlock-client1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  <del>PHONE_TYPE_WORK = 3;</del>
-  <ins>PHONE_TYPE_FAX = 4;</ins>
+    <pre class="green client1" id="deadlock-client1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  <del>CORPUS_IMAGES = 2;</del>
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
 
-    <pre class="blue server0" id="deadlock-server0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+    <pre class="blue server0" id="deadlock-server0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
 
-    <pre class="green server1" id="deadlock-server1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  <del>PHONE_TYPE_WORK = 3;</del>
-  <ins>PHONE_TYPE_FAX = 4;</ins>
+    <pre class="green server1" id="deadlock-server1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  <del>CORPUS_IMAGES = 2;</del>
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
   </div>
 </figure>
@@ -1095,7 +1086,7 @@ message SearchRequest {
           color: 'black',
           size: 2,
           path: 'straight',
-          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }),
+          middleLabel: LeaderLine.captionLabel('2', { lineOffset: -10 }),
           startSocket: 'bottom',
           endSocket: 'top',
         }
@@ -1108,7 +1099,7 @@ message SearchRequest {
           color: 'black',
           size: 2,
           path: 'straight',
-          middleLabel: LeaderLine.captionLabel('4', { lineOffset: -10 }),
+          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }),
           startSocket: 'bottom',
           endSocket: 'top',
         }
@@ -1122,9 +1113,9 @@ message SearchRequest {
           size: 2,
           path: 'straight',
           startSocket: 'bottom',
-          middleLabel: LeaderLine.pathLabel('3', { lineOffset: 30 }),
+          middleLabel: LeaderLine.pathLabel('2', { lineOffset: 30 }),
           endSocket: 'top',
-          endLabel: LeaderLine.captionLabel('Unknown enum value: 3', {
+          endLabel: LeaderLine.captionLabel('Unknown enum value: 2', {
             color: '#d64545',
             outlineColor: ''
           })
@@ -1139,9 +1130,9 @@ message SearchRequest {
           size: 2,
           path: 'straight',
           startSocket: 'bottom',
-          middleLabel: LeaderLine.captionLabel('4', { lineOffset: -100 }),
+          middleLabel: LeaderLine.captionLabel('3', { lineOffset: -100 }),
           endSocket: 'top',
-          endLabel: LeaderLine.captionLabel('Unknown enum value: 4', {
+          endLabel: LeaderLine.captionLabel('Unknown enum value: 3', {
             color: '#d64545',
             outlineColor: ''
           })
@@ -1379,40 +1370,34 @@ message GetUserResponse {
       <figure class="semifullwidth">
         <div class="container-3-col" id="impl-default">
           <pre class="blue" id="impl-default-client0"><code>enum Corpus {
-  CORPUS_WEB = 1;
-  CORPUS_IMAGES = 3;
-  CORPUS_NEWS = 5;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
           <pre class="green" id="impl-default-client1"><code>enum Corpus {
   <ins>CORPUS_UNSPECIFIED = 0;</ins>
-  CORPUS_WEB = 1;
-  CORPUS_IMAGES = 3;
-  CORPUS_NEWS = 5;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
           <pre class="blue" id="impl-default-client2"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
-  CORPUS_WEB = 1;
-  CORPUS_IMAGES = 3;
-  CORPUS_NEWS = 5;
-  <ins>CORPUS_VIDEO = 7;</ins>
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
           <pre class="blue" id="impl-default-server0"><code>enum Corpus {
-  CORPUS_WEB = 1;
-  CORPUS_IMAGES = 3;
-  CORPUS_NEWS = 5;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
           <pre class="green" id="impl-default-server1"><code>enum Corpus {
   <ins>CORPUS_UNSPECIFIED = 0;</ins>
-  CORPUS_WEB = 1;
-  CORPUS_IMAGES = 3;
-  CORPUS_NEWS = 5;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
           <pre class="blue" id="impl-default-server2"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
-  CORPUS_WEB = 1;
-  CORPUS_IMAGES = 3;
-  CORPUS_NEWS = 5;
-  <ins>CORPUS_VIDEO = 7;</ins>
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
         </div>
       </figure>
@@ -1425,8 +1410,8 @@ message GetUserResponse {
             new LeaderLine(document.getElementById('impl-default-client1'), document.getElementById('impl-default-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
             new LeaderLine(document.getElementById('impl-default-client1'), document.getElementById('impl-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('1', { lineOffset: -10 }) });
             new LeaderLine(document.getElementById('impl-default-client1'), document.getElementById('impl-default-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
-            new LeaderLine(document.getElementById('impl-default-client2'), document.getElementById('impl-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('7 → 0', { lineOffset: 30 }) });
-            new LeaderLine(document.getElementById('impl-default-client2'), document.getElementById('impl-default-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('7', { lineOffset: -10 }) });
+            new LeaderLine(document.getElementById('impl-default-client2'), document.getElementById('impl-default-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('3 → 0', { lineOffset: 30 }) });
+            new LeaderLine(document.getElementById('impl-default-client2'), document.getElementById('impl-default-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }) });
           }, 450);
         });
       </script>
@@ -1714,45 +1699,39 @@ and it follows that it may also permit:
 
     <figure class="semifullwidth">
       <div class="container-3-col" id="unproducible">
-        <pre class="blue" id="unprod-client0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+        <pre class="blue" id="unprod-client0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
-        <pre class="green" id="unprod-client1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
-  <ins>unproducible PHONE_TYPE_FAX = 4;</ins>
+        <pre class="green" id="unprod-client1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>unproducible CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
-        <pre class="blue" id="unprod-client2"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
-  <ins>PHONE_TYPE_FAX = 4;</ins>
+        <pre class="blue" id="unprod-client2"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
-        <pre class="blue" id="unprod-server0"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
+        <pre class="blue" id="unprod-server0"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
 }</code></pre>
-        <pre class="green" id="unprod-server1"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
-  <ins>unproducible PHONE_TYPE_FAX = 4;</ins>
+        <pre class="green" id="unprod-server1"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>unproducible CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
-        <pre class="blue" id="unprod-server2"><code>enum PhoneType {
-  PHONE_TYPE_UNSPECIFIED = 0;
-  PHONE_TYPE_MOBILE = 1;
-  PHONE_TYPE_HOME = 2;
-  PHONE_TYPE_WORK = 3;
-  <ins>PHONE_TYPE_FAX = 4;</ins>
+        <pre class="blue" id="unprod-server2"><code>enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  <ins>CORUPUS_AUDIO = 3;</ins>
 }</code></pre>
       </div>
     </figure>
@@ -1760,13 +1739,13 @@ and it follows that it may also permit:
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
-          new LeaderLine(document.getElementById('unprod-client0'), document.getElementById('unprod-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }) });
+          new LeaderLine(document.getElementById('unprod-client0'), document.getElementById('unprod-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('2', { lineOffset: -10 }) });
           new LeaderLine(document.getElementById('unprod-client0'), document.getElementById('unprod-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
           new LeaderLine(document.getElementById('unprod-client1'), document.getElementById('unprod-server0'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
-          new LeaderLine(document.getElementById('unprod-client1'), document.getElementById('unprod-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }) });
+          new LeaderLine(document.getElementById('unprod-client1'), document.getElementById('unprod-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('2', { lineOffset: -10 }) });
           new LeaderLine(document.getElementById('unprod-client1'), document.getElementById('unprod-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
           new LeaderLine(document.getElementById('unprod-client2'), document.getElementById('unprod-server1'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' });
-          new LeaderLine(document.getElementById('unprod-client2'), document.getElementById('unprod-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('4', { lineOffset: -10 }) });
+          new LeaderLine(document.getElementById('unprod-client2'), document.getElementById('unprod-server2'), { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('3', { lineOffset: -10 }) });
         }, 475);
       });
     </script>
