@@ -682,11 +682,13 @@ message SearchRequest {
     <h2><a id="problems-with-symmetric-types" href="#problems-with-symmetric-types"></a>Problems with symmetric types
     </h2>
 
-    <p>Assume an environment where we do not control deployment ordering, such for a given release.</p>
+    <p>Assume an environment where we do not control deployment ordering, such for a given release, producers or consumers may be deployed before each other.</p>
 
-    <p>If an engineer needs to strengthen a message, such as the simple act of a trying to add a <code>required</code>
-      field they create an incompatibility risk:</p>
+    <p>If an engineer needs to narrow a message, such as trying to add a <code>required</code>
+      field they create an incompatibility risk. A message sent by an old producer breaks a new consumer:</p>
 
+
+      <!-- FIXME: required string doesn't trigger a deserialization error because it has a deserialization defualt. We need a new example -->
 <figure>
   <div class="container-2-col">
     <pre class="blue client0" id="client0"><code>message SearchRequest {
@@ -768,7 +770,7 @@ message SearchRequest {
       });
     </script>
 
-    <p>This also occurs when widening a message, by removing a <code>required</code> field:</p>
+    <p>This also occurs when widening a message, by removing a <code>required</code> field. A message sent by a new producer breaks an old consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -852,7 +854,7 @@ message SearchRequest {
   });
 </script>
 
-    <p>And strengthening an enum, by removing a value:</p>
+    <p>And narrowing an enum, by removing a value. An enum sent by an old producer breaks a new consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -945,7 +947,7 @@ message SearchRequest {
 </script>
 
 
-    <p>And widening an enum, by adding a value:</p>
+    <p>And widening an enum, by adding a value. An enum sent by a new producer breaks an old consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -1039,7 +1041,7 @@ message SearchRequest {
   });
 </script>
 
-    <p>One may assume that controlling the ordering of deploys prevents these incompatibilities.</p>
+    <p>One may think that controlling the ordering of deploys prevents these incompatibilities.</p>
 
     <p>Not true.</p>
 
@@ -1143,8 +1145,9 @@ message SearchRequest {
 </script>
 
     <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
-      messages that are in a request position and a response position also deadlocks.</p>
+      messages that are in a request position and a response position, we also deadlock.</p>
 
+      <!-- -->
 <figure>
   <div class="container-2-col">
     <pre class="blue client0" id="transitive-deadlock-client0"><code>message User {}
@@ -1285,8 +1288,6 @@ message GetUserResponse {
   });
 </script>
 
-    <p>Even ordered deployment is insufficient to avoid this scenario.</p>
-
     <h2><a id="what-is-an-asymmetric-type" href="#what-is-an-asymmetric-type"></a>What is an asymmetric type?</h2>
 
     <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
@@ -1295,11 +1296,12 @@ message GetUserResponse {
     </p>
 
     <p>A rule of thumb is that the constructor validation must always entail the deserialization validation.</p>
+    
+    <p>More formally, this is CV ⇛ DV which expands to ∀x. CV(x) ⟹ DV(x)</p>
 
-    <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the
-      evolution is merged and then deployed immediately or at the next scheduled release.</p>
+    <!-- <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the -->
+      <!-- evolution is merged and then deployed immediately or at the next scheduled release.</p> -->
 
-    <p>More formally, CV ⇛ DV which expands to ∀x. CV(x) ⟹ DV(x)</p>
 
     <p>There is a rich design space of asymmetric types. Let's look at a few.</p>
 
@@ -1433,7 +1435,8 @@ message GetUserResponse {
     <p><a href="https://github.com/stepchowfun/typical">typical</a> has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
       the deserialization validation only requires 1, the fallback.</p>
 
-    <p>For <code>choice</code> types, Typical treats this dually: writers of optional/asymmetric cases must provide a fallback,
+      <!-- TODO: Maybe strop typical -->
+    <p>For <code>choice</code> types, typical treats this dually: writers of optional/asymmetric cases must provide a fallback,
       and readers can always recover to a known case while rollouts are in flight.</p>
 
     <p>Good (adding and removing an <code>optional</code> choice case)</p>
@@ -1544,6 +1547,8 @@ message GetUserResponse {
       </div>
     </figure>
 
+    <!-- TODO: inspect generated code of Rust. -->
+
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         setTimeout(function () {
@@ -1587,26 +1592,37 @@ message GetUserResponse {
     </script>
 
     <h3><a id="constructor-required-deserialization-optional"
-        href="#constructor-required-deserialization-optional"></a>constructor required deserialization optional</h3>
+        href="#constructor-required-deserialization-optional"></a>"constructor required deserialization optional"</h3>
 
     <p>The simplest means of avoiding the use of a default is to use an <code>optional</code> label when adding fields.
     </p>
 
     <p>But unfortunately, <code>optional</code> alone offers no such safe evolution pathway to transform a field into a
       <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
-      without incompatibility risk, and vice versa, as per the rationale offered up in <a href="#preamble">the preamble</a>.</p>
+      without incompatibility risk, and vice versa, as per the rationale offered up in <a href="#context">the context</a>.</p>
 
-    <p>I strongly believe the removal or this label was unnecessary, and an asymmetric label should have been
+    <p>As stated before, I strongly believe the removal of <code>optional</code> was unnecessary, and an additional asymmetric label should have been
       added instead.</p>
 
-    <p>Thus, the second, less common type of asymmetric type we'll look at is "constructor required deserialization
-      optional" label. To save ink, I will instead call it <code>asymmetric</code> the same as field label from the IDL
-      <a href="https://github.com/stepchowfun/typical">typical</a>, and the namesake of this article.</p>
+    <p>Thus, the second, less common type of asymmetric type we'll look at is a "constructor required deserialization
+      optional" type,
 
-    <p><code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
+      <!-- TODO: need double cross -->
+      <!-- TODO:  need to renumber footnotes -->
+      <sup><a id="fnref:2" href="#fn:3">†</a></sup> label.</p> 
+
+    <aside>
+      <p id="fn:3">
+        <a href="#fnref:3">†</a>This is the best name I've got.
+      </p>
+    </aside>
+      
+    <p>In <a href="https://github.com/stepchowfun/typical">typical</a>, the <code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
       data absence in the payload.</p>
 
     <p>Use of this label admits safe evolution semantics! We can now use it as a safe intermediate stage when adding a required field:</p>
+
+      <!-- FIXME: required string doesn't trigger a deserialization error because it has a deserialization defualt. We need a new example -->
 
     <figure class="semifullwidth">
       <div class="container-3-col" id="required">
@@ -1686,6 +1702,8 @@ and it follows that it may also permit:
 </ul>
 
 </p>
+
+<!--TODO: inspect generated code of Rust-->
 
     <h3><a id="unproducible" href="#unproducible"></a>Unproducible</h3>
 
