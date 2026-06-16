@@ -230,7 +230,7 @@
     </div>
 
     <div class="abstract">
-      Adding asymmetric types to Protocol Buffers - types that generate code that have stronger constructor validations than their deserialization validations -  
+      Adding more asymmetric types to Protocol Buffers - types that generate code that have stronger constructor validations than their deserialization validations -  
       would make schema evolution safer.    
     </div>
 
@@ -1310,18 +1310,19 @@ message GetUserResponse {
       <!-- evolution is merged and then deployed immediately or at the next scheduled release.</p> -->
 
 
-    <p>There is a rich design space of asymmetric types. Let's look at a few.</p>
+    <p>There is a rich design space of asymmetric types, and Protocol Buffers already supports some! Let's look at a few.</p>
 
     <h3><a id="defaults" href="#defaults"></a>Defaults</h3>
 
     <h4><a id="explicit-field-defaults" href="#explicit-field-defaults"></a>Explicit field defaults</h4>
 
-    <p>The most common form of asymmetric type is a field default.</p>
+    <p>The form of asymmetric type most people are familiar with is a field default.</p>
 
-    <p>It relaxes the just deserializer such that it accepts missing payload data.</p>
+    <p>It relaxes the deserializer such that it "plods on" when there's missing payload data. This permits safe evolution </p>
 
-    <p>But the default must be a member of type field type <code>T</code>.</p>
 
+    <!-- TODO: Update this diagram to already start with a query, and we're adding a required Timestamp "since" IFF Protocol Buffers permits constructing messages as defaults
+    If not, add corupus and choose a Corupus default -->
     <figure class="semifullwidth">
       <div class="container-3-col" id="field-default">
         <pre class="blue" id="field-default-client0"><code>message SearchRequest {
@@ -1360,6 +1361,8 @@ message GetUserResponse {
         }, 425);
       });
     </script>
+
+    <p>But <code>default</code> has one key restriction: the specified default must be a member of the field's type.</p>
 
     <p>This poses 2 problems:</p>
 
