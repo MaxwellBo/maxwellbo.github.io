@@ -335,6 +335,11 @@ message SearchRequest {
   rpc Search(SearchRequest) returns (SearchResponse);
 }</code></pre>
 
+
+    <!-- TODO: Add an aside: We may refer to the composition of the field type and label as a "type" too: e.g. an <code>optional string</code> has a different type to that of a <code>required string</code>.
+     
+    
+    This aside should use a standard cross.-->
     <p>A proto file may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
       <code>required</code> or <code>repeated</code>:</p>
 
@@ -392,6 +397,7 @@ message SearchRequest {
     </figure>
   </div> -->
 
+    <!-- TODO: need double cross -->
     <p>File versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and deployed into releases:<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
 
     <aside>
@@ -1295,7 +1301,7 @@ message GetUserResponse {
   });
 </script>
 
-    <h2><a id="what-is-an-asymmetric-type" href="#what-is-an-asymmetric-type"></a>What is an asymmetric type?</h2>
+    <h2><a id="asymmetric-types" href="#asymmetric-types"></a>Asymmetric types</h2>
 
     <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
 
@@ -1304,7 +1310,9 @@ message GetUserResponse {
 
     <p>A rule of thumb is that the constructor validation must always entail the deserialization validation.</p>
     
-    <p>More formally, this is CV ⇛ DV which expands to ∀x. CV(x) ⟹ DV(x)</p>
+
+    <!-- TODO: use mathjax and center this -->
+    <p>More formally, we can say that CV ⇛ DV which expands to ∀x. CV(x) ⟹ DV(x)</p>
 
     <!-- <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the -->
       <!-- evolution is merged and then deployed immediately or at the next scheduled release.</p> -->
@@ -1622,9 +1630,8 @@ message GetUserResponse {
     <p>Thus, the second, less common type of asymmetric type we'll look at is a "constructor required deserialization
       optional" type,
 
-      <!-- TODO: need double cross -->
-      <!-- TODO:  need to renumber footnotes -->
-      <sup><a id="fnref:2" href="#fn:3">†</a></sup> label.</p> 
+      <!-- TODO: need triple cross -->
+      <sup><a id="fnref:3" href="#fn:3">†</a></sup> label.</p> 
 
     <aside>
       <p id="fn:3">
