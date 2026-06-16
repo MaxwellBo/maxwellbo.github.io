@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- TODO: check for usage of consistent terminology.-->
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -228,8 +230,8 @@
     </div>
 
     <div class="abstract">
-      IDLs that support asymmetric types generate code that have stronger constructor validations than their deserialization validations. 
-      I believe they make schema evolution safer and more IDLs should support them.
+      Adding asymmetric types to Protocol Buffers - types that generate code that have stronger constructor validations than their deserialization validations -  
+      would make schema evolution safer.    
     </div>
 
     <h2><a id="context" href="#context"></a>Context</h2>
@@ -267,7 +269,7 @@ message SearchRequest {
     </figure>
 
     <p>
-      Because of this change, you see the following tortured convention <a href="https://github.com/search?q=%22%2F%2F+required%22+language%3A%22Protocol+Buffers%22+&type=code">littered throughout <i>proto3</i>-using codebases</a>:
+      Because of this change, you see the following convention <a href="https://github.com/search?q=%22%2F%2F+required%22+language%3A%22Protocol+Buffers%22+&type=code">littered throughout <i>proto3</i>-using codebases</a>:
     </p>
     <pre><code>message ButtonPressRequest {
   // Required: which button to press
@@ -282,7 +284,7 @@ message SearchRequest {
       the <code>required</code> and <code>optional</code> labels while adding a set of <i>"Safe proto evolution extensions"</i>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
 
     <p>
-      In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <i>proto2</i> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can dramatically expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would upstream similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
+      In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <i>proto2</i> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would introduce similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
     </p>
 
 
@@ -324,16 +326,16 @@ message SearchRequest {
 
     <h2><a id="preamble" href="#preamble"></a>Preamble</h2>
 
-    <p>I will provide a refresher on Protocol Buffers and define some useful terminology:</p>
+    <p>First, a refresher on Protocol Buffers, and some article specific terminology.</p>
 
-    <p>A proto schema may define services, which define methods, that have request types and response types:</p>
+    <p>A proto file may define services, which define methods, that have request types and response types:</p>
 
     <pre>
 <code>service SearchService {
   rpc Search(SearchRequest) returns (SearchResponse);
 }</code></pre>
 
-    <p>A proto schema may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
+    <p>A proto file may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
       <code>required</code> or <code>repeated</code>:</p>
 
     <pre>
@@ -342,7 +344,7 @@ message SearchRequest {
   optional int32 page_number = 2;
 }</code></pre>
 
-    <p>A schema may define enums, that have values:</p>
+    <p>A file may define enums, that have values:</p>
     <pre>
 <code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
@@ -350,10 +352,10 @@ message SearchRequest {
   CORPUS_IMAGES = 2;
 }</code></pre>
 
-    <p>A committed change to a schema is called an <i>evolution</i>:</p>
+    <p>A committed change to a file is called an <i>evolution</i>:</p>
 
     <pre>
-<code>message Corpus {
+<code>message SearchRequest {
   required string query = 1;
   optional int32 page_number = 2;
   <ins>optional Corpus corpus = 3;</ins>
@@ -367,20 +369,20 @@ message SearchRequest {
     An evolution that was approved to be safe is called an approved evolution.
   </p> -->
 
-    <p>
-      If a committed change is merged to <code>master</code>, we get a new <i>schema version</i>, which is a specific snapshot of a file</i>:
-    </p>
+    <!-- <p>
+      If a committed change is merged to <code>master</code>, we get a new <i>file version</i>, which is a specific snapshot of a file</i>:
+    </p> -->
 
-  <div class="container-2-col">
+  <!-- <div class="container-2-col">
     <figure class="card blue">
       <pre><code>message SearchRequest {
   required string query = 1;
   optional int32 page_number = 2;
 }</code></pre>
       <figcaption>search-2026-02-28.proto</figcaption>
-    </figure>
+    </figure> -->
 
-    <figure class="card green">
+    <!-- <figure class="card green">
       <pre><code>message SearchRequest {
   required string query = 1;
   optional int32 page_number = 2;
@@ -388,9 +390,9 @@ message SearchRequest {
 }</code></pre>
       <figcaption>search-2026-03-01.proto</figcaption>
     </figure>
-  </div>
+  </div> -->
 
-    <p>Schema versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and deployed into releases:<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
+    <p>File versions can be generated into classes which build instances which serialize to payloads. Classes are built into artifacts and deployed into releases:<sup><a id="fnref:2" href="#fn:2">†</a></sup></p>
 
     <aside>
       <p id="fn:2">
@@ -404,6 +406,7 @@ message SearchRequest {
       live.</p> -->
 
 
+      <!-- TODO: update diagram to refer to a file version instead of a schema version-->
     <figure>
       <svg viewBox="0 0 980 810" role="img" aria-labelledby="schema-lifecycle-title schema-lifecycle-desc">
         <title id="schema-lifecycle-title">Schema versions, releases, instances, and payloads</title>
@@ -617,7 +620,7 @@ message SearchRequest {
       We will use a simplified form of this diagram from now on.
     </p>
 
-    <p>A schema can be said to made "narrower" than its previous version when:
+    <p>A definition can be said to made "narrower" than its previous version when:
     <ul>
       <li>For messages (a product type), we add a new field</li>
       <li>For enums (a sum type), we remove a value</li>
@@ -645,7 +648,7 @@ message SearchRequest {
       </div>
     </figure>
 
-    <p>Conversely, a schema can can be made "wider" than its previous version when:</p>
+    <p>Conversely, a definition can can be made "wider" than its previous version when:</p>
     <ul>
       <li>for messages, we remove a field</li>
       <li>for enums, we add a value</li>
@@ -688,7 +691,11 @@ message SearchRequest {
       field they create an incompatibility risk. A message sent by an old producer breaks a new consumer:</p>
 
 
-      <!-- FIXME: required string doesn't trigger a deserialization error because it has a deserialization defualt. We need a new example -->
+      <!-- TODO: required string doesn't trigger a deserialization error because it has a deserialization defualt. We need a new example
+      
+      In the new example `query ` will be in both before and after but we will be adding the required field Corups instead
+      
+      -->
 <figure>
   <div class="container-2-col">
     <pre class="blue client0" id="client0"><code>message SearchRequest {
@@ -1145,7 +1152,7 @@ message SearchRequest {
 </script>
 
     <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
-      messages that are in a request position and a response position, we also deadlock.</p>
+      messages that are in any method's request position and any method's response position, we also deadlock.</p>
 
       <!-- -->
 <figure>
@@ -1365,10 +1372,11 @@ message GetUserResponse {
     <h5><a id="implicit-type-defaults" href="#implicit-type-defaults"></a>Implicit type defaults</h5>
 
     <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax
-      for explicitly registering a default, it implicitly enrolls most primitive types into this defaulting behavior,
-      and even enums, defaulting to the member with the lowest value.</p>
+      for explicitly registering a default, it implicitly enrolls primitive types into this defaulting behavior: <code>boolean</code> defaulting to <code>false</code>, <code>string</code> defaulting to <code>""</code>, numerics defaulting to <code>0</code>, etc.
 
+      But Protocol Buffers even defaults <i>enums</i>, defaulting a parse of an unrecegnized or unspecified enum value to the variant with the lowest value. Thus, the following is the "safe" way to add a new enum value:</p>
 
+      <!-- TODO remove the original -->
       <figure class="semifullwidth">
         <div class="container-3-col" id="impl-default">
           <pre class="blue" id="impl-default-client0"><code>enum Corpus {
@@ -1418,8 +1426,12 @@ message GetUserResponse {
         });
       </script>
 
-      <p>Thus, proto enums, are defined by programming
-      convention to have an <code>UNKNOWN</code> variant, that either pollutes the domain model, or necessitate a
+      <p>
+        You're shit out of luck if the enum was defined with a "domain meaningful" <code>0</code> variant, because otherwise adding new values would trigger misbehaviour in old clients! And no, Protocol Buffers does not support negative enum values, so there's no defining a <code>-1</code> to get around this.
+      </p>
+
+      <p>Thus, enums are defined by programming
+      convention to have an <code>UNKNOWN = 0</code> variants. I find this is a bit ridiculous: it either pollutes the domain model, or necessitates a
       validation post-deserialization to strip out the <code>UNKNOWN</code> variant and map it onto a
       <code>UNKNOWN</code>-less domain model enum.</p>
 
@@ -1436,7 +1448,7 @@ message GetUserResponse {
       the deserialization validation only requires 1, the fallback.</p>
 
       <!-- TODO: Maybe strop typical -->
-    <p>For <code>choice</code> types, typical treats this dually: writers of optional/asymmetric cases must provide a fallback,
+    <p>For <code>choice</code> types, <a href="https://github.com/stepchowfun/typical">typical</a> treats this dually: writers of optional/asymmetric cases must provide a fallback,
       and readers can always recover to a known case while rollouts are in flight.</p>
 
     <p>Good (adding and removing an <code>optional</code> choice case)</p>
@@ -2136,8 +2148,8 @@ and it follows that it may also permit:
 
     </center>
     <p>
-    Built with <a href="https://maxbo.me/celine">@celine</a>
-</p>
+      Built with <a href="https://maxbo.me/celine">@celine</a>
+  </p>
   </footer>
   </main>
 
