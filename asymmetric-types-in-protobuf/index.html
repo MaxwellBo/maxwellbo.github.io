@@ -6,7 +6,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Protocol Buffers should have asymmetric types</title>
+  <title>Protocol Buffers should have more asymmetric types</title>
 
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
@@ -248,10 +248,10 @@ message SearchRequest {
     </p>
 
     <p>
-      this change still upset quite a few people. 
+      This change still upset quite a few people. 
       On the <time>15th of December 2016</time>, a Protocol Buffers maintainer
       <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale
-      </a> for this change:
+      </a> for it:
     </p>
 
     <figure class="blockquote">
@@ -280,11 +280,11 @@ message SearchRequest {
 }</code></pre>
 
     <p>In 2022, I joined <a href="https://www.canva.com/about/">Canva</a>. 
-      For the next 3 years I worked on, for all intents and purposes, a hard fork of Protocol Buffers. This fork was locked to <i>proto2</i> syntax, preserving
+      For the next 3 years I worked on, for all intents and purposes, a hard fork of Protocol Buffers. This fork was locked to <a href="https://protobuf.dev/programming-guides/proto2/"><i>proto2</i></a> syntax, preserving
       the <code>required</code> and <code>optional</code> labels while adding a set of <i>"Safe proto evolution extensions"</i>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
 
     <p>
-      In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <i>proto2</i> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would introduce similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
+      In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <a href="https://protobuf.dev/programming-guides/proto2/"><i>proto2</i></a> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would introduce similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
     </p>
 
 
@@ -326,7 +326,8 @@ message SearchRequest {
 
     <h2><a id="preamble" href="#preamble"></a>Preamble</h2>
 
-    <p>First, a refresher on Protocol Buffers, and some article specific terminology.</p>
+    <!-- TO-->
+    <p>First, a refresher on Protocol Buffers <a href="https://protobuf.dev/programming-guides/proto2/"></a>, and some article specific terminology.</p>
 
     <p>A proto file may define services, which define methods, that have request types and response types:</p>
 
@@ -339,7 +340,7 @@ message SearchRequest {
     <!-- TODO: Add an aside: We may refer to the composition of the field type and label as a "type" too: e.g. an <code>optional string</code> has a different type to that of a <code>required string</code>.
      
     
-    This aside should use a standard cross.-->
+    This aside should use a standard cross. -->
     <p>A proto file may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
       <code>required</code> or <code>repeated</code>:</p>
 
@@ -867,7 +868,11 @@ message SearchRequest {
   });
 </script>
 
-    <p>And narrowing an enum, by removing a value. An enum sent by an old producer breaks a new consumer:</p>
+    <p>
+      This incompatibility risk doesn't just happen when adding or removing a <code>required</code> field directly: the same kind of risk occurs when transitioning an <code>optional</code> field to <code>required</code>, or <code>required</code> to <code>optional</code>.
+    </p>
+
+    <p>Enum evolutions also carry incompatibility risk, for example, when narrowing an enum, by removing an enum value. An enum sent by an old producer breaks a new consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -960,7 +965,7 @@ message SearchRequest {
 </script>
 
 
-    <p>And widening an enum, by adding a value. An enum sent by a new producer breaks an old consumer:</p>
+    <p>And also when widening an enum, by adding a value. An enum sent by a new producer breaks an old consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -1054,12 +1059,11 @@ message SearchRequest {
   });
 </script>
 
-    <p>One may think that controlling the ordering of deploys prevents these incompatibilities.</p>
+    <p>One may think that controlling the ordering of deploys prevents these incompatibilities, such that new consumers are released before new producers, or vice versa.</p>
 
     <p>Not true.</p>
 
-    <p>A simultaneous narrowing and widening of a schema "deadlocks" the schema such there is no deployment ordering
-      that prevents incompatibilities:</p>
+    <p>A simultaneous narrowing and widening of a definition "deadlocks" a definition such there is no deployment ordering that prevents incompatibilities:</p>
 
 <figure>
   <div class="container-2-col">
@@ -1157,10 +1161,9 @@ message SearchRequest {
   });
 </script>
 
-    <p>Furthermore, if the evolution takes place in a domain object that is referenced transitively by 2 separate
-      messages that are in any method's request position and any method's response position, we also deadlock.</p>
+    <p>Furthermore, if the evolution takes place in a domain definition that is referenced transitively by 2 separate messages that are in any method's request position and any method's response position, we also deadlock.</p>
 
-      <!-- -->
+      <!-- TODO: The user should have an email field. The field that should be added is required Timestamp created_at -->
 <figure>
   <div class="container-2-col">
     <pre class="blue client0" id="transitive-deadlock-client0"><code>message User {}
@@ -1303,12 +1306,14 @@ message GetUserResponse {
 
     <h2><a id="asymmetric-types" href="#asymmetric-types"></a>Asymmetric types</h2>
 
-    <p>Asymmetric types have different validations on their classes constructor than its deserializer.</p>
+    <p>
+      Asymmetric types admit afe evolution pathways that symmetric types do not, but having different validations on their their generated class's constructor than its deserializer. 
+      </p>
 
     <p>These validations execute at typecheck-time or runtime in the constructor, or just runtime in the deserializer.
     </p>
 
-    <p>A rule of thumb is that the constructor validation must always entail the deserialization validation.</p>
+    <p>A rule of thumb is that the constructor validation must always <i>entail</i> the deserialization validation.</p>
     
 
     <!-- TODO: use mathjax and center this -->
@@ -1318,19 +1323,20 @@ message GetUserResponse {
       <!-- evolution is merged and then deployed immediately or at the next scheduled release.</p> -->
 
 
-    <p>There is a rich design space of asymmetric types, and Protocol Buffers already supports some! Let's look at a few.</p>
+    <p>There is a rich design space of asymmetric types, and Protocol Buffers already supports some! Let's look at a few:</p>
 
-    <h3><a id="defaults" href="#defaults"></a>Defaults</h3>
+    <h3><a id="currently-supported" href="#currently-supported"></a>Currently supported asymmetric types</h3>
 
     <h4><a id="explicit-field-defaults" href="#explicit-field-defaults"></a>Explicit field defaults</h4>
 
-    <p>The form of asymmetric type most people are familiar with is a field default.</p>
-
-    <p>It relaxes the deserializer such that it "plods on" when there's missing payload data. This permits safe evolution </p>
+    <p>The form of asymmetric type most people are familiar with is a field default. It relaxes the deserializer such that it "plods on" when there's missing payload data. This permits the safe edition of a <code>required</code> field:</p>
 
 
     <!-- TODO: Update this diagram to already start with a query, and we're adding a required Timestamp "since" IFF Protocol Buffers permits constructing messages as defaults
-    If not, add corupus and choose a Corupus default -->
+    If not, add corupus and choose a Corupus default
+    
+    
+    Btw, does default with `optional` do anything? Shouldn't we have a 2 column diagram with a require filed wiht a default? -->
     <figure class="semifullwidth">
       <div class="container-3-col" id="field-default">
         <pre class="blue" id="field-default-client0"><code>message SearchRequest {
@@ -1382,10 +1388,12 @@ message GetUserResponse {
 
     <h5><a id="implicit-type-defaults" href="#implicit-type-defaults"></a>Implicit type defaults</h5>
 
-    <p>Protocol Buffers is particularly egregious when it comes to utilizing this defaulting behavior. Along with syntax
-      for explicitly registering a default, it implicitly enrolls primitive types into this defaulting behavior: <code>boolean</code> defaulting to <code>false</code>, <code>string</code> defaulting to <code>""</code>, numerics defaulting to <code>0</code>, etc.
+    <p>Along with syntax
+      for explicitly registering a field default, Protocol Buffers does defaulting of fields with primitive types: <code>boolean</code> to <code>false</code>, <code>string</code> to <code>""</code>, numerics to <code>0</code>, etc.
 
-      But Protocol Buffers even defaults <i>enums</i>, defaulting a parse of an unrecegnized or unspecified enum value to the variant with the lowest value. Thus, the following is the "safe" way to add a new enum value:</p>
+    <h4><a id="implicit-type-defaults" href="#implicit-type-defaults"></a>Enum defaults</h4>
+
+      Protocol Buffers even defaults <i>enums</i>, defaulting a parse of an unrecegnized or unspecified enum value to the variant with the lowest value. Thus, the following is the "safe" way to add a new enum value:</p>
 
       <!-- TODO remove the original -->
       <figure class="semifullwidth">
@@ -1438,7 +1446,7 @@ message GetUserResponse {
       </script>
 
       <p>
-        You're shit out of luck if the enum was defined with a "domain meaningful" <code>0</code> variant, because otherwise adding new values would trigger misbehaviour in old clients! And no, Protocol Buffers does not support negative enum values, so there's no defining a <code>-1</code> to get around this.
+        This is bad. You're shit out of luck if the enum was defined with a "domain meaningful" <code>0</code> variant, because otherwise adding new values would trigger misbehaviour in old clients! And no, Protocol Buffers does not support negative enum values, so there's no defining a <code>-1</code> to get around this either.
       </p>
 
       <p>Thus, enums are defined by programming
@@ -1452,199 +1460,42 @@ message GetUserResponse {
 
     <p>TODO: a differentiation between absence and non-recognition</p>
 
+    <h3><a id="currently-unsupported" href="currently-unsupported"></a>Asymmetric types that could be supported</h3>
 
-    <h3><a id="field-fallbacks" href="#field-fallbacks"></a>Field fallbacks</h3>
 
-    <p><a href="https://github.com/stepchowfun/typical">typical</a> has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
-      the deserialization validation only requires 1, the fallback.</p>
 
-      <!-- TODO: Maybe strop typical -->
-    <p>For <code>choice</code> types, <a href="https://github.com/stepchowfun/typical">typical</a> treats this dually: writers of optional/asymmetric cases must provide a fallback,
-      and readers can always recover to a known case while rollouts are in flight.</p>
 
-    <p>Good (adding and removing an <code>optional</code> choice case)</p>
-    <figure class="semifullwidth">
-      <div class="container-3-col" id="choice-optional">
-        <pre class="blue" id="choice-optional-client0"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-}</code></pre>
-        <pre class="green" id="choice-optional-client1"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-  <ins>optional authentication_error: String = 2</ins>
-}</code></pre>
-        <pre class="blue" id="choice-optional-client2"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-}</code></pre>
-        <pre class="blue" id="choice-optional-server0"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-}</code></pre>
-        <pre class="green" id="choice-optional-server1"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-  <ins>optional authentication_error: String = 2</ins>
-}</code></pre>
-        <pre class="blue" id="choice-optional-server2"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-}</code></pre>
-      </div>
-    </figure>
 
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(function () {
-          new LeaderLine(
-            document.getElementById('choice-optional-client0'),
-            document.getElementById('choice-optional-server0'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
-          );
-          new LeaderLine(
-            document.getElementById('choice-optional-client0'),
-            document.getElementById('choice-optional-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-optional-client1'),
-            document.getElementById('choice-optional-server0'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-optional-client1'),
-            document.getElementById('choice-optional-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": "bad token", "1": "please try again" }', { lineOffset: -10 }) }
-          );
-          new LeaderLine(
-            document.getElementById('choice-optional-client1'),
-            document.getElementById('choice-optional-server2'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-optional-client2'),
-            document.getElementById('choice-optional-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-optional-client2'),
-            document.getElementById('choice-optional-server2'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
-          );
-        }, 350);
-      });
-    </script>
+    <h4><a id="constructor-required-deserialization-optional"
+        href="#constructor-required-deserialization-optional"></a>"constructor required deserialization optional"</h4>
 
-    <p>Good (adding an <code>asymmetric</code> choice case, then promoting to required)</p>
-    <figure class="semifullwidth">
-      <div class="container-3-col" id="choice-asymmetric">
-        <pre class="blue" id="choice-asymmetric-client0"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-}</code></pre>
-        <pre class="green" id="choice-asymmetric-client1"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-  <ins>asymmetric please_try_again = 3</ins>
-}</code></pre>
-        <pre class="blue" id="choice-asymmetric-client2"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-  <ins>please_try_again = 3</ins>
-}</code></pre>
-        <pre class="blue" id="choice-asymmetric-server0"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-}</code></pre>
-        <pre class="green" id="choice-asymmetric-server1"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-  <ins>asymmetric please_try_again = 3</ins>
-}</code></pre>
-        <pre class="blue" id="choice-asymmetric-server2"><code>choice SendEmailResponse {
-  success = 0
-  error: String = 1
-  <ins>please_try_again = 3</ins>
-}</code></pre>
-      </div>
-    </figure>
-
-    <!-- TODO: inspect generated code of Rust. -->
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(function () {
-          new LeaderLine(
-            document.getElementById('choice-asymmetric-client0'),
-            document.getElementById('choice-asymmetric-server0'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
-          );
-          new LeaderLine(
-            document.getElementById('choice-asymmetric-client0'),
-            document.getElementById('choice-asymmetric-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-asymmetric-client1'),
-            document.getElementById('choice-asymmetric-server0'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-asymmetric-client1'),
-            document.getElementById('choice-asymmetric-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "3": null, "1": "please try again" }', { lineOffset: -10 }) }
-          );
-          new LeaderLine(
-            document.getElementById('choice-asymmetric-client1'),
-            document.getElementById('choice-asymmetric-server2'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-asymmetric-client2'),
-            document.getElementById('choice-asymmetric-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('choice-asymmetric-client2'),
-            document.getElementById('choice-asymmetric-server2'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "3": null }', { lineOffset: -10 }) }
-          );
-        }, 375);
-      });
-    </script>
-
-    <h3><a id="constructor-required-deserialization-optional"
-        href="#constructor-required-deserialization-optional"></a>"constructor required deserialization optional"</h3>
-
-    <p>The simplest means of avoiding the use of a default is to use an <code>optional</code> label when adding fields.
+    <p>Let's say the restrictions of associated with the use of an <a href="#explicit-field-defaults">explicit field default</a> is too much: what are we to do?
     </p>
 
-    <p>But unfortunately, <code>optional</code> alone offers no such safe evolution pathway to transform a field into a
-      <code>required</code> field. <code>optional</code> can simply not be transitioned into <code>required</code>
-      without incompatibility risk, and vice versa, as per the rationale offered up in <a href="#context">the context</a>.</p>
+    <p>In vanilla Protocol Buffers, unfortunately, nothing: there is no other safe evolution pathway to add or remove a <code>required</code> field
+      without incompatibility risk as per the <a href="#problems-with-symmetric-types">Problems with symmetric types</a> section.
 
     <p>As stated before, I strongly believe the removal of <code>optional</code> was unnecessary, and an additional asymmetric label should have been
       added instead.</p>
 
-    <p>Thus, the second, less common type of asymmetric type we'll look at is a "constructor required deserialization
-      optional" type,
+    <!-- <p>Thus, the second, less common type of asymmetric type we'll look at is a "constructor required deserialization -->
+      <!-- optional" type, -->
 
-      <!-- TODO: need triple cross -->
-      <sup><a id="fnref:3" href="#fn:3">†</a></sup> label.</p> 
+    <!-- TODO: need triple cross -->
+      <!-- <sup><a id="fnref:3" href="#fn:3">†</a></sup> label.</p> 
 
     <aside>
       <p id="fn:3">
         <a href="#fnref:3">†</a>This is the best name I've got.
       </p>
-    </aside>
+    </aside> -->
       
     <p>In <a href="https://github.com/stepchowfun/typical">typical</a>, the <code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
       data absence in the payload.</p>
 
-    <p>Use of this label admits safe evolution semantics! We can now use it as a safe intermediate stage when adding a required field:</p>
+    <p>Use of this label admits safe evolution semantics! We can now use it as a safe intermediate stage when adding a <code>required</code> field:</p>
 
-      <!-- FIXME: required string doesn't trigger a deserialization error because it has a deserialization defualt. We need a new example -->
+      <!-- TODO: required string doesn't trigger a deserialization error because it has a deserialization defualt. Use the same example of the one we use in the Problems with Symmetric Types section -->
 
     <figure class="semifullwidth">
       <div class="container-3-col" id="required">
@@ -1725,14 +1576,25 @@ and it follows that it may also permit:
 
 </p>
 
-<!--TODO: inspect generated code of Rust-->
 
-    <h3><a id="unproducible" href="#unproducible"></a>Unproducible</h3>
+<p>
+  By looking at the generated code, we can see how this is achieved:
+</p>
+<!--TODO: get generated code of Rust-->
 
-    <p>The third type is <code>unproducible</code>.</p>
+<p>
+  TODO: Fill in
+</p>
 
-    <p>For enums (or any sum type), we prevent the use of the value or variant in certain contexts, but permit its
-      deserialization.</p>
+
+<p>
+
+</p>
+
+
+    <h4><a id="unproducible" href="#unproducible"></a>Unproducible variants</h4>
+
+    <p>A label that prevents the construction of an enum value or variant in certain contexts, whilst permitting its deserialization, turns the enum into an asymmetric type.</p>
 
     <p>The label permits us to safely add a variant under the assumption that no other engineer can construct, serialize
       and send it to deserializers that are unprepared to handle it.</p>
@@ -1796,19 +1658,16 @@ and it follows that it may also permit:
     <p>One such way is to enforce unproducibility is the use of a linter that ensures that values and constructors may
       only be used in 'if' tests, and switch case labels and patterns.</p>
 
-    <h3><a id="two-validations" href="#two-validations"></a>Two validations</h3>
-
-    <p>The fourth type is "two validations".</p>
+    <h4><a id="two-validations" href="#two-validations"></a>Two validations</h4>
 
     <p>Some IDLs support arbitrary field validations, such as Amazon's <a href="https://smithy.io/2.0/index.html">Smithy</a> and
       Protocol Buffers with <a href="https://buf.build/">Buf</a>'s <a
         href="https://protovalidate.com/">protovalidate</a>.</p>
 
-    <p>But these validations inherit the restrictions placed upon <code>required</code> and <code>optional</code>
-      fields: they cannot change safely in RPC and API contexts.</p>
+    <p>But these are <i>symmetric</i> validations and thus cannot change without incompatibility risk:</p>
 
+    <p>By narrowing a validation, we induce an incompatibility risk:</p>
 
-    <p>Narrowing</p>
     <figure>
       <div class="container-2-col">
         <pre class="blue client0" id="v1-client0"><code>message SearchRequest {
@@ -1869,7 +1728,7 @@ and it follows that it may also permit:
       });
     </script>
 
-    <p>Widening</p>
+    <p>And also by widening the validation:</p>
     <figure>
       <div class="container-2-col">
         <pre class="blue client0" id="v2-client0"><code>message SearchRequest {
@@ -1930,103 +1789,9 @@ and it follows that it may also permit:
       });
     </script>
 
-    <p>Once again, decoupling the constructor validation and the deserialisation validation admits the ability to change
-      the validation.</p>
+    <p>Once again, by decoupling the constructor validation and the deserialisation validation we admit the ability to change the validation:</p>
 
-    <p>Widening</p>
-    <figure class="semifullwidth">
-      <div class="container-3-col">
-        <pre class="blue" id="v3-client0"><code>message SearchRequest {
-  required string query = 1;
-  required int32 page_number = 2 [
-    (constructor_cel) = "this <= 20",
-    (deserialize_cel) = "this <= 20"
-  ];
-}</code></pre>
-        <pre class="green" id="v3-client1"><code>message SearchRequest {
-  required string query = 1;
-  required int32 page_number = 2 [
-    (constructor_cel) = "this <= 20",
-    (deserialize_cel) = "this <= <ins>30</ins>"
-  ];
-}</code></pre>
-        <pre class="blue" id="v3-client2"><code>message SearchRequest {
-  required string query = 1;
-  required int32 page_number = 2 [
-    (constructor_cel) = "this <= <ins>30</ins>",
-    (deserialize_cel) = "this <= 30"
-  ];
-}</code></pre>
-        <pre class="blue" id="v3-server0"><code>message SearchRequest {
-  required string query = 1;
-  required int32 page_number = 2 [
-    (constructor_cel) = "this <= 20",
-    (deserialize_cel) = "this <= 20"
-  ];
-}</code></pre>
-        <pre class="green" id="v3-server1"><code>message SearchRequest {
-  required string query = 1;
-  required int32 page_number = 2 [
-    (constructor_cel) = "this <= 20",
-    (deserialize_cel) = "this <= <ins>30</ins>"
-  ];
-}</code></pre>
-        <pre class="blue" id="v3-server2"><code>message SearchRequest {
-  required string query = 1;
-  required int32 page_number = 2 [
-    (constructor_cel) = "this <= <ins>30</ins>",
-    (deserialize_cel) = "this <= 30"
-  ];
-}</code></pre>
-      </div>
-    </figure>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(function () {
-          // v3-client0 -> v3-server0, v3-server1
-          new LeaderLine(
-            document.getElementById('v3-client0'),
-            document.getElementById('v3-server0'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": 20 }', { lineOffset: -10 }) }
-          );
-          new LeaderLine(
-            document.getElementById('v3-client0'),
-            document.getElementById('v3-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          // v3-client1 -> v3-server0, v3-server1, v3-server2
-          new LeaderLine(
-            document.getElementById('v3-client1'),
-            document.getElementById('v3-server0'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('v3-client1'),
-            document.getElementById('v3-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": 20 }', { lineOffset: -10 }) }
-          );
-          new LeaderLine(
-            document.getElementById('v3-client1'),
-            document.getElementById('v3-server2'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          // v3-client2 -> v3-server1, v3-server2
-          new LeaderLine(
-            document.getElementById('v3-client2'),
-            document.getElementById('v3-server1'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
-          );
-          new LeaderLine(
-            document.getElementById('v3-client2'),
-            document.getElementById('v3-server2'),
-            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": 30 }', { lineOffset: -10 }) }
-          );
-        }, 600);
-      });
-    </script>
-
-    <p>Narrowing</p>
+    <p>Now we have safe narrowing:</p>
     <figure class="semifullwidth">
       <div class="container-3-col">
         <pre class="blue" id="v4-client0"><code>message SearchRequest {
@@ -2119,15 +1884,288 @@ and it follows that it may also permit:
       });
     </script>
 
-    <p>Thus, a message field's constructor validation must entail the deserialisation validation.</p>
+    <p>And widening:</p>
+    <figure class="semifullwidth">
+      <div class="container-3-col">
+        <pre class="blue" id="v3-client0"><code>message SearchRequest {
+  required string query = 1;
+  required int32 page_number = 2 [
+    (constructor_cel) = "this <= 20",
+    (deserialize_cel) = "this <= 20"
+  ];
+}</code></pre>
+        <pre class="green" id="v3-client1"><code>message SearchRequest {
+  required string query = 1;
+  required int32 page_number = 2 [
+    (constructor_cel) = "this <= 20",
+    (deserialize_cel) = "this <= <ins>30</ins>"
+  ];
+}</code></pre>
+        <pre class="blue" id="v3-client2"><code>message SearchRequest {
+  required string query = 1;
+  required int32 page_number = 2 [
+    (constructor_cel) = "this <= <ins>30</ins>",
+    (deserialize_cel) = "this <= 30"
+  ];
+}</code></pre>
+        <pre class="blue" id="v3-server0"><code>message SearchRequest {
+  required string query = 1;
+  required int32 page_number = 2 [
+    (constructor_cel) = "this <= 20",
+    (deserialize_cel) = "this <= 20"
+  ];
+}</code></pre>
+        <pre class="green" id="v3-server1"><code>message SearchRequest {
+  required string query = 1;
+  required int32 page_number = 2 [
+    (constructor_cel) = "this <= 20",
+    (deserialize_cel) = "this <= <ins>30</ins>"
+  ];
+}</code></pre>
+        <pre class="blue" id="v3-server2"><code>message SearchRequest {
+  required string query = 1;
+  required int32 page_number = 2 [
+    (constructor_cel) = "this <= <ins>30</ins>",
+    (deserialize_cel) = "this <= 30"
+  ];
+}</code></pre>
+      </div>
+    </figure>
 
-    <p>Checking whether the invariant holds, and whether a proposed evolution is legal, can prove difficult.</p>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(function () {
+          // v3-client0 -> v3-server0, v3-server1
+          new LeaderLine(
+            document.getElementById('v3-client0'),
+            document.getElementById('v3-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": 20 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client0'),
+            document.getElementById('v3-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          // v3-client1 -> v3-server0, v3-server1, v3-server2
+          new LeaderLine(
+            document.getElementById('v3-client1'),
+            document.getElementById('v3-server0'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client1'),
+            document.getElementById('v3-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": 20 }', { lineOffset: -10 }) }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client1'),
+            document.getElementById('v3-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          // v3-client2 -> v3-server1, v3-server2
+          new LeaderLine(
+            document.getElementById('v3-client2'),
+            document.getElementById('v3-server1'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+          );
+          new LeaderLine(
+            document.getElementById('v3-client2'),
+            document.getElementById('v3-server2'),
+            { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": 30 }', { lineOffset: -10 }) }
+          );
+        }, 600);
+      });
+    </script>
 
-    <p>CEL ensures that evolutions of field validations are compatible with their previous schema versions using a
-      lattice based type-system.</p>
+    <p>For this to work, we must ensure that a message field's constructor validation must entail the deserialisation validation at all times. But checking whether this invariant holds, and whether a proposed evolution is legal, can prove difficult.</p>
 
-    <p>Although somewhat overkill, I believe that Z3 would be sufficient to check the invariant, and to check that the
+
+    <!-- TODO link C3 lattice based description-->
+    <p>CEL ensures that evolutions of field validations are compatible with their previous schema versions using a lattice based type-system.</p>
+
+
+    <!-- TODO: link Z3-->
+    <p>Although somewhat overkill, I believe that Z3 would be sufficient to ensure entailment, and to check that the
       constructor validation entails the deserialization validations of all previous schema versions.</p>
+
+
+  <!-- TODO: Create a Python script that can be invoked by uv that installs z3 in the frontmatter.
+  
+  Then construct an entailment scenario showing that we can find a counter example for whn a constructor validation does not match a deserializer validation-->
+
+
+  <p>
+
+  </p>
+
+
+
+      <h3><a id="others" href="others"></a>Other asymmetric types</h3>
+      <h4><a id="field-fallbacks" href="#field-fallbacks"></a>Field fallbacks</h4>
+  
+      <p>The <a href="https://github.com/stepchowfun/typical">typical</a> IDL supports a structure called <code>choice</code>.
+  
+      <!-- TODO: figure out what the fuck is going on here -->
+        
+        
+        has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
+        the deserialization validation only requires 1, the fallback.</p>
+  
+        <!-- TODO: Maybe strop typical -->
+      <p>For <code>choice</code> types, <a href="https://github.com/stepchowfun/typical">typical</a> treats this dually: writers of optional/asymmetric cases must provide a fallback,
+        and readers can always recover to a known case while rollouts are in flight.</p>
+  
+      <p>Good (adding and removing an <code>optional</code> choice case)</p>
+      <figure class="semifullwidth">
+        <div class="container-3-col" id="choice-optional">
+          <pre class="blue" id="choice-optional-client0"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+          <pre class="green" id="choice-optional-client1"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+    <ins>optional authentication_error: String = 2</ins>
+  }</code></pre>
+          <pre class="blue" id="choice-optional-client2"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+          <pre class="blue" id="choice-optional-server0"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+          <pre class="green" id="choice-optional-server1"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+    <ins>optional authentication_error: String = 2</ins>
+  }</code></pre>
+          <pre class="blue" id="choice-optional-server2"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+        </div>
+      </figure>
+  
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          setTimeout(function () {
+            new LeaderLine(
+              document.getElementById('choice-optional-client0'),
+              document.getElementById('choice-optional-server0'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
+            );
+            new LeaderLine(
+              document.getElementById('choice-optional-client0'),
+              document.getElementById('choice-optional-server1'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-optional-client1'),
+              document.getElementById('choice-optional-server0'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-optional-client1'),
+              document.getElementById('choice-optional-server1'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "2": "bad token", "1": "please try again" }', { lineOffset: -10 }) }
+            );
+            new LeaderLine(
+              document.getElementById('choice-optional-client1'),
+              document.getElementById('choice-optional-server2'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-optional-client2'),
+              document.getElementById('choice-optional-server1'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-optional-client2'),
+              document.getElementById('choice-optional-server2'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
+            );
+          }, 350);
+        });
+      </script>
+  
+      <p>Good (adding an <code>asymmetric</code> choice case, then promoting to required)</p>
+      <figure class="semifullwidth">
+        <div class="container-3-col" id="choice-asymmetric">
+          <pre class="blue" id="choice-asymmetric-client0"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+          <pre class="green" id="choice-asymmetric-client1"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+    <ins>asymmetric please_try_again = 3</ins>
+  }</code></pre>
+          <pre class="blue" id="choice-asymmetric-client2"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+    <ins>please_try_again = 3</ins>
+  }</code></pre>
+          <pre class="blue" id="choice-asymmetric-server0"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+          <pre class="green" id="choice-asymmetric-server1"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+    <ins>asymmetric please_try_again = 3</ins>
+  }</code></pre>
+          <pre class="blue" id="choice-asymmetric-server2"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+    <ins>please_try_again = 3</ins>
+  }</code></pre>
+        </div>
+      </figure>
+  
+      <!-- TODO: inspect generated code of Rust. -->
+  
+      <script>
+        document.addEventListener("DOMContentLoaded", function () {
+          setTimeout(function () {
+            new LeaderLine(
+              document.getElementById('choice-asymmetric-client0'),
+              document.getElementById('choice-asymmetric-server0'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "please try again" }', { lineOffset: -10 }) }
+            );
+            new LeaderLine(
+              document.getElementById('choice-asymmetric-client0'),
+              document.getElementById('choice-asymmetric-server1'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-asymmetric-client1'),
+              document.getElementById('choice-asymmetric-server0'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-asymmetric-client1'),
+              document.getElementById('choice-asymmetric-server1'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "3": null, "1": "please try again" }', { lineOffset: -10 }) }
+            );
+            new LeaderLine(
+              document.getElementById('choice-asymmetric-client1'),
+              document.getElementById('choice-asymmetric-server2'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-asymmetric-client2'),
+              document.getElementById('choice-asymmetric-server1'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top' }
+            );
+            new LeaderLine(
+              document.getElementById('choice-asymmetric-client2'),
+              document.getElementById('choice-asymmetric-server2'),
+              { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "3": null }', { lineOffset: -10 }) }
+            );
+          }, 375);
+        });
+      </script>
 
     <h2><a id="ai-usage-disclosure" href="#ai-usage-disclosure"></a>AI usage disclosure</h2>
 
