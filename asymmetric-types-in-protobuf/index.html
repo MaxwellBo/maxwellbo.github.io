@@ -103,6 +103,10 @@
       background-repeat: repeat-x;
       background-size: 100% 0.08em;
     }
+
+    .katex {
+      font-size: 1em !important;
+    }
   </style>
 
   <script type="module">
@@ -889,7 +893,7 @@ message SearchRequest {
     </p>
 
     <!-- TODO explain open and closed enums in an aside https://protobuf.dev/programming-guides/enum/#:~:text=enum%E2%80%99s%20default%20value.-,Implications%20of%20Closed%20Enums,-The%20behavior%20of -->
-    <p>Enum evolutions also carry incompatibility risk, <i>when the enum is used as a <code>required</code> field, for example, when narrowing an enum, by removing an enum value. An enum sent by an old producer breaks a new consumer:</p>
+    <p>Enum evolutions also carry incompatibility risk, <i>when the enum is used as a <code>required</code> field</i>, for example, when narrowing an enum, by removing an enum value. An enum sent by an old producer breaks a new consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -1338,7 +1342,9 @@ message GetUserResponse {
     <p>A rule of thumb is that the constructor validation must always <i>entail</i> the deserialization validation.</p>
     
 
-    <p>More formally, we can say that \(\mathrm{CV} \Rrightarrow \mathrm{DV}\), which expands to:</p>
+    <p>More formally, we can say that:</p>
+    \[ \mathrm{CV} \Rrightarrow \mathrm{DV} \]
+    <p>which expands to:</p>
     \[ \forall x.\; \mathrm{CV}(x) \implies \mathrm{DV}(x) \]
 
     <!-- <p>A compatibility checker can check, statically, whether a schema evolution will cause incompatibilities if the -->
