@@ -1,4 +1,4 @@
-import suncalc from "https://esm.sh/suncalc";
+import { getPosition } from "https://esm.sh/suncalc";
 
 /**
  * From https://github.com/dnlzro/horizon, rewritten by Claude.
@@ -408,7 +408,7 @@ function renderGradient(altitude) {
  */
 export function renderSkyAtLocation(latitude, longitude) {
   const now = new Date();
-  const sunPos = suncalc.getPosition(
+  const sunPos = getPosition(
     now,
     latitude,
     longitude,
