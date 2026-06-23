@@ -403,54 +403,88 @@
     <div class="drop"></div>
     <div class="drop"></div>
   </div>
-  <img id="draggable-postit" src="me.webp"
-    style="position: absolute; bottom: 20px; right: 40px; width: 90px; cursor: grab; z-index: 1000;" />
   <script>
-    const postit = document.getElementById('draggable-postit');
-    let isDragging = false;
-    let currentX;
-    let currentY;
-    let initialX;
-    let initialY;
-    let xOffset = 0;
-    let yOffset = 0;
-
-    // Prevent default drag behavior
-    postit.addEventListener('dragstart', (e) => {
-      e.preventDefault();
-    });
-
-    postit.addEventListener('mousedown', dragStart);
-    document.addEventListener('mousemove', drag);
-    document.addEventListener('mouseup', dragEnd);
-
-    function dragStart(e) {
-      initialX = e.clientX - xOffset;
-      initialY = e.clientY - yOffset;
-
-      if (e.target === postit) {
-        isDragging = true;
+    document.addEventListener('DOMContentLoaded', () => {
+      const postit = document.getElementById('draggable-postit');
+      const postitSlot = document.getElementById('draggable-postit-slot');
+      if (!postit || !postitSlot) {
+        return;
       }
-      postit.style.cursor = 'grabbing';
-    }
 
-    function drag(e) {
-      if (isDragging) {
+      let isDragging = false;
+      let currentX = 0;
+      let currentY = 0;
+      let initialX = 0;
+      let initialY = 0;
+      let xOffset = 0;
+      let yOffset = 0;
+      let dragStartLeft = 0;
+      let dragStartTop = 0;
+      let dragStartX = 0;
+      let dragStartY = 0;
+
+      // Prevent default image dragging so pointer dragging works on mouse and touch.
+      postit.addEventListener('dragstart', (e) => {
         e.preventDefault();
-        currentX = e.clientX - initialX;
-        currentY = e.clientY - initialY;
+      });
+
+      postit.addEventListener('pointerdown', dragStart);
+      postit.addEventListener('pointermove', drag);
+      postit.addEventListener('pointerup', dragEnd);
+      postit.addEventListener('pointercancel', dragEnd);
+
+      function dragStart(e) {
+        if (e.button !== 0) {
+          return;
+        }
+
+        const rect = postit.getBoundingClientRect();
+        dragStartLeft = rect.left;
+        dragStartTop = rect.top;
+        dragStartX = e.clientX;
+        dragStartY = e.clientY;
+        initialX = xOffset;
+        initialY = yOffset;
+
+        postitSlot.style.height = `${postitSlot.getBoundingClientRect().height}px`;
+        postit.style.left = `${dragStartLeft}px`;
+        postit.style.top = `${dragStartTop}px`;
+        postit.style.width = `${rect.width}px`;
+        postit.style.transform = 'none';
+        isDragging = true;
+        postit.setPointerCapture(e.pointerId);
+        postit.classList.add('is-floating');
+        postit.classList.add('is-dragging');
+      }
+
+      function drag(e) {
+        if (!isDragging) {
+          return;
+        }
+
+        e.preventDefault();
+        const deltaX = e.clientX - dragStartX;
+        const deltaY = e.clientY - dragStartY;
+        currentX = initialX + deltaX;
+        currentY = initialY + deltaY;
+        postit.style.left = `${dragStartLeft + deltaX}px`;
+        postit.style.top = `${dragStartTop + deltaY}px`;
+      }
+
+      function dragEnd(e) {
+        if (!isDragging) {
+          return;
+        }
+
+        if (postit.hasPointerCapture(e.pointerId)) {
+          postit.releasePointerCapture(e.pointerId);
+        }
         xOffset = currentX;
         yOffset = currentY;
-        postit.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        isDragging = false;
+        postit.classList.remove('is-dragging');
       }
-    }
-
-    function dragEnd(e) {
-      initialX = currentX;
-      initialY = currentY;
-      isDragging = false;
-      postit.style.cursor = 'grab';
-    }
+    });
   </script>
   <p id="watermark">Max Bo</p>
   <div class="only-show-on-desktop" style="position: absolute; top: 10px; right: 20px; z-index: 1001; display: flex; gap: 12px;">
@@ -2010,7 +2044,8 @@
             <p class="title">cccbd</p>
           </a>
         </article>
-        <article id="cycle" class="art">
+        <article id="draggable-postit-slot" class="art">
+          <img id="draggable-postit" src="me.webp" alt="A draggable post-it note" />
         </article>
         <article id="worm-tile" class="art pseudolink" onclick="wormTileClick(event)" title="da worm"
           aria-labelledby="worm-tile-label">

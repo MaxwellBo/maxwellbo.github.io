@@ -207,6 +207,33 @@ div.cards {
   grid-template-columns: repeat(auto-fit, minmax(20ch, 1fr));
 }
 
+#draggable-postit-slot {
+  align-self: start;
+  position: relative;
+  width: 100%;
+  z-index: 2147483647;
+}
+
+#draggable-postit {
+  cursor: grab;
+  display: block;
+  position: relative;
+  touch-action: none;
+  user-select: none;
+  width: 100%;
+  z-index: inherit;
+}
+
+#draggable-postit.is-dragging {
+  cursor: grabbing;
+}
+
+#draggable-postit.is-floating {
+  max-width: none;
+  position: fixed;
+  z-index: 2147483647;
+}
+
 article {
   border: 1px dotted grey;
 }
