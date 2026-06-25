@@ -1666,7 +1666,7 @@ pub struct SendEmailRequestIn {
 }</code></pre>
 
 
-    <h4><a id="unproducible" href="#unproducible"></a>Unproducible variants</h4>
+    <h4><a id="unconstructable" href="#unconstructable"></a>Unconstructable variants</h4>
 
     <p>An enum value option that prevents the construction of a specific enum value, while still permitting its deserialization, turns the enum into an asymmetric type.</p>
 
@@ -1674,7 +1674,7 @@ pub struct SendEmailRequestIn {
       and send it to deserializers that are unprepared to handle it.</p>
 
     <figure class="semifullwidth">
-      <div class="container-3-col" id="unproducible">
+      <div class="container-3-col" id="unconstructable">
         <pre class="blue" id="unprod-client0"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
@@ -1684,7 +1684,7 @@ pub struct SendEmailRequestIn {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  <ins>CORPUS_AUDIO = 3 [(unproducible) = true];</ins>
+  <ins>CORPUS_AUDIO = 3 [(unconstructable) = true];</ins>
 }</code></pre>
         <pre class="blue" id="unprod-client2"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
@@ -1701,7 +1701,7 @@ pub struct SendEmailRequestIn {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  <ins>CORPUS_AUDIO = 3 [(unproducible) = true];</ins>
+  <ins>CORPUS_AUDIO = 3 [(unconstructable) = true];</ins>
 }</code></pre>
         <pre class="blue" id="unprod-server2"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
@@ -1731,69 +1731,70 @@ pub struct SendEmailRequestIn {
     <pre><code>import "google/protobuf/descriptor.proto";
 
 extend google.protobuf.EnumValueOptions {
-  optional bool unproducible = 50001;
+  optional bool unconstructable = 50001;
 }
 
 enum Corpus {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  CORPUS_AUDIO = 3 [(unproducible) = true];
+  CORPUS_AUDIO = 3 [(unconstructable) = true];
 }</code></pre>
 
-    <p>A Java generator would not need to model this as a fake wrapper class. It could keep <code>Corpus</code> as a native enum, so the value remains usable in readers, comparisons, and <code>switch</code> labels. The restriction belongs on producer-facing construction APIs, such as message builders or factories, that would otherwise let user code serialize the value:</p>
+    <p>This would generate Java code that looks like:</p>
 
     <pre data-lang="java"><code>public enum Corpus {
-  CORPUS_UNSPECIFIED(0),
-  CORPUS_TEXT(1),
-  CORPUS_IMAGES(2),
-  CORPUS_AUDIO(3); // [(unproducible) = true]
+  CORPUS_UNSPECIFIED,
+  CORPUS_TEXT,
+  CORPUS_IMAGES,
+  CORPUS_AUDIO; // [(unconstructable) = true]
 
-  private final int number;
-
-  Corpus(int number) {
-    this.number = number;
+  public static Corpus fromWireValue(int number) {
+    // ...
   }
+}
 
-  static Corpus fromWireValue(int number) {
-    return switch (number) {
-      case 0 -&gt; CORPUS_UNSPECIFIED;
-      case 1 -&gt; CORPUS_TEXT;
-      case 2 -&gt; CORPUS_IMAGES;
-      case 3 -&gt; CORPUS_AUDIO;
-      default -&gt; throw new IllegalArgumentException("unknown Corpus value");
-    };
-  }
+public enum ConstructableCorpus {
+  CORPUS_UNSPECIFIED,
+  CORPUS_TEXT,
+  CORPUS_IMAGES;
 
-  static void checkProducible(Corpus value) {
-    if (value == CORPUS_AUDIO) {
-      throw new IllegalArgumentException(
-          "CORPUS_AUDIO is marked unproducible and cannot be serialized");
-    }
+  Corpus asCorpus() {
+    // ...
   }
 }
 
 public final class SearchRequest {
-  private Corpus corpus;
+  // ...
 
-  public static final class Builder {
-    private Corpus corpus = Corpus.CORPUS_UNSPECIFIED;
-
-    public Builder setCorpus(Corpus corpus) {
-      Corpus.checkProducible(corpus);
-      this.corpus = corpus;
-      return this;
-    }
+  public Corpus getCorpus() {
+    // ...
   }
 
-  static SearchRequest parseFromWire(int corpusNumber) {
-    SearchRequest message = new SearchRequest();
-    message.corpus = Corpus.fromWireValue(corpusNumber);
-    return message;
+  public static final class Builder {
+    // ...
+
+    public Builder setCorpus(ConstructableCorpus corpus) {
+      // ...
+    }
   }
 }</code></pre>
 
-    <p>The value is not constructible through producer APIs, but it is still a real enum constant that generated and handwritten reader code can handle exhaustively:</p>
+    <p>With this shape, producer code cannot pass <code>Corpus.CORPUS_AUDIO</code> to the builder at all:</p>
+
+    <pre data-lang="java"><code>SearchRequest ok =
+    SearchRequest.newBuilder()
+        .setCorpus(ConstructableCorpus.CORPUS_TEXT)
+        .build();
+
+SearchRequest nope =
+    SearchRequest.newBuilder()
+        .setCorpus(Corpus.CORPUS_AUDIO)
+        // Does not compile:
+        // required ConstructableCorpus, found Corpus
+        .build();</code></pre>
+
+    <p>But <code>CORPUS_AUDIO</code> is still a real enum constant that generated and handwritten reader code can handle exhaustively:</p>
 
     <pre data-lang="java"><code>switch (request.getCorpus()) {
   case CORPUS_UNSPECIFIED -&gt; handleUnspecified();
