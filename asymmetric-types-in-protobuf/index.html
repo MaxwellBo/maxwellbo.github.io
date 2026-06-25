@@ -114,7 +114,7 @@
 
     const highlighter = await createHighlighter({
       themes: ['github-light'],
-      langs: ['proto', 'python', 'rust'],
+      langs: ['proto', 'python', 'rust', 'java'],
     });
 
     function extractCodeAndMarkupRegions(codeEl) {
@@ -1498,11 +1498,12 @@ message GetUserResponse {
     <h4><a id="constructor-required-deserialization-optional"
         href="#constructor-required-deserialization-optional"></a>"constructor required deserialization optional"</h4>
 
-    <p>Let's say the restrictions of associated with the use of an <a href="#explicit-field-defaults">explicit field default</a> is too much: what are we to do?
+    <p>Let's say the restrictions associated with the use of an <a href="#explicit-field-defaults">explicit field default</a> are too much: what are we to do?
     </p>
 
     <p>In vanilla Protocol Buffers, unfortunately, nothing: there is no other safe evolution pathway to add or remove a <code>required</code> field
       without incompatibility risk as per the <a href="#problems-with-symmetric-types">Problems with symmetric types</a> section.
+    </p>
 
     <p>As stated before, I strongly believe the removal of <code>optional</code> was unnecessary, and an additional asymmetric label should have been
       added instead.</p>
@@ -1519,30 +1520,46 @@ message GetUserResponse {
       </p>
     </aside> -->
       
-    <p>In <a href="https://github.com/stepchowfun/typical">typical</a>, the <code>asymmetric</code> label forces parameterization of a non-null value at the constructor site but permits
-      data absence in the payload.</p>
+    <p>In <a href="https://github.com/stepchowfun/typical#required-optional-and-asymmetric-fields">Typical</a>, the <code>asymmetric</code> label forces writers to provide a non-null value at the construction site but permits
+      readers to deserialize payloads where that value is absent.</p>
 
-    <p>Use of this label admits safe evolution semantics! We can now use it as a safe intermediate stage when adding a <code>required</code> field:</p>
-
-      <!-- TODO: required string doesn't trigger a deserialization error because it has a deserialization defualt. Use the same example of the one we use in the Problems with Symmetric Types section -->
+    <p>Using the email API example from Typical's tutorial, we can add a new <code>from</code> field to <code>SendEmailRequest</code> via a safe intermediate state:</p>
 
     <figure class="semifullwidth">
       <div class="container-3-col" id="required">
-        <pre class="blue" id="b-client0"><code>message SearchRequest {
+        <pre class="blue" data-lang="text" id="b-client0"><code>struct SendEmailRequest {
+    to: String = 0
+    subject: String = 1
+    body: String = 2
 }</code></pre>
-        <pre class="green" id="b-client1"><code>message SearchRequest {
-  <ins>asymmetric string user = 1;</ins>
+        <pre class="green" data-lang="text" id="b-client1"><code>struct SendEmailRequest {
+    to: String = 0
+    <ins>asymmetric from: String = 3</ins>
+    subject: String = 1
+    body: String = 2
 }</code></pre>
-        <pre class="blue" id="b-client2"><code>message SearchRequest {
-  <ins>required</ins> string user = 1;
+        <pre class="blue" data-lang="text" id="b-client2"><code>struct SendEmailRequest {
+    to: String = 0
+    <ins>from: String = 3</ins>
+    subject: String = 1
+    body: String = 2
 }</code></pre>
-        <pre class="blue" id="b-server0"><code>message SearchRequest {
+        <pre class="blue" data-lang="text" id="b-server0"><code>struct SendEmailRequest {
+    to: String = 0
+    subject: String = 1
+    body: String = 2
 }</code></pre>
-        <pre class="green" id="b-server1"><code>message SearchRequest {
-  <ins>asymmetric string user = 1;</ins>
+        <pre class="green" data-lang="text" id="b-server1"><code>struct SendEmailRequest {
+    to: String = 0
+    <ins>asymmetric from: String = 3</ins>
+    subject: String = 1
+    body: String = 2
 }</code></pre>
-        <pre class="blue" id="b-server2"><code>message SearchRequest {
-  <ins>required</ins> string user = 1;
+        <pre class="blue" data-lang="text" id="b-server2"><code>struct SendEmailRequest {
+    to: String = 0
+    <ins>from: String = 3</ins>
+    subject: String = 1
+    body: String = 2
 }</code></pre>
       </div>
     </figure>
@@ -1555,7 +1572,7 @@ message GetUserResponse {
       new LeaderLine(
         document.getElementById('b-client0'),
         document.getElementById('b-server0'),
-        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{}', { lineOffset: -10 }) }
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('SendEmailRequest { to, subject, body }', { lineOffset: -10 }) }
       );
       new LeaderLine(
         document.getElementById('b-client0'),
@@ -1572,7 +1589,7 @@ message GetUserResponse {
       new LeaderLine(
         document.getElementById('b-client1'),
         document.getElementById('b-server1'),
-        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -10 }) }
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('SendEmailRequest { to, from, subject, body }', { lineOffset: -10 }) }
       );
       new LeaderLine(
         document.getElementById('b-client1'),
@@ -1589,51 +1606,61 @@ message GetUserResponse {
       new LeaderLine(
         document.getElementById('b-client2'),
         document.getElementById('b-server2'),
-        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('{ "1": "hello" }', { lineOffset: -10 }) }
+        { color: 'black', size: 2, path: 'straight', startSocket: 'bottom', endSocket: 'top', middleLabel: LeaderLine.captionLabel('SendEmailRequest { to, from, subject, body }', { lineOffset: -10 }) }
       );
     }, 300);
   });
 </script>
 <p>
+This same intermediate state may also permit:
+</p>
 
-and it follows that it may also permit:
 <ul>
   <li>transitioning from <code>optional</code> to <code>required</code></li>
   <li>transitioning from <code>required</code> to <code>optional</code></li>
   <li>removing a <code>required</code> field</li>
 </ul>
 
-</p>
-
-
 <p>
-  By looking at the generated code, we can see how this is achieved. Compiling the following <a href="https://github.com/stepchowfun/typical">typical</a> schema with <code>typical generate</code>:
+  By looking at the generated code, we can see how this is achieved. Compiling the following <a href="https://github.com/stepchowfun/typical">Typical</a> schema with <code>typical generate</code>:
 </p>
 
-<pre data-lang="text"><code>struct SearchRequest {
-    asymmetric user: String = 0
+<pre data-lang="text"><code>struct SendEmailRequest {
+    to: String = 0
+    asymmetric from: String = 3
+    subject: String = 1
+    body: String = 2
 }</code></pre>
 
 <p>
-  produces two distinct Rust types: a <code>SearchRequestOut</code> used to construct and serialize a message, and a <code>SearchRequestIn</code> produced by deserialization. The <code>asymmetric</code> label makes <code>user</code> a non-optional <code>String</code> on the way out, but an <code>Option&lt;String&gt;</code> on the way in:
+  produces two distinct Rust types: a <code>SendEmailRequestOut</code> used to construct and serialize a message, and a <code>SendEmailRequestIn</code> produced by deserialization. The <code>asymmetric</code> label makes <code>from</code> a non-optional <code>String</code> on the way out, but an <code>Option&lt;String&gt;</code> on the way in:
 </p>
 
-<pre data-lang="rust"><code>pub struct SearchRequestOut {
-    pub user: String,
+<pre data-lang="rust"><code>pub struct SendEmailRequestOut {
+    pub to: String,
+    pub from: String,
+    pub subject: String,
+    pub body: String,
 }
 
-pub struct SearchRequestIn {
-    pub user: Option&lt;String&gt;,
+pub struct SendEmailRequestIn {
+    pub to: String,
+    pub from: Option&lt;String&gt;,
+    pub subject: String,
+    pub body: String,
 }</code></pre>
 
 <p>
-  This is the asymmetry made concrete: the constructor demands a value, while the deserializer tolerates its absence. The generated <code>From&lt;SearchRequestOut&gt; for SearchRequestIn</code> conversion simply wraps the value in <code>Some</code>:
+  This is the asymmetry made concrete: the constructor demands a value, while the deserializer tolerates its absence. The generated <code>From&lt;SendEmailRequestOut&gt; for SendEmailRequestIn</code> conversion simply wraps the value in <code>Some</code>:
 </p>
 
-<pre data-lang="rust"><code>impl From&lt;SearchRequestOut&gt; for SearchRequestIn {
-    fn from(message: SearchRequestOut) -> Self {
-        SearchRequestIn {
-            user: Some(message.user.into()),
+<pre data-lang="rust"><code>impl From&lt;SendEmailRequestOut&gt; for SendEmailRequestIn {
+    fn from(message: SendEmailRequestOut) -> Self {
+        SendEmailRequestIn {
+            to: message.to.into(),
+            from: Some(message.from.into()),
+            subject: message.subject.into(),
+            body: message.body.into(),
         }
     }
 }</code></pre>
@@ -1641,9 +1668,9 @@ pub struct SearchRequestIn {
 
     <h4><a id="unproducible" href="#unproducible"></a>Unproducible variants</h4>
 
-    <p>A label that prevents the construction of an enum value or variant in certain contexts, whilst permitting its deserialization, turns the enum into an asymmetric type.</p>
+    <p>An enum value option that prevents the construction of a specific enum value, while still permitting its deserialization, turns the enum into an asymmetric type.</p>
 
-    <p>The label permits us to safely add a variant under the assumption that no other engineer can construct, serialize
+    <p>The option permits us to safely add a variant under the assumption that no other engineer can construct, serialize
       and send it to deserializers that are unprepared to handle it.</p>
 
     <figure class="semifullwidth">
@@ -1657,13 +1684,13 @@ pub struct SearchRequestIn {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  <ins>unproducible CORUPUS_AUDIO = 3;</ins>
+  <ins>CORPUS_AUDIO = 3 [(unproducible) = true];</ins>
 }</code></pre>
         <pre class="blue" id="unprod-client2"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  <ins>CORUPUS_AUDIO = 3;</ins>
+  <ins>CORPUS_AUDIO = 3;</ins>
 }</code></pre>
         <pre class="blue" id="unprod-server0"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
@@ -1674,13 +1701,13 @@ pub struct SearchRequestIn {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  <ins>unproducible CORUPUS_AUDIO = 3;</ins>
+  <ins>CORPUS_AUDIO = 3 [(unproducible) = true];</ins>
 }</code></pre>
         <pre class="blue" id="unprod-server2"><code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
   CORPUS_TEXT = 1;
   CORPUS_IMAGES = 2;
-  <ins>CORUPUS_AUDIO = 3;</ins>
+  <ins>CORPUS_AUDIO = 3;</ins>
 }</code></pre>
       </div>
     </figure>
@@ -1699,11 +1726,81 @@ pub struct SearchRequestIn {
       });
     </script>
 
-    <p>One of the reasons I suspect that it quite difficult, although possible, to statically enforce unproducibility.
-    </p>
+    <p>We could express this in Protocol Buffers as a custom enum value option:</p>
 
-    <p>One such way is to enforce unproducibility is the use of a linter that ensures that values and constructors may
-      only be used in 'if' tests, and switch case labels and patterns.</p>
+    <pre><code>import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.EnumValueOptions {
+  optional bool unproducible = 50001;
+}
+
+enum Corpus {
+  CORPUS_UNSPECIFIED = 0;
+  CORPUS_TEXT = 1;
+  CORPUS_IMAGES = 2;
+  CORPUS_AUDIO = 3 [(unproducible) = true];
+}</code></pre>
+
+    <p>A Java generator would not need to model this as a fake wrapper class. It could keep <code>Corpus</code> as a native enum, so the value remains usable in readers, comparisons, and <code>switch</code> labels. The restriction belongs on producer-facing construction APIs, such as message builders or factories, that would otherwise let user code serialize the value:</p>
+
+    <pre data-lang="java"><code>public enum Corpus {
+  CORPUS_UNSPECIFIED(0),
+  CORPUS_TEXT(1),
+  CORPUS_IMAGES(2),
+  CORPUS_AUDIO(3); // [(unproducible) = true]
+
+  private final int number;
+
+  Corpus(int number) {
+    this.number = number;
+  }
+
+  static Corpus fromWireValue(int number) {
+    return switch (number) {
+      case 0 -&gt; CORPUS_UNSPECIFIED;
+      case 1 -&gt; CORPUS_TEXT;
+      case 2 -&gt; CORPUS_IMAGES;
+      case 3 -&gt; CORPUS_AUDIO;
+      default -&gt; throw new IllegalArgumentException("unknown Corpus value");
+    };
+  }
+
+  static void checkProducible(Corpus value) {
+    if (value == CORPUS_AUDIO) {
+      throw new IllegalArgumentException(
+          "CORPUS_AUDIO is marked unproducible and cannot be serialized");
+    }
+  }
+}
+
+public final class SearchRequest {
+  private Corpus corpus;
+
+  public static final class Builder {
+    private Corpus corpus = Corpus.CORPUS_UNSPECIFIED;
+
+    public Builder setCorpus(Corpus corpus) {
+      Corpus.checkProducible(corpus);
+      this.corpus = corpus;
+      return this;
+    }
+  }
+
+  static SearchRequest parseFromWire(int corpusNumber) {
+    SearchRequest message = new SearchRequest();
+    message.corpus = Corpus.fromWireValue(corpusNumber);
+    return message;
+  }
+}</code></pre>
+
+    <p>The value is not constructible through producer APIs, but it is still a real enum constant that generated and handwritten reader code can handle exhaustively:</p>
+
+    <pre data-lang="java"><code>switch (request.getCorpus()) {
+  case CORPUS_UNSPECIFIED -&gt; handleUnspecified();
+  case CORPUS_TEXT -&gt; handleText();
+  case CORPUS_IMAGES -&gt; handleImages();
+  case CORPUS_AUDIO -&gt; handleAudio();
+}</code></pre>
 
     <h4><a id="two-validations" href="#two-validations"></a>Two validations</h4>
 
@@ -2027,14 +2124,14 @@ pub struct SearchRequestIn {
     <p>For this to work, we must ensure that a message field's constructor validation must entail the deserialisation validation at all times. But checking whether this invariant holds, and whether a proposed evolution is legal, can prove difficult.</p>
 
 
-    <p>CEL ensures that evolutions of field validations are compatible with their previous file versions using a <a href="https://github.com/google/cel-spec/blob/master/doc/langdef.md#gradual-type-checking">lattice based type-system</a>.</p>
+    <p>As an example, <a href="https://cuelang.org/">CUE</a> can prove that evolutions of field validations are compatible with their previous file versions using its <a href="https://cuelang.org/docs/concept/the-logic-of-cue/">lattice-based type system</a>.</p>
 
 
-    <p>Although somewhat overkill, I believe that <a href="https://github.com/Z3Prover/z3">Z3</a> would be sufficient to ensure entailment, and to check that the
+    <p>Although somewhat overkill, I believe that <a href="https://github.com/Z3Prover/z3">Z3</a> would be sufficient to prove entailment, and to check that the
       constructor validation entails the deserialization validations of all previous file versions.</p>
 
 
-  <p>Here is a self-contained <a href="https://docs.astral.sh/uv/">uv</a> script (<a href="entailment.py">entailment.py</a>) that installs Z3 in its frontmatter and checks the property. We ask Z3 for a counterexample to <code>∀x. CV(x) ⟹ DV(x)</code> — that is, a value satisfying <code>CV(x) ∧ ¬DV(x)</code>. If one exists, it's exactly a message an engineer could construct but that an older deserializer would reject:</p>
+  <p>As a small demo, we ask Z3 for a counterexample to <code>∀x. CV(x) ⟹ DV(x)</code> by asking it to find some <code>x</code> such that <code>CV(x) ∧ ¬DV(x)</code> is true.</p>
 
   <pre data-lang="python"><code># /// script
 # requires-python = "&gt;=3.10"
@@ -2043,8 +2140,8 @@ pub struct SearchRequestIn {
 from z3 import Int, Not, Solver, sat
 
 
-def check_entailment(name, cv, dv):
-    x = Int("page_number")
+def check_entailment(cv, dv):
+    x = Int("x")
 
     # Prove ∀x. CV(x) ⟹ DV(x) by asking for a counterexample:
     #   ∃x. CV(x) ∧ ¬DV(x)
@@ -2054,65 +2151,63 @@ def check_entailment(name, cv, dv):
 
     if solver.check() == sat:
         witness = solver.model()[x]
-        print(f"{name}: UNSAFE, counterexample page_number = {witness}")
+        print(f"counterexample x = {witness}")
     else:
-        print(f"{name}: safe")
+        print("safe")
 
 
-# Safe narrowing: constructor &lt;= 10, deserializer still admits &lt;= 20.
-check_entailment("cv &lt;= 10, dv &lt;= 20", lambda x: x &lt;= 10, lambda x: x &lt;= 20)
+# safe
+check_entailment(lambda x: x &lt;= 10, lambda x: x &lt;= 20)
 
-# Unsafe widening: constructor relaxed to &lt;= 30 before the deserializer caught up.
-check_entailment("cv &lt;= 30, dv &lt;= 20", lambda x: x &lt;= 30, lambda x: x &lt;= 20)</code></pre>
-
-  <p>Running it with <code>uv run entailment.py</code> shows the safe evolution passing and the unsafe one yielding a concrete counterexample:</p>
-
-  <pre data-lang="text"><code>cv &lt;= 10, dv &lt;= 20: safe
-cv &lt;= 30, dv &lt;= 20: UNSAFE, counterexample page_number = 21</code></pre>
+# counterexample x = 21
+check_entailment(lambda x: x &lt;= 30, lambda x: x &lt;= 20)</code></pre>
 
 
 
       <h3><a id="others" href="others"></a>Other asymmetric types</h3>
-      <h4><a id="field-fallbacks" href="#field-fallbacks"></a>Field fallbacks</h4>
+      <h4><a id="field-fallbacks" href="#field-fallbacks"></a>Choice fallbacks</h4>
   
-      <p>The <a href="https://github.com/stepchowfun/typical">typical</a> IDL supports a structure called <code>choice</code>.
+      <p>The <a href="https://github.com/stepchowfun/typical#choices-can-have-optional-and-asymmetric-fields-too">Typical</a> IDL supports a structure called <code>choice</code> that supports a novel evolution mechanism when used with the <code>asymmetric</code> label: it strengthens the constructor validation such that it demands 2 values, but the deserialization validation only requires 1, the fallback.</p>
   
-      <!-- TODO: figure out what the fuck is going on here -->
-        
-        
-        has a novel evolution mechanism: it strengthens the constructor validation such it demands 2 values, but
-        the deserialization validation only requires 1, the fallback.</p>
+      <p>The tutorial's email API example uses both kinds of fallback field:</p>
+
+      <pre data-lang="text"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+
+    # A more specific type of error for curious clients
+    optional authentication_error: String = 2
+
+    # To be promoted to required in the future
+    asymmetric please_try_again = 3
+}</code></pre>
   
-        <!-- TODO: Maybe strop typical -->
-      <p>For <code>choice</code> types, <a href="https://github.com/stepchowfun/typical">typical</a> treats this dually: writers of optional/asymmetric cases must provide a fallback,
-        and readers can always recover to a known case while rollouts are in flight.</p>
-  
-      <p>Good (adding and removing an <code>optional</code> choice case)</p>
+      <p>Adding and removing the <code>optional</code> <code>authentication_error</code> case is safe because writers provide a fallback, and readers that do not know or do not care about that case can use the fallback instead.</p>
       <figure class="semifullwidth">
         <div class="container-3-col" id="choice-optional">
-          <pre class="blue" id="choice-optional-client0"><code>choice SendEmailResponse {
+          <pre class="blue" data-lang="text" id="choice-optional-client0"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
   }</code></pre>
-          <pre class="green" id="choice-optional-client1"><code>choice SendEmailResponse {
-    success = 0
-    error: String = 1
-    <ins>optional authentication_error: String = 2</ins>
-  }</code></pre>
-          <pre class="blue" id="choice-optional-client2"><code>choice SendEmailResponse {
-    success = 0
-    error: String = 1
-  }</code></pre>
-          <pre class="blue" id="choice-optional-server0"><code>choice SendEmailResponse {
-    success = 0
-    error: String = 1
-  }</code></pre>
-          <pre class="green" id="choice-optional-server1"><code>choice SendEmailResponse {
+          <pre class="green" data-lang="text" id="choice-optional-client1"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
     <ins>optional authentication_error: String = 2</ins>
   }</code></pre>
-          <pre class="blue" id="choice-optional-server2"><code>choice SendEmailResponse {
+          <pre class="blue" data-lang="text" id="choice-optional-client2"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+          <pre class="blue" data-lang="text" id="choice-optional-server0"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+  }</code></pre>
+          <pre class="green" data-lang="text" id="choice-optional-server1"><code>choice SendEmailResponse {
+    success = 0
+    error: String = 1
+    <ins>optional authentication_error: String = 2</ins>
+  }</code></pre>
+          <pre class="blue" data-lang="text" id="choice-optional-server2"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
   }</code></pre>
@@ -2161,33 +2256,33 @@ cv &lt;= 30, dv &lt;= 20: UNSAFE, counterexample page_number = 21</code></pre>
         });
       </script>
   
-      <p>Good (adding an <code>asymmetric</code> choice case, then promoting to required)</p>
+      <p>Adding the <code>asymmetric</code> <code>please_try_again</code> case is the dual of the struct example above: writers may choose the new case only if they also include a fallback, while readers that know the asymmetric case must handle it directly. Once all readers can handle it, the field can be promoted to required.</p>
       <figure class="semifullwidth">
         <div class="container-3-col" id="choice-asymmetric">
-          <pre class="blue" id="choice-asymmetric-client0"><code>choice SendEmailResponse {
+          <pre class="blue" data-lang="text" id="choice-asymmetric-client0"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
   }</code></pre>
-          <pre class="green" id="choice-asymmetric-client1"><code>choice SendEmailResponse {
+          <pre class="green" data-lang="text" id="choice-asymmetric-client1"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
     <ins>asymmetric please_try_again = 3</ins>
   }</code></pre>
-          <pre class="blue" id="choice-asymmetric-client2"><code>choice SendEmailResponse {
+          <pre class="blue" data-lang="text" id="choice-asymmetric-client2"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
     <ins>please_try_again = 3</ins>
   }</code></pre>
-          <pre class="blue" id="choice-asymmetric-server0"><code>choice SendEmailResponse {
+          <pre class="blue" data-lang="text" id="choice-asymmetric-server0"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
   }</code></pre>
-          <pre class="green" id="choice-asymmetric-server1"><code>choice SendEmailResponse {
+          <pre class="green" data-lang="text" id="choice-asymmetric-server1"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
     <ins>asymmetric please_try_again = 3</ins>
   }</code></pre>
-          <pre class="blue" id="choice-asymmetric-server2"><code>choice SendEmailResponse {
+          <pre class="blue" data-lang="text" id="choice-asymmetric-server2"><code>choice SendEmailResponse {
     success = 0
     error: String = 1
     <ins>please_try_again = 3</ins>
@@ -2237,37 +2332,39 @@ cv &lt;= 30, dv &lt;= 20: UNSAFE, counterexample page_number = 21</code></pre>
         });
       </script>
 
-      <p>The generated Rust shows how the fallback is enforced. The writer-side enum requires a fallback value for the <code>asymmetric</code> case, while the reader-side enum does not:</p>
+      <p>The generated Rust shows how the fallback is enforced. The writer-side enum requires fallback values for the optional and asymmetric cases, while the reader-side enum only exposes the asymmetric case itself:</p>
 
       <pre data-lang="rust"><code>pub enum SendEmailResponseOut {
     Success,
     Error(String),
+    AuthenticationError(String, Box&lt;SendEmailResponseOut&gt;),
     PleaseTryAgain(Box&lt;SendEmailResponseOut&gt;),
 }
 
 pub enum SendEmailResponseIn {
     Success,
     Error(String),
+    AuthenticationError(String, Box&lt;SendEmailResponseIn&gt;),
     PleaseTryAgain,
 }</code></pre>
 
-      <p>A writer choosing <code>PleaseTryAgain</code> must supply a <code>Box&lt;SendEmailResponseOut&gt;</code> &mdash; a fallback case that older readers (which don't yet know <code>please_try_again</code>) can fall back to. A reader, on the other hand, recovers to a payload-free <code>PleaseTryAgain</code>. The generated conversion discards the fallback once the case is understood:</p>
+      <p>A writer choosing <code>PleaseTryAgain</code> must supply a <code>Box&lt;SendEmailResponseOut&gt;</code>, a fallback case that older readers (which don't yet know <code>please_try_again</code>) can fall back to. A reader, on the other hand, sees a payload-free <code>PleaseTryAgain</code>. The generated conversion discards the fallback once the case is understood:</p>
 
       <pre data-lang="rust"><code>impl From&lt;SendEmailResponseOut&gt; for SendEmailResponseIn {
     fn from(message: SendEmailResponseOut) -> Self {
         match message {
             SendEmailResponseOut::Success =&gt; SendEmailResponseIn::Success,
             SendEmailResponseOut::Error(payload) =&gt; SendEmailResponseIn::Error(payload.into()),
-            SendEmailResponseOut::PleaseTryAgain(fallback) =&gt; SendEmailResponseIn::PleaseTryAgain,
+            SendEmailResponseOut::AuthenticationError(message, fallback) =&gt; {
+                SendEmailResponseIn::AuthenticationError(
+                    message.into(),
+                    Box::new((*fallback).into()),
+                )
+            }
+            SendEmailResponseOut::PleaseTryAgain(_fallback) =&gt; SendEmailResponseIn::PleaseTryAgain,
         }
     }
 }</code></pre>
-
-    <h2><a id="ai-usage-disclosure" href="#ai-usage-disclosure"></a>AI usage disclosure</h2>
-
-    <p>All prose was handwritten, with predictive autocomplete disabled. Diagrams were generated. Proof-read by Claude
-      Opus 4.6 on TODO.</p>
-
     <script>
       document.addEventListener("DOMContentLoaded", function () {
         const faviconBase = "https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&size=64&url=";
