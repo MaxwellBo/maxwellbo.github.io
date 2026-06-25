@@ -1632,8 +1632,10 @@ This same intermediate state may also permit:
     body: String = 2
 }</code></pre>
 
+<p>In Typical, fields are required by default, so <code>to</code>, <code>subject</code>, and <code>body</code> do not need an explicit label.</p>
+
 <p>
-  produces two distinct Rust types: a <code>SendEmailRequestOut</code> used to construct and serialize a message, and a <code>SendEmailRequestIn</code> produced by deserialization. The <code>asymmetric</code> label makes <code>from</code> a non-optional <code>String</code> on the way out, but an <code>Option&lt;String&gt;</code> on the way in:
+  produces two distinct Rust types: a <code>SendEmailRequestOut</code> used to construct and serialize a message, and a <code>SendEmailRequestIn</code> produced by deserialization. The unlabeled <code>to</code>, <code>subject</code>, and <code>body</code> fields remain required in both directions. The <code>asymmetric</code> label makes <code>from</code> a non-optional <code>String</code> on the way out, but an <code>Option&lt;String&gt;</code> on the way in:
 </p>
 
 <pre data-lang="rust"><code>pub struct SendEmailRequestOut {
@@ -1664,6 +1666,79 @@ pub struct SendEmailRequestIn {
         }
     }
 }</code></pre>
+
+<p>
+  In Protocol Buffers, we could express the same idea with a new field option, <code>constructor_required</code>. The <code>from</code> field is still optional for deserialization, but generated producer-facing construction APIs require it:
+</p>
+
+<pre><code>import "google/protobuf/descriptor.proto";
+
+extend google.protobuf.FieldOptions {
+  optional bool constructor_required = 50002;
+}
+
+message SendEmailRequest {
+  required string to = 1;
+  required string subject = 2;
+  required string body = 3;
+  optional string from = 4 [(constructor_required) = true];
+}</code></pre>
+
+<p>Compared to default Java generation, the producer-facing builder entry point changes like this:</p>
+
+<pre data-lang="java"><code>public final class SendEmailRequest {
+  // ...
+
+  public boolean hasFrom() {
+    // ...
+  }
+
+  public String getFrom() {
+    // ...
+  }
+
+  <del>public static Builder newBuilder() {
+    return new Builder();
+  }</del>
+
+  <ins>public static Builder newBuilder(
+      String to,
+      String subject,
+      String body,
+      String from) {
+    return new Builder(to, subject, body, from);
+  }</ins>
+
+  public static final class Builder {
+    <del>private Builder() {
+      // ...
+    }</del>
+
+    <ins>private Builder(String to, String subject, String body, String from) {
+      // to, subject, body, and from are required for producer-side construction.
+      // ...
+    }</ins>
+
+    public SendEmailRequest build() {
+      // ...
+    }
+  }
+
+  static SendEmailRequest parseFromWire(byte[] payload) {
+    // May return a message where hasFrom() is false.
+    // ...
+  }
+}</code></pre>
+
+<pre data-lang="java"><code><del>SendEmailRequest.newBuilder();</del>
+// Does not compile: expected required constructor fields.
+
+<ins>SendEmailRequest.newBuilder(
+        "typical@example.com",
+        "I love Typical!",
+        "It makes serialization easy and safe.",
+        "newsletter@example.com")
+    .build();</ins> // ok</code></pre>
 
 
     <h4><a id="unconstructable" href="#unconstructable"></a>Unconstructable variants</h4>
@@ -1794,7 +1869,7 @@ SearchRequest nope =
         // required ConstructableCorpus, found Corpus
         .build();</code></pre>
 
-    <p>But <code>CORPUS_AUDIO</code> is still a real enum constant that generated and handwritten reader code can handle exhaustively:</p>
+    <p>But <code>CORPUS_AUDIO</code> is still a real case/value that generated and handwritten reader code can handle exhaustively:</p>
 
     <pre data-lang="java"><code>switch (request.getCorpus()) {
   case CORPUS_UNSPECIFIED -&gt; handleUnspecified();
