@@ -1668,7 +1668,7 @@ pub struct SendEmailRequestIn {
 }</code></pre>
 
 <p>
-  In Protocol Buffers, we could express the same idea with a new field option, <code>constructor_required</code>. The <code>from</code> field is still optional for deserialization, but generated producer-facing construction APIs require it:
+  In Protocol Buffers, we could express the same idea with a new field option, <code>constructor_required</code>. For this option to be useful, generated Protocol Buffers construction APIs would need to change significantly: instead of defaulting to a no-argument builder and checking required fields later, producer-facing construction would need to require constructor fields up front. The <code>from</code> field is still optional for deserialization, but generated producer-facing construction APIs require it:
 </p>
 
 <pre><code>import "google/protobuf/descriptor.proto";
