@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 
+<!-- TODO: When i try to open the page on localhost it blocks loading for a very long time. I suspect it's
+ blocking on loading the stylesheet. I don't want it to do that. -->
+
 <!-- TODO: check for usage of consistent terminology.-->
 
 <head>
@@ -15,7 +18,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/leader-line-new@1.1.9/leader-line.min.js"></script>
 
-  <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@26.0.0/libertine.css" />
+  <!-- TODO: Restore -->
+  <!-- <link rel="stylesheet" href="https://esm.sh/jsr/@celine/libertine@26.0.0/libertine.css" /> -->
 
   <link rel="stylesheet" href="https://esm.sh/jsr/@celine/celine@7.0.1/cell.css" />
 
@@ -271,11 +275,11 @@ message SearchRequest {
     <p>
       this change still upset quite a few people. 
       On the <time>15th of December 2016</time>, a Protocol Buffers maintainer
-      <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale
-      </a> for it, which I encourage you to read in full:
+      <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale</a> for it, which I encourage you to read in full:
     </p>
 
     <figure class="blockquote">
+      <!-- TODO: The code borders in this blockquote context make them unreadable. Either lighten up the code context or make the <code> borders darker. -->
       <blockquote>
         <p>
           We dropped <code>required</code> fields in <i>proto3</i> because <code>required</code> fields are generally considered harmful and violating protobuf's compatibility semantics. The whole idea of using protobuf is that it allows you to add/remove fields from your protocol definition while still being fully forward/backward compatible with newer/older binaries. <code>Required</code> fields break this though. You can never safely add a <code>required</code> field to a <code>.proto</code> definition, nor can you safely remove an existing <code>required</code> field because both of these actions break wire compatibility. For example, if you add a <code>required</code> field to a <code>.proto</code> definition, binaries built with the new definition won't be able to parse data serialized using the old definition because the <code>required</code> field is not present in old data. In a complex system where <code>.proto</code> definitions are shared widely across many different components of the system, adding/removing <code>required</code> fields could easily bring down multiple parts of the system. We have seen production issues caused by this multiple times and it's pretty much banned everywhere inside Google for anyone to add/remove <code>required</code> fields. For this reason we completely removed <code>required</code> fields in <i>proto3</i>.
@@ -295,10 +299,10 @@ message SearchRequest {
       the <code>required</code> and <code>optional</code> labels while adding a set of <i>"Safe proto evolution extensions"</i>. This, along with a custom compatibility checker, almost entirely eliminated API and RPC compatibility issues at Canva.</p>
 
     <p>
-      In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <a href="https://protobuf.dev/programming-guides/proto2/"><i>proto2</i></a> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would introduce similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
+      In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <a href="https://protobuf.dev/programming-guides/proto2/"><i>proto2</i></a> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would introduce similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and the <a href="https://buf.build/docs/breaking/"><code>buf breaking</code> compatibiity checker.</a>.
     </p>
 
-    <h2><a id="why-should-we-want-required" href="#why-we-should-want-required"></a>Why we should want <code>required</code></h2>
+    <h3><a id="why-should-we-want-required" href="#why-we-should-want-required"></a>Why we should want <code>required</code></h3>
 
     <p>
 
@@ -357,9 +361,9 @@ message SearchRequest {
     <h2><a id="preamble" href="#preamble"></a>Preamble</h2>
 
     <!-- TO-->
-    <p>First, a refresher on Protocol Buffers <a href="https://protobuf.dev/programming-guides/proto2/"></a>, and some article specific terminology.</p>
+    <p>First, a refresher on Protocol Buffers, specifically <a href="https://protobuf.dev/programming-guides/proto2/"><i>proto2</i></a>, and some article specific terminology.</p>
 
-    <p>A proto file may define services, which define methods, that have request types and response types:</p>
+    <p>A <code>.proto</code> file may define services, which define methods, that have request types and response types:</p>
 
     <pre>
 <code>service SearchService {
@@ -367,7 +371,7 @@ message SearchRequest {
 }</code></pre>
 
 
-    <p>A proto file may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
+    <p>A <code>.proto</code> file may define messages, that have fields with types and labels. Labels may indicate <code>optional</code>,
       <code>required</code> or <code>repeated</code>:<sup><a id="fnref:1" href="#fn:1">†</a></sup></p>
 
     <aside>
@@ -382,7 +386,7 @@ message SearchRequest {
   optional int32 page_number = 2;
 }</code></pre>
 
-    <p>A file may define enums, that have values:</p>
+    <p>A <code>.proto</code> file may define enums, that have values:</p>
     <pre>
 <code>enum Corpus {
   CORPUS_UNSPECIFIED = 0;
@@ -713,14 +717,17 @@ message SearchRequest {
       </div>
     </figure>
 
-    <p>A method is made narrower if its request or response is made narrower.</p>
+    <!-- <p>A method is made narrower if its request or response is made narrower.</p>
     <p>A method is made wider if its request or response is made wider.</p>
 
     <p>A service is made narrower if any its methods are made narrower.</p>
-    <p>A service is made wider if any its methods are made wider.</p>
+    <p>A service is made wider if any its methods are made wider.</p> -->
 
-    <h2><a id="problems-with-symmetric-types" href="#problems-with-symmetric-types"></a>Problems with symmetric types
-    </h2>
+    <h2><a id="problems-with-symmetric-types" href="#problems-with-symmetric-types"></a>Problems with symmetric types</h2>
+
+    <p>
+      Let's dig further into the problems associated with <code>required</code> described by the quote in the <a href="#context">context section</a>.
+    </p>
 
     <p>Assume an environment where we do not control deployment ordering, such for a given release, producers or consumers may be deployed before each other.</p>
 
