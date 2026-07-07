@@ -250,6 +250,7 @@
     </div>
 
     <div class="abstract">
+      <!-- TODO: I think we need to confirm whether we want to use the language "more" here -->
       Adding more asymmetric types to Protocol Buffers - types that generate code that have stronger constructor validations than their deserialization validations -  
       would make schema evolution safer.    
     </div>
@@ -268,10 +269,10 @@ message SearchRequest {
     </p>
 
     <p>
-      This change still upset quite a few people. 
+      this change still upset quite a few people. 
       On the <time>15th of December 2016</time>, a Protocol Buffers maintainer
       <a href="https://github.com/protocolbuffers/protobuf/issues/2497#issuecomment-267422550">offered up some rationale
-      </a> for it:
+      </a> for it, which I encourage you to read in full:
     </p>
 
     <figure class="blockquote">
@@ -288,16 +289,6 @@ message SearchRequest {
       </figcaption>
     </figure>
 
-    <p>
-      Because of this change, you see the following convention <a href="https://github.com/search?q=%22%2F%2F+required%22+language%3A%22Protocol+Buffers%22+&type=code">littered throughout <i>proto3</i>-using codebases</a>:
-    </p>
-    <pre><code>message ButtonPressRequest {
-  // Required: which button to press
-  Button button = 1;
-
-  // Required: duration in milliseconds for how long to press the button
-  uint32 duration_ms = 2;
-}</code></pre>
 
     <p>In 2022, I joined <a href="https://www.canva.com/about/">Canva</a>. 
       For the next 3 years I worked on, for all intents and purposes, a hard fork of Protocol Buffers. This fork was locked to <a href="https://protobuf.dev/programming-guides/proto2/"><i>proto2</i></a> syntax, preserving
@@ -307,6 +298,25 @@ message SearchRequest {
       In light of this, I view the <i>proto3</i> changes to be one of software engineering's <i>"throwing the baby out with the bathwater"</i> moments, and generally a bad decision. I am writing this article to show that that some small extensions to <a href="https://protobuf.dev/programming-guides/proto2/"><i>proto2</i></a> or <a href="https://protobuf.dev/editions/overview/">Protobuf Editions</a> (and more broadly, any mature IDL, like <a href="https://thrift.apache.org/">Thrift</a> or <a href="https://smithy.io/2.0/index.html">Smithy</a>, etc.) can expand backwards compatibility guarantees. Ideally, <a href="https://buf.build/">Buf</a> would introduce similar changes into <a href="https://protovalidate.com/">Protovalidate</a> and <a href="https://buf.build/docs/breaking/"><code>buf breaking</code></a>.
     </p>
 
+    <h2><a id="why-should-we-want-required" href="#why-we-should-want-required"></a>Why we should want <code>required</code></h2>
+
+    <p>
+
+    <i>proto3</i> shifts the responsibility to reject payloads with missing data out of the IDL instance deserialization logic into domain logic. Because of this, you will see the following convention <a href="https://github.com/search?q=%22%2F%2F+required%22+language%3A%22Protocol+Buffers%22+&type=code">littered throughout <i>proto3</i>-using codebases</a> as a reminder to perform this validation:
+
+    </p>
+    <pre><code>message ButtonPressRequest {
+  // Required: which button to press
+  Button button = 1;
+
+  // Required: duration in milliseconds for how long to press the button
+  uint32 duration_ms = 2;
+}</code></pre>
+
+    <p>
+      Thus, the design of a <i>proto3</i> stands as a rejection of a <a href="https://lexi-lambda.github.io/blog/2019/11/05/parse-don-t-validate/">"parse, don't validate"</a> philosophy.
+    </p>
+      
 
     <!-- <p>
       About a month ago I read <a href="https://www.iankduncan.com/engineering/2026-02-09-what-functional-programmers-get-wrong-about-systems/"><cite>What Functional Programmers Get Wrong About Systems</cite></a> by <a href="https://www.iankduncan.com/">Ian Duncan</a>.
@@ -892,6 +902,7 @@ message SearchRequest {
       This incompatibility risk doesn't just happen when adding or removing a <code>required</code> field directly: the same kind of risk occurs when transitioning an <code>optional</code> field to <code>required</code>, or <code>required</code> to <code>optional</code>.
     </p>
 
+    <!-- TODO: verify that these enums actually explode. I think it might be related to the `required`-ness of the enum field reference. -->
     <!-- TODO explain open and closed enums in an aside https://protobuf.dev/programming-guides/enum/#:~:text=enum%E2%80%99s%20default%20value.-,Implications%20of%20Closed%20Enums,-The%20behavior%20of -->
     <p>Enum evolutions also carry incompatibility risk, <i>when the enum is used as a <code>required</code> field</i>, for example, when narrowing an enum, by removing an enum value. An enum sent by an old producer breaks a new consumer:</p>
 
@@ -1498,28 +1509,29 @@ message GetUserResponse {
     <h4><a id="constructor-required-deserialization-optional"
         href="#constructor-required-deserialization-optional"></a>"constructor required deserialization optional"</h4>
 
-    <p>Let's say the restrictions associated with the use of an <a href="#explicit-field-defaults">explicit field default</a> are too much: what are we to do?
-    </p>
 
-    <p>In vanilla Protocol Buffers, unfortunately, nothing: there is no other safe evolution pathway to add or remove a <code>required</code> field
+    <!-- <p>Let's say the restrictions associated with the use of an <a href="#explicit-field-defaults">explicit field default</a> are too much: what are we to do?
+    </p> -->
+
+    <!-- <p>In vanilla Protocol Buffers, unfortunately, nothing: there is no other safe evolution pathway to add or remove a <code>required</code> field
       without incompatibility risk as per the <a href="#problems-with-symmetric-types">Problems with symmetric types</a> section.
-    </p>
+    </p> -->
 
-    <p>As stated before, I strongly believe the removal of <code>optional</code> was unnecessary, and an additional asymmetric label should have been
-      added instead.</p>
+    <!-- <p>As stated before, I strongly believe the removal of <code>optional</code> was unnecessary, and an additional asymmetric label should have been
+      added instead.</p> -->
 
-    <!-- <p>Thus, the second, less common type of asymmetric type we'll look at is a "constructor required deserialization -->
-      <!-- optional" type, -->
+    <p>Thus, the second, less common type of asymmetric type we'll look at is a "constructor required deserialization optional" type.</p>
 
     <!-- TODO: need triple cross -->
-      <!-- <sup><a id="fnref:3" href="#fn:3">†</a></sup> label.</p> 
+    <sup><a id="fnref:3" href="#fn:3">†</a></sup> label.</p> 
 
     <aside>
       <p id="fn:3">
         <a href="#fnref:3">†</a>This is the best name I've got.
       </p>
-    </aside> -->
+    </aside>
       
+    <!-- TODO: Quote directly from typical docs -->
     <p>In <a href="https://github.com/stepchowfun/typical#required-optional-and-asymmetric-fields">Typical</a>, the <code>asymmetric</code> label forces writers to provide a non-null value at the construction site but permits
       readers to deserialize payloads where that value is absent.</p>
 
@@ -1612,18 +1624,16 @@ message GetUserResponse {
   });
 </script>
 <p>
-This same intermediate state may also permit:
+This same intermediate state also permits:
 </p>
 
+<!-- TODO: do we even use this terminology (optional/required) in typical? It hasn't been established yet:-->
 <ul>
   <li>transitioning from <code>optional</code> to <code>required</code></li>
   <li>transitioning from <code>required</code> to <code>optional</code></li>
   <li>removing a <code>required</code> field</li>
 </ul>
 
-<p>
-  By looking at the generated code, we can see how this is achieved. Compiling the following <a href="https://github.com/stepchowfun/typical">Typical</a> schema with <code>typical generate</code>:
-</p>
 
 <pre data-lang="text"><code>struct SendEmailRequest {
     to: String = 0
@@ -1632,11 +1642,7 @@ This same intermediate state may also permit:
     body: String = 2
 }</code></pre>
 
-<p>In Typical, fields are required by default, so <code>to</code>, <code>subject</code>, and <code>body</code> do not need an explicit label.</p>
 
-<p>
-  produces two distinct Rust types: a <code>SendEmailRequestOut</code> used to construct and serialize a message, and a <code>SendEmailRequestIn</code> produced by deserialization. The unlabeled <code>to</code>, <code>subject</code>, and <code>body</code> fields remain required in both directions. The <code>asymmetric</code> label makes <code>from</code> a non-optional <code>String</code> on the way out, but an <code>Option&lt;String&gt;</code> on the way in:
-</p>
 
 <pre data-lang="rust"><code>pub struct SendEmailRequestOut {
     pub to: String,
@@ -1652,9 +1658,7 @@ pub struct SendEmailRequestIn {
     pub body: String,
 }</code></pre>
 
-<p>
-  This is the asymmetry made concrete: the constructor demands a value, while the deserializer tolerates its absence. The generated <code>From&lt;SendEmailRequestOut&gt; for SendEmailRequestIn</code> conversion simply wraps the value in <code>Some</code>:
-</p>
+
 
 <pre data-lang="rust"><code>impl From&lt;SendEmailRequestOut&gt; for SendEmailRequestIn {
     fn from(message: SendEmailRequestOut) -> Self {
@@ -1667,9 +1671,6 @@ pub struct SendEmailRequestIn {
     }
 }</code></pre>
 
-<p>
-  In Protocol Buffers, we could express the same idea with a new field option, <code>constructor_required</code>. For this option to be useful, generated Protocol Buffers construction APIs would need to change significantly: instead of defaulting to a no-argument builder and checking required fields later, producer-facing construction would need to require constructor fields up front. The <code>from</code> field is still optional for deserialization, but generated producer-facing construction APIs require it:
-</p>
 
 <pre><code>import "google/protobuf/descriptor.proto";
 
@@ -1734,10 +1735,10 @@ message SendEmailRequest {
 // Does not compile: expected required constructor fields.
 
 <ins>SendEmailRequest.newBuilder(
-        "typical@example.com",
-        "I love Typical!",
-        "It makes serialization easy and safe.",
-        "newsletter@example.com")
+        "TODO",
+        "TODO",
+        "TODO",
+        "TODO")
     .build();</ins> // ok</code></pre>
 
 
@@ -1745,8 +1746,7 @@ message SendEmailRequest {
 
     <p>An enum value option that prevents the construction of a specific enum value, while still permitting its deserialization, turns the enum into an asymmetric type.</p>
 
-    <p>The option permits us to safely add a variant under the assumption that no other engineer can construct, serialize
-      and send it to deserializers that are unprepared to handle it.</p>
+    <p>This option permits us to safely add a variant under the assumption that no other engineer can construct, serialize and send it to deserializers that are unprepared to handle it.</p>
 
     <figure class="semifullwidth">
       <div class="container-3-col" id="unconstructable">
@@ -1855,7 +1855,7 @@ public final class SearchRequest {
   }
 }</code></pre>
 
-    <p>With this shape, producer code cannot pass <code>Corpus.CORPUS_AUDIO</code> to the builder at all:</p>
+    <p>This would prevent passing <code>Corpus.CORPUS_AUDIO</code> to the builder:</p>
 
     <pre data-lang="java"><code>SearchRequest ok =
     SearchRequest.newBuilder()
@@ -1869,13 +1869,11 @@ SearchRequest nope =
         // required ConstructableCorpus, found Corpus
         .build();</code></pre>
 
-    <p>But <code>CORPUS_AUDIO</code> is still a real case/value that generated and handwritten reader code can handle exhaustively:</p>
-
     <pre data-lang="java"><code>switch (request.getCorpus()) {
-  case CORPUS_UNSPECIFIED -&gt; handleUnspecified();
-  case CORPUS_TEXT -&gt; handleText();
-  case CORPUS_IMAGES -&gt; handleImages();
-  case CORPUS_AUDIO -&gt; handleAudio();
+  case CORPUS_UNSPECIFIED -&gt; ...;
+  case CORPUS_TEXT -&gt; ...;
+  case CORPUS_IMAGES -&gt; ...;
+  case CORPUS_AUDIO -&gt; ...;
 }</code></pre>
 
     <h4><a id="two-validations" href="#two-validations"></a>Two validations</h4>
@@ -2258,7 +2256,6 @@ check_entailment(lambda x: x &lt;= 30, lambda x: x &lt;= 20)</code></pre>
     asymmetric please_try_again = 3
 }</code></pre>
   
-      <p>Adding and removing the <code>optional</code> <code>authentication_error</code> case is safe because writers provide a fallback, and readers that do not know or do not care about that case can use the fallback instead.</p>
       <figure class="semifullwidth">
         <div class="container-3-col" id="choice-optional">
           <pre class="blue" data-lang="text" id="choice-optional-client0"><code>choice SendEmailResponse {
@@ -2332,7 +2329,7 @@ check_entailment(lambda x: x &lt;= 30, lambda x: x &lt;= 20)</code></pre>
         });
       </script>
   
-      <p>Adding the <code>asymmetric</code> <code>please_try_again</code> case is the dual of the struct example above: writers may choose the new case only if they also include a fallback, while readers that know the asymmetric case must handle it directly. Once all readers can handle it, the field can be promoted to required.</p>
+
       <figure class="semifullwidth">
         <div class="container-3-col" id="choice-asymmetric">
           <pre class="blue" data-lang="text" id="choice-asymmetric-client0"><code>choice SendEmailResponse {
@@ -2408,7 +2405,6 @@ check_entailment(lambda x: x &lt;= 30, lambda x: x &lt;= 20)</code></pre>
         });
       </script>
 
-      <p>The generated Rust shows how the fallback is enforced. The writer-side enum requires fallback values for the optional and asymmetric cases, while the reader-side enum only exposes the asymmetric case itself:</p>
 
       <pre data-lang="rust"><code>pub enum SendEmailResponseOut {
     Success,
@@ -2423,8 +2419,6 @@ pub enum SendEmailResponseIn {
     AuthenticationError(String, Box&lt;SendEmailResponseIn&gt;),
     PleaseTryAgain,
 }</code></pre>
-
-      <p>A writer choosing <code>PleaseTryAgain</code> must supply a <code>Box&lt;SendEmailResponseOut&gt;</code>, a fallback case that older readers (which don't yet know <code>please_try_again</code>) can fall back to. A reader, on the other hand, sees a payload-free <code>PleaseTryAgain</code>. The generated conversion discards the fallback once the case is understood:</p>
 
       <pre data-lang="rust"><code>impl From&lt;SendEmailResponseOut&gt; for SendEmailResponseIn {
     fn from(message: SendEmailResponseOut) -> Self {
