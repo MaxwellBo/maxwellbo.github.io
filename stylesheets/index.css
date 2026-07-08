@@ -22,6 +22,29 @@ h1 {
   margin: 0 !important;
 }
 
+main {
+  counter-reset: section;
+}
+
+main h2 {
+  position: relative;
+  counter-increment: section;
+}
+
+main h2::before {
+  content: counter(section);
+  position: absolute;
+  left: 0.15em;
+  top: 50%;
+  transform: translateY(-25%);
+  font-family: 'Crozet', serif;
+  font-size: 6em;
+  line-height: 1;
+  z-index: 1000;
+  pointer-events: none;
+  color: rgba(0, 0, 0, 0.32);
+}
+
 img.icon {
   /* display: inline-block; */
   display: none;
@@ -211,7 +234,7 @@ div.cards {
   align-self: start;
   position: relative;
   width: 100%;
-  z-index: 2147483647;
+  z-index: 500;
 }
 
 #draggable-postit {
@@ -231,7 +254,7 @@ div.cards {
 #draggable-postit.is-floating {
   max-width: none;
   position: fixed;
-  z-index: 2147483647;
+  z-index: 500;
 }
 
 article {
