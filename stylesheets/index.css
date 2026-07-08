@@ -31,14 +31,14 @@ main h2 {
   counter-increment: section;
 }
 
-main h2::before {
+main h2::after {
   content: counter(section);
   position: absolute;
-  left: 0.15em;
+  right: 0;
   top: 50%;
   transform: translateY(-25%);
   font-family: 'Crozet', serif;
-  font-size: 6em;
+  font-size: 3.25em;
   line-height: 1;
   z-index: 1000;
   pointer-events: none;
