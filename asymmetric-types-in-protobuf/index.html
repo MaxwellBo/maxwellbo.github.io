@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="EN-AU">
 
 <!-- TODO: When i try to open the page on localhost it blocks loading for a very long time. I suspect it's
  blocking on loading the stylesheet. I don't want it to do that. -->
@@ -662,6 +662,7 @@ message SearchRequest {
     </p>
 
     <p>A definition can be said to made "narrower" than its previous version when:
+      <!-- TODO it would be nice if each of these entries floated above the message and enum-->
     <ul>
       <li>For messages (a product type), we add a new field</li>
       <li>For enums (a sum type), we remove a value</li>
@@ -690,6 +691,8 @@ message SearchRequest {
     </figure>
 
     <p>Conversely, a definition can can be made "wider" than its previous version when:</p>
+
+    <!-- TODO it would be nice if each of these entries floated above the message and enum-->
     <ul>
       <li>for messages, we remove a field</li>
       <li>for enums, we add a value</li>
@@ -731,8 +734,7 @@ message SearchRequest {
 
     <p>Assume an environment where we do not control deployment ordering, such for a given release, producers or consumers may be deployed before each other.</p>
 
-    <p>If an engineer needs to narrow a message, such as trying to add a <code>required</code>
-      field they create an incompatibility risk. A message sent by an old producer breaks a new consumer:</p>
+    <p>If an engineer needs to narrow a message, such as trying to add a <code>required</code>, field they create an incompatibility risk. A message sent by an old producer can break a new consumer:</p>
 
 
       <!-- TODO: required string doesn't trigger a deserialization error because it has a deserialization defualt. We need a new example
@@ -821,7 +823,7 @@ message SearchRequest {
       });
     </script>
 
-    <p>This also occurs when widening a message, by removing a <code>required</code> field. A message sent by a new producer breaks an old consumer:</p>
+    <p>This also occurs when widening a message, by removing a <code>required</code> field. A message sent by a new producer can break an old consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -906,12 +908,12 @@ message SearchRequest {
 </script>
 
     <p>
-      This incompatibility risk doesn't just happen when adding or removing a <code>required</code> field directly: the same kind of risk occurs when transitioning an <code>optional</code> field to <code>required</code>, or <code>required</code> to <code>optional</code>.
+      This incompatibility risk doesn't just happen when adding or removing a <code>required</code> field directly: the same kind of risk occurs when evolving an <code>optional</code> field to <code>required</code>, or <code>required</code> to <code>optional</code>.
     </p>
 
     <!-- TODO: verify that these enums actually explode. I think it might be related to the `required`-ness of the enum field reference. -->
     <!-- TODO explain open and closed enums in an aside https://protobuf.dev/programming-guides/enum/#:~:text=enum%E2%80%99s%20default%20value.-,Implications%20of%20Closed%20Enums,-The%20behavior%20of -->
-    <p>Enum evolutions also carry incompatibility risk, <i>when the enum is used as a <code>required</code> field</i>, for example, when narrowing an enum, by removing an enum value. An enum sent by an old producer breaks a new consumer:</p>
+    <p>Enum evolutions also carry incompatibility risk, <i>when the enum is used as a <code>required</code> field</i>, for example, when narrowing an enum, by removing an enum value. An enum sent by an old producer can break a new consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -1004,7 +1006,7 @@ message SearchRequest {
 </script>
 
 
-    <p>And also when widening an enum, by adding a value. An enum sent by a new producer breaks an old consumer:</p>
+    <p>And also when widening an enum, by adding a value. An enum sent by a new producer break can break an old consumer:</p>
 
 <figure>
   <div class="container-2-col">
@@ -1538,11 +1540,11 @@ message GetUserResponse {
       </p>
     </aside>
       
-    <!-- TODO: Quote directly from typical docs -->
-    <p>In <a href="https://github.com/stepchowfun/typical#required-optional-and-asymmetric-fields">Typical</a>, the <code>asymmetric</code> label forces writers to provide a non-null value at the construction site but permits
-      readers to deserialize payloads where that value is absent.</p>
+    <p>In <a href="https://github.com/stepchowfun/typical#required-optional-and-asymmetric-fields">Typical</a> adding the <code>asymmetric</code> label to a field generates code treats the field as required in the constructor, such that it must be parameterized, whilst treating it as optional in its deserializer and by public field access.
 
-    <p>Using the email API example from Typical's tutorial, we can add a new <code>from</code> field to <code>SendEmailRequest</code> via a safe intermediate state:</p>
+
+      <!-- TODO: should we explicit `required` syntax? Does Typical support that? -->
+    <p>Using the example from Typical README, we can see that by first adding field <code>from</code> with an<code>asymmetric</code> label, we can safely evolve it it to a (labelless) required.</p>
 
     <figure class="semifullwidth">
       <div class="container-3-col" id="required">
@@ -1631,15 +1633,19 @@ message GetUserResponse {
   });
 </script>
 <p>
-This same intermediate state also permits:
+How wonderful! Using <code>asymmetric</code> as this intermediate stage admits:
 </p>
 
 <!-- TODO: do we even use this terminology (optional/required) in typical? It hasn't been established yet:-->
 <ul>
-  <li>transitioning from <code>optional</code> to <code>required</code></li>
-  <li>transitioning from <code>required</code> to <code>optional</code></li>
-  <li>removing a <code>required</code> field</li>
+  <li>safe evolution from <code>optional</code> to <code>required</code></li>
+  <li>safe evolution <code>required</code> to <code>optional</code></li>
+  <li>safe removal of a <code>required</code> field</li>
 </ul>
+
+<p>
+  Before moving on, I think it's worth looking at what <code>asymmetric</code> does to the generated Rust code:
+</p>
 
 
 <pre data-lang="text"><code>struct SendEmailRequest {
@@ -1648,7 +1654,6 @@ This same intermediate state also permits:
     subject: String = 1
     body: String = 2
 }</code></pre>
-
 
 
 <pre data-lang="rust"><code>pub struct SendEmailRequestOut {
@@ -1678,7 +1683,14 @@ pub struct SendEmailRequestIn {
     }
 }</code></pre>
 
+<!-- TODO: explain generated code-->
+<!-- TODO: get impl for the deserializer-->
 
+<p>Porting this behaviour to <code>proto2</code> is not trivial.</p>
+
+<p>
+  It is simple 
+</p>
 <pre><code>import "google/protobuf/descriptor.proto";
 
 extend google.protobuf.FieldOptions {
