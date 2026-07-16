@@ -174,3 +174,36 @@ describe('gf2p8affineqb', () => {
     expect(result_neg[0]).toBe(0b11111111); // Sign extended
   });
 });
+
+describe("RPCS3 SHUFB special-case fast path (Whatcookie's trick)", () => {
+  // Matrix used in RPCS3's SPULLVMRecompiler SHUFB path:
+  // Byte 0 (row for output bit 7): 0x40 -> copies control bit 6 to the sign bit
+  // Bytes 1-7 (rows for output bits 6..0): 0x20 -> copy control bit 5,
+  // which imm8 = 0x7F then inverts
+  const shufbMatrix = 0x2020202020202040n;
+  const imm8 = 0x7f;
+
+  /** Model the affine op followed by RPCS3's first blend (force 0x00 when sign bit clear) */
+  function idxConst(control) {
+    const gfni = affineByte(shufbMatrix, control, imm8);
+    return (gfni & 0x80) ? gfni : 0x00;
+  }
+
+  test('10xxxxxx produces 0x00', () => {
+    for (let c = 0b10000000; c <= 0b10111111; c++) {
+      expect(idxConst(c)).toBe(0x00);
+    }
+  });
+
+  test('110xxxxx produces 0xFF', () => {
+    for (let c = 0b11000000; c <= 0b11011111; c++) {
+      expect(idxConst(c)).toBe(0xFF);
+    }
+  });
+
+  test('111xxxxx produces 0x80', () => {
+    for (let c = 0b11100000; c <= 0b11111111; c++) {
+      expect(idxConst(c)).toBe(0x80);
+    }
+  });
+});

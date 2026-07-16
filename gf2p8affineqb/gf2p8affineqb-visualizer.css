@@ -59,3 +59,11 @@
 .gf2p8-cpp-section {
   margin-top: 15px;
 }
+
+.gf2p8-blend-section {
+  margin-top: 10px;
+}
+
+.gf2p8-blend-section p {
+  margin: 6px 0;
+}

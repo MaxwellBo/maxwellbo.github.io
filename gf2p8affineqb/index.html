@@ -622,6 +622,84 @@ end</pre>
     </blockquote>
 
     <p>
+      A naive implementation has to check for the three constant-generating patterns
+      (<code>10xxxxxx</code> → <code>0x00</code>, <code>110xxxxx</code> → <code>0xFF</code>,
+      <code>111xxxxx</code> → <code>0x80</code>) on every one of the 16 control bytes, on top of
+      the actual shuffle. <a href="https://github.com/Whatcookie">Whatcookie</a>'s fast path
+      (<a href="https://github.com/RPCS3/rpcs3/pull/8712">RPCS3 PR #8712</a>) decodes all three
+      special cases at once with a single GF2P8AFFINEQB over the control bytes, because each
+      output is a pure boolean function of control bits 5, 6, and 7 &mdash; exactly the kind of
+      function an affine transformation can compute:
+    </p>
+
+    <ul>
+      <li>The matrix row for output bit 7 is <code>0b01000000</code>, so the result's sign bit is a copy
+        of control bit 6.</li>
+      <li>The rows for output bits 6 through 0 are all <code>0b00100000</code>, selecting control bit
+        5, and imm8 = <code>0x7F</code> flips those seven bits, so they become ¬(control bit 5).</li>
+    </ul>
+
+    <p>
+      Two cheap blends then finish the job: one forces the byte to <code>0x00</code> wherever the affine
+      result's sign bit is clear (fixing up the <code>10xxxxxx</code> case), and one selects between the
+      special-case constant and the actual shuffled data based on the control byte's own sign bit.
+      Toggle the control byte's top three bits below and watch <i>Table 5-1</i> fall out:
+    </p>
+
+    <div id="viz-shufb" class="simulator-container"></div>
+
+    <script type="module">
+      import { createShufbVisualization, SHUFB_GFNI_MATRIX } from './gf2p8affineqb-visualizer.js';
+
+      createShufbVisualization(document.getElementById('viz-shufb'), {
+        control: 0b11000101,
+        matrix: new Uint8Array(SHUFB_GFNI_MATRIX),
+        imm: 0x7f,
+      });
+    </script>
+
+    <p>
+      Here's the actual source, from RPCS3's SPU LLVM recompiler
+      (<code>gf2p8affineqb</code> is a thin wrapper that emits the
+      <code>llvm.x86.vgf2p8affineqb.128</code> intrinsic, and <code>c</code> holds the 16 SHUFB
+      control bytes). The 16-byte <code>build</code> is the <code>0x2020202020202040</code> matrix
+      from the simulator above, once per 64-bit lane:
+    </p>
+
+    <figure>
+      <pre><code>// Calculate special index constants
+
+value_t&lt;u8[16]&gt; idx_consts;
+if (perm_or_zero_only)
+{
+	idx_consts = eval(splat&lt;u8[16]&gt;(0));
+}
+else if (m_use_avx512_icl)
+{
+	const auto gfni = gf2p8affineqb(c, build&lt;u8[16]&gt;(0x40, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x40, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20), 0x7f);
+	idx_consts = eval(select(noncast&lt;s8[16]&gt;(gfni) &gt;= 0, splat&lt;u8[16]&gt;(0), gfni));
+}
+else
+{
+	const auto pshufb_lut = build&lt;u8[16]&gt;(0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0xff, 0xff, 0x80, 0x80);
+	idx_consts = eval(pshufb(pshufb_lut, (c &gt;&gt; 4)));
+}
+
+// Combine shuffle and special index constants
+
+if (shuf_zero_when_msb)
+	set_vr(op.rt4, ab_shuf | idx_consts);
+else
+	set_vr(op.rt4, select(noncast&lt;s8[16]&gt;(c) &gt;= 0, ab_shuf, idx_consts));</code></pre>
+      <figcaption>
+        <a
+          href="https://github.com/RPCS3/rpcs3/blob/cdbc43712bac68cd174f4c7305bfcd41d04db51c/rpcs3/Emu/Cell/SPULLVMRecompiler.cpp#L7635-L7658">
+          <cite>rpcs3/Emu/Cell/SPULLVMRecompiler.cpp</cite>, lines 7635&ndash;7658, in <code>SHUFB</code>
+        </a>
+      </figcaption>
+    </figure>
+
+    <p>
       <a href="https://www.youtube.com/watch?v=19ae5Mq2lJE">Here's the video that discusses it</a>
     </p>
 
