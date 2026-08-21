@@ -88,6 +88,7 @@ fetch(url)
   .then(response => response.json())
   .then(data => {
     const weatherCode = simulateRain ? 63 : data.current.weather_code;
+    const isDay = data.current.is_day === 1;
 
     currentTemp.textContent = data.current.temperature_2m.toFixed(1) + '°C';
     high.textContent = "H: " + data.daily.temperature_2m_max[0].toFixed(1) + '°C';
@@ -112,19 +113,19 @@ fetch(url)
         conditions.textContent = 'Clear sky';
         element.style.background = 'linear-gradient(0deg, #87CEEB, #FFD700)';
         useSkyGradient();
-        conditionsEmoji.textContent = '☀️';
+        conditionsEmoji.textContent = isDay ? '☀️' : '🌙';
         break;
       case 1: // Mainly clear
         conditions.textContent = 'Mainly clear';
         element.style.background = 'linear-gradient(0deg, #B0E2FF, #FFFACD)';
         useSkyGradient();
-        conditionsEmoji.textContent = '🌤️';
+        conditionsEmoji.textContent = isDay ? '🌤️' : '🌙';
         break;
       case 2: // Partly cloudy
         conditions.textContent = 'Partly cloudy';
         element.style.background = 'linear-gradient(0deg, #CCCCFF, #F0E68C)';
         useSkyGradient();
-        conditionsEmoji.textContent = '⛅';
+        conditionsEmoji.textContent = isDay ? '⛅' : '☁️';
         break;
       case 3: // Overcast
         conditions.textContent = 'Overcast';

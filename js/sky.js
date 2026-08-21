@@ -1,4 +1,4 @@
-import { getPosition } from "https://esm.sh/suncalc";
+import { getPosition } from "https://esm.sh/suncalc@2.0.1";
 
 /**
  * From https://github.com/dnlzro/horizon, rewritten by Claude.
@@ -414,7 +414,8 @@ export function renderSkyAtLocation(latitude, longitude) {
     longitude,
   );
 
-  const [gradient, topVec, bottomVec] = renderGradient(sunPos.altitude);
+  // SunCalc v2 returns altitude in degrees; the renderer expects radians.
+  const [gradient, topVec, bottomVec] = renderGradient(sunPos.altitude * Math.PI / 180);
 
   const top = `rgb(${topVec[0]}, ${topVec[1]}, ${topVec[2]})`;
   const bottom = `rgb(${bottomVec[0]}, ${bottomVec[1]}, ${bottomVec[2]})`
